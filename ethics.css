@@ -1,3 +1,6 @@
+body {
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
 #game {
     width:800px;
     height:800px;
@@ -8,4 +11,16 @@
     margin:5px;
     background-color: #F0F0F0;
     height: 100px;
+}
+
+button {
+    margin: 5px;
+    padding: 5px;
+    border-width: 1;
+    background-color: white;
+    color: #303030;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 18px;
 }
