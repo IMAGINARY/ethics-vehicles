@@ -1,0 +1,11 @@
+#game {
+    width:800px;
+    height:800px;
+}
+
+#options_bar {
+    width:800px;
+    margin:5px;
+    background-color: #F0F0F0;
+    height: 100px;
+}

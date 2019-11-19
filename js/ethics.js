@@ -2,7 +2,7 @@
 const app = new PIXI.Application({
     width: 800, height: 800, backgroundColor: 0x1099bb, resolution: window.devicePixelRatio || 1,
 });
-document.body.appendChild(app.view);
+document.getElementById("game").appendChild(app.view);
 
 class Lane {
     constructor(start, end, driveDirection) {
