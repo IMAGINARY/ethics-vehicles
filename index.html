@@ -11,18 +11,16 @@
         <div align="center">
                 <div id="game"></div>
                 <div id="options_bar">
-                    Type of Policy: <select id="policy">
+                    Type of Policy: <select id="option_policy">
                         <option value="humanistic">Humanistic</option>
-                        <option value="profit">Profit</option>
-                        <option value="protecting">Protecting</option>
                     </select>
-                    Situation: <select id="situation">
-                            <option value="car_enters_lane">Car enters your lane</option>
-                            <option value="tree_falls">A Tree falls</option>
+                    Situation: <select id="option_situation">
+                        <option value="car_enters_lane">Car enters your lane</option>
                     </select>
-                <button type="button">Start!</button>
+                    <button type="button" onclick="startSimulation();">Start!</button>
+                    <button type="button" onclick="startCarMovement();">Reset</button>
+            </div>
         </div>
-    </div>
     <script src="js/ethics.js"></script>
 </body>
 </html>

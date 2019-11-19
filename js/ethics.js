@@ -19,15 +19,18 @@ class DriveDirection {
     }
 }
 
-const DEFAULT_SPEED = 5;
+const DEFAULT_SPEED = 3;
 const OFF_SCREEN_LIMIT = 440;
 const STREET_X_OFFSET = 228;
 const STREET_Y_OFFSET = 318;
 const STREET_LANE_OFFSET = 25;
-const DRIVE_LEFT = new DriveDirection(270, -DEFAULT_SPEED);
+const DRIVE_LEFT = new DriveDirection(270, -DEFAULT_SPEED, 0);
 const DRIVE_RIGHT = new DriveDirection(90, DEFAULT_SPEED, 0);
 const DRIVE_UP = new DriveDirection(0, 0, -DEFAULT_SPEED);
 const DRIVE_DOWN = new DriveDirection(180, 0, DEFAULT_SPEED);
+
+const CAR_SCALE = 0.2;
+const STREET_SCALE = 0.8;
 
 const LANES = [
     createVerticalLane(STREET_X_OFFSET - STREET_LANE_OFFSET, DRIVE_UP),
@@ -52,9 +55,6 @@ function createVerticalLane(horizontalOffset, driveDirection) {
     dirMultiplier = driveDirection.carSpeed.y > 0 ? -1 : 1;
     return new Lane(new PIXI.Point(-horizontalOffset, OFF_SCREEN_LIMIT * dirMultiplier), new PIXI.Point(horizontalOffset, -OFF_SCREEN_LIMIT * dirMultiplier), driveDirection);
 }
-
-const CAR_SCALE = 0.2;
-const STREET_SCALE = 0.8;
 
 function setupBackground(container) {
     const backgroundTexture = PIXI.Texture.from('images/street.png');
@@ -89,20 +89,35 @@ function isCarOutOfScreen() {
 function carUpdate() {
     car.x += currentLane.driveDirection.carSpeed.x * app.ticker.deltaTime;
     car.y += currentLane.driveDirection.carSpeed.y * app.ticker.deltaTime;
-    if (isCarOutOfScreen()) {
-        resetCarMovement();
-    }
+    if (isCarOutOfScreen())
+        onCarLeavesScreen();
 }
 
 function resetCarMovement() {
-    index = Math.floor((Math.random() * LANES.length)); 
-    currentLane = LANES[index];
+    currentLane = LANES[Math.floor((Math.random() * LANES.length))];
     setCarInLane(currentLane);
 }
 
 function startCarMovement() {
+    app.ticker.remove(carUpdate);
     resetCarMovement();
+    onCarLeavesScreen = resetCarMovement;
     app.ticker.add(carUpdate);
+}
+
+function startSimulation() {
+    policy = document.getElementById("option_policy").value;
+    situation = document.getElementById("option_situation").value;
+    console.log("prepare situation " + situation + " with policy " + policy);
+
+    // Start the simulation only when the idling car leaves the screen
+    onCarLeavesScreen = () => { simulate(policy, situation); }
+}
+
+function simulate(policy, situation) {
+    app.ticker.remove(carUpdate);
+    console.log("starting simulation of " + situation + " with policy " + policy);
+    setTimeout(startCarMovement, 4000);
 }
 
 const container = new PIXI.Container();
