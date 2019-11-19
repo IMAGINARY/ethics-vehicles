@@ -19,7 +19,7 @@ class DriveDirection {
     }
 }
 
-const DEFAULT_SPEED = 3;
+const DEFAULT_SPEED = 5;
 const OFF_SCREEN_LIMIT = 440;
 const STREET_X_OFFSET = 228;
 const STREET_Y_OFFSET = 318;
@@ -115,10 +115,34 @@ function startSimulation() {
 }
 
 function simulate(policy, situation) {
-    app.ticker.remove(carUpdate);
     console.log("starting simulation of " + situation + " with policy " + policy);
-    setTimeout(startCarMovement, 4000);
+
+    if (policy == 'humanistic' && situation == 'car_enters_lane') {
+        startPrototypeSituation();
+    }
 }
+
+function startPrototypeSituation() {
+    app.ticker.remove(carUpdate);
+
+    console.log('startPrototypeSituation');
+    currentLane = LANES[0]; //    createVerticalLane(STREET_X_OFFSET - STREET_LANE_OFFSET, DRIVE_UP),
+
+    carInLane = createSprite("images/car_black.png", CAR_SCALE);
+    carInLane.x = -STREET_X_OFFSET - STREET_LANE_OFFSET;
+    carInLane.y = 0;
+    carInLane.angle = DRIVE_DOWN.carAngle;
+    container.addChild(carInLane);
+
+    setCarInLane(currentLane);
+    onCarLeavesScreen = () => { 
+        console.log("car out of screen during prototype situation");
+        app.ticker.remove(carUpdate);
+    };
+    app.ticker.add(carUpdate);
+}
+
+
 
 const container = new PIXI.Container();
 app.stage.addChild(container);
