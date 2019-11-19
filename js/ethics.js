@@ -56,22 +56,22 @@ function createVerticalLane(horizontalOffset, driveDirection) {
     return new Lane(new PIXI.Point(-horizontalOffset, OFF_SCREEN_LIMIT * dirMultiplier), new PIXI.Point(horizontalOffset, -OFF_SCREEN_LIMIT * dirMultiplier), driveDirection);
 }
 
+function createSprite(sourceImage, scale, anchor = 0.5) {
+    const texture = PIXI.Texture.from(sourceImage);
+    const sprite = new PIXI.Sprite(texture);
+    sprite.scale.x = scale;
+    sprite.scale.y = scale;
+    sprite.anchor.set(anchor);
+    return sprite;
+}
+
 function setupBackground(container) {
-    const backgroundTexture = PIXI.Texture.from('images/street.png');
-    const background = new PIXI.Sprite(backgroundTexture);
-    background.scale.x = STREET_SCALE;
-    background.scale.y = STREET_SCALE;
-    background.anchor.set(0.5);
+    const background = createSprite('images/street.png', STREET_SCALE);
     container.addChild(background);
 }
 
 function setupCar(container) {
-    const carTexture = PIXI.Texture.from('images/car.png');
-    const car = new PIXI.Sprite(carTexture);
-    car.anchor.set(0.5);
-    car.scale.x = CAR_SCALE;
-    car.scale.y = CAR_SCALE;
-    car.angle = 90;
+    const car = createSprite('images/car.png', CAR_SCALE);
     container.addChild(car);
     return car;
 }
