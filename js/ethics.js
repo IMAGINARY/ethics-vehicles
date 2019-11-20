@@ -97,7 +97,7 @@ function setupCar(container) {
     return car;
 }
 
-function placeCarInLane(lane, car = agentCar, position = null) {
+function placeCarInLane(car, lane, position = null) {
     car.x = lane.start.x;
     car.y = lane.start.y;
 
@@ -124,7 +124,7 @@ function carUpdate() {
 
 function resetCarMovement() {
     currentLane = LANES[Math.floor((Math.random() * LANES.length))];
-    placeCarInLane(currentLane);
+    placeCarInLane(agentCar, currentLane);
 }
 
 function startCarMovement() {

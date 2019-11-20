@@ -13,7 +13,7 @@ function endPrototypeSituation(container) {
 
 function addTempCarInLane(imageFile, lane, position = null) {
     carInLane = createSprite(imageFile, CAR_SCALE);
-    placeCarInLane(lane, carInLane, position);
+    placeCarInLane(carInLane, lane, position);
     container.addChild(carInLane);
     tempElementsInScene.add(carInLane);
     return carInLane;
@@ -30,7 +30,7 @@ function startPrototypeSituation(container) {
     addTempCarInLane("images/car_black.png", currentLane.oppositeLane, -80);
     addTempCarInLane("images/small_truck.png", currentLane.oppositeLane, -10);
 
-    placeCarInLane(currentLane);
+    placeCarInLane(agentCar, currentLane);
     onCarLeavesScreen = () => { 
         endPrototypeSituation(container);
     };
