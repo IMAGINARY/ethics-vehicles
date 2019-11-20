@@ -1,5 +1,5 @@
 
-var tempElementsInScene = new Set();
+var tempElementsInSituation = new Set();
 
 function startSituation() {
     console.log('start situation');
@@ -9,19 +9,17 @@ function startSituation() {
     moveTruckInPosition()
     .then(moveBlackCarInPosition)
     .then(moveAgentInPosition)
-/*    
-    .then(result => cleanTempElements())
-*/    
+//    .then(result => cleanTempElements())
     ;
 }
 
 function moveTruckInPosition() {
-    truck = addTempCar("images/small_truck.png");
+    truck = addCarToSituation("images/small_truck.png");
     return advanceCarThroughLane(truck, parkedLane, 0, 0.45);
 }
 
 function moveBlackCarInPosition(result) {
-    blackCar = addTempCar("images/car_black.png");
+    blackCar = addCarToSituation("images/car_black.png");
     return advanceCarThroughLane(blackCar, parkedLane, 0, 0.35);
 }
 
@@ -29,16 +27,15 @@ function moveAgentInPosition(result) {
     return advanceCarThroughLane(agentCar, agentLane, 0, 0.5);
 }
 
-function addTempCar(imageFile) {
-    car = createSprite(imageFile, CAR_SCALE);
-    container.addChild(car);
-    tempElementsInScene.add(car);
+function addCarToSituation(imageFile) {
+    car = addCarToScene(imageFile);
+    tempElementsInSituation.add(car);
     return car;
 }
 
 function cleanTempElements() {
     console.log('cleanTempElements');
-    tempElementsInScene.forEach(element => {
+    tempElementsInSituation.forEach(element => {
         container.removeChild(element);
     });
 }

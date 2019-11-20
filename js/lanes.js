@@ -25,6 +25,12 @@ class Lane {
     isHorizontal() {
         return this.driveDirection.isHorizontal();
     }
+    getCarPosition(car) {
+        if (this.isVertical())
+            return (car.y - this.start.y) / (this.end.y - this.start.y);
+        else
+            return (car.x - this.lane.start.x) / (this.end.x - this.start.x);
+    }
 }
 
 const DEFAULT_SPEED = 5;
