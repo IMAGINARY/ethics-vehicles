@@ -27,17 +27,13 @@ function setupCar(container) {
     return car;
 }
 
-function placeCarInLane(car, lane, position = null) {
-    car.x = lane.start.x;
-    car.y = lane.start.y;
-
-    if (position != null) {
-        if (lane.isHorizontal())
-            car.x = position;
-        else
-            car.y = position;
-
-    }
+function placeCarInLane(car, lane, position = 0.0) {
+    car.x = lane.start.x + (lane.end.x - lane.start.x) * position;
+    car.y = lane.start.y + (lane.end.y - lane.start.y) * position;
+    console.log("lane start: " + lane.start.x + "," + lane.start.y + ", lane end: " + lane.end.x + "," + lane.end.y);
+    console.log("position: " + position);
+    console.log("car.x: " + car.x);
+    console.log("car.y: " + car.y);
     car.angle = lane.driveDirection.carAngle;
 }
 
@@ -60,6 +56,13 @@ function onStartClicked() {
 function advanceAgentCar() {
     agentCar.x += currentLane.driveDirection.carSpeed.x * app.ticker.deltaTime;
     agentCar.y += currentLane.driveDirection.carSpeed.y * app.ticker.deltaTime;
+}
+
+function advanceCarThroughLane(car, lane, startPosition = 0.0, endPosition = 1.0) {
+    return new Promise((resolve, reject) => {
+        placeCarInLane(car, lane);
+
+    });
 }
 
 function doIdleAnimation() {

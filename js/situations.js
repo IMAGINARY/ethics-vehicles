@@ -27,8 +27,8 @@ function setupSituation() {
 
     currentLane = LANES[0];
     
-    addTempCarInLane("images/car_black.png", currentLane.oppositeLane, -80);
-    addTempCarInLane("images/small_truck.png", currentLane.oppositeLane, -10);
+    addTempCarInLane("images/car_black.png", currentLane.oppositeLane, 0.35);
+    addTempCarInLane("images/small_truck.png", currentLane.oppositeLane, 0.45);
 
     placeCarInLane(agentCar, currentLane);
 }
