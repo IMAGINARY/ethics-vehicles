@@ -69,5 +69,3 @@ function createVerticalLane(horizontalOffset, driveDirection) {
     dirMultiplier = driveDirection.carSpeed.y > 0 ? -1 : 1;
     return new Lane(new PIXI.Point(-horizontalOffset, OFF_SCREEN_LIMIT * dirMultiplier), new PIXI.Point(-horizontalOffset, -OFF_SCREEN_LIMIT * dirMultiplier), driveDirection);
 }
-
-let noState = new ExhibitState();
