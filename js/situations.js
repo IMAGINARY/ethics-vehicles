@@ -25,7 +25,7 @@ function startPrototypeSituation(container) {
     tempElementsInScene.clear();
 
     console.log('startPrototypeSituation');
-    currentLane = LANES[0]; //    createVerticalLane(STREET_X_OFFSET - STREET_LANE_OFFSET, DRIVE_UP),
+    currentLane = LANES[0];
 
     addTempCarInLane("images/car_black.png", currentLane.oppositeLane, -80);
     addTempCarInLane("images/small_truck.png", currentLane.oppositeLane, -10);
