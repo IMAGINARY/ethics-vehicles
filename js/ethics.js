@@ -9,6 +9,13 @@ class Lane {
         this.start = start;
         this.end = end;
         this.driveDirection = driveDirection;
+        this.oppositeLane = null;
+    }
+    isVertical() {
+        return this.driveDirection.isVertical();
+    }
+    isHorizontal() {
+        return this.driveDirection.isHorizontal();
     }
 }
 
@@ -16,6 +23,12 @@ class DriveDirection {
     constructor(carAngle, speedX, speedY) {
         this.carAngle = carAngle;
         this.carSpeed = new PIXI.Point(speedX, speedY);
+    }
+    isVertical() {
+        return this.carSpeed.x == 0;
+    }
+    isHorizontal() {
+        return this.carSpeed.y == 0;
     }
 }
 
@@ -45,6 +58,14 @@ const LANES = [
     createHorizontalLane(-STREET_Y_OFFSET + STREET_LANE_OFFSET, DRIVE_LEFT),
     createHorizontalLane(-STREET_Y_OFFSET - STREET_LANE_OFFSET, DRIVE_RIGHT),
 ];
+function setOppositeLanes(laneA, laneB) {
+    laneA.oppositeLane = laneB;
+    laneB.oppositeLane = laneA;
+}
+setOppositeLanes(LANES[0], LANES[1]);
+setOppositeLanes(LANES[2], LANES[3]);
+setOppositeLanes(LANES[4], LANES[5]);
+setOppositeLanes(LANES[6], LANES[7]);
 
 function createHorizontalLane(verticalOffset, driveDirection) {
     dirMultiplier = driveDirection.carSpeed.x > 0 ? -1 : 1;
@@ -76,26 +97,34 @@ function setupCar(container) {
     return car;
 }
 
-function setCarInLane(lane) {
+function placeCarInLane(lane, car = agentCar, position = null) {
     car.x = lane.start.x;
     car.y = lane.start.y;
+
+    if (position != null) {
+        if (lane.isHorizontal())
+            car.x = position;
+        else
+            car.y = position;
+
+    }
     car.angle = lane.driveDirection.carAngle;
 }
 
 function isCarOutOfScreen() {
-    return (car.x < -OFF_SCREEN_LIMIT || car.x > OFF_SCREEN_LIMIT || car.y < -OFF_SCREEN_LIMIT || car.y > OFF_SCREEN_LIMIT);
+    return (agentCar.x < -OFF_SCREEN_LIMIT || agentCar.x > OFF_SCREEN_LIMIT || agentCar.y < -OFF_SCREEN_LIMIT || agentCar.y > OFF_SCREEN_LIMIT);
 }
 
 function carUpdate() {
-    car.x += currentLane.driveDirection.carSpeed.x * app.ticker.deltaTime;
-    car.y += currentLane.driveDirection.carSpeed.y * app.ticker.deltaTime;
+    agentCar.x += currentLane.driveDirection.carSpeed.x * app.ticker.deltaTime;
+    agentCar.y += currentLane.driveDirection.carSpeed.y * app.ticker.deltaTime;
     if (isCarOutOfScreen())
         onCarLeavesScreen();
 }
 
 function resetCarMovement() {
     currentLane = LANES[Math.floor((Math.random() * LANES.length))];
-    setCarInLane(currentLane);
+    placeCarInLane(currentLane);
 }
 
 function startCarMovement() {
@@ -128,6 +157,6 @@ container.x = app.screen.width / 2;
 container.y = app.screen.height / 2;
 
 setupBackground(container);
-const car = setupCar(container);
+const agentCar = setupCar(container);
 
 startCarMovement();

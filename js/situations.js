@@ -20,14 +20,17 @@ function startPrototypeSituation(container) {
     currentLane = LANES[0]; //    createVerticalLane(STREET_X_OFFSET - STREET_LANE_OFFSET, DRIVE_UP),
 
     carInLane = createSprite("images/car_black.png", CAR_SCALE);
+    placeCarInLane(currentLane.oppositeLane, carInLane, 0);
+/*    
     carInLane.x = -STREET_X_OFFSET - STREET_LANE_OFFSET;
     carInLane.y = 0;
     carInLane.angle = DRIVE_DOWN.carAngle;
+*/    
     container.addChild(carInLane);
 
     tempElementsInScene.add(carInLane);
 
-    setCarInLane(currentLane);
+    placeCarInLane(currentLane);
     onCarLeavesScreen = () => { 
         endPrototypeSituation(container);
     };
