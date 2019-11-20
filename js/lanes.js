@@ -29,7 +29,7 @@ class Lane {
         if (this.isVertical())
             return (car.y - this.start.y) / (this.end.y - this.start.y);
         else
-            return (car.x - this.lane.start.x) / (this.end.x - this.start.x);
+            return (car.x - this.start.x) / (this.end.x - this.start.x);
     }
 }
 
