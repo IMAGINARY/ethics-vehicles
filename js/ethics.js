@@ -21,7 +21,7 @@ function setupBackground(container) {
     container.addChild(background);
 }
 
-function setupCar(container) {
+function setupAgentCar(container) {
     const car = createSprite('images/car.png', CAR_SCALE);
     container.addChild(car);
     return car;
@@ -30,10 +30,6 @@ function setupCar(container) {
 function placeCarInLane(car, lane, position = 0.0) {
     car.x = lane.start.x + (lane.end.x - lane.start.x) * position;
     car.y = lane.start.y + (lane.end.y - lane.start.y) * position;
-    console.log("lane start: " + lane.start.x + "," + lane.start.y + ", lane end: " + lane.end.x + "," + lane.end.y);
-    console.log("position: " + position);
-    console.log("car.x: " + car.x);
-    console.log("car.y: " + car.y);
     car.angle = lane.driveDirection.carAngle;
 }
 
@@ -49,8 +45,8 @@ function resetCarMovement() {
 function onStartClicked() {
     policy = document.getElementById("option_policy").value;
     situation = document.getElementById("option_situation").value;
-    console.log("prepare situation " + situation + " with policy " + policy);
-    startSimulation = true;
+    console.log("policy: " + policy + ", situation: " + situation);
+    afterIdleAction = startSituation;
 }
 
 function advanceAgentCar() {
@@ -58,38 +54,45 @@ function advanceAgentCar() {
     agentCar.y += currentLane.driveDirection.carSpeed.y * app.ticker.deltaTime;
 }
 
-function advanceCarThroughLane(car, lane, startPosition = 0.0, endPosition = 1.0) {
-    return new Promise((resolve, reject) => {
-        placeCarInLane(car, lane);
-
-    });
+function updateCar(car, lane) {
+    car.x += lane.driveDirection.carSpeed.x * app.ticker.deltaTime;
+    car.y += lane.driveDirection.carSpeed.y * app.ticker.deltaTime;
 }
 
-function doIdleAnimation() {
+function getCarPosition(car, lane) {
+    if (lane.isVertical())
+        return (car.y - lane.start.y) / (lane.end.y - lane.start.y);
+    else
+        return (car.x - lane.start.x) / (lane.end.x - lane.start.x);
+}
+
+function hasCarReachedPosition(car, lane, position) {
+    return getCarPosition(car, lane) >= position;
+}
+
+function advanceCarThroughLane(car, lane, startPosition = 0.0, endPosition = 1.0) {
     return new Promise((resolve, reject) => {
-        currentLane = LANES[Math.floor((Math.random() * LANES.length))];
-        placeCarInLane(agentCar, currentLane);
+        placeCarInLane(car, lane, startPosition);
 
         let update = () => {
-            advanceAgentCar();
-            if (isCarOutOfScreen()) {
-                resolve( startSimulation ? 'simulate' : 'idle' );
+            updateCar(car, lane);
+            if (hasCarReachedPosition(car, lane, endPosition)) {
+                resolve( 'arrived' );
                 app.ticker.remove(update);
             }
         };
         app.ticker.add(update);
-    })
+    });
+}
+
+function doIdleAnimation() {
+    currentLane = LANES[Math.floor((Math.random() * LANES.length))];
+    return advanceCarThroughLane(agentCar, currentLane);
 };
 
 function startIdleAnimation() {
-    startSimulation = false;
-    doIdleAnimation().then( (value) => {
-        console.log(value);
-        if (value == 'idle')
-            startIdleAnimation();
-        else
-            startSituation();
-    });    
+    afterIdleAction = startIdleAnimation;
+    doIdleAnimation().then( (value) => afterIdleAction() );
 }
 
 const container = new PIXI.Container();
@@ -98,8 +101,6 @@ container.x = app.screen.width / 2;
 container.y = app.screen.height / 2;
 
 setupBackground(container);
-const agentCar = setupCar(container);
-
-startSimulation = false;
+const agentCar = setupAgentCar(container);
 
 startIdleAnimation();

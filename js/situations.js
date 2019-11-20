@@ -1,50 +1,44 @@
 
+var tempElementsInScene = new Set();
+
 function startSituation() {
-    doApproachAnimation().then( (value) => {
-        console.log(value);
-    });    
+    console.log('start situation');
+    agentLane = LANES[0];
+    parkedLane = agentLane.oppositeLane;
+
+    moveTruckInPosition()
+    .then(moveBlackCarInPosition)
+    .then(moveAgentInPosition)
+/*    
+    .then(result => cleanTempElements())
+*/    
+    ;
 }
 
-function doApproachAnimation() {
-    return new Promise((resolve, reject) => {
-        setupSituation();
-
-        let update = () => {
-            advanceAgentCar();
-            if (agentCar.y < 0) {
-                resolve( 'agent arrived' );
-                app.ticker.remove(update);
-                tearDownSituation();
-                startIdleAnimation();
-            }
-        };
-        app.ticker.add(update);
-    })
-};
-
-function setupSituation() {
-    tempElementsInScene.clear();
-
-    currentLane = LANES[0];
-    
-    addTempCarInLane("images/car_black.png", currentLane.oppositeLane, 0.35);
-    addTempCarInLane("images/small_truck.png", currentLane.oppositeLane, 0.45);
-
-    placeCarInLane(agentCar, currentLane);
+function moveTruckInPosition() {
+    truck = addTempCar("images/small_truck.png");
+    return advanceCarThroughLane(truck, parkedLane, 0, 0.45);
 }
 
-function tearDownSituation() {
+function moveBlackCarInPosition(result) {
+    blackCar = addTempCar("images/car_black.png");
+    return advanceCarThroughLane(blackCar, parkedLane, 0, 0.35);
+}
+
+function moveAgentInPosition(result) {
+    return advanceCarThroughLane(agentCar, agentLane, 0, 0.5);
+}
+
+function addTempCar(imageFile) {
+    car = createSprite(imageFile, CAR_SCALE);
+    container.addChild(car);
+    tempElementsInScene.add(car);
+    return car;
+}
+
+function cleanTempElements() {
+    console.log('cleanTempElements');
     tempElementsInScene.forEach(element => {
         container.removeChild(element);
     });
-}
-
-var tempElementsInScene = new Set();
-
-function addTempCarInLane(imageFile, lane, position = null) {
-    carInLane = createSprite(imageFile, CAR_SCALE);
-    placeCarInLane(carInLane, lane, position);
-    container.addChild(carInLane);
-    tempElementsInScene.add(carInLane);
-    return carInLane;
 }
