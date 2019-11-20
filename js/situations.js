@@ -11,6 +11,14 @@ function endPrototypeSituation(container) {
     startCarMovement();
 }
 
+function addTempCarInLane(imageFile, lane, position = null) {
+    carInLane = createSprite(imageFile, CAR_SCALE);
+    placeCarInLane(lane, carInLane, position);
+    container.addChild(carInLane);
+    tempElementsInScene.add(carInLane);
+    return carInLane;
+}
+
 function startPrototypeSituation(container) {
     app.ticker.remove(carUpdate);
 
@@ -19,16 +27,8 @@ function startPrototypeSituation(container) {
     console.log('startPrototypeSituation');
     currentLane = LANES[0]; //    createVerticalLane(STREET_X_OFFSET - STREET_LANE_OFFSET, DRIVE_UP),
 
-    carInLane = createSprite("images/car_black.png", CAR_SCALE);
-    placeCarInLane(currentLane.oppositeLane, carInLane, 0);
-/*    
-    carInLane.x = -STREET_X_OFFSET - STREET_LANE_OFFSET;
-    carInLane.y = 0;
-    carInLane.angle = DRIVE_DOWN.carAngle;
-*/    
-    container.addChild(carInLane);
-
-    tempElementsInScene.add(carInLane);
+    addTempCarInLane("images/car_black.png", currentLane.oppositeLane, -80);
+    addTempCarInLane("images/small_truck.png", currentLane.oppositeLane, -10);
 
     placeCarInLane(currentLane);
     onCarLeavesScreen = () => { 
