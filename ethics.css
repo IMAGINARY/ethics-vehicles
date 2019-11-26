@@ -1,16 +1,10 @@
 body {
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
-#game {
-    width:800px;
-    height:800px;
-}
 
 #options_bar {
-    width:800px;
-    margin:5px;
     background-color: #F0F0F0;
-    height: 100px;
+    height: 80px;
 }
 
 button {
