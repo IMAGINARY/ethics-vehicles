@@ -1,18 +1,50 @@
 
 var tempElementsInSituation = new Set();
+var tempInfoElements = new Set();
 var blackCar;
 var truck;
 var busStop;
 
 const InfoTextSize = 80;
+const DecisionText = "Description:\n" + 
+"A car enters your lane and there is no time to break. A collision is unavoidable.\n" + 
+"\n" + 
+"Options:\n" + 
+"* Drive left and crash into a parked truck\n" + 
+" Property damage costs: medium\n" + 
+" Insurance cost: low\n" + 
+" People injured: 4 with severe injuries, 1 with light injuries\n" + 
+"\n" + 
+"* Drive right and crash into a bus stop\n" + 
+" Property damage costs: low\n" + 
+" Insurance cost: medium\n" + 
+" People injured: 10 with severe injuries\n" + 
+" \n" + 
+"* Reduce speed and crash into car entering lane\n" + 
+" Property damage costs: medium\n" + 
+" Insurance cost: high\n" + 
+" People injured: 2 with light injuries\n" + 
+" \n" + 
+"Humanistic policy: reduce human damage\n" + 
+"Analysis: Turning left will risk 4 lives. Turning right with certainly kill people at the stop. Solution: breaking and crashing into the car in front will probably not result in fatalities, so it’s the action taken"
+;
 
-const infoTextStyle = new PIXI.TextStyle({
+const InfoBoxStyle = new PIXI.TextStyle({
     fontFamily: 'Arial',
     fontSize: 16,
     fill: '#000000',
     wordWrap: true,
     wordWrapWidth: InfoTextSize + 20,
 });
+
+const DecisionBoxStyle = new PIXI.TextStyle({
+    fontFamily: 'Arial',
+    fontSize: 16,
+    fill: '#000000',
+    wordWrap: true,
+    wordWrapWidth: 700,
+});
+
 
 function startSituation() {
     console.log('start situation');
@@ -23,12 +55,13 @@ function startSituation() {
 
     moveTruckInPosition()
     .then(moveBlackCarInPosition)
-    .then(moveAgentInPosition)
-    .then(waitForKeyPress)
-    .then(blackCarCrossesLane)
-    .then(waitForKeyPress)
-    .then(highlightSituationElements)
-    .then(waitForKeyPress)
+    .then(moveAgentInPosition).then(waitForKeyPress)
+    .then(blackCarCrossesLane).then(waitForKeyPress)
+    .then(highlightSituationElements).then(waitForKeyPress)
+    .then(removeTempInfoElements)
+    .then(playOutDecision).then(waitForKeyPress)
+    .then(showDecision).then(waitForKeyPress)
+    .then(removeTempInfoElements)
     .then(cleanTempElements)
     .then(startIdleAnimation)
     ;
@@ -63,6 +96,20 @@ function waitForKeyPress() {
     });
 }
 
+function showDecision() {
+    const infoSymbol = createSprite('images/info_symbol.png', CAR_SCALE);
+    infoSymbol.x = -350;
+    infoSymbol.y = -20;
+    container.addChild(infoSymbol);
+    tempElementsInSituation.add(infoSymbol);
+
+    addInfoText(infoSymbol, DecisionText, 'down', DecisionBoxStyle);
+}
+
+function playOutDecision() {
+    advanceCarThroughLane(agentCar, agentLane, agentLane.getCarPosition(agentCar), agentLane.getCarPosition(blackCar));
+}
+
 function highlightSituationElements() {
     highlightSprite(agentCar, 0x3220DE, 'autonomous car\nProperty value: medium', 'down');
     highlightSprite(blackCar, 0xDE3220, 'car entering lane\nPassengers: 1\nProperty Value: high\nInsurance: yes', 'up');
@@ -75,15 +122,15 @@ function highlightSprite(sprite, color, text = null, placement = 'right') {
     graphics.beginFill(color, 0.5);
     graphics.drawRect(sprite.x - sprite.width/2, sprite.y - sprite.height/2, sprite.width, sprite.height);
     graphics.endFill();
-    tempElementsInSituation.add(graphics);
+    tempInfoElements.add(graphics);
     container.addChild(graphics);
 
     if (text != null)
         addInfoText(sprite, text, placement);
 }
 
-function addInfoText(sprite, text, placement = 'right') {
-    const infoText = new PIXI.Text(text, infoTextStyle);
+function addInfoText(sprite, text, placement = 'right', style = InfoBoxStyle) {
+    const infoText = new PIXI.Text(text, style);
     infoText.x = sprite.x - sprite.width/2;
     infoText.y = sprite.y - sprite.height/2;
 
@@ -102,7 +149,7 @@ function addInfoText(sprite, text, placement = 'right') {
             break;
     }
 
-    tempElementsInSituation.add(infoText);
+    tempInfoElements.add(infoText);
     container.addChild(infoText);
 }
 
@@ -118,6 +165,15 @@ function addBusStop() {
     busStop.y = -50;
     container.addChild(busStop);
     tempElementsInSituation.add(busStop);
+}
+
+function removeTempInfoElements() {
+    return new Promise((resolve, reject) => {
+        tempInfoElements.forEach(element => {
+            container.removeChild(element);
+        });
+        resolve('clean');
+    });
 }
 
 function cleanTempElements() {
