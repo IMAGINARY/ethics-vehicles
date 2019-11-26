@@ -9,6 +9,7 @@ function startSituation() {
     moveTruckInPosition()
     .then(moveBlackCarInPosition)
     .then(moveAgentInPosition)
+    .then(blackCarCrossesLane)
 //    .then(result => cleanTempElements())
     ;
 }
@@ -25,6 +26,11 @@ function moveBlackCarInPosition(result) {
 
 function moveAgentInPosition(result) {
     return advanceCarThroughLane(agentCar, agentLane, 0, 0.5);
+}
+
+function blackCarCrossesLane() {
+    placeCarInLane(blackCar, agentLane, 1 - parkedLane.getCarPosition(blackCar));
+    blackCar.angle = agentLane.oppositeLane.driveDirection.carAngle;
 }
 
 function addCarToSituation(imageFile) {
