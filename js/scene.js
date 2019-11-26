@@ -6,13 +6,6 @@ function setupBackground() {
     container.addChild(background);
 }
 
-function setupBusStop() {
-    const busStop = createSprite('images/bus_stop.png', CAR_SCALE);
-    busStop.x = -150;
-    busStop.y = -50;
-    container.addChild(busStop);
-}
-
 function addCarToScene(imageFile) {
     car = createSprite(imageFile, CAR_SCALE);
     container.addChild(car);
@@ -40,5 +33,4 @@ container.y = app.screen.height / 2;
 
 function setupScene() {
     setupBackground();
-    setupBusStop();
 }

@@ -4,6 +4,16 @@ var blackCar;
 var truck;
 var busStop;
 
+const InfoTextSize = 80;
+
+const infoTextStyle = new PIXI.TextStyle({
+    fontFamily: 'Arial',
+    fontSize: 16,
+    fill: '#000000',
+    wordWrap: true,
+    wordWrapWidth: InfoTextSize + 20,
+});
+
 function startSituation() {
     console.log('start situation');
     agentLane = LANES[0];
@@ -54,19 +64,46 @@ function waitForKeyPress() {
 }
 
 function highlightSituationElements() {
-    highlightSprite(agentCar, 0x3220DE);
-    highlightSprite(blackCar, 0xDE3220);
-    highlightSprite(truck, 0xDE3220);
-    highlightSprite(busStop, 0xDEDE20);
+    highlightSprite(agentCar, 0x3220DE, 'autonomous car\nProperty value: medium', 'down');
+    highlightSprite(blackCar, 0xDE3220, 'car entering lane\nPassengers: 1\nProperty Value: high\nInsurance: yes', 'up');
+    highlightSprite(truck, 0xDE3220, 'parked car\nPassengers: 4\nProperty value: low\nInsurance: none', 'left');
+    highlightSprite(busStop, 0xDEDE20, 'bus stop\nPeople: 10\nProperty value: medium', 'right');
 }
 
-function highlightSprite(car, color) {
+function highlightSprite(sprite, color, text = null, placement = 'right') {
     const graphics = new PIXI.Graphics();
     graphics.beginFill(color, 0.5);
-    graphics.drawRect(car.x - car.width/2, car.y - car.height/2, car.width, car.height);
+    graphics.drawRect(sprite.x - sprite.width/2, sprite.y - sprite.height/2, sprite.width, sprite.height);
     graphics.endFill();
     tempElementsInSituation.add(graphics);
     container.addChild(graphics);
+
+    if (text != null)
+        addInfoText(sprite, text, placement);
+}
+
+function addInfoText(sprite, text, placement = 'right') {
+    const infoText = new PIXI.Text(text, infoTextStyle);
+    infoText.x = sprite.x - sprite.width/2;
+    infoText.y = sprite.y - sprite.height/2;
+
+    switch (placement) {
+        case 'right':
+            infoText.x += sprite.width;
+            break;
+        case 'left':
+            infoText.x -= sprite.width + InfoTextSize;
+            break;
+        case 'up':
+            infoText.y -= sprite.height + InfoTextSize;
+            break;
+        case 'down':
+            infoText.y += sprite.height;
+            break;
+    }
+
+    tempElementsInSituation.add(infoText);
+    container.addChild(infoText);
 }
 
 function addCarToSituation(imageFile) {
