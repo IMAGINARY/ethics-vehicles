@@ -1,10 +1,15 @@
 
 var tempElementsInSituation = new Set();
+var blackCar;
+var truck;
+var busStop;
 
 function startSituation() {
     console.log('start situation');
     agentLane = LANES[0];
     parkedLane = agentLane.oppositeLane;
+
+    addBusStop();
 
     moveTruckInPosition()
     .then(moveBlackCarInPosition)
@@ -13,7 +18,9 @@ function startSituation() {
     .then(blackCarCrossesLane)
     .then(waitForKeyPress)
     .then(highlightSituationElements)
-//    .then(result => cleanTempElements())
+    .then(waitForKeyPress)
+    .then(cleanTempElements)
+    .then(startIdleAnimation)
     ;
 }
 
@@ -47,15 +54,18 @@ function waitForKeyPress() {
 }
 
 function highlightSituationElements() {
-    highlightCar(agentCar);
+    highlightSprite(agentCar, 0x3220DE);
+    highlightSprite(blackCar, 0xDE3220);
+    highlightSprite(truck, 0xDE3220);
+    highlightSprite(busStop, 0xDEDE20);
 }
 
-function highlightCar(car) {
-    console.log("hightlighting car " + car + " @" + car.x + "," + car.y + " - " + car.width + "x" + car.height);
+function highlightSprite(car, color) {
     const graphics = new PIXI.Graphics();
-    graphics.beginFill(0xDE3280, 0.5);
+    graphics.beginFill(color, 0.5);
     graphics.drawRect(car.x - car.width/2, car.y - car.height/2, car.width, car.height);
     graphics.endFill();
+    tempElementsInSituation.add(graphics);
     container.addChild(graphics);
 }
 
@@ -65,9 +75,19 @@ function addCarToSituation(imageFile) {
     return car;
 }
 
+function addBusStop() {
+    busStop = createSprite('images/bus_stop.png', CAR_SCALE);
+    busStop.x = -150;
+    busStop.y = -50;
+    container.addChild(busStop);
+    tempElementsInSituation.add(busStop);
+}
+
 function cleanTempElements() {
-    console.log('cleanTempElements');
-    tempElementsInSituation.forEach(element => {
-        container.removeChild(element);
+    return new Promise((resolve, reject) => {
+        tempElementsInSituation.forEach(element => {
+            container.removeChild(element);
+        });
+        resolve('clean');
     });
 }
