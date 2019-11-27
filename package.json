@@ -1,0 +1,27 @@
+{
+  "name": "ethics-vehicles",
+  "version": "1.0.0",
+  "description": "I AM AI exhibition module",
+  "main": "index.html",
+  "dependencies": {
+    "pixi.js": "^5.2.0"
+  },
+  "devDependencies": {
+    "eslint": "^6.7.1",
+    "eslint-config-airbnb-base": "^14.0.0",
+    "eslint-plugin-import": "^2.18.2"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/IMAGINARY/ethics-vehicles.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/IMAGINARY/ethics-vehicles/issues"
+  },
+  "homepage": "https://github.com/IMAGINARY/ethics-vehicles#readme"
+}
