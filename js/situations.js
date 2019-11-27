@@ -51,7 +51,6 @@ const DecisionBoxStyle = new PIXI.TextStyle({
     wordWrapWidth: 700,
 });
 
-
 function startSituation() {
     console.log('start situation');
     agentLane = LANES[0];
@@ -160,13 +159,13 @@ function addInfoText(sprite, text, placement = 'right', style = InfoBoxStyle) {
 }
 
 function addCarToSituation(imageFile) {
-    car = addCarToScene(imageFile);
+    const car = addCarToScene(imageFile);
     tempElementsInSituation.add(car);
     return car;
 }
 
 function addBusStop() {
-    busStop = createSprite('images/bus_stop.png', CAR_SCALE);
+    const busStop = createSprite('images/bus_stop.png', CAR_SCALE);
     busStop.x = BUS_STOP_X;
     busStop.y = BUS_STOP_Y;
     container.addChild(busStop);

@@ -62,10 +62,14 @@ setOppositeLanes(LANES[6], LANES[7]);
 
 function createHorizontalLane(verticalOffset, driveDirection) {
     dirMultiplier = driveDirection.carSpeed.x > 0 ? -1 : 1;
-    return new Lane(new PIXI.Point(OFF_SCREEN_LIMIT * dirMultiplier, -verticalOffset), new PIXI.Point(-OFF_SCREEN_LIMIT * dirMultiplier, -verticalOffset), driveDirection);
+    return new Lane(new PIXI.Point(OFF_SCREEN_LIMIT * dirMultiplier, -verticalOffset),
+                    new PIXI.Point(-OFF_SCREEN_LIMIT * dirMultiplier, -verticalOffset),
+                    driveDirection);
 }
 
 function createVerticalLane(horizontalOffset, driveDirection) {
     dirMultiplier = driveDirection.carSpeed.y > 0 ? -1 : 1;
-    return new Lane(new PIXI.Point(-horizontalOffset, OFF_SCREEN_LIMIT * dirMultiplier), new PIXI.Point(-horizontalOffset, -OFF_SCREEN_LIMIT * dirMultiplier), driveDirection);
+    return new Lane(new PIXI.Point(-horizontalOffset, OFF_SCREEN_LIMIT * dirMultiplier),
+                    new PIXI.Point(-horizontalOffset, -OFF_SCREEN_LIMIT * dirMultiplier),
+                    driveDirection);
 }

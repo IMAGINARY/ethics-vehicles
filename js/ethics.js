@@ -1,18 +1,17 @@
 
-
 function doIdleAnimation() {
-    currentLane = LANES[Math.floor((Math.random() * LANES.length))];
+    const currentLane = LANES[Math.floor((Math.random() * LANES.length))];
     return advanceCarThroughLane(agentCar, currentLane);
-};
+}
 
 function startIdleAnimation() {
     afterIdleAction = startIdleAnimation;
-    doIdleAnimation().then( (value) => afterIdleAction() );
+    doIdleAnimation().then((value) => afterIdleAction());
 }
 
 function onStartClicked() {
-    policy = document.getElementById("option_policy").value;
-    situation = document.getElementById("option_situation").value;
+    const policy = document.getElementById("option_policy").value;
+    const situation = document.getElementById("option_situation").value;
     console.log("policy: " + policy + ", situation: " + situation);
     afterIdleAction = startSituation;
 }

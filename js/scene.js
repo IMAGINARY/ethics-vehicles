@@ -5,7 +5,7 @@ function setupBackground() {
 }
 
 function addCarToScene(imageFile) {
-    car = createSprite(imageFile, CAR_SCALE);
+    const car = createSprite(imageFile, CAR_SCALE);
     container.addChild(car);
     return car;
 }
