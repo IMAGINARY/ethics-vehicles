@@ -37,3 +37,5 @@ class Lane {
             return (car.x - this.start.x) / (this.end.x - this.start.x);
     }
 }
+const POINT_ZERO = new PIXI.Point(0, 0);
+const NO_LANE = new Lane(POINT_ZERO, new PIXI.Point(1, 0), DRIVE_RIGHT);

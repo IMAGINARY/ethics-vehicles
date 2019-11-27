@@ -7,11 +7,14 @@ const AGENT_STOP_POSITION = 0.45;
 
 var tempElementsInSituation = new Set();
 var tempInfoElements = new Set();
-var blackCar;
-var truck;
+
+var blackCar = new Car("images/car_black.png");
+var truck = new Car("images/small_truck.png");
+
 var busStop;
 var agentLane;
 var parkedLane;
+
 
 var decisionFunction = () => {};
 var decisionText = "";
@@ -93,17 +96,23 @@ function makeDecision(policy) {
 }
 
 function moveTruckInPosition() {
-    truck = addCarToSituation("images/small_truck.png");
-    return advanceCarThroughLane(truck, parkedLane, 0, TRUCK_STOP_POSITION);
+    addCarToSituation(truck);
+    truck.placeInLane(parkedLane);
+    return truck.driveInLaneUntilPosition(TRUCK_STOP_POSITION);
+//    return advanceCarThroughLane(truck, parkedLane, 0, TRUCK_STOP_POSITION);
 }
 
 function moveBlackCarInPosition(result) {
-    blackCar = addCarToSituation("images/car_black.png");
-    return advanceCarThroughLane(blackCar, parkedLane, 0, BLACK_CAR_STOP_POSITION);
+    addCarToSituation(blackCar);
+    blackCar.placeInLane(parkedLane);
+    return blackCar.driveInLaneUntilPosition(BLACK_CAR_STOP_POSITION);
+//    return advanceCarThroughLane(blackCar, parkedLane, 0, BLACK_CAR_STOP_POSITION);
 }
 
 function moveAgentInPosition(result) {
-    return advanceCarThroughLane(agentCar, agentLane, 0, AGENT_STOP_POSITION);
+    agentCar.placeInLane(agentLane);
+    return agentCar.driveInLaneUntilPosition(AGENT_STOP_POSITION);
+//    return advanceCarThroughLane(agentCar, agentLane, 0, AGENT_STOP_POSITION);
 }
 
 function blackCarCrossesLane() {
@@ -111,7 +120,8 @@ function blackCarCrossesLane() {
 }
 
 function carCrossLane(car, startingLane) {
-    placeCarInLane(car, startingLane.oppositeLane, 1 - startingLane.getCarPosition(car), forceAngle = false);
+    car.placeInLane(startingLane.oppositeLane, 1 - startingLane.getCarPosition(car), false);
+//    placeCarInLane(car, startingLane.oppositeLane, 1 - startingLane.getCarPosition(car), forceAngle = false);
 }
 
 function waitForKeyPress() {
@@ -129,7 +139,8 @@ function playOutDecision() {
 }
 
 function decisionAdvace() {
-    return advanceCarThroughLane(agentCar, agentLane, agentLane.getCarPosition(agentCar), agentLane.getCarPosition(blackCar));
+    return agentCar.driveInLaneUntilPosition(agentLane.getCarPosition(blackCar));
+//    return advanceCarThroughLane(agentCar, agentLane, agentLane.getCarPosition(agentCar), agentLane.getCarPosition(blackCar));
 }
 
 function decisionTurnLeft() {
@@ -179,9 +190,9 @@ function addInfoText(sprite, text, placement = 'right', style = InfoBoxStyle) {
     container.addChild(infoText);
 }
 
-function addCarToSituation(imageFile) {
-    const car = addCarToScene(imageFile);
-    tempElementsInSituation.add(car);
+function addCarToSituation(car) {
+    container.addChild(car.sprite);
+    tempElementsInSituation.add(car.sprite);
     return car;
 }
 

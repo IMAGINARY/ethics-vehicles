@@ -1,7 +1,8 @@
 
 function doIdleAnimation() {
     const currentLane = LANES[Math.floor((Math.random() * LANES.length))];
-    return advanceCarThroughLane(agentCar, currentLane);
+    agentCar.placeInLane(currentLane, 0, true);
+    return agentCar.driveInLaneUntilPosition(1.0);
 }
 
 function startIdleAnimation() {
