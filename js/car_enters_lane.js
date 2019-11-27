@@ -10,14 +10,10 @@ var tempInfoElements = new Set();
 
 var blackCar = new Car("images/car_black.png");
 var truck = new Car("images/small_truck.png");
+var busStop = createSprite('images/bus_stop.png', CAR_SCALE);
 
-var busStop;
 var agentLane;
 var parkedLane;
-
-
-var decisionFunction = () => {};
-var decisionText = "";
 
 const InfoTextSize = 80;
 
@@ -27,14 +23,6 @@ const InfoBoxStyle = new PIXI.TextStyle({
     fill: '#000000',
     wordWrap: true,
     wordWrapWidth: InfoTextSize + 20,
-});
-
-const DecisionBoxStyle = new PIXI.TextStyle({
-    fontFamily: 'Arial',
-    fontSize: 16,
-    fill: '#000000',
-    wordWrap: true,
-    wordWrapWidth: 700,
 });
 
 const Options = [{
@@ -54,7 +42,23 @@ const Options = [{
     selfDamage: 'low'
 }];
 
-function startCarEntersLane(policy) {
+const Decisions = {
+    'humanist' : {
+        text : "Turning left will risk 4 lives. Turning right with certainly kill people at the stop. Solution: breaking and crashing into the car in front will probably not result in fatalities, so it’s the action taken",
+        actionFunction : decisionAdvace
+    },
+    'profit' : {
+        text : "the car ahead is very expensive, so braking is not recommended. Turning right will risk high payouts to the victims or their families. Solution: turn left towards the parked car, as it is cheap and if the risk of casualties is lower.",
+        actionFunction : decisionTurnLeft
+    },
+    'protector' : {
+        text : "breaking and turning left mean crashing into heavy, hard objects and potentially harming you. Solution: turning right has almost no risk for you and your car, as people are softer than cars.",
+        actionFunction : () => {}
+    }
+};
+var currentDecision = Decisions[0];
+
+function startCarEntersLane(policyId) {
     agentLane = LANES[0];
     parkedLane = agentLane.oppositeLane;
 
@@ -66,7 +70,7 @@ function startCarEntersLane(policy) {
     .then(blackCarCrossesLane).then(waitForKeyPress)
     .then(highlightSituationElements).then(waitForKeyPress).then(removeTempInfoElements)
 
-    .then(makeDecision(policy))
+    .then(makeDecision(policyId))
 
     .then(showDecision).then(waitForKeyPress).then(hideDecision)
     .then(playOutDecision).then(waitForKeyPress)
@@ -75,23 +79,10 @@ function startCarEntersLane(policy) {
     ;
 }
 
-function makeDecision(policy) {
-    console.log('make decision ' + policy);
+function makeDecision(policyId) {
     return new Promise((resolve, reject) => {
-        switch (policy) {
-            case 'humanist':
-                decisionText = "Turning left will risk 4 lives. Turning right with certainly kill people at the stop. Solution: breaking and crashing into the car in front will probably not result in fatalities, so it’s the action taken";
-                decisionFunction = decisionAdvace;
-                break;
-            case 'profit':
-                decisionText = "the car ahead is very expensive, so braking is not recommended. Turning right will risk high payouts to the victims or their families. Solution: turn left towards the parked car, as it is cheap and if the risk of casualties is lower.";
-                decisionFunction = decisionTurnLeft;
-                break;
-            case 'protector':
-                break;
-        }
-
-        resolve(policy);
+        currentDecision = Decisions[policyId];
+        resolve(policyId);
     });
 }
 
@@ -99,20 +90,17 @@ function moveTruckInPosition() {
     addCarToSituation(truck);
     truck.placeInLane(parkedLane);
     return truck.driveInLaneUntilPosition(TRUCK_STOP_POSITION);
-//    return advanceCarThroughLane(truck, parkedLane, 0, TRUCK_STOP_POSITION);
 }
 
 function moveBlackCarInPosition(result) {
     addCarToSituation(blackCar);
     blackCar.placeInLane(parkedLane);
     return blackCar.driveInLaneUntilPosition(BLACK_CAR_STOP_POSITION);
-//    return advanceCarThroughLane(blackCar, parkedLane, 0, BLACK_CAR_STOP_POSITION);
 }
 
 function moveAgentInPosition(result) {
     agentCar.placeInLane(agentLane);
     return agentCar.driveInLaneUntilPosition(AGENT_STOP_POSITION);
-//    return advanceCarThroughLane(agentCar, agentLane, 0, AGENT_STOP_POSITION);
 }
 
 function blackCarCrossesLane() {
@@ -121,13 +109,11 @@ function blackCarCrossesLane() {
 
 function carCrossLane(car, startingLane) {
     car.placeInLane(startingLane.oppositeLane, 1 - startingLane.getCarPosition(car), false);
-//    placeCarInLane(car, startingLane.oppositeLane, 1 - startingLane.getCarPosition(car), forceAngle = false);
 }
 
 function waitForKeyPress() {
     return new Promise((resolve, reject) => {
         window.onkeydown = function() {
-            console.log("keydown");
             resolve("keydown");
             window.onkeydown = function() {}
         }
@@ -135,12 +121,11 @@ function waitForKeyPress() {
 }
 
 function playOutDecision() {
-    return decisionFunction();
+    return currentDecision.actionFunction();
 }
 
 function decisionAdvace() {
     return agentCar.driveInLaneUntilPosition(agentLane.getCarPosition(blackCar));
-//    return advanceCarThroughLane(agentCar, agentLane, agentLane.getCarPosition(agentCar), agentLane.getCarPosition(blackCar));
 }
 
 function decisionTurnLeft() {
@@ -197,7 +182,6 @@ function addCarToSituation(car) {
 }
 
 function addBusStop() {
-    busStop = createSprite('images/bus_stop.png', CAR_SCALE);
     busStop.x = BUS_STOP_X;
     busStop.y = BUS_STOP_Y;
     container.addChild(busStop);
@@ -205,7 +189,7 @@ function addBusStop() {
 }
 
 function showDecision() {
-    document.getElementById("report_decision").innerHTML = decisionText;
+    document.getElementById("report_decision").innerHTML = currentDecision.text;
 
     return setVisible("report", "visible");
 }
