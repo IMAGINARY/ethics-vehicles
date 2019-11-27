@@ -12,28 +12,6 @@ var truck;
 var busStop;
 
 const InfoTextSize = 80;
-const DecisionText = "Description:\n" + 
-"A car enters your lane and there is no time to break. A collision is unavoidable.\n" + 
-"\n" + 
-"Options:\n" + 
-"* Drive left and crash into a parked truck\n" + 
-" Property damage costs: medium\n" + 
-" Insurance cost: low\n" + 
-" People injured: 4 with severe injuries, 1 with light injuries\n" + 
-"\n" + 
-"* Drive right and crash into a bus stop\n" + 
-" Property damage costs: low\n" + 
-" Insurance cost: medium\n" + 
-" People injured: 10 with severe injuries\n" + 
-" \n" + 
-"* Reduce speed and crash into car entering lane\n" + 
-" Property damage costs: medium\n" + 
-" Insurance cost: high\n" + 
-" People injured: 2 with light injuries\n" + 
-" \n" + 
-"Humanistic policy: reduce human damage\n" + 
-"Analysis: Turning left will risk 4 lives. Turning right with certainly kill people at the stop. Solution: breaking and crashing into the car in front will probably not result in fatalities, so it’s the action taken"
-;
 
 const InfoBoxStyle = new PIXI.TextStyle({
     fontFamily: 'Arial',
@@ -66,7 +44,7 @@ function startSituation() {
     .then(removeTempInfoElements)
     .then(playOutDecision).then(waitForKeyPress)
     .then(showDecision).then(waitForKeyPress)
-    .then(removeTempInfoElements)
+    .then(hideDecision)
     .then(cleanTempElements)
     .then(startIdleAnimation)
     ;
@@ -99,16 +77,6 @@ function waitForKeyPress() {
             window.onkeydown = function() {}
         }
     });
-}
-
-function showDecision() {
-    const infoSymbol = createSprite('images/info_symbol.png', CAR_SCALE);
-    infoSymbol.x = -350;
-    infoSymbol.y = -20;
-    container.addChild(infoSymbol);
-    tempElementsInSituation.add(infoSymbol);
-
-    addInfoText(infoSymbol, DecisionText, 'down', DecisionBoxStyle);
 }
 
 function playOutDecision() {
@@ -165,11 +133,26 @@ function addCarToSituation(imageFile) {
 }
 
 function addBusStop() {
-    const busStop = createSprite('images/bus_stop.png', CAR_SCALE);
+    busStop = createSprite('images/bus_stop.png', CAR_SCALE);
     busStop.x = BUS_STOP_X;
     busStop.y = BUS_STOP_Y;
     container.addChild(busStop);
     tempElementsInSituation.add(busStop);
+}
+
+function showDecision() {
+    return setVisible("report", "visible");
+}
+
+function hideDecision() {
+    return setVisible("report", "hidden");
+}
+
+function setVisible(elementName, visibility = 'visible') {
+    return new Promise((resolve, reject) => {
+        document.getElementById(elementName).style.visibility = visibility;
+        resolve('clean');
+    });
 }
 
 function removeTempInfoElements() {

@@ -7,6 +7,17 @@ body {
     height: 80px;
 }
 
+#report {
+    z-index: 100;
+    position:fixed;
+    left:100px;
+    top:200px;
+    width:800px;
+    height: 600px;
+    background-color: #F0F0F0;
+    visibility:hidden;
+}
+
 button {
     margin: 5px;
     padding: 5px;
