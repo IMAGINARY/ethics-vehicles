@@ -42,23 +42,26 @@ const Options = [{
     selfDamage: 'low'
 }];
 
-const Decisions = {
-    'humanist' : {
-        text : "Turning left will risk 4 lives. Turning right with certainly kill people at the stop. Solution: breaking and crashing into the car in front will probably not result in fatalities, so it’s the action taken",
-        actionFunction : decisionAdvace
-    },
-    'profit' : {
-        text : "the car ahead is very expensive, so braking is not recommended. Turning right will risk high payouts to the victims or their families. Solution: turn left towards the parked car, as it is cheap and if the risk of casualties is lower.",
-        actionFunction : decisionTurnLeft
-    },
-    'protector' : {
-        text : "breaking and turning left mean crashing into heavy, hard objects and potentially harming you. Solution: turning right has almost no risk for you and your car, as people are softer than cars.",
-        actionFunction : () => {}
-    }
-};
+const Decisions = {};
+Decisions[HUMANIST_ID] = {
+    text : "Turning left will risk 4 lives. Turning right with certainly kill people at the stop. Solution: breaking and crashing into the car in front will probably not result in fatalities, so it’s the action taken",
+    actionFunction : decisionAdvace};
+
+Decisions[PROFIT_ID] = {
+    text : "the car ahead is very expensive, so braking is not recommended. Turning right will risk high payouts to the victims or their families. Solution: turn left towards the parked car, as it is cheap and if the risk of casualties is lower.",
+    actionFunction : decisionTurnLeft};
+
+Decisions[PROTECTOR_ID] = {
+    text : "breaking and turning left mean crashing into heavy, hard objects and potentially harming you. Solution: turning right has almost no risk for you and your car, as people are softer than cars.",
+    actionFunction : () => {}};
+
+console.log(Decisions);
+
 var currentDecision = Decisions[0];
+var currentPolicyId = HUMANIST_ID;
 
 function startCarEntersLane(policyId) {
+    currentPolicyId = policyId;
     agentLane = LANES[0];
     parkedLane = agentLane.oppositeLane;
 
@@ -70,7 +73,7 @@ function startCarEntersLane(policyId) {
     .then(blackCarCrossesLane).then(waitForKeyPress)
     .then(highlightSituationElements).then(waitForKeyPress).then(removeTempInfoElements)
 
-    .then(makeDecision(policyId))
+    .then(makeDecision)
 
     .then(showDecision).then(waitForKeyPress).then(hideDecision)
     .then(playOutDecision).then(waitForKeyPress)
@@ -79,10 +82,12 @@ function startCarEntersLane(policyId) {
     ;
 }
 
-function makeDecision(policyId) {
+function makeDecision() {
     return new Promise((resolve, reject) => {
-        currentDecision = Decisions[policyId];
-        resolve(policyId);
+        console.log('current policy Id: ' + currentPolicyId);
+        currentDecision = Decisions[currentPolicyId];
+        console.log('currentDecision: ' + currentDecision);
+        resolve(currentPolicyId);
     });
 }
 
@@ -190,6 +195,8 @@ function addBusStop() {
 
 function showDecision() {
     document.getElementById("report_decision").innerHTML = currentDecision.text;
+    document.getElementById("report_policy_name").innerHTML = Policies[currentPolicyId].name;
+    document.getElementById("report_policy_objective").innerHTML = Policies[currentPolicyId].objective;
 
     return setVisible("report", "visible");
 }
