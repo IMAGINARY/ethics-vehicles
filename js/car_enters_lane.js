@@ -13,6 +13,9 @@ var busStop;
 var agentLane;
 var parkedLane;
 
+var decisionFunction = () => {};
+var decisionText = "";
+
 const InfoTextSize = 80;
 
 const InfoBoxStyle = new PIXI.TextStyle({
@@ -31,6 +34,23 @@ const DecisionBoxStyle = new PIXI.TextStyle({
     wordWrapWidth: 700,
 });
 
+const Options = [{
+    action: 'attempt to break',
+    propertyCosts: 'high',
+    injuries: 'low',
+    selfDamage: 'high'
+}, {
+    action: 'turn left',
+    propertyCosts: 'low',
+    injuries: 'medium',
+    selfDamage: 'high'
+}, {
+    action: 'turn right',
+    propertyCosts: 'high',
+    injuries: 'high',
+    selfDamage: 'low'
+}];
+
 function startCarEntersLane(policy) {
     agentLane = LANES[0];
     parkedLane = agentLane.oppositeLane;
@@ -43,7 +63,7 @@ function startCarEntersLane(policy) {
     .then(blackCarCrossesLane).then(waitForKeyPress)
     .then(highlightSituationElements).then(waitForKeyPress).then(removeTempInfoElements)
 
-    .then(makeDecision)
+    .then(makeDecision(policy))
 
     .then(showDecision).then(waitForKeyPress).then(hideDecision)
     .then(playOutDecision).then(waitForKeyPress)
@@ -52,8 +72,22 @@ function startCarEntersLane(policy) {
     ;
 }
 
-function makeDecision() {
+function makeDecision(policy) {
+    console.log('make decision ' + policy);
+    return new Promise((resolve, reject) => {
+        switch (policy) {
+            case 'humanist':
+                decisionText = "Turning left will risk 4 lives. Turning right with certainly kill people at the stop. Solution: breaking and crashing into the car in front will probably not result in fatalities, so it’s the action taken";
+                decisionFunction = decisionAdvace;
+                break;
+            case 'profit':
+                break;
+            case 'protector':
+                break;
+        }
 
+        resolve(policy);
+    });
 }
 
 function moveTruckInPosition() {
@@ -86,7 +120,11 @@ function waitForKeyPress() {
 }
 
 function playOutDecision() {
-    advanceCarThroughLane(agentCar, agentLane, agentLane.getCarPosition(agentCar), agentLane.getCarPosition(blackCar));
+    return decisionFunction();
+}
+
+function decisionAdvace() {
+    return advanceCarThroughLane(agentCar, agentLane, agentLane.getCarPosition(agentCar), agentLane.getCarPosition(blackCar));
 }
 
 function highlightSituationElements() {
@@ -147,6 +185,8 @@ function addBusStop() {
 }
 
 function showDecision() {
+    document.getElementById("report_decision").innerHTML = decisionText;
+
     return setVisible("report", "visible");
 }
 
