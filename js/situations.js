@@ -1,3 +1,9 @@
+const BUS_STOP_X = -0.16 * VIEW_SIZE;
+const BUS_STOP_Y = -0.06 * VIEW_SIZE;
+
+const TRUCK_STOP_POSITION = 0.45;
+const BLACK_CAR_STOP_POSITION = 0.35;
+const AGENT_STOP_POSITION = 0.5;
 
 var tempElementsInSituation = new Set();
 var tempInfoElements = new Set();
@@ -69,16 +75,16 @@ function startSituation() {
 
 function moveTruckInPosition() {
     truck = addCarToSituation("images/small_truck.png");
-    return advanceCarThroughLane(truck, parkedLane, 0, 0.45);
+    return advanceCarThroughLane(truck, parkedLane, 0, TRUCK_STOP_POSITION);
 }
 
 function moveBlackCarInPosition(result) {
     blackCar = addCarToSituation("images/car_black.png");
-    return advanceCarThroughLane(blackCar, parkedLane, 0, 0.35);
+    return advanceCarThroughLane(blackCar, parkedLane, 0, BLACK_CAR_STOP_POSITION);
 }
 
 function moveAgentInPosition(result) {
-    return advanceCarThroughLane(agentCar, agentLane, 0, 0.5);
+    return advanceCarThroughLane(agentCar, agentLane, 0, AGENT_STOP_POSITION);
 }
 
 function blackCarCrossesLane() {
@@ -161,8 +167,8 @@ function addCarToSituation(imageFile) {
 
 function addBusStop() {
     busStop = createSprite('images/bus_stop.png', CAR_SCALE);
-    busStop.x = -150;
-    busStop.y = -50;
+    busStop.x = BUS_STOP_X;
+    busStop.y = BUS_STOP_Y;
     container.addChild(busStop);
     tempElementsInSituation.add(busStop);
 }

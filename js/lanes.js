@@ -33,12 +33,6 @@ class Lane {
     }
 }
 
-const DEFAULT_SPEED = 5;
-const STREET_X_OFFSET = 228;
-const STREET_Y_OFFSET = 318;
-const STREET_LANE_OFFSET = 25;
-const OFF_SCREEN_LIMIT = 440;
-
 const DRIVE_LEFT = new DriveDirection(270, -DEFAULT_SPEED, 0);
 const DRIVE_RIGHT = new DriveDirection(90, DEFAULT_SPEED, 0);
 const DRIVE_UP = new DriveDirection(0, 0, -DEFAULT_SPEED);

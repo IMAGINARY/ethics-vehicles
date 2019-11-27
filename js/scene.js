@@ -1,8 +1,6 @@
-const CAR_SCALE = 0.2;
-const STREET_SCALE = 0.8;
 
 function setupBackground() {
-    const background = createSprite('images/street.png', STREET_SCALE);
+    const background = createSprite('images/street.png', GLOBAL_SCALE);
     container.addChild(background);
 }
 
@@ -22,7 +20,7 @@ function createSprite(sourceImage, scale, anchor = 0.5) {
 }
 
 const app = new PIXI.Application({
-    width: 800, height: 800, backgroundColor: 0x1099bb, resolution: window.devicePixelRatio || 1,
+    width: VIEW_SIZE, height: VIEW_SIZE, backgroundColor: 0x000000, resolution: window.devicePixelRatio || 1,
 });
 document.getElementById("game").appendChild(app.view);
 

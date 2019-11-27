@@ -20,6 +20,19 @@
                 <button type="button" onclick="onStartClicked();">Start!</button>
         </div>
     </div>
+    <script>
+    const GLOBAL_SCALE = 0.7;
+
+    const CAR_SCALE = 0.25 * GLOBAL_SCALE;
+
+    const VIEW_SIZE = 1024 * GLOBAL_SCALE;
+
+    const DEFAULT_SPEED = 25 * GLOBAL_SCALE;
+    const STREET_X_OFFSET = 1/4 * VIEW_SIZE;
+    const STREET_Y_OFFSET = 1/4 * VIEW_SIZE;
+    const STREET_LANE_OFFSET = 1/40 * VIEW_SIZE;
+    const OFF_SCREEN_LIMIT = (1/2 + 1/10) * VIEW_SIZE;
+    </script>
     <script src="js/lanes.js"></script>
     <script src="js/scene.js"></script>
     <script src="js/movement.js"></script>
