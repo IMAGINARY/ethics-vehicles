@@ -138,9 +138,9 @@ function decisionTurnLeft() {
 }
 
 function highlightSituationElements() {
-    highlightSprite(agentCar, 0x3220DE, 'autonomous car\nProperty value: medium', 'down');
-    highlightSprite(blackCar, 0xDE3220, 'car entering lane\nPassengers: 1\nProperty Value: high\nInsurance: yes', 'up');
-    highlightSprite(truck, 0xDE3220, 'parked car\nPassengers: 4\nProperty value: low\nInsurance: none', 'left');
+    highlightSprite(agentCar.sprite, 0x3220DE, 'autonomous car\nProperty value: medium', 'down');
+    highlightSprite(blackCar.sprite, 0xDE3220, 'car entering lane\nPassengers: 1\nProperty Value: high\nInsurance: yes', 'up');
+    highlightSprite(truck.sprite, 0xDE3220, 'parked car\nPassengers: 4\nProperty value: low\nInsurance: none', 'left');
     highlightSprite(busStop, 0xDEDE20, 'bus stop\nPeople: 10\nProperty value: medium', 'right');
 }
 
