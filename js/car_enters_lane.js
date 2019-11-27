@@ -2,8 +2,8 @@ const BUS_STOP_X = -0.16 * VIEW_SIZE;
 const BUS_STOP_Y = -0.06 * VIEW_SIZE;
 
 const TRUCK_STOP_POSITION = 0.45;
-const BLACK_CAR_STOP_POSITION = 0.35;
-const AGENT_STOP_POSITION = 0.5;
+const BLACK_CAR_STOP_POSITION = 0.38;
+const AGENT_STOP_POSITION = 0.45;
 
 var tempElementsInSituation = new Set();
 var tempInfoElements = new Set();
@@ -81,6 +81,8 @@ function makeDecision(policy) {
                 decisionFunction = decisionAdvace;
                 break;
             case 'profit':
+                decisionText = "the car ahead is very expensive, so braking is not recommended. Turning right will risk high payouts to the victims or their families. Solution: turn left towards the parked car, as it is cheap and if the risk of casualties is lower.";
+                decisionFunction = decisionTurnLeft;
                 break;
             case 'protector':
                 break;
@@ -105,8 +107,11 @@ function moveAgentInPosition(result) {
 }
 
 function blackCarCrossesLane() {
-    placeCarInLane(blackCar, agentLane, 1 - parkedLane.getCarPosition(blackCar));
-    blackCar.angle = agentLane.oppositeLane.driveDirection.carAngle;
+    carCrossLane(blackCar, parkedLane);
+}
+
+function carCrossLane(car, startingLane) {
+    placeCarInLane(car, startingLane.oppositeLane, 1 - startingLane.getCarPosition(car), forceAngle = false);
 }
 
 function waitForKeyPress() {
@@ -125,6 +130,10 @@ function playOutDecision() {
 
 function decisionAdvace() {
     return advanceCarThroughLane(agentCar, agentLane, agentLane.getCarPosition(agentCar), agentLane.getCarPosition(blackCar));
+}
+
+function decisionTurnLeft() {
+    carCrossLane(agentCar, agentLane, forceAngle = false);
 }
 
 function highlightSituationElements() {
