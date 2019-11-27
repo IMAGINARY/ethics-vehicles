@@ -37,11 +37,16 @@
                 <b>Decision:</b>>Turning left will risk 4 lives. Turning right with certainly kill people at the stop. Solution: breaking and crashing into the car in front will probably not result in fatalities, so it’s the action taken
             </div>
             <div id="options_bar">
-                Type of Policy: <select id="option_policy">
-                    <option value="humanistic">Humanistic</option>
+                Type of Policy:
+                <select id="option_policy">
+                    <option value="humanist">Humanist</option>
+                    <option value="profit">Profit based</option>
+                    <option value="protector">Protector</option>
                 </select>
-                Situation: <select id="option_situation">
+                Situation:
+                <select id="option_situation">
                     <option value="car_enters_lane">Car enters your lane</option>
+                    <option value="tree_falls">A tree falls in the road</option>
                 </select>
                 <button type="button" onclick="onStartClicked();">Start!</button>
         </div>
@@ -63,6 +68,8 @@
     <script src="js/scene.js"></script>
     <script src="js/movement.js"></script>
     <script src="js/car_enters_lane.js"></script>
+    <script src="js/tree_falls.js"></script>
+
     <script src="js/ethics.js"></script>
 </body>
 </html>

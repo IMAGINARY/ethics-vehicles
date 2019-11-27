@@ -12,8 +12,20 @@ function startIdleAnimation() {
 function onStartClicked() {
     const policy = document.getElementById("option_policy").value;
     const situation = document.getElementById("option_situation").value;
-    console.log("policy: " + policy + ", situation: " + situation);
-    afterIdleAction = startSituation;
+    afterIdleAction = () => { startSituation(situation, policy);} ;
+}
+
+function startSituation(situation, policy) {
+    switch (situation) {
+        case 'car_enters_lane':
+            startCarEntersLane(policy);
+            break;
+        case 'tree_falls':
+            startTreeFalls(policy);
+            break;
+        default:
+            startIdleAnimation();
+    }
 }
 
 setupScene();

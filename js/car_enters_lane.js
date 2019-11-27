@@ -10,6 +10,8 @@ var tempInfoElements = new Set();
 var blackCar;
 var truck;
 var busStop;
+var agentLane;
+var parkedLane;
 
 const InfoTextSize = 80;
 
@@ -29,8 +31,7 @@ const DecisionBoxStyle = new PIXI.TextStyle({
     wordWrapWidth: 700,
 });
 
-function startSituation() {
-    console.log('start situation');
+function startCarEntersLane(policy) {
     agentLane = LANES[0];
     parkedLane = agentLane.oppositeLane;
 
@@ -41,11 +42,18 @@ function startSituation() {
     .then(moveAgentInPosition).then(waitForKeyPress)
     .then(blackCarCrossesLane).then(waitForKeyPress)
     .then(highlightSituationElements).then(waitForKeyPress).then(removeTempInfoElements)
+
+    .then(makeDecision)
+
     .then(showDecision).then(waitForKeyPress).then(hideDecision)
     .then(playOutDecision).then(waitForKeyPress)
     .then(cleanTempElements)
     .then(startIdleAnimation)
     ;
+}
+
+function makeDecision() {
+
 }
 
 function moveTruckInPosition() {
