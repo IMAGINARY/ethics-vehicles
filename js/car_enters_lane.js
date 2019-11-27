@@ -53,7 +53,7 @@ Decisions[PROFIT_ID] = {
 
 Decisions[PROTECTOR_ID] = {
     text : "breaking and turning left mean crashing into heavy, hard objects and potentially harming you. Solution: turning right has almost no risk for you and your car, as people are softer than cars.",
-    actionFunction : () => {}};
+    actionFunction : decisionTurnRight};
 
 console.log(Decisions);
 
@@ -135,6 +135,11 @@ function decisionAdvace() {
 
 function decisionTurnLeft() {
     carCrossLane(agentCar, agentLane, forceAngle = false);
+}
+
+function decisionTurnRight() {
+    agentCar.x += STREET_LANE_OFFSET * 2;
+//    carCrossLane(agentCar, agentLane, forceAngle = false);
 }
 
 function highlightSituationElements() {
