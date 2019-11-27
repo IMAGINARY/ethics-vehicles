@@ -40,11 +40,9 @@ function startSituation() {
     .then(moveBlackCarInPosition)
     .then(moveAgentInPosition).then(waitForKeyPress)
     .then(blackCarCrossesLane).then(waitForKeyPress)
-    .then(highlightSituationElements).then(waitForKeyPress)
-    .then(removeTempInfoElements)
+    .then(highlightSituationElements).then(waitForKeyPress).then(removeTempInfoElements)
+    .then(showDecision).then(waitForKeyPress).then(hideDecision)
     .then(playOutDecision).then(waitForKeyPress)
-    .then(showDecision).then(waitForKeyPress)
-    .then(hideDecision)
     .then(cleanTempElements)
     .then(startIdleAnimation)
     ;
