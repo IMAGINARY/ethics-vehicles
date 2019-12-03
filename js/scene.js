@@ -4,12 +4,17 @@ class SceneElement {
         this.sprite = createSprite(imageFile, scale);
         this.sprite.x = position.x;
         this.sprite.y = position.y;
+        this.initialPosition = position;
     }
     show() {
         container.addChild(this.sprite);
     }
     hide() {
         container.removeChild(this.sprite);
+    }
+    reset() {
+        this.sprite.x = this.initialPosition.x;
+        this.sprite.y = this.initialPosition.y;
     }
 }
 
