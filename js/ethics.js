@@ -21,7 +21,7 @@ function onStartClicked() {
 function startSituation(situation, policy) {
     switch (situation) {
         case 'car_enters_lane':
-            startCarEntersLane(policy);
+            executeSituation(carEntersLane, policy);
             break;
         case 'tree_falls':
             startTreeFalls(policy);
