@@ -36,6 +36,7 @@ const app = new PIXI.Application({
 document.getElementById("game").appendChild(app.view);
 
 const container = new PIXI.Container();
+container.sortableChildren = true;
 app.stage.addChild(container);
 container.x = app.screen.width / 2;
 container.y = app.screen.height / 2;

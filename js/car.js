@@ -2,6 +2,7 @@
 class Car {
     constructor(imageFile, lane = NO_LANE) {
         this.sprite = createSprite(imageFile, CAR_SCALE, 0.5);
+        this.sprite.zIndex = 100;
         this.currentLane = lane;
         this.driveDirection = lane.driveDirection;
     }
@@ -50,5 +51,11 @@ class Car {
             360 - this.driveDirection.carAngle,
             -this.driveDirection.speedX,
             -this.driveDirection.speedY);
+    }
+    show() {
+        container.addChild(this.sprite);
+    }
+    hide() {
+        container.removeChild(this.sprite);
     }
 }
