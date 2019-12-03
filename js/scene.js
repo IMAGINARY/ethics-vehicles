@@ -1,8 +1,19 @@
 
-function setupBackground() {
-    const background = createSprite('images/street.png', GLOBAL_SCALE);
-    container.addChild(background);
+class SceneElement {
+    constructor(imageFile, position, scale = CAR_SCALE) {
+        this.sprite = createSprite(imageFile, scale);
+        this.sprite.x = position.x;
+        this.sprite.y = position.y;
+    }
+    show() {
+        container.addChild(this.sprite);
+    }
+    hide() {
+        container.removeChild(this.sprite);
+    }
 }
+
+const background = new SceneElement('images/street.png', POINT_ZERO, scale = GLOBAL_SCALE);
 
 function addCarToScene(imageFile) {
     const car = new Car(imageFile);
@@ -30,5 +41,5 @@ container.x = app.screen.width / 2;
 container.y = app.screen.height / 2;
 
 function setupScene() {
-    setupBackground();
+    background.show();
 }
