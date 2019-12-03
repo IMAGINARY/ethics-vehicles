@@ -15,6 +15,7 @@ class SceneElement {
     reset() {
         this.sprite.x = this.initialPosition.x;
         this.sprite.y = this.initialPosition.y;
+        this.sprite.angle = 0;
     }
 }
 

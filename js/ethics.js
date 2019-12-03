@@ -24,7 +24,7 @@ function startSituation(situation, policy) {
             executeSituation(carEntersLane, policy);
             break;
         case 'tree_falls':
-            startTreeFalls(policy);
+            executeSituation(aTreeFalls, policy);
             break;
         default:
             startIdleAnimation();
