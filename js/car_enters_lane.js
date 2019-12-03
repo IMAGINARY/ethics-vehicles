@@ -10,7 +10,7 @@ var tempInfoElements = new Set();
 
 var blackCar = new Car("images/car_black.png");
 var truck = new Car("images/small_truck.png");
-var busStop = createSprite('images/bus_stop.png', CAR_SCALE);
+var busStop = new SceneElement('images/bus_stop.png', new PIXI.Point(BUS_STOP_X, BUS_STOP_Y));
 
 var agentLane;
 var parkedLane;
@@ -55,8 +55,6 @@ Decisions[PROTECTOR_ID] = {
     text : "breaking and turning left mean crashing into heavy, hard objects and potentially harming you. Solution: turning right has almost no risk for you and your car, as people are softer than cars.",
     actionFunction : decisionTurnRight};
 
-console.log(Decisions);
-
 var currentDecision = Decisions[0];
 var currentPolicyId = HUMANIST_ID;
 
@@ -84,9 +82,7 @@ function startCarEntersLane(policyId) {
 
 function makeDecision() {
     return new Promise((resolve, reject) => {
-        console.log('current policy Id: ' + currentPolicyId);
         currentDecision = Decisions[currentPolicyId];
-        console.log('currentDecision: ' + currentDecision);
         resolve(currentPolicyId);
     });
 }
@@ -146,7 +142,7 @@ function highlightSituationElements() {
     highlightSprite(agentCar.sprite, 0x3220DE, 'autonomous car\nProperty value: medium', 'down');
     highlightSprite(blackCar.sprite, 0xDE3220, 'car entering lane\nPassengers: 1\nProperty Value: high\nInsurance: yes', 'up');
     highlightSprite(truck.sprite, 0xDE3220, 'parked car\nPassengers: 4\nProperty value: low\nInsurance: none', 'left');
-    highlightSprite(busStop, 0xDEDE20, 'bus stop\nPeople: 10\nProperty value: medium', 'right');
+    highlightSprite(busStop.sprite, 0xDEDE20, 'bus stop\nPeople: 10\nProperty value: medium', 'right');
 }
 
 function highlightSprite(sprite, color, text = null, placement = 'right') {
@@ -192,10 +188,7 @@ function addCarToSituation(car) {
 }
 
 function addBusStop() {
-    busStop.x = BUS_STOP_X;
-    busStop.y = BUS_STOP_Y;
-    container.addChild(busStop);
-    tempElementsInSituation.add(busStop);
+    busStop.show();
 }
 
 function showDecision() {
@@ -228,6 +221,7 @@ function removeTempInfoElements() {
 
 function cleanTempElements() {
     return new Promise((resolve, reject) => {
+        busStop.hide();
         tempElementsInSituation.forEach(element => {
             container.removeChild(element);
         });

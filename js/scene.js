@@ -1,6 +1,6 @@
 
 class SceneElement {
-    constructor(imageFile, position, scale = CAR_SCALE) {
+    constructor(imageFile, position = POINT_ZERO, scale = CAR_SCALE) {
         this.sprite = createSprite(imageFile, scale);
         this.sprite.x = position.x;
         this.sprite.y = position.y;
