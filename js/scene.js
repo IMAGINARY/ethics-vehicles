@@ -41,6 +41,8 @@ app.stage.addChild(container);
 container.x = app.screen.width / 2;
 container.y = app.screen.height / 2;
 
+const agentCar = new Car('images/car.png');
+
 function setupScene() {
     background.show();
 }

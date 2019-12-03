@@ -1,6 +1,8 @@
 
 function doIdleAnimation() {
     const currentLane = LANES[Math.floor((Math.random() * LANES.length))];
+    agentCar.hide();
+    agentCar.show();
     agentCar.placeInLane(currentLane, 0, true);
     return agentCar.driveInLaneUntilPosition(1.0);
 }
@@ -30,7 +32,5 @@ function startSituation(situation, policy) {
 }
 
 setupScene();
-
-const agentCar = addCarToScene('images/car.png');
 
 startIdleAnimation();
