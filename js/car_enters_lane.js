@@ -24,6 +24,9 @@ const carEntersLane = {
                 .then(moveAgentInPosition)
                 .then(blackCarCrossesLane);
     },
+    teardown: () => {
+        busStop.hide();
+    },
     elements: [
         { sprite: agentCar.sprite, color: 0x3220DE,
             text: 'autonomous car\nProperty value: medium', placement: 'down'},
@@ -46,10 +49,6 @@ const carEntersLane = {
             actionFunction : decisionTurnRight }
     }
 };
-
-function startCarEntersLane(policyId) {
-    executeSituation(carEntersLane, policyId);
-}
 
 function moveTruckInPosition() {
     addCarToSituation(truck);

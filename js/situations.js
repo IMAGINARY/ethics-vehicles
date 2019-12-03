@@ -26,6 +26,7 @@ function executeSituation(situation, policyId) {
     .then(showDecision(policyId)).then(waitForKeyPress).then(hideDecision)
     .then(playOutDecision).then(waitForKeyPress)
     .then(cleanTempElements)
+    .then(situation.teardown)
     .then(startIdleAnimation)
     ;   
 }
@@ -136,7 +137,6 @@ function removeTempInfoElements() {
 
 function cleanTempElements() {
     return new Promise((resolve, reject) => {
-        busStop.hide();
         tempElementsInSituation.forEach(element => {
             container.removeChild(element);
         });
