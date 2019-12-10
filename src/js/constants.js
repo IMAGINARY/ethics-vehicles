@@ -1,4 +1,4 @@
-export const GLOBAL_SCALE = 0.5;
+export const GLOBAL_SCALE = 0.75;
 export const CAR_SCALE = 0.25 * GLOBAL_SCALE;
 export const VIEW_SIZE = 1024 * GLOBAL_SCALE;
 export const DEFAULT_SPEED = 10 * GLOBAL_SCALE;

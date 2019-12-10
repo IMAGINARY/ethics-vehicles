@@ -36,6 +36,10 @@ export default class Situation {
 
   }
 
+  getDescription() {
+    
+  }
+
   static registerSituation(key, aSituation) {
     Situation.situations[key] = aSituation;
   }

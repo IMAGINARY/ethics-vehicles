@@ -17,7 +17,7 @@ export default class SituationRunner {
       .then(() => this.highlight(situation.getElements()))
       .then(() => this.waitForKeyPress())
       .then(() => this.removeHighligts())
-      .then(() => this.showDecision(policyID))
+      .then(() => this.showDecision(situation, policyID))
       .then(() => this.waitForKeyPress())
       .then(() => this.hideDecision())
       .then(() => this.playOutDecision())
@@ -97,10 +97,11 @@ export default class SituationRunner {
   }
 
 
-  showDecision(policyID) {
+  showDecision(situation, policyID) {
     document.getElementById('report_decision').innerHTML = this.currentDecision.text;
     document.getElementById('report_policy_name').innerHTML = Policies[policyID].name;
     document.getElementById('report_policy_objective').innerHTML = Policies[policyID].objective;
+    document.getElementById('report_situation_description').innerHTML = situation.getDescription();
 
     return this.setVisible('report', 'visible');
   }

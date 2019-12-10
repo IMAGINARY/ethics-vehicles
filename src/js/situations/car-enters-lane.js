@@ -94,6 +94,10 @@ export default class CarEntersLaneSituation extends Situation {
     };
   }
 
+  getDescription() {
+    return 'A car enters your lane and there is no time to break. The car can either crash against it, turn left and crash against a parked car, or turn right and drive over a bus stop full of people';
+  }
+
   // eslint-disable-next-line class-methods-use-this
   carCrossLane(car, startingLane) {
     car.placeInLane(startingLane.oppositeLane, 1 - startingLane.getCarPosition(car), false);

@@ -129,7 +129,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.OFF_SCREEN_LIMIT = exports.STREET_LANE_OFFSET = exports.STREET_Y_OFFSET = exports.STREET_X_OFFSET = exports.DEFAULT_SPEED = exports.VIEW_SIZE = exports.CAR_SCALE = exports.GLOBAL_SCALE = void 0;
-var GLOBAL_SCALE = 0.5;
+var GLOBAL_SCALE = 0.75;
 exports.GLOBAL_SCALE = GLOBAL_SCALE;
 var CAR_SCALE = 0.25 * GLOBAL_SCALE;
 exports.CAR_SCALE = CAR_SCALE;
@@ -474,7 +474,7 @@ function () {
       }).then(function () {
         return _this.removeHighligts();
       }).then(function () {
-        return _this.showDecision(policyID);
+        return _this.showDecision(situation, policyID);
       }).then(function () {
         return _this.waitForKeyPress();
       }).then(function () {
@@ -575,10 +575,11 @@ function () {
     }
   }, {
     key: "showDecision",
-    value: function showDecision(policyID) {
+    value: function showDecision(situation, policyID) {
       document.getElementById('report_decision').innerHTML = this.currentDecision.text;
       document.getElementById('report_policy_name').innerHTML = _policies.Policies[policyID].name;
       document.getElementById('report_policy_objective').innerHTML = _policies.Policies[policyID].objective;
+      document.getElementById('report_situation_description').innerHTML = situation.getDescription();
       return this.setVisible('report', 'visible');
     }
   }, {
@@ -667,6 +668,9 @@ function () {
   }, {
     key: "getDecisions",
     value: function getDecisions() {}
+  }, {
+    key: "getDescription",
+    value: function getDescription() {}
   }], [{
     key: "registerSituation",
     value: function registerSituation(key, aSituation) {
@@ -830,6 +834,11 @@ function (_Situation) {
           }
         }
       };
+    }
+  }, {
+    key: "getDescription",
+    value: function getDescription() {
+      return 'A car enters your lane and there is no time to break. The car can either crash against it, turn left and crash against a parked car, or turn right and drive over a bus stop full of people';
     } // eslint-disable-next-line class-methods-use-this
 
   }, {
@@ -1028,6 +1037,11 @@ function (_Situation) {
           }
         }
       };
+    }
+  }, {
+    key: "getDescription",
+    value: function getDescription() {
+      return 'a tree falls in front of the car. The person in the front passenger seat has no seat belt. A cyclist is riding through the opposite lane. Options: Sudden break, slow down and turn left, slow down and turn right.';
     }
   }, {
     key: "moveCyclistInPosition",

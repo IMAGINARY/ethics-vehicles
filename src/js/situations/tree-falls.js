@@ -102,6 +102,10 @@ export default class TreeFallsSituation extends Situation {
     };
   }
 
+  getDescription() {
+    return 'a tree falls in front of the car. The person in the front passenger seat has no seat belt. A cyclist is riding through the opposite lane. Options: Sudden break, slow down and turn left, slow down and turn right.';
+  }
+
   moveCyclistInPosition() {
     this.cyclist.show();
     this.cyclist.placeInLane(this.bicycleLane);
