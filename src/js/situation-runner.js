@@ -1,6 +1,7 @@
 /* eslint-disable class-methods-use-this */
 /* globals PIXI */
 import { Policies } from './policies';
+const Handlebars = require("handlebars");
 
 export default class SituationRunner {
   constructor(view) {
@@ -102,7 +103,12 @@ export default class SituationRunner {
     document.getElementById('report_policy_name').innerHTML = Policies[policyID].name;
     document.getElementById('report_policy_objective').innerHTML = Policies[policyID].objective;
     document.getElementById('report_situation_description').innerHTML = situation.getDescription();
+/*
+    const template = Handlebars.compile("<p><u>{{description}}</u><br>Property and Insurance costs:{{damage_costs}}<br>Injuries to humans:{{human_injuries}}<br>Risk to passenger and car:{{car_safety}}</p>");
+    template( {
 
+    })
+*/
     return this.setVisible('report', 'visible');
   }
 
