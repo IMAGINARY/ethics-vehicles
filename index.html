@@ -1,78 +1,63 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
-<head>
-  <meta charset="utf-8">
-  <title>Ethics of Autonomous Vehicles</title>
-  <meta name="description" content="Ethics of Autonomous Vehicles">
-  <link rel="stylesheet" type="text/css" href="ethics.css" />
-  <script src="js/lib/pixi.min.js"></script>
-</head>
-<body>
-    <div align="center">
-            <div id="game"></div>
-            <div id="report">
-                <h2>Report</h2>
-                <p>A car enters your lane and there is no time to break. A collision is unavoidable.</p>
-                
-                <h3>Options</h3>
-                <p>
-                    <u>Drive left and crash into a parked truck</u>
-                    Property damage costs: <b>medium</b><br>
-                    Insurance costs: <b>low</b><br>
-                    Injuries: <b>4</b> people with severe injuries, <b>1</b> with light injuries<br>
-                </p>
-                <p>
-                    <u>Drive right and crash into a bus stop</u>
-                    Property damage costs: <b>low</b><br>
-                    Insurance costs: <b>medium</b><br>
-                    Injuries: <b>10</b> people with severe injuries<br>
-                </p>
-                <p>
-                    <u>Reduce speed and crash into car entering lane</u>
-                    Property damage costs: <b>medium</b><br>
-                    Insurance costs: <b>high</b><br>
-                    Injuries: <b>2</b> with light injuries<br>
-                </p>
-                <h3><span id="report_policy_name"></span> policy: <span id="report_policy_objective"></h3>
-                <b>Decision:</b><span id="report_decision"></span>
-            </div>
-            <div id="options_bar">
-                Type of Policy:
-                <select id="option_policy">
-                    <option value="humanist">Humanist</option>
-                    <option value="profit">Profit based</option>
-                    <option value="protector">Protector</option>
-                </select>
-                Situation:
-                <select id="option_situation">
-                    <option value="car_enters_lane">Car enters your lane</option>
-                    <option value="tree_falls">A tree falls in the road</option>
-                </select>
-                <button type="button" onclick="onStartClicked();">Start!</button>
-        </div>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <meta property="og:url" content="">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Ethics of Autonomous Vehicles">
+    <meta property="og:image" content="">
+    <meta name="description" content="">
+    <meta property="og:description" content="">
+    <link rel="icon" type="image/png" href="assets/img/favicon.png">
+    <link href="https://fonts.googleapis.com/css?family=Ubuntu:300,400,700" rel="stylesheet">
+    <link rel="stylesheet" href="vendor/bootstrap/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="assets/css/default.css" media="all" type="text/css">
+    <title>Ethics of Autonomous Vehicles
+    </title>
+  </head>
+  <body>
+    <div class="text-center">
+      <div id="game"></div>
+      <div id="report">
+        <h2>Report</h2>
+        <p>A car enters your lane and there is no time to break. A collision is unavoidable.</p>
+        <h3>Options</h3>
+        <p>
+          <u>Drive left and crash into a parked truck</u>Property damage costs: <b>medium</b><br>Insurance costs: <b>low</b><br>Injuries: <b>4</b> people with severe injuries, <b>1</b> with light injuries<br>
+        </p>
+        <p>
+          <u>Drive right and crash into a bus stop</u>Property damage costs: <b>low</b><br>Insurance costs: <b>medium</b><br>Injuries: <b>10</b> people with severe injuries<br>
+        </p>
+        <p>
+          <u>Reduce speed and crash into car entering lane</u>Property damage costs: <b>medium</b><br>Insurance costs: <b>high</b><br>Injuries: <b>2</b> with light injuries<br>
+        </p>
+        <h3><span id="report_policy_name"></span>
+          policy:
+          <span id="report_policy_objective"></span>
+        </h3><b>Decision:</b><span id="report_decision"></span>
+      </div>
+      <div id="options_bar">
+        Type of Policy:
+        
+        <select id="option_policy">
+          <option value="humanist">Humanist</option>
+          <option value="profit">Profit based</option>
+          <option value="protector">Protector</option>
+        </select>
+        Situation:
+        
+        <select id="option_situation">
+          <option value="car-enters-lane">Car enters your lane</option>
+          <option value="tree-falls">A tree falls in the road</option>
+        </select>
+        <button id="startButton" type="button">Start!</button>
+      </div>
     </div>
-    <script>
-    const GLOBAL_SCALE = 0.5;
-
-    const CAR_SCALE = 0.25 * GLOBAL_SCALE;
-
-    const VIEW_SIZE = 1024 * GLOBAL_SCALE;
-
-    const DEFAULT_SPEED = 10 * GLOBAL_SCALE;
-    const STREET_X_OFFSET = 1/4 * VIEW_SIZE;
-    const STREET_Y_OFFSET = 1/4 * VIEW_SIZE;
-    const STREET_LANE_OFFSET = 1/40 * VIEW_SIZE;
-    const OFF_SCREEN_LIMIT = (1/2 + 1/10) * VIEW_SIZE;
-    </script>
-    <script src="js/core_classes.js"></script>
-    <script src="js/policies.js"></script>
-    <script src="js/situations.js"></script>
-    <script src="js/car.js"></script>
-    <script src="js/lanes.js"></script>
-    <script src="js/scene.js"></script>
-    <script src="js/car_enters_lane.js"></script>
-    <script src="js/tree_falls.js"></script>
-
-    <script src="js/ethics.js"></script>
-</body>
+    <script src="vendor/jquery/jquery-3.3.1.slim.min.js"></script>
+    <script src="vendor/popper/popper.min.js"></script>
+    <script src="vendor/bootstrap/bootstrap.min.js"></script>
+    <script src="vendor/pixi.js/pixi.min.js"></script>
+    <script type="text/javascript" src="assets/js/bundle.min.js"></script>
+  </body>
 </html>

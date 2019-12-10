@@ -14,5 +14,24 @@ module.exports = {
     ecmaVersion: 2018,
   },
   rules: {
+    "prefer-destructuring": ["error", {
+      "VariableDeclarator": {
+        "array": false,
+        "object": true
+      },
+      "AssignmentExpression": {
+        "array": false,
+        "object": true
+      }
+    }, {
+      "enforceForRenamedProperties": false
+    }],
+    "comma-dangle": ["error", {
+      "arrays": "always-multiline",
+      "objects": "always-multiline",
+      "imports": "always-multiline",
+      "exports": "always-multiline",
+      "functions": "never"
+    }]
   },
 };
