@@ -1,51 +1,51 @@
 extends tpl/base
 
 block body
-  .text-center
-    #game
-    #report
-      h2 Report
-      p
-        | A car enters your lane and there is no time to break. A collision is unavoidable.
-      h3 Options
-      p
-        u
-          | Drive left and crash into a parked truck
-        | Property damage costs: <b>medium</b>
-        br
-        | Insurance costs: <b>low</b>
-        br
-        | Injuries: <b>4</b> people with severe injuries, <b>1</b> with light injuries
-        br
-      p
-        u
-          | Drive right and crash into a bus stop
-        | Property damage costs: <b>low</b>
-        br
-        | Insurance costs: <b>medium</b>
-        br
-        | Injuries: <b>10</b> people with severe injuries
-        br
-      p
-        u
-          | Reduce speed and crash into car entering lane
-        | Property damage costs: <b>medium</b>
-        br
-        | Insurance costs: <b>high</b>
-        br
-        | Injuries: <b>2</b> with light injuries
-        br
-      h3
-        span#report_policy_name
-        |
-        | policy:
-        |
-        span#report_policy_objective
-      b
-        | Decision:
-      span#report_decision
+  #game
+  #report
+    h2 Report
+    p
+      | A car enters your lane and there is no time to break. A collision is unavoidable.
+    h3 Options
+    p
+      u
+        | Drive left and crash into a parked truck
+      | Property damage costs: <b>medium</b>
+      br
+      | Insurance costs: <b>low</b>
+      br
+      | Injuries: <b>4</b> people with severe injuries, <b>1</b> with light injuries
+      br
+    p
+      u
+        | Drive right and crash into a bus stop
+      | Property damage costs: <b>low</b>
+      br
+      | Insurance costs: <b>medium</b>
+      br
+      | Injuries: <b>10</b> people with severe injuries
+      br
+    p
+      u
+        | Reduce speed and crash into car entering lane
+      | Property damage costs: <b>medium</b>
+      br
+      | Insurance costs: <b>high</b>
+      br
+      | Injuries: <b>2</b> with light injuries
+      br
+    h3
+      span#report_policy_name
+      |
+      | policy:
+      |
+      span#report_policy_objective
+    b
+      | Decision:
+    span#report_decision
 
-    #options_bar
+  #options_bar
+    .text-center
       | Type of Policy:
       |
       select#option_policy
