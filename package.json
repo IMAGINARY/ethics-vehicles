@@ -4,18 +4,19 @@
   "description": "I AM AI exhibition module",
   "main": "index.html",
   "dependencies": {
+    "handlebars": "^4.5.3",
     "pixi.js": "^5.2.0"
   },
   "devDependencies": {
-    "eslint": "^6.7.1",
-    "eslint-config-airbnb-base": "^14.0.0",
-    "eslint-plugin-import": "^2.18.2",
     "@babel/core": "^7.4.5",
     "@babel/preset-env": "^7.4.5",
     "babelify": "^10.0.0",
     "bootstrap": "^4.3.1",
     "browserify": "^16.2.3",
     "core-js": "^3.2.1",
+    "eslint": "^6.7.1",
+    "eslint-config-airbnb-base": "^14.0.0",
+    "eslint-plugin-import": "^2.18.2",
     "gulp": "^4.0.2",
     "gulp-babel": "^8.0.0",
     "gulp-pug": "^4.0.1",
