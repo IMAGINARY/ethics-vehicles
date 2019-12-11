@@ -1,11 +1,13 @@
 /* globals $ */
 import View from './view';
+import Report from './report';
+import InfoBoxes from './info-boxes';
+
 import Situation from './situation';
 import SituationRunner from './situation-runner';
 import './situations/car-enters-lane';
 import './situations/tree-falls';
-import Report from './report';
-import InfoBoxes from './info-boxes';
+import './situations/child-runs';
 
 const view = new View($('#game')[0]);
 const report = new Report($('#report')[0]);
