@@ -1,11 +1,11 @@
 /* globals PIXI */
-import { VIEW_SIZE, STREET_LANE_OFFSET } from '../constants';
+import { VIEW_SIZE, STREET_LANE_OFFSET, BORDER_BLOCK_SIZE, SPRITE_WIDTH} from '../constants';
 import SceneElement from '../scene-element';
 import Situation from '../situation';
 import Car from '../car';
 import { LANES } from '../lanes';
 
-const BUS_STOP_X = -0.16 * VIEW_SIZE;
+const BUS_STOP_X = (VIEW_SIZE/2) - BORDER_BLOCK_SIZE + (SPRITE_WIDTH/2);
 const BUS_STOP_Y = -0.06 * VIEW_SIZE;
 
 const TRUCK_STOP_POSITION = 0.45;
@@ -15,22 +15,12 @@ const AGENT_STOP_POSITION = 0.45;
 export default class CarEntersLaneSituation extends Situation {
   constructor(view) {
     super(view);
-    this.agentLane = LANES[0];
+    this.agentLane = LANES[2];
     this.parkedLane = this.agentLane.oppositeLane;
 
     this.blackCar = new Car(view, 'assets/images/car_black.png');
     this.truck = new Car(view, 'assets/images/small_truck.png');
     this.busStop = new SceneElement(view, 'assets/images/bus_stop.png', new PIXI.Point(BUS_STOP_X, BUS_STOP_Y));
-
-    // // bind methods for use as pointers
-    // this.carCrossLane = this.carCrossLane.bind(this);
-    // this.decisionAdvace = this.decisionAdvace.bind(this);
-    // this.decisionTurnLeft = this.decisionTurnLeft.bind(this);
-    // this.decisionTurnRight = this.decisionTurnRight.bind(this);
-    // this.moveTruckInPosition = this.moveTruckInPosition.bind(this);
-    // this.moveBlackCarInPosition = this.moveBlackCarInPosition.bind(this);
-    // this.moveAgentInPosition = this.moveAgentInPosition.bind(this);
-    // this.blackCarCrossesLane = this.blackCarCrossesLane.bind(this);
   }
 
   setup() {
