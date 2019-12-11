@@ -4,9 +4,11 @@ import Situation from './situation';
 import SituationRunner from './situation-runner';
 import './situations/car-enters-lane';
 import './situations/tree-falls';
+import Report from './report';
 
 const view = new View($('#game')[0]);
-const runner = new SituationRunner(view);
+const report = new Report($('#report')[0]);
+const runner = new SituationRunner(view, report);
 
 $('#startButton').on('click', () => {
   const policyID = $('#option_policy').val();

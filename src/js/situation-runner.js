@@ -3,8 +3,9 @@
 import { Policies } from './policies';
 
 export default class SituationRunner {
-  constructor(view) {
+  constructor(view, report) {
     this.view = view;
+    this.report = report;
     this.currentDecision = null;
     this.infoElements = [];
   }
@@ -85,19 +86,11 @@ export default class SituationRunner {
   }
 
   showDecision(situation, policyID) {
-    document.getElementById('report_decision').innerHTML = this.currentDecision.text;
-    document.getElementById('report_policy_name').innerHTML = Policies[policyID].name;
-    document.getElementById('report_policy_objective').innerHTML = Policies[policyID].objective;
-    document.getElementById('report_situation_description').innerHTML = situation.getDescription();
-    return this.setVisible('report', 'visible');
+    return this.report.show(situation, Policies[policyID], this.currentDecision.text);
   }
 
   hideDecision() {
-    return this.setVisible('report', 'hidden');
-  }
-
-  setVisible(elementName, visibility = 'visible') {
-    document.getElementById(elementName).style.visibility = visibility;
+    return this.report.hide();
   }
 
   playOutDecision() {
