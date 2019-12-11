@@ -3,7 +3,6 @@ export default class InfoBoxes {
   constructor(htmlElement) {
     this.htmlElement = htmlElement;
     this.infoElements = Array.from($('.info_element'));
-    console.log(this.infoElements);
   }
 
   show(text, index) {
