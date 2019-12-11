@@ -85,5 +85,6 @@ export default class SituationRunner {
     this.tempElements.forEach((element) => {
       this.view.container.removeChild(element);
     });
+    this.tempElements = [];
   }
 }
