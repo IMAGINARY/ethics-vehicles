@@ -1,13 +1,15 @@
 /* eslint-disable class-methods-use-this */
 /* globals PIXI */
 import { Policies } from './policies';
+import { highlightSprite } from './pixi-help';
 
 export default class SituationRunner {
-  constructor(view, report) {
+  constructor(view, report, infoBoxes) {
     this.view = view;
     this.report = report;
+    this.infoBoxes = infoBoxes;
     this.currentDecision = null;
-    this.infoElements = [];
+    this.tempElements = [];
   }
 
   run(situation, policyID) {
@@ -42,8 +44,8 @@ export default class SituationRunner {
   showElementsInfo(elements) {
     return new Promise((resolve) => {
       elements.forEach((element, index) => {
-        this.highlightSprite(element.sprite, element.color);
-        this.showInfoElement(element.text, index);
+        this.highlight(element.sprite, element.color);
+        this.infoBoxes.show(element.text, index);
       });
       resolve('highlight');
     });
@@ -51,38 +53,11 @@ export default class SituationRunner {
 
   hideElementsInfo() {
     return new Promise((resolve) => {
-      this.infoElements.forEach((element, index) => {
-        this.view.container.removeChild(element);
-        this.hideInfoElement(index);
-      });
+      this.removeTempElements();
+      this.infoBoxes.hideAll();
+
       resolve('clean');
     });
-  }
-
-  highlightSprite(sprite, color) {
-    const graphics = new PIXI.Graphics();
-    graphics.beginFill(color, 0.5);
-    graphics.drawRect(
-      sprite.x - sprite.width / 2,
-      sprite.y - sprite.height / 2,
-      sprite.width,
-      sprite.height
-    );
-    graphics.endFill();
-    this.infoElements.push(graphics);
-    this.view.container.addChild(graphics);
-  }
-
-  showInfoElement(text, elementIndex) {
-    const htmlInfoBox = document.getElementById('info_element_' + elementIndex);
-    const descriptionElement = htmlInfoBox.querySelector("#description");
-    descriptionElement.innerText = text;
-    htmlInfoBox.style.visibility = "visible";
-  }
-
-  hideInfoElement(elementIndex) {
-    const htmlInfoBox = document.getElementById('info_element_' + elementIndex);
-    htmlInfoBox.style.visibility = "hidden";
   }
 
   showDecision(situation, policyID) {
@@ -95,5 +70,20 @@ export default class SituationRunner {
 
   playOutDecision() {
     return this.currentDecision.actionFunction();
+  }
+  
+  highlight(sprite, color) {
+    this.addTempElement(highlightSprite(sprite, color));
+  }
+
+  addTempElement(element) {
+    this.tempElements.push(element);
+    this.view.container.addChild(element);
+  }
+
+  removeTempElements() {
+    this.tempElements.forEach((element) => {
+      this.view.container.removeChild(element);
+    });
   }
 }

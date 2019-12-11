@@ -5,10 +5,12 @@ import SituationRunner from './situation-runner';
 import './situations/car-enters-lane';
 import './situations/tree-falls';
 import Report from './report';
+import InfoBoxes from './info-boxes';
 
 const view = new View($('#game')[0]);
 const report = new Report($('#report')[0]);
-const runner = new SituationRunner(view, report);
+const infoBoxes = new InfoBoxes($('#info_elements')[0]);
+const runner = new SituationRunner(view, report, infoBoxes);
 
 $('#startButton').on('click', () => {
   const policyID = $('#option_policy').val();

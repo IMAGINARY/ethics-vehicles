@@ -9,4 +9,17 @@ export function createSprite(sourceImage, scale, anchor = 0.5) {
   return sprite;
 }
 
+export function highlightSprite(sprite, color) {
+  const graphics = new PIXI.Graphics();
+  graphics.beginFill(color, 0.5);
+  graphics.drawRect(
+    sprite.x - sprite.width / 2,
+    sprite.y - sprite.height / 2,
+    sprite.width,
+    sprite.height
+  );
+  graphics.endFill();
+  return graphics;
+}
+
 export const POINT_ZERO = new PIXI.Point(0, 0);
