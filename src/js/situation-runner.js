@@ -1,7 +1,6 @@
 /* eslint-disable class-methods-use-this */
 /* globals PIXI */
 import { Policies } from './policies';
-const Handlebars = require("handlebars");
 
 export default class SituationRunner {
   constructor(view) {
@@ -15,12 +14,14 @@ export default class SituationRunner {
     situation.setup();
     situation.start()
       .then(() => this.waitForKeyPress())
-      .then(() => this.highlight(situation.getElements()))
+      .then(() => this.showElementsInfo(situation.getElements()))
       .then(() => this.waitForKeyPress())
-      .then(() => this.removeHighligts())
+      .then(() => this.hideElementsInfo())
+
       .then(() => this.showDecision(situation, policyID))
       .then(() => this.waitForKeyPress())
       .then(() => this.hideDecision())
+
       .then(() => this.playOutDecision())
       .then(() => this.waitForKeyPress())
       .then(() => situation.clearSprites())
@@ -37,25 +38,27 @@ export default class SituationRunner {
     });
   }
 
-  highlight(elements) {
+  showElementsInfo(elements) {
     return new Promise((resolve) => {
-      elements.forEach((element) => {
-        this.highlightSprite(element.sprite, element.color, element.text, element.placement);
+      elements.forEach((element, index) => {
+        this.highlightSprite(element.sprite, element.color);
+        this.showInfoElement(element.text, index);
       });
       resolve('highlight');
     });
   }
 
-  removeHighligts() {
+  hideElementsInfo() {
     return new Promise((resolve) => {
-      this.infoElements.forEach((element) => {
+      this.infoElements.forEach((element, index) => {
         this.view.container.removeChild(element);
+        this.hideInfoElement(index);
       });
       resolve('clean');
     });
   }
 
-  highlightSprite(sprite, color, text, placement = 'right') {
+  highlightSprite(sprite, color) {
     const graphics = new PIXI.Graphics();
     graphics.beginFill(color, 0.5);
     graphics.drawRect(
@@ -67,48 +70,25 @@ export default class SituationRunner {
     graphics.endFill();
     this.infoElements.push(graphics);
     this.view.container.addChild(graphics);
-    this.addInfoText(sprite, text, placement);
   }
 
-  addInfoText(sprite, text, placement = 'right', style = SituationRunner.InfoBoxStyle) {
-    const infoText = new PIXI.Text(text, style);
-    infoText.x = sprite.x - sprite.width / 2;
-    infoText.y = sprite.y - sprite.height / 2;
-
-    switch (placement) {
-      case 'right':
-        infoText.x += sprite.width;
-        break;
-      case 'left':
-        infoText.x -= sprite.width + SituationRunner.InfoTextSize;
-        break;
-      case 'up':
-        infoText.y -= sprite.height + SituationRunner.InfoTextSize;
-        break;
-      case 'down':
-        infoText.y += sprite.height;
-        break;
-      default:
-        infoText.x += sprite.width;
-        break;
-    }
-
-    this.infoElements.push(infoText);
-    this.view.container.addChild(infoText);
+  showInfoElement(text, elementIndex) {
+    const htmlInfoBox = document.getElementById('info_element_' + elementIndex);
+    const descriptionElement = htmlInfoBox.querySelector("#description");
+    descriptionElement.innerText = text;
+    htmlInfoBox.style.visibility = "visible";
   }
 
+  hideInfoElement(elementIndex) {
+    const htmlInfoBox = document.getElementById('info_element_' + elementIndex);
+    htmlInfoBox.style.visibility = "hidden";
+  }
 
   showDecision(situation, policyID) {
     document.getElementById('report_decision').innerHTML = this.currentDecision.text;
     document.getElementById('report_policy_name').innerHTML = Policies[policyID].name;
     document.getElementById('report_policy_objective').innerHTML = Policies[policyID].objective;
     document.getElementById('report_situation_description').innerHTML = situation.getDescription();
-/*
-    const template = Handlebars.compile("<p><u>{{description}}</u><br>Property and Insurance costs:{{damage_costs}}<br>Injuries to humans:{{human_injuries}}<br>Risk to passenger and car:{{car_safety}}</p>");
-    template( {
-
-    })
-*/
     return this.setVisible('report', 'visible');
   }
 
@@ -124,13 +104,3 @@ export default class SituationRunner {
     return this.currentDecision.actionFunction();
   }
 }
-
-SituationRunner.InfoTextSize = 80;
-
-SituationRunner.InfoBoxStyle = new PIXI.TextStyle({
-  fontFamily: 'Arial',
-  fontSize: 16,
-  fill: '#000000',
-  wordWrap: true,
-  wordWrapWidth: SituationRunner.InfoTextSize + 20,
-});
