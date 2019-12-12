@@ -89,10 +89,6 @@ export default class CarEntersLaneSituation extends Situation {
   }
 
   // eslint-disable-next-line class-methods-use-this
-  carCrossLane(car, startingLane) {
-    car.placeInLane(startingLane.oppositeLane, 1 - startingLane.getCarPosition(car), false);
-  }
-
   decisionAdvace() {
     return this.view.agentCar.driveInLaneUntilPosition(
       this.agentLane.getCarPosition(this.blackCar)
@@ -100,7 +96,7 @@ export default class CarEntersLaneSituation extends Situation {
   }
 
   decisionTurnLeft() {
-    this.carCrossLane(this.view.agentCar, this.agentLane, false);
+    this.view.agentCar.crossLane();
   }
 
   decisionTurnRight() {
@@ -127,7 +123,7 @@ export default class CarEntersLaneSituation extends Situation {
 
   blackCarCrossesLane() {
     return new Promise((resolve) => {
-      this.carCrossLane(this.blackCar, this.parkedLane);
+      this.blackCar.crossLane();
       resolve();
     });
   }
