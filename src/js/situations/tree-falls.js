@@ -4,9 +4,11 @@ import Car from '../car';
 import Situation from '../situation';
 import { VIEW_SIZE, STREET_LANE_OFFSET } from '../constants';
 import { LANES } from '../lanes';
+import { screenPosFromFraction } from '../pixi-help';
 
-const TREE_STOP_POSITION = 0.45;
-const CYCLIST_STOP_POSITION = 0.40;
+const AGENT_LANE = 1;
+const CYCLIST_STOP_POSITION = 1/2;
+const AGENT_STOP_POSITION = 3/8;
 
 export default class TreeFallsSituation extends Situation {
   constructor(view) {
@@ -15,19 +17,19 @@ export default class TreeFallsSituation extends Situation {
     this.waterPuddle = new SceneElement(
       this.view,
       'assets/images/water_puddle.png',
-      new PIXI.Point(0.225 * VIEW_SIZE, -0.05 * VIEW_SIZE)
+      screenPosFromFraction(1/8, 3/8 + 1/16)
     );
     this.tree = new SceneElement(
       this.view,
       'assets/images/tree.png',
-      new PIXI.Point(0.18 * VIEW_SIZE, 0)
+      screenPosFromFraction(1/16, 0.5)
     );
     this.cyclist = new Car(
       this.view,
       'assets/images/cyclist.png'
     );
 
-    this.agentLane = LANES[3];
+    this.agentLane = LANES[AGENT_LANE];
     this.bicycleLane = this.agentLane.oppositeLane;
 
     // this.moveCyclistInPosition = this.moveCyclistInPosition.bind(this);
@@ -115,7 +117,7 @@ export default class TreeFallsSituation extends Situation {
 
   moveAgentInPosition() {
     this.view.agentCar.placeInLane(this.agentLane);
-    return this.view.agentCar.driveInLaneUntilPosition(TREE_STOP_POSITION);
+    return this.view.agentCar.driveInLaneUntilPosition(AGENT_STOP_POSITION);
   }
 
   fellTree() {
