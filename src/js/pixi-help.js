@@ -33,4 +33,10 @@ export function screenPosFromFraction(x, y) {
                         (y - 0.5) * VIEW_SIZE);
 }
 
+export function moveToFraction(sprite, x, y) {
+  const pos = screenPosFromFraction(x, y);
+  sprite.x = pos.x;
+  sprite.y = pos.y;
+}
+
 export const POINT_ZERO = new PIXI.Point(0, 0);
