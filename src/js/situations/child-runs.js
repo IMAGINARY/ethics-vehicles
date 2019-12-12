@@ -4,28 +4,23 @@ import Car from '../car';
 import Situation from '../situation';
 import { VIEW_SIZE, STREET_LANE_OFFSET } from '../constants';
 import { LANES } from '../lanes';
+import { screenPosFromFraction, moveToFraction } from '../pixi-help';
+
+const AGENT_LANE = 4;
+const CROSSING_CAR_POSITION = 1/4;
+const AGENT_CAR_POSITION = 1/2 + 1/8;
+const AMBULANCE_POSITION = 1/2 + 1/16;
+const childStartPos = screenPosFromFraction(1/4 + 1/32, 1/16);
 
 export default class ChildRunsSituation extends Situation {
   constructor(view) {
     super(view);
+    this.agentLane = LANES[AGENT_LANE];
+    this.oppositeLane = this.agentLane.oppositeLane;
 
-    this.ambulance = new SceneElement(
-      this.view,
-      'assets/images/ambulance.png',
-      new PIXI.Point(0.225 * VIEW_SIZE, -0.05 * VIEW_SIZE)
-    );
-    this.child = new SceneElement(
-      this.view,
-      'assets/images/child.png',
-      new PIXI.Point(0.18 * VIEW_SIZE, 0)
-    );
-    this.parkedCar = new Car(
-      this.view,
-      'assets/images/blue_car.png'
-    );
-
-    this.agentLane = LANES[4];
-    this.parkedLane = this.agentLane.oppositeLane;
+    this.child = new SceneElement(this.view, 'assets/images/child.png', childStartPos);
+    this.crossingCar = new Car(this.view, 'assets/images/blue_car.png');
+    this.ambulance = new Car(this.view, 'assets/images/ambulance.png');
   }
 
   setup() {
@@ -33,7 +28,7 @@ export default class ChildRunsSituation extends Situation {
   }
 
   start() {
-    return this.moveParkedCarInPosition()
+    return this.moveCrossingCarInPosition()
       .then(() => this.moveAgentInPosition())
       .then(() => this.moveAmbulanceInPosition())
       .then(() => this.childRuns());
@@ -56,9 +51,9 @@ export default class ChildRunsSituation extends Situation {
         text: 'A child running onto the street',
       },
       {
-        sprite: this.parkedCar.sprite,
+        sprite: this.crossingCar.sprite,
         color: 0xDE3220,
-        text: 'A parked car',
+        text: 'A car coming from the opposite direction',
       },
     ];
   }
@@ -67,7 +62,7 @@ export default class ChildRunsSituation extends Situation {
     return {
       humanist: {
         text: 'both breaking and continuing have a high risk on human lives, so crash onto the car parked on the left.',
-        actionFunction: () => this.decisionCrashParkedCar()
+        actionFunction: () => this.decisionCrashCrossingCar()
       },
       profit: {
         text: 'the child appeared out of nowhere and you had a green light, so you are protected by the law. Breaking or turning left will incur in higher car damage and costs.',
@@ -81,32 +76,39 @@ export default class ChildRunsSituation extends Situation {
   }
 
   decisionAdvance() {
-    return this.view.agentCar.driveInLaneUntilPosition(0.5);
+    return this.view.agentCar.driveInLaneUntilPosition(0.75);
   }
 
-  decisionCrashParkedCar() {
-    this.view.agentCar.x -= STREET_LANE_OFFSET;
-    this.view.agentCar.y += STREET_LANE_OFFSET;
+  decisionCrashCrossingCar() {
+    this.view.agentCar.crossLane();
   }
 
   getDescription() {
-    return 'When reaching a crossing, and with green light in your favor, a child suddenly runs onto the street from behind a parked car. At the same time, an ambulance with lights and siren is coming behind you fast.';
+    return 'When reaching a crossing and having a green light, a child suddenly runs onto the street from behind a parked car. At the same time, an ambulance with lights and siren is coming behind you fast.';
   }
 
-  moveParkedCarInPosition() {
-      return new Promise( (resolve, reject) => { resolve('parked')} );
+  moveCrossingCarInPosition() {
+    this.addSprite(this.crossingCar.sprite);
+    this.crossingCar.placeInLane(this.oppositeLane);
+    return this.crossingCar.driveInLaneUntilPosition(CROSSING_CAR_POSITION);
   }
 
   moveAgentInPosition() {
-    return new Promise( (resolve, reject) => { resolve('moved')} );
+    this.view.agentCar.placeInLane(this.agentLane);
+    return this.view.agentCar.driveInLaneUntilPosition(AGENT_CAR_POSITION);
 }
 
   moveAmbulanceInPosition() {
-    return new Promise( (resolve, reject) => { resolve('moved')} );
+    this.addSprite(this.ambulance.sprite);
+    this.ambulance.placeInLane(this.agentLane);
+    return this.ambulance.driveInLaneUntilPosition(AMBULANCE_POSITION);
   }
 
   childRuns() {
-    return new Promise( (resolve, reject) => { resolve('ran')} );
+    return new Promise( (resolve, reject) => {
+      moveToFraction(this.child.sprite, 9/32, 1/8);
+      resolve('ran');
+    });
   }
 }
 
