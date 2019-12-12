@@ -8,7 +8,7 @@ import { screenPosFromFraction, moveToFraction } from '../pixi-help';
 const AGENT_LANE = 4;
 const CROSSING_CAR_POSITION = 1/4;
 const AGENT_CAR_POSITION = 1/2 + 1/8;
-const AMBULANCE_POSITION = 1/2 + 1/16;
+const AMBULANCE_POSITION = 1/2 + 1/32;
 const childStartPos = screenPosFromFraction(1/4 + 1/32, 1/16);
 
 export default class ChildRunsSituation extends Situation {
