@@ -2,7 +2,6 @@
 import SceneElement from '../scene-element';
 import Car from '../car';
 import Situation from '../situation';
-import { VIEW_SIZE, STREET_LANE_OFFSET } from '../constants';
 import { LANES } from '../lanes';
 import { screenPosFromFraction, moveToFraction } from '../pixi-help';
 

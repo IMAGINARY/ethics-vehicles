@@ -2,20 +2,22 @@
 import { Lane } from './lane';
 import DriveDirection from './drive-direction';
 import {
-  OFF_SCREEN_LIMIT, STREET_X_OFFSET, STREET_Y_OFFSET, STREET_LANE_OFFSET,
+  VIEW_SIZE, STREET_X_OFFSET, STREET_Y_OFFSET, STREET_LANE_OFFSET,
 } from './constants';
 
 function createHorizontalLane(verticalOffset, driveDirection) {
   const dirMultiplier = driveDirection.carSpeed.x > 0 ? -1 : 1;
-  return new Lane(new PIXI.Point(OFF_SCREEN_LIMIT * dirMultiplier, -verticalOffset),
-    new PIXI.Point(-OFF_SCREEN_LIMIT * dirMultiplier, -verticalOffset),
+  return new Lane(
+    new PIXI.Point( (VIEW_SIZE/2) * dirMultiplier, -verticalOffset),
+    new PIXI.Point(-(VIEW_SIZE/2) * dirMultiplier, -verticalOffset),
     driveDirection);
 }
 
 function createVerticalLane(horizontalOffset, driveDirection) {
   const dirMultiplier = driveDirection.carSpeed.y > 0 ? -1 : 1;
-  return new Lane(new PIXI.Point(-horizontalOffset, OFF_SCREEN_LIMIT * dirMultiplier),
-    new PIXI.Point(-horizontalOffset, -OFF_SCREEN_LIMIT * dirMultiplier),
+  return new Lane(
+    new PIXI.Point(-horizontalOffset,  (VIEW_SIZE/2) * dirMultiplier),
+    new PIXI.Point(-horizontalOffset, -(VIEW_SIZE/2) * dirMultiplier),
     driveDirection);
 }
 
