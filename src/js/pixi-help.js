@@ -1,4 +1,5 @@
 /* global PIXI */
+import { VIEW_SIZE } from './constants';
 
 export function createSprite(sourceImage, scale, anchor = 0.5) {
   const texture = PIXI.Texture.from(sourceImage);
@@ -20,6 +21,16 @@ export function highlightSprite(sprite, color) {
   );
   graphics.endFill();
   return graphics;
+}
+
+/**
+ * 
+ * @param {fraction [0,1] of the screen, horizontally, starting from left} x 
+ * @param {fraction [0,1] of the screen, vertically, starting from top} y 
+ */
+export function screenPosFromFraction(x, y) {
+  return new PIXI.Point((x - 0.5) * VIEW_SIZE,
+                        (y - 0.5) * VIEW_SIZE);
 }
 
 export const POINT_ZERO = new PIXI.Point(0, 0);
