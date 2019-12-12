@@ -8,7 +8,7 @@ export default class Car {
     this.view = view;
     this.sprite = createSprite(imageFile, CAR_SCALE, 0.5);
     this.sprite.zIndex = 100;
-    this.currentLane = lane;
+    this.lane = lane;
     this.driveDirection = lane.driveDirection;
   }
 
@@ -69,6 +69,10 @@ export default class Car {
       -this.driveDirection.speedX,
       -this.driveDirection.speedY
     );
+  }
+
+  crossLane() {
+    this.placeInLane(this.lane.oppositeLane, 1 - this.lane.getCarPosition(this), false);
   }
 
   show() {
