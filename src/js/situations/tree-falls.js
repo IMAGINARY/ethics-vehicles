@@ -79,10 +79,7 @@ export default class TreeFallsSituation extends Situation {
     return {
       humanist: {
         text: 'a sudden break would send the passenger without seatbelt forward through the glass, potentially killing them. Swerving might avoid the collision with the tree, but could also harm the passenger. Solution: turn right and break, crashing into the tree softly, with the passenger without seatbelt protected by the one on its side and by its airbag.',
-        actionFunction: () => {
-          this.view.agentCar.x -= STREET_LANE_OFFSET;
-          this.view.agentCar.y += STREET_LANE_OFFSET;
-        },
+        actionFunction: () => this.softlyCrashTree()
       },
       profit: {
         text: 'Crashing with the tree will cost the insurers money. Swerving might avoid the collision with the tree, but as the floor is wet it could also potentially turn around the car, damaging it. As the car has warned the passenger to wear the seat belt but they have not, any injury will be their own responsibility. Changing lanes would kill the cyclist, but its insurance status is unknown, so its a financial risk. Solution: a sudden break, fully protecting the car and passengers that wear a seat belt.',
@@ -110,6 +107,17 @@ export default class TreeFallsSituation extends Situation {
     return this.cyclist.driveInLaneUntilPosition(CYCLIST_STOP_POSITION);
   }
 
+  softlyCrashTree() {
+    return new Promise( (resolve) => {
+      new TWEEN.Tween(this.view.agentCar)
+        .to( { x: this.view.agentCar.x - STREET_LANE_OFFSET,
+               y: this.view.agentCar.y + STREET_LANE_OFFSET,
+               angle: this.view.agentCar.angle + 30})
+        .easing(TWEEN.Easing.Quadratic.Out)
+        .onComplete( () => resolve('crash') )
+        .start();
+    });
+  }
 
   moveAgentInPosition() {
     this.view.agentCar.placeInLane(this.agentLane);
