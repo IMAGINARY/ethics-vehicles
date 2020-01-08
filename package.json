@@ -4,8 +4,8 @@
   "description": "I AM AI exhibition module",
   "main": "index.html",
   "dependencies": {
-    "handlebars": "^4.5.3",
-    "pixi.js": "^5.2.0"
+    "pixi.js": "^5.2.0",
+    "tweenjs": "^1.0.2"
   },
   "devDependencies": {
     "@babel/core": "^7.4.5",
