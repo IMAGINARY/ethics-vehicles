@@ -83,9 +83,7 @@ export default class TreeFallsSituation extends Situation {
       },
       profit: {
         text: 'Crashing with the tree will cost the insurers money. Swerving might avoid the collision with the tree, but as the floor is wet it could also potentially turn around the car, damaging it. As the car has warned the passenger to wear the seat belt but they have not, any injury will be their own responsibility. Changing lanes would kill the cyclist, but its insurance status is unknown, so its a financial risk. Solution: a sudden break, fully protecting the car and passengers that wear a seat belt.',
-        actionFunction: () => {
-          this.view.agentCar.y += STREET_LANE_OFFSET * 2;
-        },
+        actionFunction: () => this.fullBreak()
       },
       protector: {
         text: 'Crashing with the tree or swerving would hurt the passenger without seatbelt. Solution: slow down and change lanes, potentially killing the cyclist but saving all passengers.',
@@ -105,6 +103,17 @@ export default class TreeFallsSituation extends Situation {
     this.cyclist.show();
     this.cyclist.placeInLane(this.bicycleLane);
     return this.cyclist.driveInLaneUntilPosition(CYCLIST_STOP_POSITION);
+  }
+
+  fullBreak() {
+    return new Promise( (resolve) => {
+      new TWEEN.Tween(this.view.agentCar)
+        .to( { y: this.view.agentCar.y + STREET_LANE_OFFSET},
+            250)
+        .easing(TWEEN.Easing.Quadratic.Out)
+        .onComplete( () => resolve('crash') )
+        .start();
+    });
   }
 
   softlyCrashTree() {
