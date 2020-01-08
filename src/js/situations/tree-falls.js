@@ -130,8 +130,8 @@ export default class TreeFallsSituation extends Situation {
     return new Promise( (resolve) => {
       new TWEEN.Tween(this.view.agentCar)
         .to( { x: this.view.agentCar.x - STREET_LANE_OFFSET,
-               y: this.view.agentCar.y + STREET_LANE_OFFSET,
-               angle: this.view.agentCar.angle + 30},
+               y: this.view.agentCar.y + STREET_LANE_OFFSET*2,
+               angle: this.view.agentCar.angle + 70},
             500)
         .easing(TWEEN.Easing.Quadratic.Out)
         .onComplete( () => resolve('crash') )
