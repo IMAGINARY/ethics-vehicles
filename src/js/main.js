@@ -22,3 +22,5 @@ $('#startButton').on('click', () => {
 });
 
 view.startIdleAnimation();
+
+view.app.ticker.add( () => TWEEN.update() );

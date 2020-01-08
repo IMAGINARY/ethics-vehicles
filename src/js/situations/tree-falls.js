@@ -1,4 +1,4 @@
-/* globals PIXI */
+/* globals PIXI, TWEEN */
 import SceneElement from '../scene-element';
 import Car from '../car';
 import Situation from '../situation';
@@ -31,10 +31,6 @@ export default class TreeFallsSituation extends Situation {
 
     this.agentLane = LANES[AGENT_LANE];
     this.bicycleLane = this.agentLane.oppositeLane;
-
-    // this.moveCyclistInPosition = this.moveCyclistInPosition.bind(this);
-    // this.moveAgentInPosition = this.moveAgentInPosition.bind(this);
-    // this.fellTree = this.fellTree.bind(this);
   }
 
   setup() {
@@ -121,8 +117,22 @@ export default class TreeFallsSituation extends Situation {
   }
 
   fellTree() {
-    this.tree.sprite.x += STREET_LANE_OFFSET * 2;
-    this.tree.sprite.angle = 90;
+
+    return new Promise((resolve) => {
+      const anim = { angle: 0, x: this.tree.sprite.x };
+      var tween = new TWEEN.Tween(anim)
+        .to( { angle: 90, x: this.tree.sprite.x + (STREET_LANE_OFFSET * 1.5)}, 250)
+        .easing(TWEEN.Easing.Quadratic.In)
+        .onUpdate( () => {
+          this.tree.sprite.angle = anim.angle;
+          this.tree.sprite.x = anim.x;
+        })
+        .onComplete( () => {
+          resolve('fell');
+        })
+        .start();
+        
+    });
   }
 }
 
