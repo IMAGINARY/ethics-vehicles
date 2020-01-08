@@ -87,10 +87,7 @@ export default class TreeFallsSituation extends Situation {
       },
       protector: {
         text: 'Crashing with the tree or swerving would hurt the passenger without seatbelt. Solution: slow down and change lanes, potentially killing the cyclist but saving all passengers.',
-        actionFunction: () => {
-          this.view.agentCar.x += STREET_LANE_OFFSET * 2;
-          this.view.agentCar.y += STREET_LANE_OFFSET;
-        },
+        actionFunction: () => this.crashCyclist()
       },
     };
   }
@@ -103,6 +100,19 @@ export default class TreeFallsSituation extends Situation {
     this.cyclist.show();
     this.cyclist.placeInLane(this.bicycleLane);
     return this.cyclist.driveInLaneUntilPosition(CYCLIST_STOP_POSITION);
+  }
+
+  crashCyclist() {
+    return new Promise( (resolve) => {
+      new TWEEN.Tween(this.view.agentCar)
+        .to( { x: this.view.agentCar.x + STREET_LANE_OFFSET * 2,
+               y: this.view.agentCar.y + STREET_LANE_OFFSET * 2,
+              angle: this.view.agentCar.angle - 45},
+            500)
+        .easing(TWEEN.Easing.Quadratic.Out)
+        .onComplete( () => resolve('crash') )
+        .start();
+    });
   }
 
   fullBreak() {
