@@ -28,6 +28,14 @@ export default class Car {
     this.sprite.y = y;
   }
 
+  get angle() {
+    return this.sprite.angle;
+  }
+
+  set angle(angle) {
+    this.sprite.angle = angle;
+  }
+
   update(elapsed) {
     this.x += this.driveDirection.carSpeed.x * elapsed;
     this.y += this.driveDirection.carSpeed.y * elapsed;
