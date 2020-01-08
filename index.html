@@ -17,12 +17,20 @@
     </title>
   </head>
   <body>
+    <div id="info_elements">
+      <div class="text-center"></div>
+      <div class="info_element" id="info_element_0"><span class="info_description" id="description"></span></div>
+      <div class="info_element" id="info_element_1"><span class="info_description" id="description"></span></div>
+      <div class="info_element" id="info_element_2"><span class="info_description" id="description"></span></div>
+      <div class="info_element" id="info_element_3"><span class="info_description" id="description"></span></div>
+    </div>
     <div id="game"></div>
     <div id="report">
+      <div class="text-center"></div>
       <h2>Report</h2>
-      <p><span id="report_situation_description"></span></p>
-      <h3>Policy:<span id="report_policy_name"></span></h3>
-      <h3>Objective:<span id="report_policy_objective"></span></h3><b>Decision:</b><span id="report_decision"></span>
+      <p><span id="situation_description"></span></p>
+      <h3>Policy:<span id="policy_name"></span></h3>
+      <h3>Objective:<span id="policy_objective"></span></h3><b>Decision:</b><span id="decision"></span>
     </div>
     <div id="options_bar">
       <div class="text-center">
@@ -38,6 +46,7 @@
         <select id="option_situation">
           <option value="car-enters-lane">Car enters your lane</option>
           <option value="tree-falls">A tree falls in the road</option>
+          <option value="child-runs">A child runs onto the street</option>
         </select>
         <button id="startButton" type="button">Start!</button>
       </div>
@@ -46,6 +55,7 @@
     <script src="vendor/popper/popper.min.js"></script>
     <script src="vendor/bootstrap/bootstrap.min.js"></script>
     <script src="vendor/pixi.js/pixi.min.js"></script>
+    <script src="vendor/tween.js/tween.umd.js"></script>
     <script type="text/javascript" src="assets/js/bundle.min.js"></script>
   </body>
 </html>
