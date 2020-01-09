@@ -8,14 +8,17 @@ export default class SceneElement {
     this.sprite.x = position.x;
     this.sprite.y = position.y;
     this.initialPosition = position;
+    this.visible = false;
   }
 
   show() {
     this.view.container.addChild(this.sprite);
+    this.visible = true;
   }
 
   hide() {
     this.view.container.removeChild(this.sprite);
+    this.visible = false;
   }
 
   reset() {
