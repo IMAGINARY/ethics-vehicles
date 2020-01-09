@@ -10,6 +10,10 @@ const AGENT_LANE = 1;
 const CYCLIST_STOP_POSITION = 3/8;
 const AGENT_STOP_POSITION = 3/8;
 
+const SETUP_TIME = 1000;
+const TREE_FALL_TIME = 250;
+const CRASH_TIME = 250;
+
 export default class TreeFallsSituation extends Situation {
   constructor(view) {
     super(view);
@@ -41,9 +45,7 @@ export default class TreeFallsSituation extends Situation {
   }
 
   start() {
-    return this.moveCyclistInPosition()
-      .then(() => this.moveAgentInPosition())
-      .then(() => this.fellTree());
+    return Promise.all([this.moveAgentInPosition(), this.moveCyclistInPosition(), this.fellTree()]);
   }
 
   teardown() {
@@ -99,7 +101,23 @@ export default class TreeFallsSituation extends Situation {
   moveCyclistInPosition() {
     this.cyclist.show();
     this.cyclist.placeInLane(this.bicycleLane);
-    return this.cyclist.driveInLaneUntilPosition(CYCLIST_STOP_POSITION);
+    return this.cyclist.driveInLaneUntilPosition(CYCLIST_STOP_POSITION, SETUP_TIME);
+  }
+
+  moveAgentInPosition() {
+    this.view.agentCar.placeInLane(this.agentLane);
+    return this.view.agentCar.driveInLaneUntilPosition(AGENT_STOP_POSITION, SETUP_TIME);
+  }
+
+  fellTree() {
+    return new Promise((resolve) => {
+      new TWEEN.Tween(this.tree.sprite)
+        .to( { angle: 90, x: this.tree.sprite.x + (STREET_LANE_OFFSET * 1.5)}, SETUP_TIME - TREE_FALL_TIME)
+        .easing(TWEEN.Easing.Quadratic.In)
+        .delay(TREE_FALL_TIME)
+        .onComplete( () => resolve('fell') )
+        .start();
+    });
   }
 
   crashCyclist() {
@@ -108,24 +126,17 @@ export default class TreeFallsSituation extends Situation {
         .to( { x: this.view.agentCar.x + STREET_LANE_OFFSET * 2,
                y: this.view.agentCar.y + STREET_LANE_OFFSET * 2,
               angle: this.view.agentCar.angle - 45},
-            500)
+            CRASH_TIME)
         .easing(TWEEN.Easing.Quadratic.Out)
         .onComplete( () => resolve('crash') )
         .start();
     });
-    const bicycleMovement = this.cyclist.driveInLaneUntilPosition(0.5);
+    const bicycleMovement = this.cyclist.driveInLaneUntilPosition(0.5, CRASH_TIME);
     return Promise.all([carMovement, bicycleMovement]);
   }
 
   fullBreak() {
-    return new Promise( (resolve) => {
-      new TWEEN.Tween(this.view.agentCar)
-        .to( { y: this.view.agentCar.y + STREET_LANE_OFFSET},
-            250)
-        .easing(TWEEN.Easing.Quadratic.Out)
-        .onComplete( () => resolve('crash') )
-        .start();
-    });
+    return this.view.agentCar.driveInLaneUntilPosition(7/16, CRASH_TIME);
   }
 
   softlyCrashTree() {
@@ -134,27 +145,10 @@ export default class TreeFallsSituation extends Situation {
         .to( { x: this.view.agentCar.x - STREET_LANE_OFFSET,
                y: this.view.agentCar.y + STREET_LANE_OFFSET*2,
                angle: this.view.agentCar.angle + 70},
-            500)
+              CRASH_TIME)
         .easing(TWEEN.Easing.Quadratic.Out)
         .onComplete( () => resolve('crash') )
         .start();
-    });
-  }
-
-  moveAgentInPosition() {
-    this.view.agentCar.placeInLane(this.agentLane);
-    return this.view.agentCar.driveInLaneUntilPosition(AGENT_STOP_POSITION);
-  }
-
-  fellTree() {
-
-    return new Promise((resolve) => {
-      new TWEEN.Tween(this.tree.sprite)
-        .to( { angle: 90, x: this.tree.sprite.x + (STREET_LANE_OFFSET * 1.5)}, 250)
-        .easing(TWEEN.Easing.Quadratic.In)
-        .onComplete( () => resolve('fell') )
-        .start();
-        
     });
   }
 }
