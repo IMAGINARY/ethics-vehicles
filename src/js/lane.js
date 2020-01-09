@@ -2,6 +2,11 @@
 import DriveDirection from './drive-direction';
 import { POINT_ZERO } from './pixi-help';
 
+PIXI.Point.Lerp = function (start, end, k) {
+  return new PIXI.Point(start.x + k * (end.x - start.x),
+                        start.y + k * (end.y - start.y));
+}
+
 export class Lane {
   constructor(start, end, driveDirection) {
     this.start = start;
@@ -16,6 +21,10 @@ export class Lane {
 
   isHorizontal() {
     return this.driveDirection.isHorizontal();
+  }
+
+  getPositionCoordinates(position) {
+    return PIXI.Point.Lerp(this.start, this.end, position);
   }
 
   getCarPosition(car) {

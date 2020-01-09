@@ -56,18 +56,15 @@ export default class Car {
   }
 
   driveInLaneUntilPosition(endPosition = 1.0) {
-    // force driving direction, or it might never stop
-    this.forceLaneDirection();
-
-    return new Promise((resolve) => {
-      const update = () => {
-        if (this.lane.getCarPosition(this) >= endPosition) {
-          this.view.app.ticker.remove(update);
-          resolve('arrived');
-        }
-        this.update(this.view.app.ticker.deltaTime);
-      };
-      this.view.app.ticker.add(update);
+    this.placeInLane(this.lane, 0, true);
+    const stopPosition = this.lane.getPositionCoordinates(endPosition);
+    return new Promise( (resolve) => {
+      new TWEEN.Tween(this.sprite)
+      .to( { x: stopPosition.x,
+             y: stopPosition.y})
+      .easing(TWEEN.Easing.Linear.None)
+      .onComplete( () => resolve('arrived') )
+      .start();
     });
   }
 
