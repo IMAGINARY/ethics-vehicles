@@ -2,12 +2,12 @@
 import SceneElement from '../scene-element';
 import Car from '../car';
 import Situation from '../situation';
-import { VIEW_SIZE, STREET_LANE_OFFSET } from '../constants';
+import { STREET_LANE_OFFSET } from '../constants';
 import { LANES } from '../lanes';
 import { screenPosFromFraction } from '../pixi-help';
 
 const AGENT_LANE = 1;
-const CYCLIST_STOP_POSITION = 1/2;
+const CYCLIST_STOP_POSITION = 3/8;
 const AGENT_STOP_POSITION = 3/8;
 
 export default class TreeFallsSituation extends Situation {
@@ -103,7 +103,7 @@ export default class TreeFallsSituation extends Situation {
   }
 
   crashCyclist() {
-    return new Promise( (resolve) => {
+    const carMovement = new Promise( (resolve) => {
       new TWEEN.Tween(this.view.agentCar)
         .to( { x: this.view.agentCar.x + STREET_LANE_OFFSET * 2,
                y: this.view.agentCar.y + STREET_LANE_OFFSET * 2,
@@ -113,6 +113,8 @@ export default class TreeFallsSituation extends Situation {
         .onComplete( () => resolve('crash') )
         .start();
     });
+    const bicycleMovement = this.cyclist.driveInLaneUntilPosition(0.5);
+    return Promise.all([carMovement, bicycleMovement]);
   }
 
   fullBreak() {
