@@ -55,12 +55,13 @@ export default class Car {
     this.sprite.angle = this.lane.driveDirection.carAngle;
   }
 
-  driveInLaneUntilPosition(endPosition = 1.0) {
+  driveInLaneUntilPosition(endPosition = 1.0, time = 500) {
     const stopPosition = this.lane.getPositionCoordinates(endPosition);
     return new Promise( (resolve) => {
       new TWEEN.Tween(this.sprite)
       .to( { x: stopPosition.x,
-             y: stopPosition.y})
+             y: stopPosition.y},
+          time)
       .easing(TWEEN.Easing.Linear.None)
       .onComplete( () => resolve('arrived') )
       .start();
