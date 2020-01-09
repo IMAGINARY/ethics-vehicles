@@ -56,7 +56,6 @@ export default class Car {
   }
 
   driveInLaneUntilPosition(endPosition = 1.0) {
-    this.placeInLane(this.lane, 0, true);
     const stopPosition = this.lane.getPositionCoordinates(endPosition);
     return new Promise( (resolve) => {
       new TWEEN.Tween(this.sprite)
