@@ -149,17 +149,10 @@ export default class TreeFallsSituation extends Situation {
   fellTree() {
 
     return new Promise((resolve) => {
-      const anim = { angle: 0, x: this.tree.sprite.x };
-      var tween = new TWEEN.Tween(anim)
+      new TWEEN.Tween(this.tree.sprite)
         .to( { angle: 90, x: this.tree.sprite.x + (STREET_LANE_OFFSET * 1.5)}, 250)
         .easing(TWEEN.Easing.Quadratic.In)
-        .onUpdate( () => {
-          this.tree.sprite.angle = anim.angle;
-          this.tree.sprite.x = anim.x;
-        })
-        .onComplete( () => {
-          resolve('fell');
-        })
+        .onComplete( () => resolve('fell') )
         .start();
         
     });
