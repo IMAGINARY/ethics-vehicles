@@ -21,6 +21,13 @@ $('#startButton').on('click', () => {
   view.queueAction(() => { runner.run(new SituationClass(view), policyID); });
 });
 
+$('#debugButton').on('click', () => {
+  if (view.debugLayer.visible)
+    view.debugLayer.hide();
+  else
+    view.debugLayer.show();
+});
+
 view.startIdleAnimation();
 
 view.app.ticker.add( () => TWEEN.update() );
