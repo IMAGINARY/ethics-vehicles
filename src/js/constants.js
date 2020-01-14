@@ -1,6 +1,7 @@
 export const CAR_SCALE = 0.25;
 export const VIEW_SIZE = 1024;
 export const DEFAULT_SPEED = 15;
+export const IDLE_ANIMATION_TIME = 2000;
 export const STREET_X_OFFSET = (VIEW_SIZE/2) - 176;
 export const STREET_Y_OFFSET = (VIEW_SIZE/2) - 176;
 export const STREET_WIDTH = 160;

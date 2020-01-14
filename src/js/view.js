@@ -2,7 +2,7 @@
 import Car from './car';
 import SceneElement from './scene-element';
 import { LANES } from './lanes';
-import { VIEW_SIZE, GLOBAL_SCALE } from './constants';
+import { VIEW_SIZE, IDLE_ANIMATION_TIME } from './constants';
 import { POINT_ZERO } from './pixi-help';
 
 export default class View {
@@ -35,7 +35,7 @@ export default class View {
     this.agentCar.hide();
     this.agentCar.show();
     this.agentCar.placeInLane(currentLane, 0, true);
-    return this.agentCar.driveInLaneUntilPosition(1.0);
+    return this.agentCar.driveInLaneUntilPosition(1.0, IDLE_ANIMATION_TIME);
   }
 
   startIdleAnimation() {
