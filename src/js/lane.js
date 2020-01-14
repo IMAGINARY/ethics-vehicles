@@ -16,11 +16,11 @@ export class Lane {
   }
 
   isVertical() {
-    return this.driveDirection.isVertical();
+    return this.start.x == this.end.x;
   }
 
   isHorizontal() {
-    return this.driveDirection.isHorizontal();
+    return this.start.y == this.end.y;
   }
 
   getPositionCoordinates(position) {
