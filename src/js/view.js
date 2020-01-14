@@ -25,7 +25,7 @@ export default class View {
     this.debugLayer = new SceneElement(this, 'assets/images/debug.png', POINT_ZERO, 1);
     this.agentCar = new Car(this, 'assets/images/car.png');
     this.background.show();
-    this.debugLayer.show();
+    this.debugLayer.hide();
 
     this.afterIdleAction = () => {};
   }
