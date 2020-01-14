@@ -16,20 +16,33 @@ export default class SituationRunner {
     this.currentDecision = situation.getDecisions()[policyID];
     situation.setup();
     situation.start()
-      .then(() => this.waitForKeyPress())
+      .then(() => this.waitForAdvanceButton('Information'))
       .then(() => this.showElementsInfo(situation.getElements()))
-      .then(() => this.waitForKeyPress())
+      .then(() => this.waitForAdvanceButton('Report'))
       .then(() => this.hideElementsInfo())
 
       .then(() => this.showDecision(situation, policyID))
-      .then(() => this.waitForKeyPress())
+      .then(() => this.waitForAdvanceButton('Resolution'))
       .then(() => this.hideDecision())
 
       .then(() => this.playOutDecision())
-      .then(() => this.waitForKeyPress())
+      .then(() => this.waitForAdvanceButton('Restart'))
       .then(() => situation.clearSprites())
       .then(() => situation.teardown())
       .then(() => this.view.startIdleAnimation());
+  }
+
+  waitForAdvanceButton(text = 'Next') {
+    return new Promise ((resolve) => {
+      $('#advanceText').text(text);
+
+      const button = $('#advanceButton');
+      button.show();
+      button.on('click', () => {
+        button.hide();
+        resolve('clicked');
+      })
+    });
   }
 
   waitForKeyPress() {

@@ -93,3 +93,13 @@ button {
   border-radius: 5px;
   padding: 4px 8px 4px 8px;
 }
+
+#advanceButton {
+  z-index: 101;
+//  visibility: hidden;
+  position: absolute;
+  display: none;
+  left: 340px;
+  top: 600px;
+  width: 120px;
+}
