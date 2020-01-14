@@ -36,11 +36,6 @@ export default class Car {
     this.sprite.angle = angle;
   }
 
-  update(elapsed) {
-    this.x += this.driveDirection.carSpeed.x * elapsed;
-    this.y += this.driveDirection.carSpeed.y * elapsed;
-  }
-
   placeInLane(lane, position = 0.0, forceDirection = true) {
     this.lane = lane;
     this.x = lane.start.x + (lane.end.x - lane.start.x) * position;
