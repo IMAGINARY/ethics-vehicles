@@ -23,6 +23,10 @@ export class Lane {
     return this.start.y == this.end.y;
   }
 
+  getDrivingAngle() {
+    return this.driveDirection.carAngle;
+  }
+
   getPositionCoordinates(position) {
     return PIXI.Point.Lerp(this.start, this.end, position);
   }

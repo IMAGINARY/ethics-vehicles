@@ -47,7 +47,7 @@ export default class Car {
 
   forceLaneDirection() {
     this.driveDirection = this.lane.driveDirection;
-    this.sprite.angle = this.lane.driveDirection.carAngle;
+    this.sprite.angle = this.lane.getDrivingAngle();
   }
 
   driveInLaneUntilPosition(endPosition = 1.0, time = 500) {
