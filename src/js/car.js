@@ -1,6 +1,5 @@
 import { CAR_SCALE } from './constants';
 import { createSprite } from './pixi-help';
-import DriveDirection from './drive-direction';
 import { NO_LANE } from './lane';
 
 export default class Car {
@@ -9,7 +8,6 @@ export default class Car {
     this.sprite = createSprite(imageFile, CAR_SCALE, 0.5);
     this.sprite.zIndex = 100;
     this.lane = lane;
-    this.driveDirection = lane.driveDirection;
   }
 
   get x() {
@@ -46,7 +44,6 @@ export default class Car {
   }
 
   forceLaneDirection() {
-    this.driveDirection = this.lane.driveDirection;
     this.sprite.angle = this.lane.getDrivingAngle();
   }
 
