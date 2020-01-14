@@ -68,14 +68,6 @@ export default class Car {
     });
   }
 
-  turnAround() {
-    this.driveDirection = new DriveDirection(
-      360 - this.driveDirection.carAngle,
-      -this.driveDirection.speedX,
-      -this.driveDirection.speedY
-    );
-  }
-
   crossLane() {
     this.placeInLane(this.lane.oppositeLane, 1 - this.lane.getCarPosition(this), false);
   }
