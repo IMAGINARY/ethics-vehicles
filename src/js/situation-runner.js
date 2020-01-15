@@ -16,7 +16,6 @@ export default class SituationRunner {
     this.currentDecision = situation.getDecisions()[policyID];
     this.view.agentCar.hide();
     situation.setup()
-      .then(() => this.view.agentCar.show())
       .then(() => situation.start())
       .then(() => situation.wait(1000))
       .then(() => this.showElementsInfo(situation.getElements()))
