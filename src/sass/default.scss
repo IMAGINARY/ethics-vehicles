@@ -28,14 +28,21 @@ body {
 }
 
 .info_element {
-  width: 190px;
-  height: 190px;
-  margin: 4px;
+  width: 178px;
+  height: 178px;
+  margin: 2px;
   float: left;
-  background-color:#D0D0D0F0;
+  background-color: #D0D0D0F0;
   z-index: 100;
-  border-radius: 25px;
+  border-radius: 20px;
   visibility: hidden;
+  padding: 8px;
+}
+
+h3 {
+  font-size: 18px;
+  margin: 0 0 2px 0;
+  text-decoration: underline;
 }
 
 .info_description {
