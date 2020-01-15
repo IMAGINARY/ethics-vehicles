@@ -55,13 +55,14 @@ export default class SituationRunner {
   }
 
   showElementsInfo(elements) {
-    return new Promise((resolve) => {
-      elements.forEach((element, index) => {
+    var promise = new Promise( (r) => r('start fades') );
+    elements.forEach((element, index) => {
+      promise = promise.then( r => {
         this.highlight(element.sprite, element.color);
-        this.infoBoxes.show(element.text, index);
-      });
-      resolve('highlight');
+        return this.infoBoxes.fadeShow(index, element.text, 1000);
+       });
     });
+   return promise;
   }
 
   hideElementsInfo() {
