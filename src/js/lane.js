@@ -1,6 +1,6 @@
 /* globals PIXI */
 import DriveDirection from './drive-direction';
-import { POINT_ZERO } from './pixi-help';
+import { POINT_ZERO, vectorBetweenPoints } from './pixi-help';
 
 PIXI.Point.Lerp = function (start, end, k) {
   return new PIXI.Point(start.x + k * (end.x - start.x),
@@ -24,7 +24,7 @@ export class Lane {
   }
 
   getDrivingAngle() {
-    return this.driveDirection.carAngle;
+    return vectorBetweenPoints(this.start, this.end);
   }
 
   getPositionCoordinates(position) {

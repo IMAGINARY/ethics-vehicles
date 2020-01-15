@@ -23,6 +23,13 @@ export function highlightSprite(sprite, color) {
   return graphics;
 }
 
+export function vectorBetweenPoints(a, b) {
+  const v1 = new PIXI.Point(0, -1);
+  const v2 = new PIXI.Point(b.x - a.x, b.y - a.y);
+  const radians = Math.atan2(v2.y, v2.x) - Math.atan2(v1.y, v1.x);
+  return radians * 180 / Math.PI;
+}
+
 /**
  * 
  * @param {fraction [0,1] of the screen, horizontally, starting from left} x 
