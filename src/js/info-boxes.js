@@ -1,3 +1,7 @@
+/* globals PIXI, TWEEN */
+import { tweenOpacity } from './style-help';
+
+const INFO_BOX_OPACITY = 0.75;
 
 export default class InfoBoxes {
   constructor(htmlElement) {
@@ -11,17 +15,10 @@ export default class InfoBoxes {
   }
 
   fadeShow(index, text, time) {
+    this.show(index, text);
     var infoElement = this.infoElements[index];
-    infoElement.querySelector("#description").innerText = text;
-    infoElement.style.visibility = 'visible';
     infoElement.style.opacity = 0;
-    return new Promise ((resolve) => {
-      new TWEEN.Tween(infoElement.style)
-        .to( { opacity: 0.75 }, time)
-        .easing(TWEEN.Easing.Quadratic.Out)
-        .onComplete( () => resolve('visible') )
-        .start();
-    });
+    return tweenOpacity(infoElement, INFO_BOX_OPACITY, time);
   }
 
   hide(index) {
