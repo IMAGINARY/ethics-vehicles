@@ -169,9 +169,24 @@ function () {
 
   _createClass(InfoBoxes, [{
     key: "show",
-    value: function show(text, index) {
+    value: function show(index, text) {
       this.infoElements[index].querySelector("#description").innerText = text;
       this.infoElements[index].style.visibility = 'visible';
+    }
+  }, {
+    key: "fadeShow",
+    value: function fadeShow(index, text, time) {
+      var infoElement = this.infoElements[index];
+      infoElement.querySelector("#description").innerText = text;
+      infoElement.style.visibility = 'visible';
+      infoElement.style.opacity = 0;
+      return new Promise(function (resolve) {
+        new TWEEN.Tween(infoElement.style).to({
+          opacity: 0.75
+        }, time).easing(TWEEN.Easing.Quadratic.Out).onComplete(function () {
+          return resolve('visible');
+        }).start();
+      });
     }
   }, {
     key: "hide",
@@ -631,14 +646,27 @@ function () {
     value: function showElementsInfo(elements) {
       var _this2 = this;
 
-      return new Promise(function (resolve) {
-        elements.forEach(function (element, index) {
+      var promise = new Promise(function (r) {
+        return r('start fades');
+      });
+      elements.forEach(function (element, index) {
+        promise = promise.then(function (r) {
           _this2.highlight(element.sprite, element.color);
 
-          _this2.infoBoxes.show(element.text, index);
+          return _this2.infoBoxes.fadeShow(index, element.text, 1000);
         });
-        resolve('highlight');
       });
+      /*
+          return new Promise((resolve) => {
+            elements.forEach((element, index) => {
+              this.highlight(element.sprite, element.color);
+              this.infoBoxes.show(index, element.text, element.color);
+            });
+            resolve('highlight');
+          });
+          */
+
+      return promise;
     }
   }, {
     key: "hideElementsInfo",
