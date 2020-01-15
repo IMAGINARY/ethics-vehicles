@@ -14,8 +14,10 @@ export default class SituationRunner {
 
   run(situation, policyID) {
     this.currentDecision = situation.getDecisions()[policyID];
-    situation.setup();
-    situation.start()
+    this.view.agentCar.hide();
+    situation.setup()
+      .then(() => this.view.agentCar.show())
+      .then(() => situation.start())
       .then(() => this.waitForAdvanceButton('Information'))
       .then(() => this.showElementsInfo(situation.getElements()))
       .then(() => this.waitForAdvanceButton('Report'))
