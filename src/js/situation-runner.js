@@ -18,26 +18,22 @@ export default class SituationRunner {
     situation.setup()
       .then(() => this.view.agentCar.show())
       .then(() => situation.start())
-      .then(() => this.wait(1000))
+      .then(() => situation.wait(1000))
       .then(() => this.showElementsInfo(situation.getElements()))
       .then(() => this.waitForAdvanceButton('Analyze'))
       .then(() => this.hideElementsInfo())
 
       .then(() => this.showDecision(situation, policyID))
-      .then(() => this.wait(1000))
+      .then(() => situation.wait(1000))
       .then(() => this.waitForAdvanceButton('Show'))
       .then(() => this.hideDecision())
 
       .then(() => this.playOutDecision())
-      .then(() => this.wait(1000))
+      .then(() => situation.wait(1000))
       .then(() => this.waitForAdvanceButton('Restart'))
       .then(() => situation.clearSprites())
       .then(() => situation.teardown())
       .then(() => this.view.startIdleAnimation());
-  }
-
-  wait(time = 1000) {
-    return new Promise( resolve => setTimeout(resolve, time) );
   }
 
   waitForAdvanceButton(text = 'Next') {
