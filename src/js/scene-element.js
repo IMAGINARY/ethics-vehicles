@@ -1,4 +1,5 @@
-import { createSprite, POINT_ZERO } from './pixi-help';
+/* globals TWEEN */
+import { createSprite, pixiFadeIn, POINT_ZERO } from './pixi-help';
 import { CAR_SCALE } from './constants';
 
 export default class SceneElement {
@@ -9,6 +10,12 @@ export default class SceneElement {
     this.sprite.y = position.y;
     this.initialPosition = position;
     this.visible = false;
+  }
+
+  fadeIn(time) {
+    this.show();
+    this.sprite.alpha = 0;
+    return pixiFadeIn(this.sprite, 1, time);
   }
 
   show() {

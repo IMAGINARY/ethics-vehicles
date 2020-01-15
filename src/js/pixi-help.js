@@ -46,4 +46,15 @@ export function moveToFraction(sprite, x, y) {
   sprite.y = pos.y;
 }
 
+export function pixiFadeIn(element, toOpacity, time = 1000) {
+  return new Promise ((resolve) => {
+      new TWEEN.Tween(element)
+          .to( { alpha: toOpacity }, time)
+          .easing(TWEEN.Easing.Quadratic.Out)
+          .onComplete( () => resolve('visible') )
+          .start();
+  });
+}
+
+
 export const POINT_ZERO = new PIXI.Point(0, 0);
