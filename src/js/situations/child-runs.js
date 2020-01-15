@@ -40,8 +40,14 @@ export default class ChildRunsSituation extends Situation {
   getElements() {
     return [
       {
-        sprite: this.ambulance.sprite,
+        sprite: this.view.agentCar.sprite,
         color: 0x3220DE,
+        name: 'Autonomous car',
+        description: 'About to cross the intersection with green light.',
+      },
+      {
+        sprite: this.ambulance.sprite,
+        color: 0xDE3220,
         name: 'Ambulance',
         description: 'Carrying a patient to the hospital',
       },
@@ -49,7 +55,7 @@ export default class ChildRunsSituation extends Situation {
         sprite: this.child.sprite,
         color: 0xDE3220,
         name: 'Child',
-        description: 'Suddenly run in the street',
+        description: 'Suddenly runs in the street',
       },
       {
         sprite: this.crossingCar.sprite,
