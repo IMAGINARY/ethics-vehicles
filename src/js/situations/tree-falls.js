@@ -39,9 +39,9 @@ export default class TreeFallsSituation extends Situation {
 
   setup() {
     this.tree.reset();
-    this.tree.show();
     this.waterPuddle.reset();
-    this.waterPuddle.show();
+    return this.tree.fadeIn(250)
+      .then( () => this.waterPuddle.fadeIn(250));
   }
 
   start() {
