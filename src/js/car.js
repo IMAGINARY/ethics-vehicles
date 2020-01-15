@@ -59,6 +59,19 @@ export default class Car {
       .start();
     });
   }
+ 
+  advanceAndTurn(offsetPosition, offsetAngle = 0, time = 1000, easing = TWEEN.Easing.Linear.None) {
+    return new Promise( (resolve) => {
+      new TWEEN.Tween(this)
+        .to( { x: this.x + offsetPosition.x,
+               y: this.y + offsetPosition.y,
+              angle: this.angle + offsetAngle},
+              time)
+        .easing(easing)
+        .onComplete( () => resolve('crash') )
+        .start();
+    });
+  }
 
   crossLane() {
     this.placeInLane(this.lane.oppositeLane, 1 - this.lane.getCarPosition(this), false);
