@@ -4,6 +4,7 @@ import Car from '../car';
 import Situation from '../situation';
 import { LANES } from '../lanes';
 import { screenPosFromFraction, pixiMoveTo } from '../pixi-help';
+import { STREET_LANE_OFFSET } from '../constants';
 
 const AGENT_LANE = 4;
 const CROSSING_CAR_POSITION = 1/4;
@@ -16,6 +17,7 @@ const SETUP_TIME = 1500;
 const CROSSING_CAR_DELAY = 1000;
 const AMBULANCE_DELAY = 400;
 const CHILD_DELAY = 1000;
+const CRASH_TIME = 250;
 
 export default class ChildRunsSituation extends Situation {
   constructor(view) {
@@ -92,11 +94,22 @@ export default class ChildRunsSituation extends Situation {
   }
 
   decisionAdvance() {
-    return this.view.agentCar.driveInLaneUntilPosition(0.75, 250);
+    return this.view.agentCar.driveInLaneUntilPosition(0.75, CRASH_TIME);
   }
 
   decisionCrashCrossingCar() {
-    this.view.agentCar.crossLane();
+    const carMovement = new Promise( (resolve) => {
+      new TWEEN.Tween(this.view.agentCar)
+        .to( { x: this.view.agentCar.x - STREET_LANE_OFFSET,
+               y: this.view.agentCar.y + STREET_LANE_OFFSET * 1.5,
+              angle: this.view.agentCar.angle - 60},
+              CRASH_TIME)
+        .easing(TWEEN.Easing.Quadratic.Out)
+        .onComplete( () => resolve('crash') )
+        .start();
+    });
+    const crossingCarMovement = this.crossingCar.driveInLaneUntilPosition(1/4 + 1/16, CRASH_TIME);
+    return Promise.all([carMovement, crossingCarMovement]);
   }
 
   getDescription() {
