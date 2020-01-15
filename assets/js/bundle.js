@@ -10,11 +10,7 @@ var _constants = require("./constants");
 
 var _pixiHelp = require("./pixi-help");
 
-var _driveDirection = _interopRequireDefault(require("./drive-direction"));
-
 var _lane = require("./lane");
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -34,16 +30,9 @@ function () {
     this.sprite = (0, _pixiHelp.createSprite)(imageFile, _constants.CAR_SCALE, 0.5);
     this.sprite.zIndex = 100;
     this.lane = lane;
-    this.driveDirection = lane.driveDirection;
   }
 
   _createClass(Car, [{
-    key: "update",
-    value: function update(elapsed) {
-      this.x += this.driveDirection.carSpeed.x * elapsed;
-      this.y += this.driveDirection.carSpeed.y * elapsed;
-    }
-  }, {
     key: "placeInLane",
     value: function placeInLane(lane) {
       var position = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0.0;
@@ -59,8 +48,7 @@ function () {
   }, {
     key: "forceLaneDirection",
     value: function forceLaneDirection() {
-      this.driveDirection = this.lane.driveDirection;
-      this.sprite.angle = this.lane.driveDirection.carAngle;
+      this.sprite.angle = this.lane.getDrivingAngle();
     }
   }, {
     key: "driveInLaneUntilPosition",
@@ -78,11 +66,6 @@ function () {
           return resolve('arrived');
         }).start();
       });
-    }
-  }, {
-    key: "turnAround",
-    value: function turnAround() {
-      this.driveDirection = new _driveDirection["default"](360 - this.driveDirection.carAngle, -this.driveDirection.speedX, -this.driveDirection.speedY);
     }
   }, {
     key: "crossLane",
@@ -130,19 +113,21 @@ function () {
 
 exports["default"] = Car;
 
-},{"./constants":2,"./drive-direction":3,"./lane":5,"./pixi-help":8}],2:[function(require,module,exports){
+},{"./constants":2,"./lane":4,"./pixi-help":7}],2:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.SPRITE_WIDTH = exports.STREET_LANE_OFFSET = exports.BORDER_BLOCK_SIZE = exports.BLOCK_SIZE = exports.STREET_WIDTH = exports.STREET_Y_OFFSET = exports.STREET_X_OFFSET = exports.DEFAULT_SPEED = exports.VIEW_SIZE = exports.CAR_SCALE = void 0;
+exports.SPRITE_WIDTH = exports.STREET_LANE_OFFSET = exports.BORDER_BLOCK_SIZE = exports.BLOCK_SIZE = exports.STREET_WIDTH = exports.STREET_Y_OFFSET = exports.STREET_X_OFFSET = exports.IDLE_ANIMATION_TIME = exports.DEFAULT_SPEED = exports.VIEW_SIZE = exports.CAR_SCALE = void 0;
 var CAR_SCALE = 0.25;
 exports.CAR_SCALE = CAR_SCALE;
 var VIEW_SIZE = 1024;
 exports.VIEW_SIZE = VIEW_SIZE;
 var DEFAULT_SPEED = 15;
 exports.DEFAULT_SPEED = DEFAULT_SPEED;
+var IDLE_ANIMATION_TIME = 2000;
+exports.IDLE_ANIMATION_TIME = IDLE_ANIMATION_TIME;
 var STREET_X_OFFSET = VIEW_SIZE / 2 - 176;
 exports.STREET_X_OFFSET = STREET_X_OFFSET;
 var STREET_Y_OFFSET = VIEW_SIZE / 2 - 176;
@@ -159,53 +144,6 @@ var SPRITE_WIDTH = 256 * CAR_SCALE;
 exports.SPRITE_WIDTH = SPRITE_WIDTH;
 
 },{}],3:[function(require,module,exports){
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports["default"] = void 0;
-
-var _constants = require("./constants");
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-var DriveDirection =
-/*#__PURE__*/
-function () {
-  function DriveDirection(carAngle, speedX, speedY) {
-    _classCallCheck(this, DriveDirection);
-
-    this.carAngle = carAngle;
-    this.carSpeed = new PIXI.Point(speedX, speedY);
-  }
-
-  _createClass(DriveDirection, [{
-    key: "isVertical",
-    value: function isVertical() {
-      return this.carSpeed.x === 0;
-    }
-  }, {
-    key: "isHorizontal",
-    value: function isHorizontal() {
-      return this.carSpeed.y === 0;
-    }
-  }]);
-
-  return DriveDirection;
-}();
-
-exports["default"] = DriveDirection;
-DriveDirection.LEFT = new DriveDirection(270, -_constants.DEFAULT_SPEED, 0);
-DriveDirection.RIGHT = new DriveDirection(90, _constants.DEFAULT_SPEED, 0);
-DriveDirection.UP = new DriveDirection(0, 0, -_constants.DEFAULT_SPEED);
-DriveDirection.DOWN = new DriveDirection(180, 0, _constants.DEFAULT_SPEED);
-
-},{"./constants":2}],4:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -256,7 +194,7 @@ function () {
 
 exports["default"] = InfoBoxes;
 
-},{}],5:[function(require,module,exports){
+},{}],4:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -264,11 +202,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.NO_LANE = exports.Lane = void 0;
 
-var _driveDirection = _interopRequireDefault(require("./drive-direction"));
-
 var _pixiHelp = require("./pixi-help");
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -283,24 +217,28 @@ PIXI.Point.Lerp = function (start, end, k) {
 var Lane =
 /*#__PURE__*/
 function () {
-  function Lane(start, end, driveDirection) {
+  function Lane(start, end) {
     _classCallCheck(this, Lane);
 
     this.start = start;
     this.end = end;
-    this.driveDirection = driveDirection;
     this.oppositeLane = null;
   }
 
   _createClass(Lane, [{
     key: "isVertical",
     value: function isVertical() {
-      return this.driveDirection.isVertical();
+      return this.start.x == this.end.x;
     }
   }, {
     key: "isHorizontal",
     value: function isHorizontal() {
-      return this.driveDirection.isHorizontal();
+      return this.start.y == this.end.y;
+    }
+  }, {
+    key: "getDrivingAngle",
+    value: function getDrivingAngle() {
+      return (0, _pixiHelp.vectorBetweenPoints)(this.start, this.end);
     }
   }, {
     key: "getPositionCoordinates",
@@ -322,10 +260,10 @@ function () {
 }();
 
 exports.Lane = Lane;
-var NO_LANE = new Lane(_pixiHelp.POINT_ZERO, new PIXI.Point(1, 0), _driveDirection["default"].RIGHT);
+var NO_LANE = new Lane(_pixiHelp.POINT_ZERO, new PIXI.Point(1, 0));
 exports.NO_LANE = NO_LANE;
 
-},{"./drive-direction":3,"./pixi-help":8}],6:[function(require,module,exports){
+},{"./pixi-help":7}],5:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -335,25 +273,19 @@ exports.LANES = void 0;
 
 var _lane = require("./lane");
 
-var _driveDirection = _interopRequireDefault(require("./drive-direction"));
-
 var _constants = require("./constants");
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-
 /* globals PIXI */
-function createHorizontalLane(verticalOffset, driveDirection) {
-  var dirMultiplier = driveDirection.carSpeed.x > 0 ? -1 : 1;
-  return new _lane.Lane(new PIXI.Point(_constants.VIEW_SIZE / 2 * dirMultiplier, -verticalOffset), new PIXI.Point(-(_constants.VIEW_SIZE / 2) * dirMultiplier, -verticalOffset), driveDirection);
+function createHorizontalLane(verticalOffset, dirMultiplier) {
+  return new _lane.Lane(new PIXI.Point(_constants.VIEW_SIZE / 2 * dirMultiplier, -verticalOffset), new PIXI.Point(-(_constants.VIEW_SIZE / 2) * dirMultiplier, -verticalOffset));
 }
 
-function createVerticalLane(horizontalOffset, driveDirection) {
-  var dirMultiplier = driveDirection.carSpeed.y > 0 ? -1 : 1;
-  return new _lane.Lane(new PIXI.Point(-horizontalOffset, _constants.VIEW_SIZE / 2 * dirMultiplier), new PIXI.Point(-horizontalOffset, -(_constants.VIEW_SIZE / 2) * dirMultiplier), driveDirection);
+function createVerticalLane(horizontalOffset, dirMultiplier) {
+  return new _lane.Lane(new PIXI.Point(-horizontalOffset, _constants.VIEW_SIZE / 2 * dirMultiplier), new PIXI.Point(-horizontalOffset, -(_constants.VIEW_SIZE / 2) * dirMultiplier));
 } // eslint-disable-next-line import/prefer-default-export
 
 
-var LANES = [createVerticalLane(_constants.STREET_X_OFFSET - _constants.STREET_LANE_OFFSET, _driveDirection["default"].UP), createVerticalLane(_constants.STREET_X_OFFSET + _constants.STREET_LANE_OFFSET, _driveDirection["default"].DOWN), createVerticalLane(-_constants.STREET_X_OFFSET - _constants.STREET_LANE_OFFSET, _driveDirection["default"].UP), createVerticalLane(-_constants.STREET_X_OFFSET + _constants.STREET_LANE_OFFSET, _driveDirection["default"].DOWN), createHorizontalLane(_constants.STREET_Y_OFFSET + _constants.STREET_LANE_OFFSET, _driveDirection["default"].LEFT), createHorizontalLane(_constants.STREET_Y_OFFSET - _constants.STREET_LANE_OFFSET, _driveDirection["default"].RIGHT), createHorizontalLane(-_constants.STREET_Y_OFFSET + _constants.STREET_LANE_OFFSET, _driveDirection["default"].LEFT), createHorizontalLane(-_constants.STREET_Y_OFFSET - _constants.STREET_LANE_OFFSET, _driveDirection["default"].RIGHT)];
+var LANES = [createVerticalLane(_constants.STREET_X_OFFSET - _constants.STREET_LANE_OFFSET, 1), createVerticalLane(_constants.STREET_X_OFFSET + _constants.STREET_LANE_OFFSET, -1), createVerticalLane(-_constants.STREET_X_OFFSET - _constants.STREET_LANE_OFFSET, 1), createVerticalLane(-_constants.STREET_X_OFFSET + _constants.STREET_LANE_OFFSET, -1), createHorizontalLane(_constants.STREET_Y_OFFSET + _constants.STREET_LANE_OFFSET, 1), createHorizontalLane(_constants.STREET_Y_OFFSET - _constants.STREET_LANE_OFFSET, -1), createHorizontalLane(-_constants.STREET_Y_OFFSET + _constants.STREET_LANE_OFFSET, 1), createHorizontalLane(-_constants.STREET_Y_OFFSET - _constants.STREET_LANE_OFFSET, -1)];
 exports.LANES = LANES;
 
 function setOppositeLanes(laneA, laneB) {
@@ -368,7 +300,7 @@ setOppositeLanes(LANES[2], LANES[3]);
 setOppositeLanes(LANES[4], LANES[5]);
 setOppositeLanes(LANES[6], LANES[7]);
 
-},{"./constants":2,"./drive-direction":3,"./lane":5}],7:[function(require,module,exports){
+},{"./constants":2,"./lane":4}],6:[function(require,module,exports){
 "use strict";
 
 var _view = _interopRequireDefault(require("./view"));
@@ -412,7 +344,7 @@ view.app.ticker.add(function () {
   return TWEEN.update();
 });
 
-},{"./info-boxes":4,"./report":10,"./situation":13,"./situation-runner":12,"./situations/car-enters-lane":14,"./situations/child-runs":15,"./situations/tree-falls":16,"./view":17}],8:[function(require,module,exports){
+},{"./info-boxes":3,"./report":9,"./situation":12,"./situation-runner":11,"./situations/car-enters-lane":13,"./situations/child-runs":14,"./situations/tree-falls":15,"./view":16}],7:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -420,6 +352,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.createSprite = createSprite;
 exports.highlightSprite = highlightSprite;
+exports.vectorBetweenPoints = vectorBetweenPoints;
 exports.screenPosFromFraction = screenPosFromFraction;
 exports.moveToFraction = moveToFraction;
 exports.POINT_ZERO = void 0;
@@ -444,6 +377,13 @@ function highlightSprite(sprite, color) {
   graphics.endFill();
   return graphics;
 }
+
+function vectorBetweenPoints(a, b) {
+  var v1 = new PIXI.Point(0, -1);
+  var v2 = new PIXI.Point(b.x - a.x, b.y - a.y);
+  var radians = Math.atan2(v2.y, v2.x) - Math.atan2(v1.y, v1.x);
+  return radians * 180 / Math.PI;
+}
 /**
  * 
  * @param {fraction [0,1] of the screen, horizontally, starting from left} x 
@@ -464,7 +404,7 @@ function moveToFraction(sprite, x, y) {
 var POINT_ZERO = new PIXI.Point(0, 0);
 exports.POINT_ZERO = POINT_ZERO;
 
-},{"./constants":2}],9:[function(require,module,exports){
+},{"./constants":2}],8:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -488,7 +428,7 @@ var Policies = {
 };
 exports.Policies = Policies;
 
-},{}],10:[function(require,module,exports){
+},{}],9:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -536,7 +476,7 @@ function () {
 
 exports["default"] = Report;
 
-},{}],11:[function(require,module,exports){
+},{}],10:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -597,7 +537,7 @@ function () {
 
 exports["default"] = SceneElement;
 
-},{"./constants":2,"./pixi-help":8}],12:[function(require,module,exports){
+},{"./constants":2,"./pixi-help":7}],11:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -636,29 +576,43 @@ function () {
       this.currentDecision = situation.getDecisions()[policyID];
       situation.setup();
       situation.start().then(function () {
-        return _this.waitForKeyPress();
+        return _this.waitForAdvanceButton('Information');
       }).then(function () {
         return _this.showElementsInfo(situation.getElements());
       }).then(function () {
-        return _this.waitForKeyPress();
+        return _this.waitForAdvanceButton('Report');
       }).then(function () {
         return _this.hideElementsInfo();
       }).then(function () {
         return _this.showDecision(situation, policyID);
       }).then(function () {
-        return _this.waitForKeyPress();
+        return _this.waitForAdvanceButton('Resolution');
       }).then(function () {
         return _this.hideDecision();
       }).then(function () {
         return _this.playOutDecision();
       }).then(function () {
-        return _this.waitForKeyPress();
+        return _this.waitForAdvanceButton('Restart');
       }).then(function () {
         return situation.clearSprites();
       }).then(function () {
         return situation.teardown();
       }).then(function () {
         return _this.view.startIdleAnimation();
+      });
+    }
+  }, {
+    key: "waitForAdvanceButton",
+    value: function waitForAdvanceButton() {
+      var text = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'Next';
+      return new Promise(function (resolve) {
+        $('#advanceText').text(text);
+        var button = $('#advanceButton');
+        button.show();
+        button.on('click', function () {
+          button.hide();
+          resolve('clicked');
+        });
       });
     }
   }, {
@@ -742,7 +696,7 @@ function () {
 
 exports["default"] = SituationRunner;
 
-},{"./pixi-help":8,"./policies":9}],13:[function(require,module,exports){
+},{"./pixi-help":7,"./policies":8}],12:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -818,7 +772,7 @@ function () {
 exports["default"] = Situation;
 Situation.situations = {};
 
-},{}],14:[function(require,module,exports){
+},{}],13:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -1016,7 +970,7 @@ exports["default"] = CarEntersLaneSituation;
 
 _situation["default"].registerSituation('car-enters-lane', CarEntersLaneSituation);
 
-},{"../car":1,"../constants":2,"../lanes":6,"../scene-element":11,"../situation":13}],15:[function(require,module,exports){
+},{"../car":1,"../constants":2,"../lanes":5,"../scene-element":10,"../situation":12}],14:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -1199,7 +1153,7 @@ exports["default"] = ChildRunsSituation;
 
 _situation["default"].registerSituation('child-runs', ChildRunsSituation);
 
-},{"../car":1,"../lanes":6,"../pixi-help":8,"../scene-element":11,"../situation":13}],16:[function(require,module,exports){
+},{"../car":1,"../lanes":5,"../pixi-help":7,"../scene-element":10,"../situation":12}],15:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -1409,7 +1363,7 @@ exports["default"] = TreeFallsSituation;
 
 _situation["default"].registerSituation('tree-falls', TreeFallsSituation);
 
-},{"../car":1,"../constants":2,"../lanes":6,"../pixi-help":8,"../scene-element":11,"../situation":13}],17:[function(require,module,exports){
+},{"../car":1,"../constants":2,"../lanes":5,"../pixi-help":7,"../scene-element":10,"../situation":12}],16:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -1457,7 +1411,7 @@ function () {
     this.debugLayer = new _sceneElement["default"](this, 'assets/images/debug.png', _pixiHelp.POINT_ZERO, 1);
     this.agentCar = new _car["default"](this, 'assets/images/car.png');
     this.background.show();
-    this.debugLayer.show();
+    this.debugLayer.hide();
 
     this.afterIdleAction = function () {};
   }
@@ -1470,7 +1424,7 @@ function () {
       this.agentCar.hide();
       this.agentCar.show();
       this.agentCar.placeInLane(currentLane, 0, true);
-      return this.agentCar.driveInLaneUntilPosition(1.0);
+      return this.agentCar.driveInLaneUntilPosition(1.0, _constants.IDLE_ANIMATION_TIME);
     }
   }, {
     key: "startIdleAnimation",
@@ -1494,4 +1448,4 @@ function () {
 
 exports["default"] = View;
 
-},{"./car":1,"./constants":2,"./lanes":6,"./pixi-help":8,"./scene-element":11}]},{},[7]);
+},{"./car":1,"./constants":2,"./lanes":5,"./pixi-help":7,"./scene-element":10}]},{},[6]);
