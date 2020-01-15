@@ -8,10 +8,9 @@ PIXI.Point.Lerp = function (start, end, k) {
 }
 
 export class Lane {
-  constructor(start, end, driveDirection) {
+  constructor(start, end) {
     this.start = start;
     this.end = end;
-    this.driveDirection = driveDirection;
     this.oppositeLane = null;
   }
 

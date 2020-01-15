@@ -9,16 +9,14 @@ function createHorizontalLane(verticalOffset, driveDirection) {
   const dirMultiplier = driveDirection.carSpeed.x > 0 ? -1 : 1;
   return new Lane(
     new PIXI.Point( (VIEW_SIZE/2) * dirMultiplier, -verticalOffset),
-    new PIXI.Point(-(VIEW_SIZE/2) * dirMultiplier, -verticalOffset),
-    driveDirection);
+    new PIXI.Point(-(VIEW_SIZE/2) * dirMultiplier, -verticalOffset));
 }
 
 function createVerticalLane(horizontalOffset, driveDirection) {
   const dirMultiplier = driveDirection.carSpeed.y > 0 ? -1 : 1;
   return new Lane(
     new PIXI.Point(-horizontalOffset,  (VIEW_SIZE/2) * dirMultiplier),
-    new PIXI.Point(-horizontalOffset, -(VIEW_SIZE/2) * dirMultiplier),
-    driveDirection);
+    new PIXI.Point(-horizontalOffset, -(VIEW_SIZE/2) * dirMultiplier));
 }
 
 // eslint-disable-next-line import/prefer-default-export
