@@ -151,11 +151,15 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports["default"] = void 0;
 
+var _styleHelp = require("./style-help");
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+var INFO_BOX_OPACITY = 0.75;
 
 var InfoBoxes =
 /*#__PURE__*/
@@ -176,17 +180,10 @@ function () {
   }, {
     key: "fadeShow",
     value: function fadeShow(index, text, time) {
+      this.show(index, text);
       var infoElement = this.infoElements[index];
-      infoElement.querySelector("#description").innerText = text;
-      infoElement.style.visibility = 'visible';
       infoElement.style.opacity = 0;
-      return new Promise(function (resolve) {
-        new TWEEN.Tween(infoElement.style).to({
-          opacity: 0.75
-        }, time).easing(TWEEN.Easing.Quadratic.Out).onComplete(function () {
-          return resolve('visible');
-        }).start();
-      });
+      return (0, _styleHelp.tweenOpacity)(infoElement, INFO_BOX_OPACITY, time);
     }
   }, {
     key: "hide",
@@ -209,7 +206,7 @@ function () {
 
 exports["default"] = InfoBoxes;
 
-},{}],4:[function(require,module,exports){
+},{"./style-help":16}],4:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -359,7 +356,7 @@ view.app.ticker.add(function () {
   return TWEEN.update();
 });
 
-},{"./info-boxes":3,"./report":9,"./situation":12,"./situation-runner":11,"./situations/car-enters-lane":13,"./situations/child-runs":14,"./situations/tree-falls":15,"./view":16}],7:[function(require,module,exports){
+},{"./info-boxes":3,"./report":9,"./situation":12,"./situation-runner":11,"./situations/car-enters-lane":13,"./situations/child-runs":14,"./situations/tree-falls":15,"./view":17}],7:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -370,6 +367,7 @@ exports.highlightSprite = highlightSprite;
 exports.vectorBetweenPoints = vectorBetweenPoints;
 exports.screenPosFromFraction = screenPosFromFraction;
 exports.moveToFraction = moveToFraction;
+exports.pixiFadeIn = pixiFadeIn;
 exports.POINT_ZERO = void 0;
 
 var _constants = require("./constants");
@@ -414,6 +412,17 @@ function moveToFraction(sprite, x, y) {
   var pos = screenPosFromFraction(x, y);
   sprite.x = pos.x;
   sprite.y = pos.y;
+}
+
+function pixiFadeIn(element, toOpacity) {
+  var time = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 1000;
+  return new Promise(function (resolve) {
+    new TWEEN.Tween(element).to({
+      alpha: toOpacity
+    }, time).easing(TWEEN.Easing.Quadratic.Out).onComplete(function () {
+      return resolve('visible');
+    }).start();
+  });
 }
 
 var POINT_ZERO = new PIXI.Point(0, 0);
@@ -527,6 +536,13 @@ function () {
   }
 
   _createClass(SceneElement, [{
+    key: "fadeIn",
+    value: function fadeIn(time) {
+      this.show();
+      this.sprite.alpha = 0;
+      return (0, _pixiHelp.pixiFadeIn)(this.sprite, 1, time);
+    }
+  }, {
     key: "show",
     value: function show() {
       this.view.container.addChild(this.sprite);
@@ -589,23 +605,31 @@ function () {
       var _this = this;
 
       this.currentDecision = situation.getDecisions()[policyID];
-      situation.setup();
-      situation.start().then(function () {
-        return _this.waitForAdvanceButton('Information');
+      this.view.agentCar.hide();
+      situation.setup().then(function () {
+        return _this.view.agentCar.show();
+      }).then(function () {
+        return situation.start();
+      }).then(function () {
+        return _this.wait(1000);
       }).then(function () {
         return _this.showElementsInfo(situation.getElements());
       }).then(function () {
-        return _this.waitForAdvanceButton('Report');
+        return _this.waitForAdvanceButton('Analyze');
       }).then(function () {
         return _this.hideElementsInfo();
       }).then(function () {
         return _this.showDecision(situation, policyID);
       }).then(function () {
-        return _this.waitForAdvanceButton('Resolution');
+        return _this.wait(1000);
+      }).then(function () {
+        return _this.waitForAdvanceButton('Show');
       }).then(function () {
         return _this.hideDecision();
       }).then(function () {
         return _this.playOutDecision();
+      }).then(function () {
+        return _this.wait(1000);
       }).then(function () {
         return _this.waitForAdvanceButton('Restart');
       }).then(function () {
@@ -614,6 +638,14 @@ function () {
         return situation.teardown();
       }).then(function () {
         return _this.view.startIdleAnimation();
+      });
+    }
+  }, {
+    key: "wait",
+    value: function wait() {
+      var time = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1000;
+      return new Promise(function (resolve) {
+        return setTimeout(resolve, time);
       });
     }
   }, {
@@ -656,16 +688,6 @@ function () {
           return _this2.infoBoxes.fadeShow(index, element.text, 1000);
         });
       });
-      /*
-          return new Promise((resolve) => {
-            elements.forEach((element, index) => {
-              this.highlight(element.sprite, element.color);
-              this.infoBoxes.show(index, element.text, element.color);
-            });
-            resolve('highlight');
-          });
-          */
-
       return promise;
     }
   }, {
@@ -1250,10 +1272,13 @@ function (_Situation) {
   _createClass(TreeFallsSituation, [{
     key: "setup",
     value: function setup() {
+      var _this2 = this;
+
       this.tree.reset();
-      this.tree.show();
       this.waterPuddle.reset();
-      this.waterPuddle.show();
+      return this.tree.fadeIn(250).then(function () {
+        return _this2.waterPuddle.fadeIn(250);
+      });
     }
   }, {
     key: "start",
@@ -1290,25 +1315,25 @@ function (_Situation) {
   }, {
     key: "getDecisions",
     value: function getDecisions() {
-      var _this2 = this;
+      var _this3 = this;
 
       return {
         humanist: {
           text: 'a sudden break would send the passenger without seatbelt forward through the glass, potentially killing them. Swerving might avoid the collision with the tree, but could also harm the passenger. Solution: turn right and break, crashing into the tree softly, with the passenger without seatbelt protected by the one on its side and by its airbag.',
           actionFunction: function actionFunction() {
-            return _this2.softlyCrashTree();
+            return _this3.softlyCrashTree();
           }
         },
         profit: {
           text: 'Crashing with the tree will cost the insurers money. Swerving might avoid the collision with the tree, but as the floor is wet it could also potentially turn around the car, damaging it. As the car has warned the passenger to wear the seat belt but they have not, any injury will be their own responsibility. Changing lanes would kill the cyclist, but its insurance status is unknown, so its a financial risk. Solution: a sudden break, fully protecting the car and passengers that wear a seat belt.',
           actionFunction: function actionFunction() {
-            return _this2.fullBreak();
+            return _this3.fullBreak();
           }
         },
         protector: {
           text: 'Crashing with the tree or swerving would hurt the passenger without seatbelt. Solution: slow down and change lanes, potentially killing the cyclist but saving all passengers.',
           actionFunction: function actionFunction() {
-            return _this2.crashCyclist();
+            return _this3.crashCyclist();
           }
         }
       };
@@ -1334,12 +1359,12 @@ function (_Situation) {
   }, {
     key: "fellTree",
     value: function fellTree() {
-      var _this3 = this;
+      var _this4 = this;
 
       return new Promise(function (resolve) {
-        new TWEEN.Tween(_this3.tree.sprite).to({
+        new TWEEN.Tween(_this4.tree.sprite).to({
           angle: 90,
-          x: _this3.tree.sprite.x + _constants.STREET_LANE_OFFSET * 1.5
+          x: _this4.tree.sprite.x + _constants.STREET_LANE_OFFSET * 1.5
         }, SETUP_TIME - TREE_FALL_TIME).easing(TWEEN.Easing.Quadratic.In).delay(TREE_FALL_TIME).onComplete(function () {
           return resolve('fell');
         }).start();
@@ -1348,13 +1373,13 @@ function (_Situation) {
   }, {
     key: "crashCyclist",
     value: function crashCyclist() {
-      var _this4 = this;
+      var _this5 = this;
 
       var carMovement = new Promise(function (resolve) {
-        new TWEEN.Tween(_this4.view.agentCar).to({
-          x: _this4.view.agentCar.x + _constants.STREET_LANE_OFFSET * 2,
-          y: _this4.view.agentCar.y + _constants.STREET_LANE_OFFSET * 2,
-          angle: _this4.view.agentCar.angle - 45
+        new TWEEN.Tween(_this5.view.agentCar).to({
+          x: _this5.view.agentCar.x + _constants.STREET_LANE_OFFSET * 2,
+          y: _this5.view.agentCar.y + _constants.STREET_LANE_OFFSET * 2,
+          angle: _this5.view.agentCar.angle - 45
         }, CRASH_TIME).easing(TWEEN.Easing.Quadratic.Out).onComplete(function () {
           return resolve('crash');
         }).start();
@@ -1370,13 +1395,13 @@ function (_Situation) {
   }, {
     key: "softlyCrashTree",
     value: function softlyCrashTree() {
-      var _this5 = this;
+      var _this6 = this;
 
       return new Promise(function (resolve) {
-        new TWEEN.Tween(_this5.view.agentCar).to({
-          x: _this5.view.agentCar.x - _constants.STREET_LANE_OFFSET,
-          y: _this5.view.agentCar.y + _constants.STREET_LANE_OFFSET * 2,
-          angle: _this5.view.agentCar.angle + 70
+        new TWEEN.Tween(_this6.view.agentCar).to({
+          x: _this6.view.agentCar.x - _constants.STREET_LANE_OFFSET,
+          y: _this6.view.agentCar.y + _constants.STREET_LANE_OFFSET * 2,
+          angle: _this6.view.agentCar.angle + 70
         }, CRASH_TIME).easing(TWEEN.Easing.Quadratic.Out).onComplete(function () {
           return resolve('crash');
         }).start();
@@ -1392,6 +1417,26 @@ exports["default"] = TreeFallsSituation;
 _situation["default"].registerSituation('tree-falls', TreeFallsSituation);
 
 },{"../car":1,"../constants":2,"../lanes":5,"../pixi-help":7,"../scene-element":10,"../situation":12}],16:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.tweenOpacity = tweenOpacity;
+
+/* globals TWEEN, PIXI */
+function tweenOpacity(element, toOpacity) {
+  var time = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 1000;
+  return new Promise(function (resolve) {
+    new TWEEN.Tween(element.style).to({
+      opacity: toOpacity
+    }, time).easing(TWEEN.Easing.Quadratic.Out).onComplete(function () {
+      return resolve('visible');
+    }).start();
+  });
+}
+
+},{}],17:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
