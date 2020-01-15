@@ -1,19 +1,16 @@
 /* globals PIXI */
 import { Lane } from './lane';
-import DriveDirection from './drive-direction';
 import {
   VIEW_SIZE, STREET_X_OFFSET, STREET_Y_OFFSET, STREET_LANE_OFFSET,
 } from './constants';
 
-function createHorizontalLane(verticalOffset, driveDirection) {
-  const dirMultiplier = driveDirection.carSpeed.x > 0 ? -1 : 1;
+function createHorizontalLane(verticalOffset, dirMultiplier) {
   return new Lane(
     new PIXI.Point( (VIEW_SIZE/2) * dirMultiplier, -verticalOffset),
     new PIXI.Point(-(VIEW_SIZE/2) * dirMultiplier, -verticalOffset));
 }
 
-function createVerticalLane(horizontalOffset, driveDirection) {
-  const dirMultiplier = driveDirection.carSpeed.y > 0 ? -1 : 1;
+function createVerticalLane(horizontalOffset, dirMultiplier) {
   return new Lane(
     new PIXI.Point(-horizontalOffset,  (VIEW_SIZE/2) * dirMultiplier),
     new PIXI.Point(-horizontalOffset, -(VIEW_SIZE/2) * dirMultiplier));
@@ -21,17 +18,17 @@ function createVerticalLane(horizontalOffset, driveDirection) {
 
 // eslint-disable-next-line import/prefer-default-export
 export const LANES = [
-  createVerticalLane(STREET_X_OFFSET - STREET_LANE_OFFSET, DriveDirection.UP),
-  createVerticalLane(STREET_X_OFFSET + STREET_LANE_OFFSET, DriveDirection.DOWN),
+  createVerticalLane(STREET_X_OFFSET - STREET_LANE_OFFSET, 1),
+  createVerticalLane(STREET_X_OFFSET + STREET_LANE_OFFSET, -1),
 
-  createVerticalLane(-STREET_X_OFFSET - STREET_LANE_OFFSET, DriveDirection.UP),
-  createVerticalLane(-STREET_X_OFFSET + STREET_LANE_OFFSET, DriveDirection.DOWN),
+  createVerticalLane(-STREET_X_OFFSET - STREET_LANE_OFFSET, 1),
+  createVerticalLane(-STREET_X_OFFSET + STREET_LANE_OFFSET, -1),
 
-  createHorizontalLane(STREET_Y_OFFSET + STREET_LANE_OFFSET, DriveDirection.LEFT),
-  createHorizontalLane(STREET_Y_OFFSET - STREET_LANE_OFFSET, DriveDirection.RIGHT),
+  createHorizontalLane(STREET_Y_OFFSET + STREET_LANE_OFFSET, 1),
+  createHorizontalLane(STREET_Y_OFFSET - STREET_LANE_OFFSET, -1),
 
-  createHorizontalLane(-STREET_Y_OFFSET + STREET_LANE_OFFSET, DriveDirection.LEFT),
-  createHorizontalLane(-STREET_Y_OFFSET - STREET_LANE_OFFSET, DriveDirection.RIGHT),
+  createHorizontalLane(-STREET_Y_OFFSET + STREET_LANE_OFFSET, 1),
+  createHorizontalLane(-STREET_Y_OFFSET - STREET_LANE_OFFSET, -1),
 ];
 
 function setOppositeLanes(laneA, laneB) {
