@@ -1,5 +1,4 @@
 /* globals PIXI */
-import DriveDirection from './drive-direction';
 import { POINT_ZERO, vectorBetweenPoints } from './pixi-help';
 
 PIXI.Point.Lerp = function (start, end, k) {
@@ -38,4 +37,4 @@ export class Lane {
   }
 }
 
-export const NO_LANE = new Lane(POINT_ZERO, new PIXI.Point(1, 0), DriveDirection.RIGHT);
+export const NO_LANE = new Lane(POINT_ZERO, new PIXI.Point(1, 0));
