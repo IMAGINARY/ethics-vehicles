@@ -45,28 +45,24 @@ export default class CarEntersLaneSituation extends Situation {
         color: 0x3220DE,
         name: 'Autonomous car',
         description: 'Property value: medium',
-        placement: 'down',
       },
       {
         sprite: this.blackCar.sprite,
         color: 0xDE3220,
         name: 'Luxury car',
         description: 'Suddenly enters your lane.<br>Property Value: high<br>Insurance: yes',
-        placement: 'up',
       },
       {
         sprite: this.truck.sprite,
         color: 0xDE3220,
         name: 'Parked car',
         description: 'Passengers: 4<br>Property value: low<br>Insurance: none',
-        placement: 'left',
       },
       {
         sprite: this.busStop.sprite,
         color: 0xDE3220,
         name: 'Bus Stop',
         description: 'People: 10<br>Property value: medium',
-        placement: 'right',
       },
     ];
   }
