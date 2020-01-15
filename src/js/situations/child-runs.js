@@ -23,7 +23,7 @@ export default class ChildRunsSituation extends Situation {
   }
 
   setup() {
-      this.child.show();
+      return this.child.show();
   }
 
   start() {

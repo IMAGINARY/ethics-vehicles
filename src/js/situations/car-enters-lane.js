@@ -24,7 +24,7 @@ export default class CarEntersLaneSituation extends Situation {
   }
 
   setup() {
-    this.busStop.show();
+    return this.busStop.show();
   }
 
   teardown() {

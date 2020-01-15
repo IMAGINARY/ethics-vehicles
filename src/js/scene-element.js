@@ -19,14 +19,20 @@ export default class SceneElement {
   }
 
   show() {
-    this.view.container.addChild(this.sprite);
-    this.visible = true;
+    return new Promise( resolve => {
+      this.view.container.addChild(this.sprite);
+      this.visible = true;
+      resolve();
+    });
   }
 
   hide() {
-    this.view.container.removeChild(this.sprite);
-    this.visible = false;
-  }
+    return new Promise( resolve => {
+      this.view.container.removeChild(this.sprite);
+      this.visible = false;
+    resolve();
+  });
+}
 
   reset() {
     this.sprite.x = this.initialPosition.x;
