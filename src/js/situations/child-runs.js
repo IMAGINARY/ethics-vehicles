@@ -117,6 +117,7 @@ export default class ChildRunsSituation extends Situation {
   }
 
   moveAgentInPosition() {
+    this.view.agentCar.show();
     this.view.agentCar.placeInLane(this.agentLane);
     return this.view.agentCar.driveInLaneUntilPosition(AGENT_CAR_POSITION, SETUP_TIME);
   }
