@@ -3,13 +3,19 @@ import SceneElement from '../scene-element';
 import Car from '../car';
 import Situation from '../situation';
 import { LANES } from '../lanes';
-import { screenPosFromFraction, moveToFraction } from '../pixi-help';
+import { screenPosFromFraction, pixiMoveTo } from '../pixi-help';
 
 const AGENT_LANE = 4;
 const CROSSING_CAR_POSITION = 1/4;
 const AGENT_CAR_POSITION = 1/2 + 1/8;
 const AMBULANCE_POSITION = 1/2 + 1/32;
 const childStartPos = screenPosFromFraction(1/4 + 1/32, 1/16);
+const childEndPos = screenPosFromFraction(9/32, 1/8);
+
+const SETUP_TIME = 1500;
+const CROSSING_CAR_DELAY = 1000;
+const AMBULANCE_DELAY = 400;
+const CHILD_DELAY = 1000;
 
 export default class ChildRunsSituation extends Situation {
   constructor(view) {
@@ -27,10 +33,12 @@ export default class ChildRunsSituation extends Situation {
   }
 
   start() {
-    return this.moveCrossingCarInPosition()
-      .then(() => this.moveAgentInPosition())
-      .then(() => this.moveAmbulanceInPosition())
-      .then(() => this.childRuns());
+    return Promise.all([
+      this.moveAgentInPosition(),
+      this.moveCrossingCarInPosition(),
+      this.moveAmbulanceInPosition(),
+      this.childRuns()
+    ]);
   }
 
   teardown() {
@@ -84,7 +92,7 @@ export default class ChildRunsSituation extends Situation {
   }
 
   decisionAdvance() {
-    return this.view.agentCar.driveInLaneUntilPosition(0.75);
+    return this.view.agentCar.driveInLaneUntilPosition(0.75, 250);
   }
 
   decisionCrashCrossingCar() {
@@ -95,28 +103,32 @@ export default class ChildRunsSituation extends Situation {
     return 'When reaching a crossing and having a green light, a child suddenly runs onto the street from behind a parked car. At the same time, an ambulance with lights and siren is coming behind you fast.';
   }
 
-  moveCrossingCarInPosition() {
-    this.addSprite(this.crossingCar.sprite);
-    this.crossingCar.placeInLane(this.oppositeLane);
-    return this.crossingCar.driveInLaneUntilPosition(CROSSING_CAR_POSITION);
-  }
-
   moveAgentInPosition() {
     this.view.agentCar.placeInLane(this.agentLane);
-    return this.view.agentCar.driveInLaneUntilPosition(AGENT_CAR_POSITION);
-}
+    return this.view.agentCar.driveInLaneUntilPosition(AGENT_CAR_POSITION, SETUP_TIME);
+  }
+
+  moveCrossingCarInPosition() {
+    return this.wait(CROSSING_CAR_DELAY).then(
+      () => {
+        this.addSprite(this.crossingCar.sprite);
+        this.crossingCar.placeInLane(this.oppositeLane);
+        return this.crossingCar.driveInLaneUntilPosition(CROSSING_CAR_POSITION, SETUP_TIME - CROSSING_CAR_DELAY);
+      });
+  }
 
   moveAmbulanceInPosition() {
-    this.addSprite(this.ambulance.sprite);
-    this.ambulance.placeInLane(this.agentLane);
-    return this.ambulance.driveInLaneUntilPosition(AMBULANCE_POSITION);
+    return this.wait(AMBULANCE_DELAY).then(
+      () => {
+        this.addSprite(this.ambulance.sprite);
+        this.ambulance.placeInLane(this.agentLane);
+        return this.ambulance.driveInLaneUntilPosition(AMBULANCE_POSITION, SETUP_TIME - AMBULANCE_DELAY)
+      });
   }
 
   childRuns() {
-    return new Promise( (resolve, reject) => {
-      moveToFraction(this.child.sprite, 9/32, 1/8);
-      resolve('ran');
-    });
+    return this.wait(CHILD_DELAY)
+               .then(() => pixiMoveTo(this.child.sprite, childEndPos, SETUP_TIME - CHILD_DELAY));
   }
 }
 
