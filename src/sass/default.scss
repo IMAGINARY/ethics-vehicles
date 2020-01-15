@@ -96,10 +96,11 @@ button {
 
 #advanceButton {
   z-index: 101;
-//  visibility: hidden;
   position: absolute;
   display: none;
   left: 340px;
-  top: 600px;
+  top: 637px;
   width: 120px;
+  border: 5px solid #407080F0;
+  border-radius: 5px 5px 0px 0px
 }
