@@ -56,5 +56,14 @@ export function pixiFadeIn(element, toOpacity, time = 1000) {
   });
 }
 
+export function pixiMoveTo(element, dest, time = 1000) {
+  return new Promise ((resolve) => {
+    new TWEEN.Tween(element)
+        .to( { x: dest.x, y: dest.y }, time)
+        .easing(TWEEN.Easing.Linear.None)
+        .onComplete( () => resolve('moved') )
+        .start();
+  });
+}
 
 export const POINT_ZERO = new PIXI.Point(0, 0);
