@@ -9,13 +9,15 @@ export default class InfoBoxes {
     this.infoElements = Array.from($('.info_element'));
   }
 
-  show(index, text) {
-    this.infoElements[index].querySelector("#description").innerText = text;
-    this.infoElements[index].style.visibility = 'visible';
+  show(index, element) {
+    var infoElement = this.infoElements[index];
+    infoElement.querySelector('#name').innerText = element.name;
+    infoElement.querySelector('#description').innerHTML = element.description;
+    infoElement.style.visibility = 'visible';
   }
 
-  fadeShow(index, text, time) {
-    this.show(index, text);
+  fadeShow(index, element, time) {
+    this.show(index, element);
     var infoElement = this.infoElements[index];
     infoElement.style.opacity = 0;
     return tweenOpacity(infoElement, INFO_BOX_OPACITY, time);

@@ -67,7 +67,7 @@ export default class SituationRunner {
     elements.forEach((element, index) => {
       promise = promise.then( r => {
         this.highlight(element.sprite, element.color);
-        return this.infoBoxes.fadeShow(index, element.text, 1000);
+        return this.infoBoxes.fadeShow(index, element, 1000);
        });
     });
    return promise;

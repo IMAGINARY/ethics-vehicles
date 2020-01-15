@@ -42,17 +42,20 @@ export default class ChildRunsSituation extends Situation {
       {
         sprite: this.ambulance.sprite,
         color: 0x3220DE,
-        text: 'Ambulance carrying a patient to the hospital',
+        name: 'Ambulance',
+        description: 'Carrying a patient to the hospital',
       },
       {
         sprite: this.child.sprite,
         color: 0xDE3220,
-        text: 'A child running onto the street',
+        name: 'Child',
+        description: 'Suddenly run in the street',
       },
       {
         sprite: this.crossingCar.sprite,
         color: 0xDE3220,
-        text: 'A car coming from the opposite direction',
+        name: 'A Car',
+        description: 'Probably will not stop',
       },
     ];
   }
