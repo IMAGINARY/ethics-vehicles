@@ -45,3 +45,8 @@ After it runs succesfuly you can compile as needed:
     yarn run build
     ```
 
+Start a web server at localhost:8080, from where you can use the exhibit:
+
+    ```
+    yarn run start
+    ```
