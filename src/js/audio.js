@@ -1,12 +1,17 @@
 
 
 export default class Sound {
-  constructor(audioFile) {
-    this.audio = new Audio(audioFile);
+  constructor(...mediaFiles) {
+    this.media = mediaFiles.map( arg => new Audio(arg ) );
+  }
+
+  getAudio() {
+    const index = Math.floor(Math.random() * Math.floor(this.media.length));
+    return this.media[index];
   }
 
   play() {
-      this.audio.play();
+    this.getAudio().play();
   }
 }
 
