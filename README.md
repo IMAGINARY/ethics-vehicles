@@ -50,3 +50,7 @@ Start a web server at localhost:8080, from where you can use the exhibit:
     ```
     yarn run start
     ```
+
+Car crash audio files (modified) downloaded from Audiosoundclips.com
+Cars passing by audio files (modified) from http://audio-stock.com, downloaded from https://freesound.org/
+
