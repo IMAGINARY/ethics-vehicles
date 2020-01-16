@@ -12,7 +12,12 @@ const TRUCK_STOP_POSITION = 0.45;
 const BLACK_CAR_STOP_POSITION = 0.35;
 const AGENT_STOP_POSITION = 0.45;
 
-const BLACK_CAR_CROSS_POSITION = new PIXI.Point(STREET_LANE_OFFSET * 2, STREET_LANE_OFFSET * 2);
+const BlackCarCrossVector = new PIXI.Point(STREET_LANE_OFFSET, STREET_LANE_OFFSET);
+
+const BlackCarCrashVector = new PIXI.Point(0, 40);
+const AgentCrashVector = new PIXI.Point(0, -40);
+const TurnLeftVector = new PIXI.Point(-STREET_LANE_OFFSET * 1.5, -STREET_LANE_OFFSET * 1.5);
+const TurnRightVector = new PIXI.Point(STREET_LANE_OFFSET * 1.5, -STREET_LANE_OFFSET * 1.5);
 
 /*
 Timeline:
@@ -27,7 +32,7 @@ const ENTER_TRUCK_TIME = 1000;
 const AGENT_ENTER_DELAY = 500;
 const BLACK_CAR_ENTRY_TIME = 500;
 const BLACK_CAR_PARKED_DELAY = 750;
-const BLACK_CAR_CROSS_TIME = 250;
+const BLACK_CAR_CROSS_TIME = 500;
 
 
 export default class CarEntersLaneSituation extends Situation {
@@ -108,17 +113,18 @@ export default class CarEntersLaneSituation extends Situation {
 
   // eslint-disable-next-line class-methods-use-this
   decisionAdvace() {
-    return this.view.agentCar.driveInLaneUntilPosition(
-      this.agentLane.getCarPosition(this.blackCar)
-    );
+    return Promise.all([this.blackCar.advanceAndTurn(BlackCarCrashVector, 0, 150),
+                        this.view.agentCar.advanceAndTurn(AgentCrashVector, 0, 150)]);
   }
 
   decisionTurnLeft() {
-    this.view.agentCar.crossLane();
+    return Promise.all([this.moveBlackCarToFinalPosition(),
+                        this.view.agentCar.advanceAndTurn(TurnLeftVector, -30, 250)]);
   }
 
   decisionTurnRight() {
-    this.view.agentCar.x += STREET_LANE_OFFSET * 2;
+    return Promise.all([this.moveBlackCarToFinalPosition(),
+                        this.view.agentCar.advanceAndTurn(TurnRightVector, 30, 250)]);
   }
 
   moveTruckInPosition() {
@@ -132,7 +138,12 @@ export default class CarEntersLaneSituation extends Situation {
     this.blackCar.placeInLane(this.parkedLane);
     return this.blackCar.driveInLaneUntilPosition(BLACK_CAR_STOP_POSITION, BLACK_CAR_ENTRY_TIME, TWEEN.Easing.Sinusoidal.Out)
       .then( () => this.wait(BLACK_CAR_PARKED_DELAY))
-      .then( () => this.blackCar.advanceAndTurn(BLACK_CAR_CROSS_POSITION, -30, BLACK_CAR_CROSS_TIME, TWEEN.Easing.Quadratic.InOut));
+      .then( () => this.blackCar.advanceAndTurn(BlackCarCrossVector, -45, BLACK_CAR_CROSS_TIME/2, TWEEN.Easing.Quadratic.In))
+      .then( () => this.blackCar.advanceAndTurn(BlackCarCrossVector, 45, BLACK_CAR_CROSS_TIME/2, TWEEN.Easing.Quadratic.Out));
+  }
+
+  moveBlackCarToFinalPosition() {
+    return this.blackCar.advanceAndTurn(new PIXI.Point(0, STREET_LANE_OFFSET * 2), 0, 250, TWEEN.Easing.Linear.None);
   }
 
   moveAgentInPosition() {
@@ -142,13 +153,6 @@ export default class CarEntersLaneSituation extends Situation {
               this.view.agentCar.placeInLane(this.agentLane);
               this.view.agentCar.driveInLaneUntilPosition(AGENT_STOP_POSITION, SETUP_TIME - AGENT_ENTER_DELAY);
             });
-  }
-
-  blackCarCrossesLane() {
-    return new Promise((resolve) => {
-      this.blackCar.crossLane();
-      resolve();
-    });
   }
 }
 
