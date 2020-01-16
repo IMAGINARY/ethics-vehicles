@@ -28,6 +28,10 @@ const paths = {
     src: './src/js/*.js',
     dest: `${OUTPUT_DIR}/assets/js`,
   },
+  audio: {
+    src: './src/audio/*.mp3',
+    dest: `${OUTPUT_DIR}/assets/audio`
+  }
 };
 
 function html() {
@@ -77,7 +81,12 @@ function watch() {
   gulp.watch(paths.scripts.src, scripts);
 }
 
-const build = gulp.parallel(html, styles, scripts);
+function audio() {
+  return gulp.src(paths.audio.src)
+             .pipe(gulp.dest(paths.audio.dest));
+}
+
+const build = gulp.parallel(html, styles, scripts, audio);
 
 exports.html = html;
 exports.styles = styles;
