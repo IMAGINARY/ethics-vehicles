@@ -18,6 +18,57 @@ body {
   margin: 0px;
 }
 
+#menu {
+  width: 400px;
+  height: 400px;
+  left: 200px;
+  top: 200px;
+  position: absolute;
+  border-radius: 15px;
+  background-color: #afdde9ff;
+  z-index: 100;
+}
+
+#menu_cursor_area {
+  position: absolute;
+  left: 20px;
+  top: 20px;
+  width: 40px;
+  height: 360px;
+  padding: 0;
+  margin: 0;
+}
+#menu_options_area {
+  position: absolute;
+  top: 20px;
+  left: 60px;
+  width: 320px;
+  height: 360px;
+  padding: 0;
+  margin: 0;
+}
+
+.menu_option {
+  width: 300px;
+  height: 55px;
+  border-radius: 15px;
+  margin: 0 0 15px 0;
+  background-color: #ff5555ff;
+
+  color: white;
+  font-size: 24px;
+  padding: 5px 10px 0 10px;
+}
+
+#menu_cursor {
+  width: 0; 
+  height: 0; 
+  margin: 10px 0 0 0;
+  border-top: 20px solid transparent;
+  border-bottom: 20px solid transparent;
+  border-left: 25px solid black;
+}
+
 #info_elements {
   width: 400px;
   height: 400px;
