@@ -173,14 +173,16 @@ function () {
 
   _createClass(InfoBoxes, [{
     key: "show",
-    value: function show(index, text) {
-      this.infoElements[index].querySelector("#description").innerText = text;
-      this.infoElements[index].style.visibility = 'visible';
+    value: function show(index, element) {
+      var infoElement = this.infoElements[index];
+      infoElement.querySelector('#name').innerText = element.name;
+      infoElement.querySelector('#description').innerHTML = element.description;
+      infoElement.style.visibility = 'visible';
     }
   }, {
     key: "fadeShow",
-    value: function fadeShow(index, text, time) {
-      this.show(index, text);
+    value: function fadeShow(index, element, time) {
+      this.show(index, element);
       var infoElement = this.infoElements[index];
       infoElement.style.opacity = 0;
       return (0, _styleHelp.tweenOpacity)(infoElement, INFO_BOX_OPACITY, time);
@@ -545,14 +547,26 @@ function () {
   }, {
     key: "show",
     value: function show() {
-      this.view.container.addChild(this.sprite);
-      this.visible = true;
+      var _this = this;
+
+      return new Promise(function (resolve) {
+        _this.view.container.addChild(_this.sprite);
+
+        _this.visible = true;
+        resolve();
+      });
     }
   }, {
     key: "hide",
     value: function hide() {
-      this.view.container.removeChild(this.sprite);
-      this.visible = false;
+      var _this2 = this;
+
+      return new Promise(function (resolve) {
+        _this2.view.container.removeChild(_this2.sprite);
+
+        _this2.visible = false;
+        resolve();
+      });
     }
   }, {
     key: "reset",
@@ -685,7 +699,7 @@ function () {
         promise = promise.then(function (r) {
           _this2.highlight(element.sprite, element.color);
 
-          return _this2.infoBoxes.fadeShow(index, element.text, 1000);
+          return _this2.infoBoxes.fadeShow(index, element, 1000);
         });
       });
       return promise;
@@ -888,7 +902,7 @@ function (_Situation) {
   _createClass(CarEntersLaneSituation, [{
     key: "setup",
     value: function setup() {
-      this.busStop.show();
+      return this.busStop.show();
     }
   }, {
     key: "teardown",
@@ -914,22 +928,26 @@ function (_Situation) {
       return [{
         sprite: this.view.agentCar.sprite,
         color: 0x3220DE,
-        text: 'autonomous car\nProperty value: medium',
+        name: 'Autonomous car',
+        description: 'Property value: medium',
         placement: 'down'
       }, {
         sprite: this.blackCar.sprite,
         color: 0xDE3220,
-        text: 'car entering lane\nPassengers: 1\nProperty Value: high\nInsurance: yes',
+        name: 'Luxury car',
+        description: 'Suddenly enters your lane.<br>Property Value: high<br>Insurance: yes',
         placement: 'up'
       }, {
         sprite: this.truck.sprite,
         color: 0xDE3220,
-        text: 'parked car\nPassengers: 4\nProperty value: low\nInsurance: none',
+        name: 'Parked car',
+        description: 'Passengers: 4<br>Property value: low<br>Insurance: none',
         placement: 'left'
       }, {
         sprite: this.busStop.sprite,
         color: 0xDE3220,
-        text: 'bus stop\nPeople: 10\nProperty value: medium',
+        name: 'Bus Stop',
+        description: 'People: 10<br>Property value: medium',
         placement: 'right'
       }];
     }
@@ -1086,7 +1104,7 @@ function (_Situation) {
   _createClass(ChildRunsSituation, [{
     key: "setup",
     value: function setup() {
-      this.child.show();
+      return this.child.show();
     }
   }, {
     key: "start",
@@ -1112,15 +1130,18 @@ function (_Situation) {
       return [{
         sprite: this.ambulance.sprite,
         color: 0x3220DE,
-        text: 'Ambulance carrying a patient to the hospital'
+        name: 'Ambulance',
+        description: 'Carrying a patient to the hospital'
       }, {
         sprite: this.child.sprite,
         color: 0xDE3220,
-        text: 'A child running onto the street'
+        name: 'Child',
+        description: 'Suddenly run in the street'
       }, {
         sprite: this.crossingCar.sprite,
         color: 0xDE3220,
-        text: 'A car coming from the opposite direction'
+        name: 'A Car',
+        description: 'Probably will not stop'
       }];
     }
   }, {
@@ -1298,17 +1319,20 @@ function (_Situation) {
       return [{
         sprite: this.view.agentCar.sprite,
         color: 0x3220DE,
-        text: 'autonomous car\nProperty value: medium',
+        name: 'Autonomous car',
+        description: 'Property value: medium<br><b>Warning! Front passenger not wearing seat belt.</b>',
         placement: 'down'
       }, {
         sprite: this.cyclist.sprite,
         color: 0xDE3220,
-        text: 'A cyclist. Insurance: unknown',
+        name: 'Cyclist',
+        description: 'Insurance: unknown',
         placement: 'up'
       }, {
         sprite: this.tree.sprite,
         color: 0xDE3220,
-        text: 'A tree. It is hard.',
+        name: 'Fallen Tree',
+        description: 'Hard. Try not to crash unto it.',
         placement: 'left'
       }];
     }
