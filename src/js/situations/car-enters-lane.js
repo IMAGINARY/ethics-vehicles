@@ -93,15 +93,15 @@ export default class CarEntersLaneSituation extends Situation {
 
   getDecisions() {
     return {
-      humanist: {
+      'humanist': {
         text: 'Turning left will risk 4 lives. Turning right with certainly kill people at the stop. Solution: breaking and crashing into the car in front will probably not result in fatalities, so it’s the action taken',
         actionFunction: () => this.decisionAdvace(),
       },
-      profit: {
+      'profit': {
         text: 'the car ahead is very expensive, so braking is not recommended. Turning right will risk high payouts to the victims or their families. Solution: turn left towards the parked car, as it is cheap and if the risk of casualties is lower.',
         actionFunction: () => this.decisionTurnLeft(),
       },
-      protector: {
+      'protector': {
         text: 'breaking and turning left mean crashing into heavy, hard objects and potentially harming you. Solution: turning right has almost no risk for you and your car, as people are softer than cars.',
         actionFunction: () => this.decisionTurnRight(),
       },

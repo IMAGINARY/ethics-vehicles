@@ -40,6 +40,10 @@ export default class Situation {
     
   }
 
+  getDecision(policyId) {
+    return this.getDecisions()[policyId];
+  }
+
   static registerSituation(key, aSituation) {
     Situation.situations[key] = aSituation;
   }

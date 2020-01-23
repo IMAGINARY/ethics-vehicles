@@ -78,15 +78,15 @@ export default class ChildRunsSituation extends Situation {
 
   getDecisions() {
     return {
-      humanist: {
+      'humanist': {
         text: 'both breaking and continuing have a high risk on human lives, so crash onto the car parked on the left.',
         actionFunction: () => this.decisionCrashCrossingCar()
       },
-      profit: {
+      'profit': {
         text: 'the child appeared out of nowhere and you had a green light, so you are protected by the law. Breaking or turning left will incur in higher car damage and costs.',
         actionFunction: () => this.decisionAdvance()
       },
-      protector: {
+      'protector': {
         text: 'breaking or turning left will damage the car and potentially hurt you, continuing will only produce minor aesthetical damage in the car.',
         actionFunction: () => this.decisionAdvance()
       },

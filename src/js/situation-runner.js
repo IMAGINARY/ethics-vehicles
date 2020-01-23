@@ -2,6 +2,7 @@
 /* globals PIXI */
 import { Policies } from './policies';
 import { highlightSprite } from './pixi-help';
+import Menu from './menu';
 
 export default class SituationRunner {
   constructor(view, report, infoBoxes) {
@@ -10,10 +11,10 @@ export default class SituationRunner {
     this.infoBoxes = infoBoxes;
     this.currentDecision = null;
     this.tempElements = [];
+    this.currentPolicy = null;
   }
 
-  run(situation, policyID) {
-    this.currentDecision = situation.getDecisions()[policyID];
+  run(situation) {
     this.view.agentCar.hide();
     situation.setup()
       .then(() => situation.start())
@@ -22,7 +23,8 @@ export default class SituationRunner {
       .then(() => this.waitForAdvanceButton('Analyze'))
       .then(() => this.hideElementsInfo())
 
-      .then(() => this.showDecision(situation, policyID))
+      .then(() => this.waitForPolicy(situation))
+      .then(() => this.showDecision(situation))
       .then(() => situation.wait(1000))
       .then(() => this.waitForAdvanceButton('Show'))
       .then(() => this.hideDecision())
@@ -33,6 +35,26 @@ export default class SituationRunner {
       .then(() => situation.clearSprites())
       .then(() => situation.teardown())
       .then(() => this.view.startIdleAnimation());
+  }
+
+  waitForPolicy(situation) {
+
+    return new Promise ( resolve => {
+      var policyMenu = null;
+      const options = Policies.map ( policy => {
+        return {
+          text: policy.name + "\n" + policy.objective,
+          action: () => {
+            this.currentPolicy = policy;
+            policyMenu.hide();
+            this.currentDecision = situation.getDecision(policy.id);
+            resolve(policy.name);
+          }
+        };
+      });
+      policyMenu = new Menu('menu', options);
+      policyMenu.show();
+    });
   }
 
   waitForAdvanceButton(text = 'Next') {
@@ -77,8 +99,8 @@ export default class SituationRunner {
     });
   }
 
-  showDecision(situation, policyID) {
-    return this.report.show(situation, Policies[policyID], this.currentDecision.text);
+  showDecision(situation) {
+    return this.report.show(situation,this.currentPolicy, this.currentDecision.text);
   }
 
   hideDecision() {
