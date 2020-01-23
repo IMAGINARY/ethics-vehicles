@@ -98,7 +98,7 @@ export default class CarEntersLaneSituation extends Situation {
         actionFunction: () => this.decisionAdvace(),
       },
       'profit': {
-        text: 'the car ahead is very expensive, so braking is not recommended. Turning right will risk high payouts to the victims or their families. Solution: turn left towards the parked car, as it is cheap and if the risk of casualties is lower.',
+        text: 'the car ahead is very expensive, so breaking is not recommended. Turning right will risk high payouts to the victims or their families. Solution: turn left towards the parked car, as it is cheap and if the risk of casualties is lower.',
         actionFunction: () => this.decisionTurnLeft(),
       },
       'protector': {
