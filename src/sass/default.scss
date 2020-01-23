@@ -55,6 +55,7 @@ body {
   border-radius: 15px;
   margin: 0 0 15px 0;
   background-color: #ff5555ff;
+  border: 0;
 
   font-family: 'Barlow', sans-serif;
   color: white;
@@ -63,6 +64,7 @@ body {
   vertical-align: middle;
   display:table-cell;
   line-height: 80%;
+  text-align: left;
 }
 
 #menu_cursor {

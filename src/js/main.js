@@ -8,6 +8,7 @@ import SituationRunner from './situation-runner';
 import './situations/car-enters-lane';
 import './situations/tree-falls';
 import './situations/child-runs';
+import { showMenu, hideMenu, addMenuButton } from './menu.js';
 
 const view = new View($('#game')[0]);
 const report = new Report($('#report')[0]);
@@ -17,9 +18,21 @@ const runner = new SituationRunner(view, report, infoBoxes);
 $('#startButton').on('click', () => {
   const policyID = $('#option_policy').val();
   const situationID = $('#option_situation').val();
+  startSituation(situationID, policyID);
+});
+
+function showSituationMenu() {
+  showMenu();
+  addMenuButton('A Tree Falls', function() { startSituation('tree-falls'); });
+  addMenuButton('A car enters your lane', function() { startSituation('car-enters-lane'); });
+  addMenuButton('A child runs in the street', function() { startSituation('child-runs'); });
+}
+
+function startSituation(situationID, policyID = 'humanist') {
+  hideMenu();
   const SituationClass = Situation.getSituation(situationID);
   view.queueAction(() => { runner.run(new SituationClass(view), policyID); });
-});
+}
 
 $('#debugButton').on('click', () => {
   if (view.debugLayer.visible)
@@ -31,3 +44,5 @@ $('#debugButton').on('click', () => {
 view.startIdleAnimation();
 
 view.app.ticker.add( () => TWEEN.update() );
+
+showSituationMenu();
