@@ -8,24 +8,15 @@ const KeyEnter = 13;
 export default class Menu {
   constructor(elementId, optionsArray) {
     this.currentOption = 0;
-    this.actions = [];
+    this.options = Array.from(optionsArray);
     this.htmlElement = $(`#${elementId}`)
     this.optionsArea = this.htmlElement.find('#menu_options_area');
     this.cursor = this.htmlElement.find('#menu_cursor');
-    optionsArray.forEach(element => {
-        this.addOption(element.text, element.action);
-    });
-  }
-
-  addOption(text, action) {
-    const button = $(`<input type="button" value="${text}" class="menu_option">`);
-    $('#menu_options_area').append(button);
-    this.actions.push(action);
-    button.click(action);
   }
 
   show() {
-    this.htmlElement.show();
+    this.createHTMLOptions();
+    this.currentOption = 0;
     window.onkeydown = event => {
       switch (event.which) {
         case KeyArrowUp: this.up(); break;
@@ -34,17 +25,25 @@ export default class Menu {
       }
     };
     this.updateCursorPosition();
+    this.htmlElement.show();
   }
 
   hide() {
     this.htmlElement.hide();
     window.onkeydown = function() {};
+    this.clearHTML();
   }
 
-  clear() {
-      this.actions = [];
-      this.currentOption = 0;
-      this.optionsArea.empty();
+  createHTMLOptions() {
+    this.options.forEach(element => {
+      const button = $(`<input type="button" value="${element.text}" class="menu_option">`);
+      $('#menu_options_area').append(button);
+      button.click(element.action);
+    });
+  }
+
+  clearHTML() {
+    this.optionsArea.empty();
   }
 
   enterOption() {
