@@ -13,6 +13,4 @@ $('#debugButton').on('click', () => {
     view.debugLayer.show();
 });
 
-view.startIdleAnimation();
-
-view.app.ticker.add( () => TWEEN.update() );
+view.start();

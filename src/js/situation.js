@@ -48,8 +48,9 @@ export default class Situation {
     Situation.situations[key] = aSituation;
   }
 
-  static getSituation(key) {
-    return Situation.situations[key];
+  static getSituation(key, view) {
+    const situationClass = Situation.situations[key];
+    return new situationClass(view);
   }
 
   wait(time = 1000) {

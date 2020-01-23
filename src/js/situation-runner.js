@@ -34,7 +34,7 @@ export default class SituationRunner {
       .then(() => this.waitForAdvanceButton('Restart'))
       .then(() => situation.clearSprites())
       .then(() => situation.teardown())
-      .then(() => this.view.startIdleAnimation());
+      .then(() => this.view.start());
   }
 
   waitForPolicy(situation) {

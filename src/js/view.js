@@ -45,6 +45,8 @@ export default class View {
     this.runner = new SituationRunner(this,
       new Report($('#report')[0]),
       new InfoBoxes($('#info_elements')[0]));
+
+    this.app.ticker.add( () => TWEEN.update() );
   }
 
   doIdleAnimation() {
@@ -57,15 +59,21 @@ export default class View {
   }
 
   startIdleAnimation() {
-    this.SituationMenu.show();
     this.afterIdleAction = this.startIdleAnimation;
     this.doIdleAnimation().then(() => this.afterIdleAction());
   }
+
+  start() {
+    this.SituationMenu.show();
+    this.startIdleAnimation();
+  }
   
-  startSituation(situationID, policyID = 'humanist') {
+  startSituation(situationID) {
     this.SituationMenu.hide();
-    const SituationClass = Situation.getSituation(situationID);
-    this.queueAction(() => { this.runner.run(new SituationClass(this), policyID); });
+    this.queueAction(() => {
+      const situationInstance = Situation.getSituation(situationID, this);
+      this.runner.run(situationInstance);
+    });
   }
 
   queueAction(action) {
