@@ -8,6 +8,7 @@ const KeyEnter = 13;
 export default class Menu {
   constructor(elementId, optionsArray) {
     this.currentOption = 0;
+    this.visible = false;
     this.options = Array.from(optionsArray);
     this.htmlElement = $(`#${elementId}`)
     this.optionsArea = this.htmlElement.find('#menu_options_area');
@@ -47,13 +48,13 @@ export default class Menu {
   }
 
   enterOption() {
-    const action = this.actions[this.currentOption];
+    const action = this.options[this.currentOption].action;
     this.hide();
     action();
   }
 
   down() {
-    if (this.currentOption < this.actions.length - 1)
+    if (this.currentOption < this.options.length - 1)
       this.currentOption++;
     this.updateCursorPosition();
   }
