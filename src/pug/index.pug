@@ -37,32 +37,9 @@ block body
       | Decision:
     span#decision
 
-  button#advanceButton(type="button")
-    span#advanceText
-
   #options_bar
-    .text-center
-      | Type of Policy:
-      |
-      select#option_policy
-        option(value="humanist")
-          | Humanist
-        option(value="profit")
-          | Profit based
-        option(value="protector")
-          | Protector
-      |
-      | Situation:
-      |
-      select#option_situation
-        option(value="car-enters-lane")
-          | Car enters your lane
-        option(value="tree-falls")
-          | A tree falls in the road
-        option(value="child-runs")
-          | A child runs onto the street
-      button#startButton(type="button")
-        | Start!
-      br
-      button#debugButton(type="button")
-        | Street Debug on/off
+    button#advanceButton(type="button")
+      span#advanceText
+
+    button#debugButton(type="button")
+      | Street Debug on/off

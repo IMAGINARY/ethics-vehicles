@@ -5,6 +5,12 @@ import { LANES } from './lanes';
 import { VIEW_SIZE, IDLE_ANIMATION_TIME } from './constants';
 import { POINT_ZERO } from './pixi-help';
 import { Sounds } from './audio';
+import Report from './report';
+import InfoBoxes from './info-boxes';
+
+import Situation from './situation';
+import SituationRunner from './situation-runner';
+import Menu from './menu.js';
 
 export default class View {
   constructor(element) {
@@ -29,6 +35,16 @@ export default class View {
     this.debugLayer.hide();
 
     this.afterIdleAction = () => {};
+   
+    this.SituationMenu = new Menu('menu', [
+      {text: 'A tree falls', action: () => this.startSituation('tree-falls') },
+      {text: 'A car enters your lane', action: () => this.startSituation('car-enters-lane') },
+      {text: 'A child runs in the street', action: () => this.startSituation('child-runs') },
+    ]);
+
+    this.runner = new SituationRunner(this,
+      new Report($('#report')[0]),
+      new InfoBoxes($('#info_elements')[0]));
   }
 
   doIdleAnimation() {
@@ -41,8 +57,15 @@ export default class View {
   }
 
   startIdleAnimation() {
+    this.SituationMenu.show();
     this.afterIdleAction = this.startIdleAnimation;
     this.doIdleAnimation().then(() => this.afterIdleAction());
+  }
+  
+  startSituation(situationID, policyID = 'humanist') {
+    this.SituationMenu.hide();
+    const SituationClass = Situation.getSituation(situationID);
+    this.queueAction(() => { this.runner.run(new SituationClass(this), policyID); });
   }
 
   queueAction(action) {
