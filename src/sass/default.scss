@@ -19,10 +19,10 @@ body {
 }
 
 #menu {
-  width: 400px;
-  height: 400px;
-  left: 200px;
-  top: 200px;
+  width: 380px;
+  height: 380px;
+  left: 210px;
+  top: 210px;
   position: absolute;
   border-radius: 15px;
   background-color: #afdde9ff;
@@ -59,12 +59,13 @@ body {
 
   font-family: 'Barlow', sans-serif;
   color: white;
-  font-size: 26px;
+  font-size: 20px;
   padding: 0px 10px 0 10px;
   vertical-align: middle;
   display:table-cell;
   line-height: 80%;
   text-align: left;
+  word-wrap: break-word;
 }
 
 #menu_cursor {

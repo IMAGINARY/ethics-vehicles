@@ -6,10 +6,10 @@ export const Policies = [
   },
   { id: 'profit-based',
     name: 'Profit-based',
-    objective: 'Minimize costs (property and insurance)',
+    objective: 'Minimize insurance costs',
   },
   { id: 'protector',
     name: 'Protector',
-    objective: 'Protect the autonomous car and its passengers',
+    objective: 'Protect car passengers',
   },
 ];
