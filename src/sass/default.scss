@@ -46,27 +46,32 @@ body {
   height: 360px;
   padding: 0;
   margin: 0;
+  line-height: 15px;
 }
 
 .menu_option {
   width: 300px;
-  height: 55px;
+  height: 60px;
   border-radius: 15px;
   margin: 0 0 15px 0;
   background-color: #ff5555ff;
 
+  font-family: 'Barlow', sans-serif;
   color: white;
-  font-size: 24px;
-  padding: 5px 10px 0 10px;
+  font-size: 26px;
+  padding: 0px 10px 0 10px;
+  vertical-align: middle;
+  display:table-cell;
+  line-height: 80%;
 }
 
 #menu_cursor {
   width: 0; 
   height: 0; 
-  margin: 10px 0 0 0;
-  border-top: 20px solid transparent;
-  border-bottom: 20px solid transparent;
-  border-left: 25px solid black;
+  margin: 15px 0 0 0;
+  border-top: 15px solid transparent;
+  border-bottom: 15px solid transparent;
+  border-left: 30px solid black;
 }
 
 #info_elements {
