@@ -12,6 +12,7 @@ export default class SituationRunner {
     this.currentDecision = null;
     this.tempElements = [];
     this.currentPolicy = null;
+    this.policyMenu = null;
   }
 
   run(situation) {
@@ -20,7 +21,7 @@ export default class SituationRunner {
       .then(() => situation.start())
       .then(() => situation.wait(1000))
       .then(() => this.showElementsInfo(situation.getElements()))
-      .then(() => this.waitForAdvanceButton('Analyze'))
+      .then(() => this.waitForAdvanceButton('Choose policy'))
       .then(() => this.hideElementsInfo())
 
       .then(() => this.waitForPolicy(situation))
@@ -40,20 +41,19 @@ export default class SituationRunner {
   waitForPolicy(situation) {
 
     return new Promise ( resolve => {
-      var policyMenu = null;
       const options = Policies.map ( policy => {
         return {
           text: policy.name + "\n" + policy.objective,
           action: () => {
             this.currentPolicy = policy;
-            policyMenu.hide();
             this.currentDecision = situation.getDecision(policy.id);
+            this.policyMenu.hide();
             resolve(policy.name);
           }
         };
       });
-      policyMenu = new Menu('menu', options);
-      policyMenu.show();
+      this.policyMenu = new Menu('menu', options);
+      this.policyMenu.show();
     });
   }
 
