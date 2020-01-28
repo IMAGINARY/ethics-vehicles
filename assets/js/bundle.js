@@ -4,6 +4,60 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports.Sounds = exports["default"] = void 0;
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+var Sound =
+/*#__PURE__*/
+function () {
+  function Sound() {
+    _classCallCheck(this, Sound);
+
+    for (var _len = arguments.length, mediaFiles = new Array(_len), _key = 0; _key < _len; _key++) {
+      mediaFiles[_key] = arguments[_key];
+    }
+
+    this.media = mediaFiles.map(function (arg) {
+      return new Audio(arg);
+    });
+  }
+
+  _createClass(Sound, [{
+    key: "getAudio",
+    value: function getAudio() {
+      var index = Math.floor(Math.random() * Math.floor(this.media.length));
+      return this.media[index];
+    }
+  }, {
+    key: "play",
+    value: function play() {
+      this.getAudio().play();
+    }
+  }]);
+
+  return Sound;
+}();
+
+exports["default"] = Sound;
+var Sounds = {
+  crash500ms: new Sound('assets/audio/crash_500ms.mp3'),
+  crash250ms: new Sound('assets/audio/crash_250ms.mp3'),
+  carIdling2000ms: new Sound('assets/audio/passing_by_1_2000ms.mp3', 'assets/audio/passing_by_2_2000ms.mp3', 'assets/audio/passing_by_3_2000ms.mp3')
+};
+exports.Sounds = Sounds;
+Object.freeze(Sounds);
+
+},{}],2:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 exports["default"] = void 0;
 
 var _constants = require("./constants");
@@ -57,13 +111,32 @@ function () {
 
       var endPosition = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1.0;
       var time = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 500;
+      var easing = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : TWEEN.Easing.Linear.None;
       var stopPosition = this.lane.getPositionCoordinates(endPosition);
       return new Promise(function (resolve) {
         new TWEEN.Tween(_this.sprite).to({
           x: stopPosition.x,
           y: stopPosition.y
-        }, time).easing(TWEEN.Easing.Linear.None).onComplete(function () {
+        }, time).easing(easing).onComplete(function () {
           return resolve('arrived');
+        }).start();
+      });
+    }
+  }, {
+    key: "advanceAndTurn",
+    value: function advanceAndTurn(offsetPosition) {
+      var _this2 = this;
+
+      var offsetAngle = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
+      var time = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 1000;
+      var easing = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : TWEEN.Easing.Linear.None;
+      return new Promise(function (resolve) {
+        new TWEEN.Tween(_this2).to({
+          x: _this2.x + offsetPosition.x,
+          y: _this2.y + offsetPosition.y,
+          angle: _this2.angle + offsetAngle
+        }, time).easing(easing).onComplete(function () {
+          return resolve('crash');
         }).start();
       });
     }
@@ -113,7 +186,7 @@ function () {
 
 exports["default"] = Car;
 
-},{"./constants":2,"./lane":4,"./pixi-help":7}],2:[function(require,module,exports){
+},{"./constants":3,"./lane":5,"./pixi-help":9}],3:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -143,7 +216,7 @@ exports.STREET_LANE_OFFSET = STREET_LANE_OFFSET;
 var SPRITE_WIDTH = 256 * CAR_SCALE;
 exports.SPRITE_WIDTH = SPRITE_WIDTH;
 
-},{}],3:[function(require,module,exports){
+},{}],4:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -208,7 +281,7 @@ function () {
 
 exports["default"] = InfoBoxes;
 
-},{"./style-help":16}],4:[function(require,module,exports){
+},{"./style-help":18}],5:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -277,7 +350,7 @@ exports.Lane = Lane;
 var NO_LANE = new Lane(_pixiHelp.POINT_ZERO, new PIXI.Point(1, 0));
 exports.NO_LANE = NO_LANE;
 
-},{"./pixi-help":7}],5:[function(require,module,exports){
+},{"./pixi-help":9}],6:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -314,18 +387,10 @@ setOppositeLanes(LANES[2], LANES[3]);
 setOppositeLanes(LANES[4], LANES[5]);
 setOppositeLanes(LANES[6], LANES[7]);
 
-},{"./constants":2,"./lane":4}],6:[function(require,module,exports){
+},{"./constants":3,"./lane":5}],7:[function(require,module,exports){
 "use strict";
 
 var _view = _interopRequireDefault(require("./view"));
-
-var _report = _interopRequireDefault(require("./report"));
-
-var _infoBoxes = _interopRequireDefault(require("./info-boxes"));
-
-var _situation = _interopRequireDefault(require("./situation"));
-
-var _situationRunner = _interopRequireDefault(require("./situation-runner"));
 
 require("./situations/car-enters-lane");
 
@@ -337,28 +402,134 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "d
 
 /* globals $ */
 var view = new _view["default"]($('#game')[0]);
-var report = new _report["default"]($('#report')[0]);
-var infoBoxes = new _infoBoxes["default"]($('#info_elements')[0]);
-var runner = new _situationRunner["default"](view, report, infoBoxes);
-$('#startButton').on('click', function () {
-  var policyID = $('#option_policy').val();
-  var situationID = $('#option_situation').val();
-
-  var SituationClass = _situation["default"].getSituation(situationID);
-
-  view.queueAction(function () {
-    runner.run(new SituationClass(view), policyID);
-  });
+/*
+$('#debugButton').on('click', () => {
+  if (view.debugLayer.visible)
+    view.debugLayer.hide();
+  else
+    view.debugLayer.show();
 });
-$('#debugButton').on('click', function () {
-  if (view.debugLayer.visible) view.debugLayer.hide();else view.debugLayer.show();
-});
-view.startIdleAnimation();
-view.app.ticker.add(function () {
-  return TWEEN.update();
-});
+*/
 
-},{"./info-boxes":3,"./report":9,"./situation":12,"./situation-runner":11,"./situations/car-enters-lane":13,"./situations/child-runs":14,"./situations/tree-falls":15,"./view":17}],7:[function(require,module,exports){
+view.start();
+
+},{"./situations/car-enters-lane":15,"./situations/child-runs":16,"./situations/tree-falls":17,"./view":19}],8:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+var KeyArrowUp = 38;
+var KeyArrowDown = 40;
+var KeyEnter = 13; // example use
+
+var Menu =
+/*#__PURE__*/
+function () {
+  function Menu(elementId, optionsArray) {
+    _classCallCheck(this, Menu);
+
+    this.currentOption = 0;
+    this.visible = false;
+    this.options = Array.from(optionsArray);
+    this.htmlElement = $("#".concat(elementId));
+    this.optionsArea = this.htmlElement.find('#menu_options_area');
+    this.cursor = this.htmlElement.find('#menu_cursor');
+  }
+
+  _createClass(Menu, [{
+    key: "show",
+    value: function show() {
+      var _this = this;
+
+      this.createHTMLOptions();
+      this.currentOption = 0;
+
+      window.onkeydown = function (event) {
+        switch (event.which) {
+          case KeyArrowUp:
+            _this.up();
+
+            break;
+
+          case KeyArrowDown:
+            _this.down();
+
+            break;
+
+          case KeyEnter:
+            _this.enterOption();
+
+            break;
+        }
+      };
+
+      this.updateCursorPosition();
+      this.htmlElement.show();
+    }
+  }, {
+    key: "hide",
+    value: function hide() {
+      this.htmlElement.hide();
+
+      window.onkeydown = function () {};
+
+      this.clearHTML();
+    }
+  }, {
+    key: "createHTMLOptions",
+    value: function createHTMLOptions() {
+      this.options.forEach(function (element) {
+        var button = $("<input type=\"button\" value=\"".concat(element.text, "\" class=\"menu_option\">"));
+        $('#menu_options_area').append(button);
+        button.click(element.action);
+      });
+    }
+  }, {
+    key: "clearHTML",
+    value: function clearHTML() {
+      this.optionsArea.empty();
+    }
+  }, {
+    key: "enterOption",
+    value: function enterOption() {
+      var action = this.options[this.currentOption].action;
+      this.hide();
+      action();
+    }
+  }, {
+    key: "down",
+    value: function down() {
+      if (this.currentOption < this.options.length - 1) this.currentOption++;
+      this.updateCursorPosition();
+    }
+  }, {
+    key: "up",
+    value: function up() {
+      if (this.currentOption > 0) this.currentOption--;
+      this.updateCursorPosition();
+    }
+  }, {
+    key: "updateCursorPosition",
+    value: function updateCursorPosition() {
+      this.cursor.css('margin-top', 15 + this.currentOption * 75 + "px");
+    }
+  }]);
+
+  return Menu;
+}();
+
+exports["default"] = Menu;
+
+},{}],9:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -370,6 +541,7 @@ exports.vectorBetweenPoints = vectorBetweenPoints;
 exports.screenPosFromFraction = screenPosFromFraction;
 exports.moveToFraction = moveToFraction;
 exports.pixiFadeIn = pixiFadeIn;
+exports.pixiMoveTo = pixiMoveTo;
 exports.POINT_ZERO = void 0;
 
 var _constants = require("./constants");
@@ -427,10 +599,22 @@ function pixiFadeIn(element, toOpacity) {
   });
 }
 
+function pixiMoveTo(element, dest) {
+  var time = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 1000;
+  return new Promise(function (resolve) {
+    new TWEEN.Tween(element).to({
+      x: dest.x,
+      y: dest.y
+    }, time).easing(TWEEN.Easing.Linear.None).onComplete(function () {
+      return resolve('moved');
+    }).start();
+  });
+}
+
 var POINT_ZERO = new PIXI.Point(0, 0);
 exports.POINT_ZERO = POINT_ZERO;
 
-},{"./constants":2}],8:[function(require,module,exports){
+},{"./constants":3}],10:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -438,23 +622,22 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.Policies = void 0;
 // eslint-disable-next-line import/prefer-default-export
-var Policies = {
-  humanist: {
-    name: 'Humanist',
-    objective: 'Minimize human injuries'
-  },
-  profit: {
-    name: 'Profit-based',
-    objective: 'Minimize costs (property and insurance)'
-  },
-  protector: {
-    name: 'Protector',
-    objective: 'Protect the autonomous car and its passengers'
-  }
-};
+var Policies = [{
+  id: 'humanist',
+  name: 'Humanist',
+  objective: 'Minimize human injuries'
+}, {
+  id: 'profit-based',
+  name: 'Profit-based',
+  objective: 'Minimize insurance costs'
+}, {
+  id: 'protector',
+  name: 'Protector',
+  objective: 'Protect car passengers'
+}];
 exports.Policies = Policies;
 
-},{}],9:[function(require,module,exports){
+},{}],11:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -502,7 +685,7 @@ function () {
 
 exports["default"] = Report;
 
-},{}],10:[function(require,module,exports){
+},{}],12:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -582,7 +765,7 @@ function () {
 
 exports["default"] = SceneElement;
 
-},{"./constants":2,"./pixi-help":7}],11:[function(require,module,exports){
+},{"./constants":3,"./pixi-help":9}],13:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -593,6 +776,10 @@ exports["default"] = void 0;
 var _policies = require("./policies");
 
 var _pixiHelp = require("./pixi-help");
+
+var _menu = _interopRequireDefault(require("./menu"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -611,31 +798,32 @@ function () {
     this.infoBoxes = infoBoxes;
     this.currentDecision = null;
     this.tempElements = [];
+    this.currentPolicy = null;
+    this.policyMenu = null;
   }
 
   _createClass(SituationRunner, [{
     key: "run",
-    value: function run(situation, policyID) {
+    value: function run(situation) {
       var _this = this;
 
-      this.currentDecision = situation.getDecisions()[policyID];
       this.view.agentCar.hide();
       situation.setup().then(function () {
-        return _this.view.agentCar.show();
-      }).then(function () {
         return situation.start();
       }).then(function () {
-        return _this.wait(1000);
+        return situation.wait(1000);
       }).then(function () {
         return _this.showElementsInfo(situation.getElements());
       }).then(function () {
-        return _this.waitForAdvanceButton('Analyze');
+        return _this.waitForAdvanceButton('Choose policy');
       }).then(function () {
         return _this.hideElementsInfo();
       }).then(function () {
-        return _this.showDecision(situation, policyID);
+        return _this.waitForPolicy(situation);
       }).then(function () {
-        return _this.wait(1000);
+        return _this.showDecision(situation);
+      }).then(function () {
+        return situation.wait(1000);
       }).then(function () {
         return _this.waitForAdvanceButton('Show');
       }).then(function () {
@@ -643,7 +831,7 @@ function () {
       }).then(function () {
         return _this.playOutDecision();
       }).then(function () {
-        return _this.wait(1000);
+        return situation.wait(1000);
       }).then(function () {
         return _this.waitForAdvanceButton('Restart');
       }).then(function () {
@@ -651,15 +839,32 @@ function () {
       }).then(function () {
         return situation.teardown();
       }).then(function () {
-        return _this.view.startIdleAnimation();
+        return _this.view.start();
       });
     }
   }, {
-    key: "wait",
-    value: function wait() {
-      var time = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1000;
+    key: "waitForPolicy",
+    value: function waitForPolicy(situation) {
+      var _this2 = this;
+
       return new Promise(function (resolve) {
-        return setTimeout(resolve, time);
+        var options = _policies.Policies.map(function (policy) {
+          return {
+            text: policy.name + "\n" + policy.objective,
+            action: function action() {
+              _this2.currentPolicy = policy;
+              _this2.currentDecision = situation.getDecision(policy.id);
+
+              _this2.policyMenu.hide();
+
+              resolve(policy.name);
+            }
+          };
+        });
+
+        _this2.policyMenu = new _menu["default"]('menu', options);
+
+        _this2.policyMenu.show();
       });
     }
   }, {
@@ -690,16 +895,16 @@ function () {
   }, {
     key: "showElementsInfo",
     value: function showElementsInfo(elements) {
-      var _this2 = this;
+      var _this3 = this;
 
       var promise = new Promise(function (r) {
         return r('start fades');
       });
       elements.forEach(function (element, index) {
         promise = promise.then(function (r) {
-          _this2.highlight(element.sprite, element.color);
+          _this3.highlight(element.sprite, element.color);
 
-          return _this2.infoBoxes.fadeShow(index, element, 1000);
+          return _this3.infoBoxes.fadeShow(index, element, 1000);
         });
       });
       return promise;
@@ -707,20 +912,20 @@ function () {
   }, {
     key: "hideElementsInfo",
     value: function hideElementsInfo() {
-      var _this3 = this;
+      var _this4 = this;
 
       return new Promise(function (resolve) {
-        _this3.removeTempElements();
+        _this4.removeTempElements();
 
-        _this3.infoBoxes.hideAll();
+        _this4.infoBoxes.hideAll();
 
         resolve('clean');
       });
     }
   }, {
     key: "showDecision",
-    value: function showDecision(situation, policyID) {
-      return this.report.show(situation, _policies.Policies[policyID], this.currentDecision.text);
+    value: function showDecision(situation) {
+      return this.report.show(situation, this.currentPolicy, this.currentDecision.text);
     }
   }, {
     key: "hideDecision",
@@ -746,10 +951,10 @@ function () {
   }, {
     key: "removeTempElements",
     value: function removeTempElements() {
-      var _this4 = this;
+      var _this5 = this;
 
       this.tempElements.forEach(function (element) {
-        _this4.view.container.removeChild(element);
+        _this5.view.container.removeChild(element);
       });
       this.tempElements = [];
     }
@@ -760,7 +965,7 @@ function () {
 
 exports["default"] = SituationRunner;
 
-},{"./pixi-help":7,"./policies":8}],12:[function(require,module,exports){
+},{"./menu":8,"./pixi-help":9,"./policies":10}],14:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -818,6 +1023,19 @@ function () {
   }, {
     key: "getDescription",
     value: function getDescription() {}
+  }, {
+    key: "getDecision",
+    value: function getDecision(policyId) {
+      return this.getDecisions()[policyId];
+    }
+  }, {
+    key: "wait",
+    value: function wait() {
+      var time = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1000;
+      return new Promise(function (resolve) {
+        return setTimeout(resolve, time);
+      });
+    }
   }], [{
     key: "registerSituation",
     value: function registerSituation(key, aSituation) {
@@ -825,8 +1043,9 @@ function () {
     }
   }, {
     key: "getSituation",
-    value: function getSituation(key) {
-      return Situation.situations[key];
+    value: function getSituation(key, view) {
+      var situationClass = Situation.situations[key];
+      return new situationClass(view);
     }
   }]);
 
@@ -836,7 +1055,7 @@ function () {
 exports["default"] = Situation;
 Situation.situations = {};
 
-},{}],13:[function(require,module,exports){
+},{}],15:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -849,6 +1068,8 @@ var _constants = require("../constants");
 var _sceneElement = _interopRequireDefault(require("../scene-element"));
 
 var _situation = _interopRequireDefault(require("../situation"));
+
+var _audio = require("../audio");
 
 var _car = _interopRequireDefault(require("../car"));
 
@@ -877,8 +1098,27 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 var BUS_STOP_X = _constants.VIEW_SIZE / 2 - _constants.BORDER_BLOCK_SIZE + _constants.SPRITE_WIDTH / 2;
 var BUS_STOP_Y = -0.06 * _constants.VIEW_SIZE;
 var TRUCK_STOP_POSITION = 0.45;
-var BLACK_CAR_STOP_POSITION = 0.38;
+var BLACK_CAR_STOP_POSITION = 0.35;
 var AGENT_STOP_POSITION = 0.45;
+var BlackCarCrossVector = new PIXI.Point(_constants.STREET_LANE_OFFSET, _constants.STREET_LANE_OFFSET);
+var BlackCarCrashVector = new PIXI.Point(0, 40);
+var AgentCrashVector = new PIXI.Point(0, -40);
+var TurnLeftVector = new PIXI.Point(-_constants.STREET_LANE_OFFSET * 1.5, -_constants.STREET_LANE_OFFSET * 1.5);
+var TurnRightVector = new PIXI.Point(_constants.STREET_LANE_OFFSET * 1.5, -_constants.STREET_LANE_OFFSET * 1.5);
+/*
+Timeline:
+0 - 1000: truck enters and parks
+1000 - 1500: black car enters and stops behind truck
+1500 - 2500: agent enters and reaches position
+2250 - 2500: black car crosses lane
+*/
+
+var SETUP_TIME = 1500;
+var ENTER_TRUCK_TIME = 1000;
+var AGENT_ENTER_DELAY = 700;
+var BLACK_CAR_ENTRY_TIME = 500;
+var BLACK_CAR_PARKED_DELAY = 500;
+var BLACK_CAR_CROSS_TIME = 500;
 
 var CarEntersLaneSituation =
 /*#__PURE__*/
@@ -902,7 +1142,7 @@ function (_Situation) {
   _createClass(CarEntersLaneSituation, [{
     key: "setup",
     value: function setup() {
-      return this.busStop.show();
+      return this.busStop.fadeIn(500);
     }
   }, {
     key: "teardown",
@@ -914,12 +1154,9 @@ function (_Situation) {
     value: function start() {
       var _this2 = this;
 
+      this.view.agentCar.hide();
       return this.moveTruckInPosition().then(function () {
-        return _this2.moveBlackCarInPosition();
-      }).then(function () {
-        return _this2.moveAgentInPosition();
-      }).then(function () {
-        return _this2.blackCarCrossesLane();
+        return Promise.all([_this2.moveBlackCarInPosition(), _this2.moveAgentInPosition()]);
       });
     }
   }, {
@@ -929,26 +1166,22 @@ function (_Situation) {
         sprite: this.view.agentCar.sprite,
         color: 0x3220DE,
         name: 'Autonomous car',
-        description: 'Property value: medium',
-        placement: 'down'
+        description: 'Property value: medium'
       }, {
         sprite: this.blackCar.sprite,
         color: 0xDE3220,
         name: 'Luxury car',
-        description: 'Suddenly enters your lane.<br>Property Value: high<br>Insurance: yes',
-        placement: 'up'
+        description: 'Suddenly enters your lane.<br>Property Value: high<br>Insurance: yes'
       }, {
         sprite: this.truck.sprite,
         color: 0xDE3220,
         name: 'Parked car',
-        description: 'Passengers: 4<br>Property value: low<br>Insurance: none',
-        placement: 'left'
+        description: 'Passengers: 4<br>Property value: low<br>Insurance: none'
       }, {
         sprite: this.busStop.sprite,
         color: 0xDE3220,
         name: 'Bus Stop',
-        description: 'People: 10<br>Property value: medium',
-        placement: 'right'
+        description: 'People: 10<br>Property value: medium'
       }];
     }
   }, {
@@ -957,19 +1190,19 @@ function (_Situation) {
       var _this3 = this;
 
       return {
-        humanist: {
+        'humanist': {
           text: 'Turning left will risk 4 lives. Turning right with certainly kill people at the stop. Solution: breaking and crashing into the car in front will probably not result in fatalities, so it’s the action taken',
           actionFunction: function actionFunction() {
             return _this3.decisionAdvace();
           }
         },
-        profit: {
-          text: 'the car ahead is very expensive, so braking is not recommended. Turning right will risk high payouts to the victims or their families. Solution: turn left towards the parked car, as it is cheap and if the risk of casualties is lower.',
+        'profit': {
+          text: 'the car ahead is very expensive, so breaking is not recommended. Turning right will risk high payouts to the victims or their families. Solution: turn left towards the parked car, as it is cheap and if the risk of casualties is lower.',
           actionFunction: function actionFunction() {
             return _this3.decisionTurnLeft();
           }
         },
-        protector: {
+        'protector': {
           text: 'breaking and turning left mean crashing into heavy, hard objects and potentially harming you. Solution: turning right has almost no risk for you and your car, as people are softer than cars.',
           actionFunction: function actionFunction() {
             return _this3.decisionTurnRight();
@@ -986,47 +1219,62 @@ function (_Situation) {
   }, {
     key: "decisionAdvace",
     value: function decisionAdvace() {
-      return this.view.agentCar.driveInLaneUntilPosition(this.agentLane.getCarPosition(this.blackCar));
+      _audio.Sounds.crash250ms.play();
+
+      return Promise.all([this.blackCar.advanceAndTurn(BlackCarCrashVector, 0, 150), this.view.agentCar.advanceAndTurn(AgentCrashVector, 0, 150)]);
     }
   }, {
     key: "decisionTurnLeft",
     value: function decisionTurnLeft() {
-      this.view.agentCar.crossLane();
+      _audio.Sounds.crash250ms.play();
+
+      return Promise.all([this.moveBlackCarToFinalPosition(), this.view.agentCar.advanceAndTurn(TurnLeftVector, -30, 250)]);
     }
   }, {
     key: "decisionTurnRight",
     value: function decisionTurnRight() {
-      this.view.agentCar.x += _constants.STREET_LANE_OFFSET * 2;
+      _audio.Sounds.crash500ms.play();
+
+      return Promise.all([this.moveBlackCarToFinalPosition(), this.view.agentCar.advanceAndTurn(TurnRightVector, 30, 250)]);
     }
   }, {
     key: "moveTruckInPosition",
     value: function moveTruckInPosition() {
       this.addSprite(this.truck.sprite);
       this.truck.placeInLane(this.parkedLane);
-      return this.truck.driveInLaneUntilPosition(TRUCK_STOP_POSITION);
+      return this.truck.driveInLaneUntilPosition(TRUCK_STOP_POSITION, ENTER_TRUCK_TIME, TWEEN.Easing.Cubic.Out);
     }
   }, {
     key: "moveBlackCarInPosition",
     value: function moveBlackCarInPosition() {
+      var _this4 = this;
+
       this.addSprite(this.blackCar.sprite);
       this.blackCar.placeInLane(this.parkedLane);
-      return this.blackCar.driveInLaneUntilPosition(BLACK_CAR_STOP_POSITION);
+      return this.blackCar.driveInLaneUntilPosition(BLACK_CAR_STOP_POSITION, BLACK_CAR_ENTRY_TIME, TWEEN.Easing.Sinusoidal.Out).then(function () {
+        return _this4.wait(BLACK_CAR_PARKED_DELAY);
+      }).then(function () {
+        return _this4.blackCar.advanceAndTurn(BlackCarCrossVector, -45, BLACK_CAR_CROSS_TIME / 2, TWEEN.Easing.Quadratic.In);
+      }).then(function () {
+        return _this4.blackCar.advanceAndTurn(BlackCarCrossVector, 45, BLACK_CAR_CROSS_TIME / 2, TWEEN.Easing.Quadratic.Out);
+      });
+    }
+  }, {
+    key: "moveBlackCarToFinalPosition",
+    value: function moveBlackCarToFinalPosition() {
+      return this.blackCar.advanceAndTurn(new PIXI.Point(0, _constants.STREET_LANE_OFFSET * 2), 0, 250, TWEEN.Easing.Linear.None);
     }
   }, {
     key: "moveAgentInPosition",
     value: function moveAgentInPosition() {
-      this.view.agentCar.placeInLane(this.agentLane);
-      return this.view.agentCar.driveInLaneUntilPosition(AGENT_STOP_POSITION);
-    }
-  }, {
-    key: "blackCarCrossesLane",
-    value: function blackCarCrossesLane() {
-      var _this4 = this;
+      var _this5 = this;
 
-      return new Promise(function (resolve) {
-        _this4.blackCar.crossLane();
+      return this.wait(AGENT_ENTER_DELAY).then(function () {
+        _this5.view.agentCar.show();
 
-        resolve();
+        _this5.view.agentCar.placeInLane(_this5.agentLane);
+
+        _this5.view.agentCar.driveInLaneUntilPosition(AGENT_STOP_POSITION, SETUP_TIME - AGENT_ENTER_DELAY);
       });
     }
   }]);
@@ -1038,7 +1286,7 @@ exports["default"] = CarEntersLaneSituation;
 
 _situation["default"].registerSituation('car-enters-lane', CarEntersLaneSituation);
 
-},{"../car":1,"../constants":2,"../lanes":5,"../scene-element":10,"../situation":12}],14:[function(require,module,exports){
+},{"../audio":1,"../car":2,"../constants":3,"../lanes":6,"../scene-element":12,"../situation":14}],16:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -1055,6 +1303,8 @@ var _situation = _interopRequireDefault(require("../situation"));
 var _lanes = require("../lanes");
 
 var _pixiHelp = require("../pixi-help");
+
+var _constants = require("../constants");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
@@ -1081,6 +1331,12 @@ var CROSSING_CAR_POSITION = 1 / 4;
 var AGENT_CAR_POSITION = 1 / 2 + 1 / 8;
 var AMBULANCE_POSITION = 1 / 2 + 1 / 32;
 var childStartPos = (0, _pixiHelp.screenPosFromFraction)(1 / 4 + 1 / 32, 1 / 16);
+var childEndPos = (0, _pixiHelp.screenPosFromFraction)(9 / 32, 1 / 8);
+var SETUP_TIME = 1500;
+var CROSSING_CAR_DELAY = 1000;
+var AMBULANCE_DELAY = 400;
+var CHILD_DELAY = 1000;
+var CRASH_TIME = 250;
 
 var ChildRunsSituation =
 /*#__PURE__*/
@@ -1109,15 +1365,7 @@ function (_Situation) {
   }, {
     key: "start",
     value: function start() {
-      var _this2 = this;
-
-      return this.moveCrossingCarInPosition().then(function () {
-        return _this2.moveAgentInPosition();
-      }).then(function () {
-        return _this2.moveAmbulanceInPosition();
-      }).then(function () {
-        return _this2.childRuns();
-      });
+      return Promise.all([this.moveAgentInPosition(), this.moveCrossingCarInPosition(), this.moveAmbulanceInPosition(), this.childRuns()]);
     }
   }, {
     key: "teardown",
@@ -1128,15 +1376,20 @@ function (_Situation) {
     key: "getElements",
     value: function getElements() {
       return [{
-        sprite: this.ambulance.sprite,
+        sprite: this.view.agentCar.sprite,
         color: 0x3220DE,
+        name: 'Autonomous car',
+        description: 'About to cross the intersection with green light.'
+      }, {
+        sprite: this.ambulance.sprite,
+        color: 0xDE3220,
         name: 'Ambulance',
         description: 'Carrying a patient to the hospital'
       }, {
         sprite: this.child.sprite,
         color: 0xDE3220,
         name: 'Child',
-        description: 'Suddenly run in the street'
+        description: 'Suddenly runs in the street'
       }, {
         sprite: this.crossingCar.sprite,
         color: 0xDE3220,
@@ -1147,25 +1400,25 @@ function (_Situation) {
   }, {
     key: "getDecisions",
     value: function getDecisions() {
-      var _this3 = this;
+      var _this2 = this;
 
       return {
-        humanist: {
+        'humanist': {
           text: 'both breaking and continuing have a high risk on human lives, so crash onto the car parked on the left.',
           actionFunction: function actionFunction() {
-            return _this3.decisionCrashCrossingCar();
+            return _this2.decisionCrashCrossingCar();
           }
         },
-        profit: {
+        'profit': {
           text: 'the child appeared out of nowhere and you had a green light, so you are protected by the law. Breaking or turning left will incur in higher car damage and costs.',
           actionFunction: function actionFunction() {
-            return _this3.decisionAdvance();
+            return _this2.decisionAdvance();
           }
         },
-        protector: {
+        'protector': {
           text: 'breaking or turning left will damage the car and potentially hurt you, continuing will only produce minor aesthetical damage in the car.',
           actionFunction: function actionFunction() {
-            return _this3.decisionAdvance();
+            return _this2.decisionAdvance();
           }
         }
       };
@@ -1173,12 +1426,24 @@ function (_Situation) {
   }, {
     key: "decisionAdvance",
     value: function decisionAdvance() {
-      return this.view.agentCar.driveInLaneUntilPosition(0.75);
+      return this.view.agentCar.driveInLaneUntilPosition(0.75, CRASH_TIME);
     }
   }, {
     key: "decisionCrashCrossingCar",
     value: function decisionCrashCrossingCar() {
-      this.view.agentCar.crossLane();
+      var _this3 = this;
+
+      var carMovement = new Promise(function (resolve) {
+        new TWEEN.Tween(_this3.view.agentCar).to({
+          x: _this3.view.agentCar.x - _constants.STREET_LANE_OFFSET,
+          y: _this3.view.agentCar.y + _constants.STREET_LANE_OFFSET * 1.5,
+          angle: _this3.view.agentCar.angle - 60
+        }, CRASH_TIME).easing(TWEEN.Easing.Quadratic.Out).onComplete(function () {
+          return resolve('crash');
+        }).start();
+      });
+      var crossingCarMovement = this.crossingCar.driveInLaneUntilPosition(1 / 4 + 1 / 16, CRASH_TIME);
+      return Promise.all([carMovement, crossingCarMovement]);
     }
   }, {
     key: "getDescription",
@@ -1186,33 +1451,45 @@ function (_Situation) {
       return 'When reaching a crossing and having a green light, a child suddenly runs onto the street from behind a parked car. At the same time, an ambulance with lights and siren is coming behind you fast.';
     }
   }, {
-    key: "moveCrossingCarInPosition",
-    value: function moveCrossingCarInPosition() {
-      this.addSprite(this.crossingCar.sprite);
-      this.crossingCar.placeInLane(this.oppositeLane);
-      return this.crossingCar.driveInLaneUntilPosition(CROSSING_CAR_POSITION);
-    }
-  }, {
     key: "moveAgentInPosition",
     value: function moveAgentInPosition() {
+      this.view.agentCar.show();
       this.view.agentCar.placeInLane(this.agentLane);
-      return this.view.agentCar.driveInLaneUntilPosition(AGENT_CAR_POSITION);
+      return this.view.agentCar.driveInLaneUntilPosition(AGENT_CAR_POSITION, SETUP_TIME);
+    }
+  }, {
+    key: "moveCrossingCarInPosition",
+    value: function moveCrossingCarInPosition() {
+      var _this4 = this;
+
+      return this.wait(CROSSING_CAR_DELAY).then(function () {
+        _this4.addSprite(_this4.crossingCar.sprite);
+
+        _this4.crossingCar.placeInLane(_this4.oppositeLane);
+
+        return _this4.crossingCar.driveInLaneUntilPosition(CROSSING_CAR_POSITION, SETUP_TIME - CROSSING_CAR_DELAY);
+      });
     }
   }, {
     key: "moveAmbulanceInPosition",
     value: function moveAmbulanceInPosition() {
-      this.addSprite(this.ambulance.sprite);
-      this.ambulance.placeInLane(this.agentLane);
-      return this.ambulance.driveInLaneUntilPosition(AMBULANCE_POSITION);
+      var _this5 = this;
+
+      return this.wait(AMBULANCE_DELAY).then(function () {
+        _this5.addSprite(_this5.ambulance.sprite);
+
+        _this5.ambulance.placeInLane(_this5.agentLane);
+
+        return _this5.ambulance.driveInLaneUntilPosition(AMBULANCE_POSITION, SETUP_TIME - AMBULANCE_DELAY);
+      });
     }
   }, {
     key: "childRuns",
     value: function childRuns() {
-      var _this4 = this;
+      var _this6 = this;
 
-      return new Promise(function (resolve, reject) {
-        (0, _pixiHelp.moveToFraction)(_this4.child.sprite, 9 / 32, 1 / 8);
-        resolve('ran');
+      return this.wait(CHILD_DELAY).then(function () {
+        return (0, _pixiHelp.pixiMoveTo)(_this6.child.sprite, childEndPos, SETUP_TIME - CHILD_DELAY);
       });
     }
   }]);
@@ -1224,7 +1501,7 @@ exports["default"] = ChildRunsSituation;
 
 _situation["default"].registerSituation('child-runs', ChildRunsSituation);
 
-},{"../car":1,"../lanes":5,"../pixi-help":7,"../scene-element":10,"../situation":12}],15:[function(require,module,exports){
+},{"../car":2,"../constants":3,"../lanes":6,"../pixi-help":9,"../scene-element":12,"../situation":14}],17:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -1320,20 +1597,17 @@ function (_Situation) {
         sprite: this.view.agentCar.sprite,
         color: 0x3220DE,
         name: 'Autonomous car',
-        description: 'Property value: medium<br><b>Warning! Front passenger not wearing seat belt.</b>',
-        placement: 'down'
+        description: 'Property value: medium<br><b>Warning! Front passenger not wearing seat belt.</b>'
       }, {
         sprite: this.cyclist.sprite,
         color: 0xDE3220,
         name: 'Cyclist',
-        description: 'Insurance: unknown',
-        placement: 'up'
+        description: 'Insurance: unknown'
       }, {
         sprite: this.tree.sprite,
         color: 0xDE3220,
         name: 'Fallen Tree',
-        description: 'Hard. Try not to crash unto it.',
-        placement: 'left'
+        description: 'Hard. Try not to crash unto it.'
       }];
     }
   }, {
@@ -1342,19 +1616,19 @@ function (_Situation) {
       var _this3 = this;
 
       return {
-        humanist: {
+        'humanist': {
           text: 'a sudden break would send the passenger without seatbelt forward through the glass, potentially killing them. Swerving might avoid the collision with the tree, but could also harm the passenger. Solution: turn right and break, crashing into the tree softly, with the passenger without seatbelt protected by the one on its side and by its airbag.',
           actionFunction: function actionFunction() {
             return _this3.softlyCrashTree();
           }
         },
-        profit: {
+        'profit': {
           text: 'Crashing with the tree will cost the insurers money. Swerving might avoid the collision with the tree, but as the floor is wet it could also potentially turn around the car, damaging it. As the car has warned the passenger to wear the seat belt but they have not, any injury will be their own responsibility. Changing lanes would kill the cyclist, but its insurance status is unknown, so its a financial risk. Solution: a sudden break, fully protecting the car and passengers that wear a seat belt.',
           actionFunction: function actionFunction() {
             return _this3.fullBreak();
           }
         },
-        protector: {
+        'protector': {
           text: 'Crashing with the tree or swerving would hurt the passenger without seatbelt. Solution: slow down and change lanes, potentially killing the cyclist but saving all passengers.',
           actionFunction: function actionFunction() {
             return _this3.crashCyclist();
@@ -1377,6 +1651,7 @@ function (_Situation) {
   }, {
     key: "moveAgentInPosition",
     value: function moveAgentInPosition() {
+      this.view.agentCar.show();
       this.view.agentCar.placeInLane(this.agentLane);
       return this.view.agentCar.driveInLaneUntilPosition(AGENT_STOP_POSITION, SETUP_TIME);
     }
@@ -1440,7 +1715,7 @@ exports["default"] = TreeFallsSituation;
 
 _situation["default"].registerSituation('tree-falls', TreeFallsSituation);
 
-},{"../car":1,"../constants":2,"../lanes":5,"../pixi-help":7,"../scene-element":10,"../situation":12}],16:[function(require,module,exports){
+},{"../car":2,"../constants":3,"../lanes":6,"../pixi-help":9,"../scene-element":12,"../situation":14}],18:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -1460,7 +1735,7 @@ function tweenOpacity(element, toOpacity) {
   });
 }
 
-},{}],17:[function(require,module,exports){
+},{}],19:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -1478,6 +1753,18 @@ var _constants = require("./constants");
 
 var _pixiHelp = require("./pixi-help");
 
+var _audio = require("./audio");
+
+var _report = _interopRequireDefault(require("./report"));
+
+var _infoBoxes = _interopRequireDefault(require("./info-boxes"));
+
+var _situation = _interopRequireDefault(require("./situation"));
+
+var _situationRunner = _interopRequireDefault(require("./situation-runner"));
+
+var _menu = _interopRequireDefault(require("./menu.js"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -1490,6 +1777,8 @@ var View =
 /*#__PURE__*/
 function () {
   function View(element) {
+    var _this = this;
+
     _classCallCheck(this, View);
 
     this.app = new PIXI.Application({
@@ -1511,6 +1800,27 @@ function () {
     this.debugLayer.hide();
 
     this.afterIdleAction = function () {};
+
+    this.SituationMenu = new _menu["default"]('menu', [{
+      text: 'A tree falls',
+      action: function action() {
+        return _this.startSituation('tree-falls');
+      }
+    }, {
+      text: 'A car enters your lane',
+      action: function action() {
+        return _this.startSituation('car-enters-lane');
+      }
+    }, {
+      text: 'A child runs in the street',
+      action: function action() {
+        return _this.startSituation('child-runs');
+      }
+    }]);
+    this.runner = new _situationRunner["default"](this, new _report["default"]($('#report')[0]), new _infoBoxes["default"]($('#info_elements')[0]));
+    this.app.ticker.add(function () {
+      return TWEEN.update();
+    });
   }
 
   _createClass(View, [{
@@ -1521,16 +1831,37 @@ function () {
       this.agentCar.hide();
       this.agentCar.show();
       this.agentCar.placeInLane(currentLane, 0, true);
+
+      _audio.Sounds.carIdling2000ms.play();
+
       return this.agentCar.driveInLaneUntilPosition(1.0, _constants.IDLE_ANIMATION_TIME);
     }
   }, {
     key: "startIdleAnimation",
     value: function startIdleAnimation() {
-      var _this = this;
+      var _this2 = this;
 
       this.afterIdleAction = this.startIdleAnimation;
       this.doIdleAnimation().then(function () {
-        return _this.afterIdleAction();
+        return _this2.afterIdleAction();
+      });
+    }
+  }, {
+    key: "start",
+    value: function start() {
+      this.SituationMenu.show();
+      this.startIdleAnimation();
+    }
+  }, {
+    key: "startSituation",
+    value: function startSituation(situationID) {
+      var _this3 = this;
+
+      this.SituationMenu.hide();
+      this.queueAction(function () {
+        var situationInstance = _situation["default"].getSituation(situationID, _this3);
+
+        _this3.runner.run(situationInstance);
       });
     }
   }, {
@@ -1545,4 +1876,4 @@ function () {
 
 exports["default"] = View;
 
-},{"./car":1,"./constants":2,"./lanes":5,"./pixi-help":7,"./scene-element":10}]},{},[6]);
+},{"./audio":1,"./car":2,"./constants":3,"./info-boxes":4,"./lanes":6,"./menu.js":8,"./pixi-help":9,"./report":11,"./scene-element":12,"./situation":14,"./situation-runner":13}]},{},[7]);

@@ -9,6 +9,60 @@ body {
   padding: 0px;
   margin: 0px; }
 
+#menu {
+  width: 380px;
+  height: 380px;
+  left: 210px;
+  top: 210px;
+  position: absolute;
+  border-radius: 15px;
+  background-color: #afdde9ff;
+  z-index: 100; }
+
+#menu_cursor_area {
+  position: absolute;
+  left: 20px;
+  top: 20px;
+  width: 40px;
+  height: 360px;
+  padding: 0;
+  margin: 0; }
+
+#menu_options_area {
+  position: absolute;
+  top: 20px;
+  left: 60px;
+  width: 320px;
+  height: 360px;
+  padding: 0;
+  margin: 0;
+  line-height: 15px; }
+
+.menu_option {
+  width: 300px;
+  height: 60px;
+  border-radius: 15px;
+  margin: 0 0 15px 0;
+  background-color: #ff5555ff;
+  border: 0;
+  font-family: 'Barlow', sans-serif;
+  color: white;
+  font-size: 20px;
+  padding: 0px 10px 0 10px;
+  vertical-align: middle;
+  display: table-cell;
+  line-height: 80%;
+  text-align: left;
+  word-wrap: break-word; }
+
+#menu_cursor {
+  width: 0;
+  height: 0;
+  margin: 15px 0 0 0;
+  border-top: 15px solid transparent;
+  border-bottom: 15px solid transparent;
+  border-left: 30px solid black; }
+
 #info_elements {
   width: 400px;
   height: 400px;
@@ -86,10 +140,8 @@ button {
   z-index: 101;
   position: absolute;
   display: none;
-  left: 340px;
-  top: 637px;
-  width: 120px;
-  border: 5px solid #407080F0;
-  border-radius: 5px 5px 0px 0px; }
+  left: 300px;
+  width: 140px;
+  bottom: 100px; }
 
 /*# sourceMappingURL=default.css.map */
