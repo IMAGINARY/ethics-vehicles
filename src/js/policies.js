@@ -4,7 +4,7 @@ export const Policies = [
     name: 'Humanist',
     objective: 'Minimize human injuries',
   },
-  { id: 'profit-based',
+  { id: 'profit',
     name: 'Profit-based',
     objective: 'Minimize insurance costs',
   },
