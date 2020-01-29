@@ -21,7 +21,7 @@ body {
 
 #menu {
   width: 480px;
-  height: 480px;
+  height: 250px;
   left: 720px;
   top: 300px;
   position: absolute;
@@ -79,10 +79,10 @@ body {
 }
 
 #info_elements {
-  width: 400px;
-  height: 400px;
-  left: 200px;
-  top: 200px;
+  width: 960px;
+  height: 200px;
+  left: 560px;
+  top: 580px;
   position: absolute;
   padding: 2px;
 }
@@ -127,13 +127,14 @@ h3 {
 #report {
   z-index: 100;
   position: absolute;
-  left: 140px;
-  top: 140px;
-  width: 500px;
-  height: 500px;
+  left: 540px;
+  top: 300px;
+  width: 820px;
+  height: 460px;
   padding: 10px;
   background-color: #E0E0D0;
   box-shadow: 10px 15px 10px -5px rgba(0, 0, 0, 0.5);
+  border-radius: 20px;  
   visibility: hidden;
 }
 

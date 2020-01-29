@@ -21,10 +21,9 @@ export default class SituationRunner {
       .then(() => situation.start())
       .then(() => situation.wait(1000))
       .then(() => this.showElementsInfo(situation.getElements()))
-      .then(() => this.waitForAdvanceButton('Choose policy'))
-      .then(() => this.hideElementsInfo())
 
       .then(() => this.waitForPolicy(situation))
+      .then(() => this.hideElementsInfo())
       .then(() => this.showDecision(situation))
       .then(() => situation.wait(1000))
       .then(() => this.waitForAdvanceButton('Show'))
