@@ -2,9 +2,8 @@
 import SceneElement from '../scene-element';
 import Car from '../car';
 import Situation from '../situation';
-import { STREET_LANE_OFFSET } from '../constants';
+import { STREET_LANE_OFFSET, StreetOffsetFromCenter } from '../constants';
 import { LANES } from '../lanes';
-import { screenPosFromFraction } from '../pixi-help';
 
 const AGENT_LANE = 1;
 const CYCLIST_STOP_POSITION = 3/8;
@@ -21,12 +20,12 @@ export default class TreeFallsSituation extends Situation {
     this.waterPuddle = new SceneElement(
       this.view,
       'assets/images/water_puddle.png',
-      screenPosFromFraction(1/8, 3/8 + 1/16)
+      new PIXI.Point(-StreetOffsetFromCenter.x - STREET_LANE_OFFSET, -STREET_LANE_OFFSET)
     );
     this.tree = new SceneElement(
       this.view,
       'assets/images/tree.png',
-      screenPosFromFraction(1/16, 0.5)
+      new PIXI.Point(-StreetOffsetFromCenter.x - STREET_LANE_OFFSET*3, 0)
     );
     this.cyclist = new Car(
       this.view,
