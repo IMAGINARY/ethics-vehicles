@@ -3,8 +3,8 @@ $color-bondi: #308090;
 $color-gray-light: #F0F0F0;
 
 $options-bar-height: 80px;
-$game-canvas-width: 1920;
-$game-canvas-height: 1080;
+$game-canvas-width: 1920px;
+$game-canvas-height: 1080px;
 
 html, body {
   width: 100%;
@@ -150,11 +150,14 @@ button {
   padding: 4px 8px 4px 8px;
 }
 
+$advance-button-width: 240px;
+$advance-button-left: ($game-canvas-width - $advance-button-width)/2;
+
 #advanceButton {
   z-index: 101;
   position: absolute;
   display: none;
-  left: 300px;
-  width: 140px;
-  bottom: 100px;
+  left: $advance-button-left;
+  width: $advance-button-width;
+  bottom: 200px;
 }
