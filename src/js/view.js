@@ -2,7 +2,7 @@
 import Car from './car';
 import SceneElement from './scene-element';
 import { LANES } from './lanes';
-import { VIEW_SIZE, IDLE_ANIMATION_TIME, ViewSize } from './constants';
+import { IDLE_ANIMATION_TIME, ViewSize } from './constants';
 import { POINT_ZERO } from './pixi-help';
 import { Sounds } from './audio';
 import Report from './report';
