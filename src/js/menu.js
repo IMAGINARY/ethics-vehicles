@@ -1,3 +1,4 @@
+import { tweenOpacity } from './style-help';
 
 const KeyArrowUp = 38;
 const KeyArrowDown = 40;
@@ -27,12 +28,21 @@ export default class Menu {
     };
     this.updateCursorPosition();
     this.htmlElement.show();
+    this.fadeInCursor();
   }
 
   hide() {
     this.htmlElement.hide();
     window.onkeydown = function() {};
     this.clearHTML();
+  }
+
+  fadeInCursor() {
+    const domCursor = this.cursor[0];
+    domCursor.style.opacity = 0;
+    return tweenOpacity(domCursor, 1, 500)
+        .then(() => tweenOpacity(domCursor, 0.125, 500))
+        .then(() => tweenOpacity(domCursor, 1, 500))
   }
 
   createHTMLOptions() {
