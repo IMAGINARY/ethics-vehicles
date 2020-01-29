@@ -1,5 +1,5 @@
 /* global PIXI */
-import { VIEW_SIZE } from './constants';
+import { ViewSize } from './constants';
 
 export function createSprite(sourceImage, scale, anchor = 0.5) {
   const texture = PIXI.Texture.from(sourceImage);
@@ -36,8 +36,8 @@ export function vectorBetweenPoints(a, b) {
  * @param {fraction [0,1] of the screen, vertically, starting from top} y 
  */
 export function screenPosFromFraction(x, y) {
-  return new PIXI.Point((x - 0.5) * VIEW_SIZE,
-                        (y - 0.5) * VIEW_SIZE);
+  return new PIXI.Point((x - 0.5) * ViewSize.width,
+                        (y - 0.5) * ViewSize.height);
 }
 
 export function moveToFraction(sprite, x, y) {

@@ -1,19 +1,19 @@
 /* globals PIXI */
 import { Lane } from './lane';
 import {
-  VIEW_SIZE, STREET_X_OFFSET, STREET_Y_OFFSET, STREET_LANE_OFFSET,
+  STREET_X_OFFSET, STREET_Y_OFFSET, STREET_LANE_OFFSET, ViewSize,
 } from './constants';
 
 function createHorizontalLane(verticalOffset, dirMultiplier) {
   return new Lane(
-    new PIXI.Point( (VIEW_SIZE/2) * dirMultiplier, -verticalOffset),
-    new PIXI.Point(-(VIEW_SIZE/2) * dirMultiplier, -verticalOffset));
+    new PIXI.Point( (ViewSize.width/2) * dirMultiplier, -verticalOffset),
+    new PIXI.Point(-(ViewSize.height/2) * dirMultiplier, -verticalOffset));
 }
 
 function createVerticalLane(horizontalOffset, dirMultiplier) {
   return new Lane(
-    new PIXI.Point(-horizontalOffset,  (VIEW_SIZE/2) * dirMultiplier),
-    new PIXI.Point(-horizontalOffset, -(VIEW_SIZE/2) * dirMultiplier));
+    new PIXI.Point(-horizontalOffset,  (ViewSize.width/2) * dirMultiplier),
+    new PIXI.Point(-horizontalOffset, -(ViewSize.height/2) * dirMultiplier));
 }
 
 // eslint-disable-next-line import/prefer-default-export

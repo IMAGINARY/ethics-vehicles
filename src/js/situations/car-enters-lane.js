@@ -1,13 +1,13 @@
 /* globals PIXI */
-import { VIEW_SIZE, STREET_LANE_OFFSET, BORDER_BLOCK_SIZE, SPRITE_WIDTH} from '../constants';
+import { ViewSize, STREET_LANE_OFFSET, BORDER_BLOCK_SIZE, SPRITE_WIDTH} from '../constants';
 import SceneElement from '../scene-element';
 import Situation from '../situation';
 import { Sounds } from '../audio';
 import Car from '../car';
 import { LANES } from '../lanes';
 
-const BUS_STOP_X = (VIEW_SIZE/2) - BORDER_BLOCK_SIZE + (SPRITE_WIDTH/2);
-const BUS_STOP_Y = -0.06 * VIEW_SIZE;
+const BUS_STOP_X = (ViewSize.width/2) - BORDER_BLOCK_SIZE + (SPRITE_WIDTH/2);
+const BUS_STOP_Y = -0.06 * ViewSize.height;
 
 const TRUCK_STOP_POSITION = 0.45;
 const BLACK_CAR_STOP_POSITION = 0.35;

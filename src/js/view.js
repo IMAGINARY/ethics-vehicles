@@ -2,7 +2,7 @@
 import Car from './car';
 import SceneElement from './scene-element';
 import { LANES } from './lanes';
-import { VIEW_SIZE, IDLE_ANIMATION_TIME } from './constants';
+import { VIEW_SIZE, IDLE_ANIMATION_TIME, ViewSize } from './constants';
 import { POINT_ZERO } from './pixi-help';
 import { Sounds } from './audio';
 import Report from './report';
@@ -15,8 +15,8 @@ import Menu from './menu.js';
 export default class View {
   constructor(element) {
     this.app = new PIXI.Application({
-      width: VIEW_SIZE,
-      height: VIEW_SIZE,
+      width: ViewSize.width,
+      height: ViewSize.height,
       backgroundColor: 0x000000,
       resolution: window.devicePixelRatio || 1,
     });

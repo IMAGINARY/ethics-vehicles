@@ -3,7 +3,8 @@ $color-bondi: #308090;
 $color-gray-light: #F0F0F0;
 
 $options-bar-height: 80px;
-$game-canvas-size: 800px;
+$game-canvas-width: 1920;
+$game-canvas-height: 1080;
 
 html, body {
   width: 100%;
@@ -109,14 +110,14 @@ h3 {
 }
 
 #game {
-  height: $game-canvas-size;
-  width: $game-canvas-size;
+  width: $game-canvas-width;
+  height: $game-canvas-height;
   padding: 0px;
   margin: 0px;
 
   canvas {
-    max-width: $game-canvas-size;
-    max-height: $game-canvas-size;
+    max-width: $game-canvas-width;
+    max-height: $game-canvas-height;
     padding: 0px;
     margin: 0px;
     display: block;
