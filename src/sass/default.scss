@@ -136,13 +136,16 @@ h3 {
   position: absolute;
   left: 540px;
   top: 300px;
-  width: 820px;
-  height: 460px;
-  padding: 10px;
-  background-color: #E0E0D0;
+  width: 830px;
+  height: 430px;
+  padding: 20px;
+  background-color: #FFF280;
   box-shadow: 10px 15px 10px -5px rgba(0, 0, 0, 0.5);
   border-radius: 20px;  
   visibility: hidden;
+
+  font-size: 22px;
+  font-family: 'Barlow', sans-serif;
 }
 
 button {
