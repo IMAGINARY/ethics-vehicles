@@ -42,7 +42,7 @@ export default class SituationRunner {
     return new Promise ( resolve => {
       const options = Policies.map ( policy => {
         return {
-          text: policy.name + "\n" + policy.objective,
+          text: policy.name + ": " + policy.objective,
           action: () => {
             this.currentPolicy = policy;
             this.currentDecision = situation.getDecision(policy.id);
