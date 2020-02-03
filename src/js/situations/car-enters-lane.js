@@ -66,25 +66,25 @@ export default class CarEntersLaneSituation extends Situation {
     return [
       {
         sprite: this.view.agentCar.sprite,
-        color: 0x3220DE,
+        color: Situation.HighlightOthersColor,
         name: 'Autonomous car',
         description: 'Property value: medium',
       },
       {
         sprite: this.blackCar.sprite,
-        color: 0xDE3220,
+        color: Situation.HighlightOthersColor,
         name: 'Luxury car',
         description: 'Suddenly enters your lane.<br>Property Value: high<br>Insurance: yes',
       },
       {
         sprite: this.truck.sprite,
-        color: 0xDE3220,
+        color: Situation.HighlightOthersColor,
         name: 'Parked car',
         description: 'Passengers: 4<br>Property value: low<br>Insurance: none',
       },
       {
         sprite: this.busStop.sprite,
-        color: 0xDE3220,
+        color: Situation.HighlightOthersColor,
         name: 'Bus Stop',
         description: 'People: 10<br>Property value: medium',
       },

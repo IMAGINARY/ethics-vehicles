@@ -59,3 +59,5 @@ export default class Situation {
 }
 
 Situation.situations = {};
+Situation.HighlightAgentColor = 0xFFF200;
+Situation.HighlightOthersColor = 0xFF8000;

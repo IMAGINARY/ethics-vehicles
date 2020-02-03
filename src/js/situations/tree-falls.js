@@ -57,19 +57,19 @@ export default class TreeFallsSituation extends Situation {
     return [
       {
         sprite: this.view.agentCar.sprite,
-        color: 0x3220DE,
+        color: Situation.HighlightAgentColor,
         name: 'Autonomous car',
         description: 'Property value: medium<br><b>Warning! Front passenger not wearing seat belt.</b>',
       },
       {
         sprite: this.cyclist.sprite,
-        color: 0xDE3220,
+        color: Situation.HighlightOthersColor,
         name: 'Cyclist',
         description: 'Insurance: unknown',
       },
       {
         sprite: this.tree.sprite,
-        color: 0xDE3220,
+        color: Situation.HighlightOthersColor,
         name: 'Fallen Tree',
         description: 'Hard. Try not to crash unto it.',
       },

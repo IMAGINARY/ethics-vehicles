@@ -51,25 +51,25 @@ export default class ChildRunsSituation extends Situation {
     return [
       {
         sprite: this.view.agentCar.sprite,
-        color: 0x3220DE,
+        color: Situation.HighlightAgentColor,
         name: 'Autonomous car',
         description: 'About to cross the intersection with green light.',
       },
       {
         sprite: this.ambulance.sprite,
-        color: 0xDE3220,
+        color: Situation.HighlightOthersColor,
         name: 'Ambulance',
         description: 'Carrying a patient to the hospital',
       },
       {
         sprite: this.child.sprite,
-        color: 0xDE3220,
+        color: Situation.HighlightOthersColor,
         name: 'Child',
         description: 'Suddenly runs in the street',
       },
       {
         sprite: this.crossingCar.sprite,
-        color: 0xDE3220,
+        color: Situation.HighlightOthersColor,
         name: 'A Car',
         description: 'Probably will not stop',
       },
