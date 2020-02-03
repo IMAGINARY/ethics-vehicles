@@ -16,8 +16,6 @@ export default class Menu {
     this.optionsArea = this.htmlElement.find('#menu_options_area');
     this.cursor = this.htmlElement.find('#menu_cursor');
     this.title = this.htmlElement.find('#menu_title');
-    console.log("title text: " + this.titleText);
-    console.log("title html: " + this.title);
   }
 
   show() {
