@@ -88,27 +88,28 @@ body {
 }
 
 .info_element {
-  width: 178px;
-  height: 178px;
+  width: 176px;
+  height: 176px;
   margin: 2px;
   float: left;
   background-color: #D0D0D0F0;
   z-index: 100;
   border-radius: 20px;
   visibility: hidden;
-  padding: 8px;
+  padding: 10px;
+  font-size: 18px;
+  font-family: 'Barlow', sans-serif;
 }
 
 #menu_title {
   font-size: 24px;
   text-align: center;
-  margin: 0 10px 2px 10px;
+  margin: 10px 10px 2px 10px;
 }
 
 h3 {
-  font-size: 18px;
+  font-size: 20px;
   margin: 0 0 2px 0;
-  text-decoration: underline;
 }
 
 .info_description {
