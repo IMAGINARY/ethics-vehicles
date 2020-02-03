@@ -584,7 +584,7 @@ function createSprite(sourceImage, scale) {
 function highlightSprite(sprite, color) {
   var graphics = new PIXI.Graphics();
   graphics.beginFill(color, 0.5);
-  graphics.drawRect(sprite.x - sprite.width / 2, sprite.y - sprite.height / 2, sprite.width, sprite.height);
+  graphics.drawRoundedRect(sprite.x - sprite.width / 2 - 10, sprite.y - sprite.height / 2 - 10, sprite.width + 20, sprite.height + 20, 10);
   graphics.endFill();
   return graphics;
 }
@@ -1076,6 +1076,8 @@ function () {
 
 exports["default"] = Situation;
 Situation.situations = {};
+Situation.HighlightAgentColor = 0xFFF200;
+Situation.HighlightOthersColor = 0xFF8000;
 
 },{}],15:[function(require,module,exports){
 "use strict";
@@ -1186,24 +1188,24 @@ function (_Situation) {
     value: function getElements() {
       return [{
         sprite: this.view.agentCar.sprite,
-        color: 0x3220DE,
+        color: _situation["default"].HighlightOthersColor,
         name: 'Autonomous car',
-        description: 'Property value: medium'
+        description: 'While reaching a bus stop, a car enters its lane in front of it'
       }, {
         sprite: this.blackCar.sprite,
-        color: 0xDE3220,
+        color: _situation["default"].HighlightOthersColor,
         name: 'Luxury car',
-        description: 'Suddenly enters your lane.<br>Property Value: high<br>Insurance: yes'
+        description: 'A very expensive car suddenly enters your lane.'
       }, {
         sprite: this.truck.sprite,
-        color: 0xDE3220,
+        color: _situation["default"].HighlightOthersColor,
         name: 'Parked car',
-        description: 'Passengers: 4<br>Property value: low<br>Insurance: none'
+        description: 'An old truck in bad shape, with four passengers'
       }, {
         sprite: this.busStop.sprite,
-        color: 0xDE3220,
+        color: _situation["default"].HighlightOthersColor,
         name: 'Bus Stop',
-        description: 'People: 10<br>Property value: medium'
+        description: 'Full of people waiting for their bus'
       }];
     }
   }, {
@@ -1213,19 +1215,19 @@ function (_Situation) {
 
       return {
         'humanist': {
-          text: 'Turning left will risk 4 lives. Turning right with certainly kill people at the stop. Solution: breaking and crashing into the car in front will probably not result in fatalities, so it’s the action taken',
+          text: 'Turning left will risk the people in the track. Turning right with probably risk even more people at the stop. Solution: breaking and crashing into the car in front will probably not result in fatalities.',
           actionFunction: function actionFunction() {
             return _this3.decisionAdvace();
           }
         },
         'profit': {
-          text: 'the car ahead is very expensive, so breaking is not recommended. Turning right will risk high payouts to the victims or their families. Solution: turn left towards the parked car, as it is cheap and if the risk of casualties is lower.',
+          text: 'The car facing you is very expensive, and crashing into it might mean long legal battles for your insurance. Crashing into the bus stop will risk high payouts to the victims in or their families. Solution: turn left towards the parked car, as it is cheap and if the risk of casualties is lower.',
           actionFunction: function actionFunction() {
             return _this3.decisionTurnLeft();
           }
         },
         'protector': {
-          text: 'breaking and turning left mean crashing into heavy, hard objects and potentially harming you. Solution: turning right has almost no risk for you and your car, as people are softer than cars.',
+          text: 'Crashing into either car will potentially damage the autonomous car and harm its passengers. Solution: turn right and crash into the bus stop, as people are softer than cars.',
           actionFunction: function actionFunction() {
             return _this3.decisionTurnRight();
           }
@@ -1351,7 +1353,7 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 var AGENT_LANE = 4;
 var CROSSING_CAR_POSITION = 1 / 4;
 var AGENT_CAR_POSITION = 1 / 2 + 1 / 8;
-var AMBULANCE_POSITION = 1 / 2 + 1 / 32;
+var AMBULANCE_POSITION = 1 / 2 + 1 / 16;
 var childStartPos = (0, _pixiHelp.screenPosFromFraction)(1 / 4 + 1 / 32, 1 / 16);
 var childEndPos = (0, _pixiHelp.screenPosFromFraction)(9 / 32, 1 / 8);
 var SETUP_TIME = 1500;
@@ -1399,22 +1401,22 @@ function (_Situation) {
     value: function getElements() {
       return [{
         sprite: this.view.agentCar.sprite,
-        color: 0x3220DE,
+        color: _situation["default"].HighlightAgentColor,
         name: 'Autonomous car',
-        description: 'About to cross the intersection with green light.'
+        description: 'About to enter a crossroad, suddenly detects a child'
       }, {
         sprite: this.ambulance.sprite,
-        color: 0xDE3220,
+        color: _situation["default"].HighlightOthersColor,
         name: 'Ambulance',
         description: 'Carrying a patient to the hospital'
       }, {
         sprite: this.child.sprite,
-        color: 0xDE3220,
+        color: _situation["default"].HighlightOthersColor,
         name: 'Child',
-        description: 'Suddenly runs in the street'
+        description: 'Runs in the street without warning'
       }, {
         sprite: this.crossingCar.sprite,
-        color: 0xDE3220,
+        color: _situation["default"].HighlightOthersColor,
         name: 'A Car',
         description: 'Probably will not stop'
       }];
@@ -1426,19 +1428,19 @@ function (_Situation) {
 
       return {
         'humanist': {
-          text: 'both breaking and continuing have a high risk on human lives, so crash onto the car parked on the left.',
+          text: 'A sudden break will provoke a crash with the ambulance, but continuing ahead will hurt the child. Best course of action is to change lanes and crash with the other car, as both are crash-safe',
           actionFunction: function actionFunction() {
             return _this2.decisionCrashCrossingCar();
           }
         },
         'profit': {
-          text: 'the child appeared out of nowhere and you had a green light, so you are protected by the law. Breaking or turning left will incur in higher car damage and costs.',
+          text: 'Breaking or turning left will incur in high car damages even risk of lawsuit. The child crossed with warning and with a red light, so you are protected by the law if you drive through.',
           actionFunction: function actionFunction() {
             return _this2.decisionAdvance();
           }
         },
         'protector': {
-          text: 'breaking or turning left will damage the car and potentially hurt you, continuing will only produce minor aesthetical damage in the car.',
+          text: 'Breaking or turning left will damage the car and potentially hurt you, while driving ahead will produce only slight car damage and no risk to passengers.',
           actionFunction: function actionFunction() {
             return _this2.decisionAdvance();
           }
@@ -1470,7 +1472,7 @@ function (_Situation) {
   }, {
     key: "getDescription",
     value: function getDescription() {
-      return 'When reaching a crossing and having a green light, a child suddenly runs onto the street from behind a parked car. At the same time, an ambulance with lights and siren is coming behind you fast.';
+      return 'When arriving at a crossing and with a green light, a child suddenly runs onto the street. At the same time, an ambulance with lights and siren is driving behind your.';
     }
   }, {
     key: "moveAgentInPosition",
@@ -1615,19 +1617,19 @@ function (_Situation) {
     value: function getElements() {
       return [{
         sprite: this.view.agentCar.sprite,
-        color: 0x3220DE,
+        color: _situation["default"].HighlightAgentColor,
         name: 'Autonomous car',
-        description: 'Property value: medium<br><b>Warning! Front passenger not wearing seat belt.</b>'
+        description: 'Warning! The front passenger is not wearing seat belt.'
       }, {
         sprite: this.cyclist.sprite,
-        color: 0xDE3220,
+        color: _situation["default"].HighlightOthersColor,
         name: 'Cyclist',
-        description: 'Insurance: unknown'
+        description: 'An ordinary cyclist driving in the opposite lane.'
       }, {
         sprite: this.tree.sprite,
-        color: 0xDE3220,
+        color: _situation["default"].HighlightOthersColor,
         name: 'Fallen Tree',
-        description: 'Hard. Try not to crash unto it.'
+        description: 'Crashing into it could be fatal.'
       }];
     }
   }, {
@@ -1637,19 +1639,19 @@ function (_Situation) {
 
       return {
         'humanist': {
-          text: 'a sudden break would send the passenger without seatbelt forward through the glass, potentially killing them. Swerving might avoid the collision with the tree, but could also harm the passenger. Solution: turn right and break, crashing into the tree softly, with the passenger without seatbelt protected by the one on its side and by its airbag.',
+          text: 'A sudden break would send the front passenger forward through the windshield, potentially killing them. Changing lanes would certainly kill the cyclist. Solution: break slowly while turning right, sending the front passenger against the driver, which would cause only minor concussions.',
           actionFunction: function actionFunction() {
             return _this3.softlyCrashTree();
           }
         },
         'profit': {
-          text: 'Crashing with the tree will cost the insurers money. Swerving might avoid the collision with the tree, but as the floor is wet it could also potentially turn around the car, damaging it. As the car has warned the passenger to wear the seat belt but they have not, any injury will be their own responsibility. Changing lanes would kill the cyclist, but its insurance status is unknown, so its a financial risk. Solution: a sudden break, fully protecting the car and passengers that wear a seat belt.',
+          text: "Crashing with the tree damage  destroy the car and be expensive for the insurers. Changing lanes would kill the cyclist and also carry a high cost to the insurers. A sudden break risks the front passenger's life, but as they are not wearing a seat belt, it is not the insurers resposibility.",
           actionFunction: function actionFunction() {
             return _this3.fullBreak();
           }
         },
         'protector': {
-          text: 'Crashing with the tree or swerving would hurt the passenger without seatbelt. Solution: slow down and change lanes, potentially killing the cyclist but saving all passengers.',
+          text: 'Crashing with the tree or turning right would hurt the passenger without seatbelt. Solution: slow down and change lanes, potentially killing the cyclist but saving all passengers.',
           actionFunction: function actionFunction() {
             return _this3.crashCyclist();
           }
@@ -1659,7 +1661,7 @@ function (_Situation) {
   }, {
     key: "getDescription",
     value: function getDescription() {
-      return 'a tree falls in front of the car. The person in the front passenger seat has no seat belt. A cyclist is riding through the opposite lane. Options: Sudden break, slow down and turn left, slow down and turn right.';
+      return 'A tree falls in front of the car. The person in the front passenger seat has no seat belt. A cyclist is riding through the opposite lane. Options: Sudden break, slow down and turn left, or change lanes.';
     }
   }, {
     key: "moveCyclistInPosition",
