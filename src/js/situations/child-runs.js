@@ -9,7 +9,7 @@ import { STREET_LANE_OFFSET } from '../constants';
 const AGENT_LANE = 4;
 const CROSSING_CAR_POSITION = 1/4;
 const AGENT_CAR_POSITION = 1/2 + 1/8;
-const AMBULANCE_POSITION = 1/2 + 1/32;
+const AMBULANCE_POSITION = 1/2 + 1/16;
 const childStartPos = screenPosFromFraction(1/4 + 1/32, 1/16);
 const childEndPos = screenPosFromFraction(9/32, 1/8);
 
