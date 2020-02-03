@@ -21,7 +21,7 @@ body {
 
 #menu {
   width: 480px;
-  height: 250px;
+  height: 280px;
   left: 720px;
   top: 300px;
   position: absolute;
@@ -33,18 +33,18 @@ body {
 #menu_cursor_area {
   position: absolute;
   left: 20px;
-  top: 20px;
+  top: 50px;
   width: 60px;
-  height: 460px;
+  height: 430px;
   padding: 0;
   margin: 0;
 }
 #menu_options_area {
   position: absolute;
-  top: 20px;
+  top: 50px;
   left: 60px;
   width: 420px;
-  height: 460px;
+  height: 430px;
   padding: 0;
   margin: 0;
   line-height: 15px;
@@ -97,6 +97,12 @@ body {
   border-radius: 20px;
   visibility: hidden;
   padding: 8px;
+}
+
+#menu_title {
+  font-size: 24px;
+  text-align: center;
+  margin: 0 10px 2px 10px;
 }
 
 h3 {

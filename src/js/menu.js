@@ -7,18 +7,23 @@ const KeyEnter = 13;
 // example use
 
 export default class Menu {
-  constructor(elementId, optionsArray) {
+  constructor(elementId, optionsArray, title) {
     this.currentOption = 0;
     this.visible = false;
     this.options = Array.from(optionsArray);
+    this.titleText = title;
     this.htmlElement = $(`#${elementId}`)
     this.optionsArea = this.htmlElement.find('#menu_options_area');
     this.cursor = this.htmlElement.find('#menu_cursor');
+    this.title = this.htmlElement.find('#menu_title');
+    console.log("title text: " + this.titleText);
+    console.log("title html: " + this.title);
   }
 
   show() {
     this.createHTMLOptions();
     this.currentOption = 0;
+    this.title.text(this.titleText);
     window.onkeydown = event => {
       switch (event.which) {
         case KeyArrowUp: this.up(); break;

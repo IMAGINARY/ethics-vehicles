@@ -40,7 +40,7 @@ export default class View {
       {text: 'A tree falls', action: () => this.startSituation('tree-falls') },
       {text: 'A car enters your lane', action: () => this.startSituation('car-enters-lane') },
       {text: 'A child runs in the street', action: () => this.startSituation('child-runs') },
-    ]);
+    ], 'Choose a scenario');
 
     this.runner = new SituationRunner(this,
       new Report($('#report')[0]),

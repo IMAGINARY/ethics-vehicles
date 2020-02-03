@@ -51,7 +51,7 @@ export default class SituationRunner {
           }
         };
       });
-      this.policyMenu = new Menu('menu', options);
+      this.policyMenu = new Menu('menu', options, 'Choose a policy');
       this.policyMenu.show();
     });
   }
