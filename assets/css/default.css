@@ -10,10 +10,10 @@ body {
   margin: 0px; }
 
 #menu {
-  width: 380px;
-  height: 380px;
-  left: 210px;
-  top: 210px;
+  width: 480px;
+  height: 280px;
+  left: 720px;
+  top: 300px;
   position: absolute;
   border-radius: 15px;
   background-color: #afdde9ff;
@@ -22,24 +22,24 @@ body {
 #menu_cursor_area {
   position: absolute;
   left: 20px;
-  top: 20px;
-  width: 40px;
-  height: 360px;
+  top: 50px;
+  width: 60px;
+  height: 430px;
   padding: 0;
   margin: 0; }
 
 #menu_options_area {
   position: absolute;
-  top: 20px;
+  top: 50px;
   left: 60px;
-  width: 320px;
-  height: 360px;
+  width: 420px;
+  height: 430px;
   padding: 0;
   margin: 0;
   line-height: 15px; }
 
 .menu_option {
-  width: 300px;
+  width: 380px;
   height: 60px;
   border-radius: 15px;
   margin: 0 0 15px 0;
@@ -64,10 +64,10 @@ body {
   border-left: 30px solid black; }
 
 #info_elements {
-  width: 400px;
-  height: 400px;
-  left: 200px;
-  top: 200px;
+  width: 960px;
+  height: 200px;
+  left: 560px;
+  top: 580px;
   position: absolute;
   padding: 2px; }
 
@@ -82,6 +82,11 @@ body {
   visibility: hidden;
   padding: 8px; }
 
+#menu_title {
+  font-size: 24px;
+  text-align: center;
+  margin: 0 10px 2px 10px; }
+
 h3 {
   font-size: 18px;
   margin: 0 0 2px 0;
@@ -91,37 +96,28 @@ h3 {
   color: #303030; }
 
 #game {
-  height: 800px;
-  width: 800px;
+  width: 1920px;
+  height: 1080px;
   padding: 0px;
   margin: 0px; }
   #game canvas {
-    max-width: 800px;
-    max-height: 800px;
+    max-width: 1920px;
+    max-height: 1080px;
     padding: 0px;
     margin: 0px;
     display: block; }
 
-#options_bar {
-  width: 490px;
-  height: 100px;
-  left: 150px;
-  bottom: 70px;
-  padding: 5px;
-  position: absolute;
-  border-radius: 5px;
-  background-color: #508090F0; }
-
 #report {
   z-index: 100;
   position: absolute;
-  left: 140px;
-  top: 140px;
-  width: 500px;
-  height: 500px;
+  left: 540px;
+  top: 300px;
+  width: 820px;
+  height: 460px;
   padding: 10px;
   background-color: #E0E0D0;
   box-shadow: 10px 15px 10px -5px rgba(0, 0, 0, 0.5);
+  border-radius: 20px;
   visibility: hidden; }
 
 button {
@@ -140,8 +136,8 @@ button {
   z-index: 101;
   position: absolute;
   display: none;
-  left: 300px;
-  width: 140px;
-  bottom: 100px; }
+  left: 840px;
+  width: 240px;
+  bottom: 200px; }
 
 /*# sourceMappingURL=default.css.map */

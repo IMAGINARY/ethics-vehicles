@@ -192,25 +192,32 @@ exports["default"] = Car;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.SPRITE_WIDTH = exports.STREET_LANE_OFFSET = exports.BORDER_BLOCK_SIZE = exports.BLOCK_SIZE = exports.STREET_WIDTH = exports.STREET_Y_OFFSET = exports.STREET_X_OFFSET = exports.IDLE_ANIMATION_TIME = exports.DEFAULT_SPEED = exports.VIEW_SIZE = exports.CAR_SCALE = void 0;
+exports.SPRITE_WIDTH = exports.STREET_LANE_OFFSET = exports.BLOCK_SIZE = exports.STREET_WIDTH = exports.IDLE_ANIMATION_TIME = exports.DEFAULT_SPEED = exports.BorderBlockSize = exports.StreetOffsetFromCenter = exports.ViewSize = exports.CAR_SCALE = void 0;
 var CAR_SCALE = 0.25;
 exports.CAR_SCALE = CAR_SCALE;
-var VIEW_SIZE = 1024;
-exports.VIEW_SIZE = VIEW_SIZE;
+var ViewSize = {
+  width: 1920,
+  height: 1080
+};
+exports.ViewSize = ViewSize;
+var StreetOffsetFromCenter = {
+  x: 560,
+  y: 350
+};
+exports.StreetOffsetFromCenter = StreetOffsetFromCenter;
+var BorderBlockSize = {
+  width: 320,
+  height: 110
+};
+exports.BorderBlockSize = BorderBlockSize;
 var DEFAULT_SPEED = 15;
 exports.DEFAULT_SPEED = DEFAULT_SPEED;
 var IDLE_ANIMATION_TIME = 2000;
 exports.IDLE_ANIMATION_TIME = IDLE_ANIMATION_TIME;
-var STREET_X_OFFSET = VIEW_SIZE / 2 - 176;
-exports.STREET_X_OFFSET = STREET_X_OFFSET;
-var STREET_Y_OFFSET = VIEW_SIZE / 2 - 176;
-exports.STREET_Y_OFFSET = STREET_Y_OFFSET;
 var STREET_WIDTH = 160;
 exports.STREET_WIDTH = STREET_WIDTH;
 var BLOCK_SIZE = 512;
 exports.BLOCK_SIZE = BLOCK_SIZE;
-var BORDER_BLOCK_SIZE = 96;
-exports.BORDER_BLOCK_SIZE = BORDER_BLOCK_SIZE;
 var STREET_LANE_OFFSET = STREET_WIDTH / 4;
 exports.STREET_LANE_OFFSET = STREET_LANE_OFFSET;
 var SPRITE_WIDTH = 256 * CAR_SCALE;
@@ -364,15 +371,15 @@ var _constants = require("./constants");
 
 /* globals PIXI */
 function createHorizontalLane(verticalOffset, dirMultiplier) {
-  return new _lane.Lane(new PIXI.Point(_constants.VIEW_SIZE / 2 * dirMultiplier, -verticalOffset), new PIXI.Point(-(_constants.VIEW_SIZE / 2) * dirMultiplier, -verticalOffset));
+  return new _lane.Lane(new PIXI.Point(_constants.ViewSize.width / 2 * dirMultiplier, -verticalOffset), new PIXI.Point(-(_constants.ViewSize.width / 2) * dirMultiplier, -verticalOffset));
 }
 
 function createVerticalLane(horizontalOffset, dirMultiplier) {
-  return new _lane.Lane(new PIXI.Point(-horizontalOffset, _constants.VIEW_SIZE / 2 * dirMultiplier), new PIXI.Point(-horizontalOffset, -(_constants.VIEW_SIZE / 2) * dirMultiplier));
+  return new _lane.Lane(new PIXI.Point(-horizontalOffset, _constants.ViewSize.height / 2 * dirMultiplier), new PIXI.Point(-horizontalOffset, -(_constants.ViewSize.height / 2) * dirMultiplier));
 } // eslint-disable-next-line import/prefer-default-export
 
 
-var LANES = [createVerticalLane(_constants.STREET_X_OFFSET - _constants.STREET_LANE_OFFSET, 1), createVerticalLane(_constants.STREET_X_OFFSET + _constants.STREET_LANE_OFFSET, -1), createVerticalLane(-_constants.STREET_X_OFFSET - _constants.STREET_LANE_OFFSET, 1), createVerticalLane(-_constants.STREET_X_OFFSET + _constants.STREET_LANE_OFFSET, -1), createHorizontalLane(_constants.STREET_Y_OFFSET + _constants.STREET_LANE_OFFSET, 1), createHorizontalLane(_constants.STREET_Y_OFFSET - _constants.STREET_LANE_OFFSET, -1), createHorizontalLane(-_constants.STREET_Y_OFFSET + _constants.STREET_LANE_OFFSET, 1), createHorizontalLane(-_constants.STREET_Y_OFFSET - _constants.STREET_LANE_OFFSET, -1)];
+var LANES = [createVerticalLane(_constants.StreetOffsetFromCenter.x - _constants.STREET_LANE_OFFSET, 1), createVerticalLane(_constants.StreetOffsetFromCenter.x + _constants.STREET_LANE_OFFSET, -1), createVerticalLane(-_constants.StreetOffsetFromCenter.x - _constants.STREET_LANE_OFFSET, 1), createVerticalLane(-_constants.StreetOffsetFromCenter.x + _constants.STREET_LANE_OFFSET, -1), createHorizontalLane(_constants.StreetOffsetFromCenter.y + _constants.STREET_LANE_OFFSET, 1), createHorizontalLane(_constants.StreetOffsetFromCenter.y - _constants.STREET_LANE_OFFSET, -1), createHorizontalLane(-_constants.StreetOffsetFromCenter.y + _constants.STREET_LANE_OFFSET, 1), createHorizontalLane(-_constants.StreetOffsetFromCenter.y - _constants.STREET_LANE_OFFSET, -1)];
 exports.LANES = LANES;
 
 function setOppositeLanes(laneA, laneB) {
@@ -421,6 +428,8 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports["default"] = void 0;
 
+var _styleHelp = require("./style-help");
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -434,15 +443,17 @@ var KeyEnter = 13; // example use
 var Menu =
 /*#__PURE__*/
 function () {
-  function Menu(elementId, optionsArray) {
+  function Menu(elementId, optionsArray, title) {
     _classCallCheck(this, Menu);
 
     this.currentOption = 0;
     this.visible = false;
     this.options = Array.from(optionsArray);
+    this.titleText = title;
     this.htmlElement = $("#".concat(elementId));
     this.optionsArea = this.htmlElement.find('#menu_options_area');
     this.cursor = this.htmlElement.find('#menu_cursor');
+    this.title = this.htmlElement.find('#menu_title');
   }
 
   _createClass(Menu, [{
@@ -452,6 +463,7 @@ function () {
 
       this.createHTMLOptions();
       this.currentOption = 0;
+      this.title.text(this.titleText);
 
       window.onkeydown = function (event) {
         switch (event.which) {
@@ -474,6 +486,7 @@ function () {
 
       this.updateCursorPosition();
       this.htmlElement.show();
+      this.fadeInCursor();
     }
   }, {
     key: "hide",
@@ -483,6 +496,17 @@ function () {
       window.onkeydown = function () {};
 
       this.clearHTML();
+    }
+  }, {
+    key: "fadeInCursor",
+    value: function fadeInCursor() {
+      var domCursor = this.cursor[0];
+      domCursor.style.opacity = 0;
+      return (0, _styleHelp.tweenOpacity)(domCursor, 1, 500).then(function () {
+        return (0, _styleHelp.tweenOpacity)(domCursor, 0.125, 500);
+      }).then(function () {
+        return (0, _styleHelp.tweenOpacity)(domCursor, 1, 500);
+      });
     }
   }, {
     key: "createHTMLOptions",
@@ -529,7 +553,7 @@ function () {
 
 exports["default"] = Menu;
 
-},{}],9:[function(require,module,exports){
+},{"./style-help":18}],9:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -579,7 +603,7 @@ function vectorBetweenPoints(a, b) {
 
 
 function screenPosFromFraction(x, y) {
-  return new PIXI.Point((x - 0.5) * _constants.VIEW_SIZE, (y - 0.5) * _constants.VIEW_SIZE);
+  return new PIXI.Point((x - 0.5) * _constants.ViewSize.width, (y - 0.5) * _constants.ViewSize.height);
 }
 
 function moveToFraction(sprite, x, y) {
@@ -627,7 +651,7 @@ var Policies = [{
   name: 'Humanist',
   objective: 'Minimize human injuries'
 }, {
-  id: 'profit-based',
+  id: 'profit',
   name: 'Profit-based',
   objective: 'Minimize insurance costs'
 }, {
@@ -815,11 +839,9 @@ function () {
       }).then(function () {
         return _this.showElementsInfo(situation.getElements());
       }).then(function () {
-        return _this.waitForAdvanceButton('Choose policy');
+        return _this.waitForPolicy(situation);
       }).then(function () {
         return _this.hideElementsInfo();
-      }).then(function () {
-        return _this.waitForPolicy(situation);
       }).then(function () {
         return _this.showDecision(situation);
       }).then(function () {
@@ -850,7 +872,7 @@ function () {
       return new Promise(function (resolve) {
         var options = _policies.Policies.map(function (policy) {
           return {
-            text: policy.name + "\n" + policy.objective,
+            text: policy.name + ": " + policy.objective,
             action: function action() {
               _this2.currentPolicy = policy;
               _this2.currentDecision = situation.getDecision(policy.id);
@@ -862,7 +884,7 @@ function () {
           };
         });
 
-        _this2.policyMenu = new _menu["default"]('menu', options);
+        _this2.policyMenu = new _menu["default"]('menu', options, 'Choose a policy');
 
         _this2.policyMenu.show();
       });
@@ -1077,7 +1099,7 @@ var _lanes = require("../lanes");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
-function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -1095,8 +1117,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
-var BUS_STOP_X = _constants.VIEW_SIZE / 2 - _constants.BORDER_BLOCK_SIZE + _constants.SPRITE_WIDTH / 2;
-var BUS_STOP_Y = -0.06 * _constants.VIEW_SIZE;
+var BUS_STOP_X = _constants.ViewSize.width / 2 - _constants.BorderBlockSize.width + _constants.SPRITE_WIDTH / 2;
+var BUS_STOP_Y = -0.06 * _constants.ViewSize.height;
 var TRUCK_STOP_POSITION = 0.45;
 var BLACK_CAR_STOP_POSITION = 0.35;
 var AGENT_STOP_POSITION = 0.45;
@@ -1308,7 +1330,7 @@ var _constants = require("../constants");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
-function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -1519,11 +1541,9 @@ var _constants = require("../constants");
 
 var _lanes = require("../lanes");
 
-var _pixiHelp = require("../pixi-help");
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
-function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -1559,8 +1579,8 @@ function (_Situation) {
     _classCallCheck(this, TreeFallsSituation);
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(TreeFallsSituation).call(this, view));
-    _this.waterPuddle = new _sceneElement["default"](_this.view, 'assets/images/water_puddle.png', (0, _pixiHelp.screenPosFromFraction)(1 / 8, 3 / 8 + 1 / 16));
-    _this.tree = new _sceneElement["default"](_this.view, 'assets/images/tree.png', (0, _pixiHelp.screenPosFromFraction)(1 / 16, 0.5));
+    _this.waterPuddle = new _sceneElement["default"](_this.view, 'assets/images/water_puddle.png', new PIXI.Point(-_constants.StreetOffsetFromCenter.x - _constants.STREET_LANE_OFFSET, -_constants.STREET_LANE_OFFSET));
+    _this.tree = new _sceneElement["default"](_this.view, 'assets/images/tree.png', new PIXI.Point(-_constants.StreetOffsetFromCenter.x - _constants.STREET_LANE_OFFSET * 3, 0));
     _this.cyclist = new _car["default"](_this.view, 'assets/images/cyclist.png');
     _this.agentLane = _lanes.LANES[AGENT_LANE];
     _this.bicycleLane = _this.agentLane.oppositeLane;
@@ -1715,7 +1735,7 @@ exports["default"] = TreeFallsSituation;
 
 _situation["default"].registerSituation('tree-falls', TreeFallsSituation);
 
-},{"../car":2,"../constants":3,"../lanes":6,"../pixi-help":9,"../scene-element":12,"../situation":14}],18:[function(require,module,exports){
+},{"../car":2,"../constants":3,"../lanes":6,"../scene-element":12,"../situation":14}],18:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -1782,8 +1802,8 @@ function () {
     _classCallCheck(this, View);
 
     this.app = new PIXI.Application({
-      width: _constants.VIEW_SIZE,
-      height: _constants.VIEW_SIZE,
+      width: _constants.ViewSize.width,
+      height: _constants.ViewSize.height,
       backgroundColor: 0x000000,
       resolution: window.devicePixelRatio || 1
     });
@@ -1816,7 +1836,7 @@ function () {
       action: function action() {
         return _this.startSituation('child-runs');
       }
-    }]);
+    }], 'Choose a scenario');
     this.runner = new _situationRunner["default"](this, new _report["default"]($('#report')[0]), new _infoBoxes["default"]($('#info_elements')[0]));
     this.app.ticker.add(function () {
       return TWEEN.update();
