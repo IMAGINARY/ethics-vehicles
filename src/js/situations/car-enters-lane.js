@@ -68,25 +68,25 @@ export default class CarEntersLaneSituation extends Situation {
         sprite: this.view.agentCar.sprite,
         color: Situation.HighlightOthersColor,
         name: 'Autonomous car',
-        description: 'Property value: medium',
+        description: 'While reaching a bus stop, a car enters its lane in front of it',
       },
       {
         sprite: this.blackCar.sprite,
         color: Situation.HighlightOthersColor,
         name: 'Luxury car',
-        description: 'Suddenly enters your lane.<br>Property Value: high<br>Insurance: yes',
+        description: 'A very expensive car suddenly enters your lane.',
       },
       {
         sprite: this.truck.sprite,
         color: Situation.HighlightOthersColor,
         name: 'Parked car',
-        description: 'Passengers: 4<br>Property value: low<br>Insurance: none',
+        description: 'An old truck in bad shape, with four passengers',
       },
       {
         sprite: this.busStop.sprite,
         color: Situation.HighlightOthersColor,
         name: 'Bus Stop',
-        description: 'People: 10<br>Property value: medium',
+        description: 'Full of people waiting for their bus',
       },
     ];
   }
@@ -94,15 +94,15 @@ export default class CarEntersLaneSituation extends Situation {
   getDecisions() {
     return {
       'humanist': {
-        text: 'Turning left will risk 4 lives. Turning right with certainly kill people at the stop. Solution: breaking and crashing into the car in front will probably not result in fatalities, so it’s the action taken',
+        text: 'Turning left will risk the people in the track. Turning right with probably risk even more people at the stop. Solution: breaking and crashing into the car in front will probably not result in fatalities.',
         actionFunction: () => this.decisionAdvace(),
       },
       'profit': {
-        text: 'the car ahead is very expensive, so breaking is not recommended. Turning right will risk high payouts to the victims or their families. Solution: turn left towards the parked car, as it is cheap and if the risk of casualties is lower.',
+        text: 'The car facing you is very expensive, and crashing into it might mean long legal battles for your insurance. Crashing into the bus stop will risk high payouts to the victims in or their families. Solution: turn left towards the parked car, as it is cheap and if the risk of casualties is lower.',
         actionFunction: () => this.decisionTurnLeft(),
       },
       'protector': {
-        text: 'breaking and turning left mean crashing into heavy, hard objects and potentially harming you. Solution: turning right has almost no risk for you and your car, as people are softer than cars.',
+        text: 'Crashing into either car will potentially damage the autonomous car and harm its passengers. Solution: turn right and crash into the bus stop, as people are softer than cars.',
         actionFunction: () => this.decisionTurnRight(),
       },
     };

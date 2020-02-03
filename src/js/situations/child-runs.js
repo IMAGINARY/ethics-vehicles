@@ -53,7 +53,7 @@ export default class ChildRunsSituation extends Situation {
         sprite: this.view.agentCar.sprite,
         color: Situation.HighlightAgentColor,
         name: 'Autonomous car',
-        description: 'About to cross the intersection with green light.',
+        description: 'About to enter a crossroad, suddenly detects a child',
       },
       {
         sprite: this.ambulance.sprite,
@@ -65,7 +65,7 @@ export default class ChildRunsSituation extends Situation {
         sprite: this.child.sprite,
         color: Situation.HighlightOthersColor,
         name: 'Child',
-        description: 'Suddenly runs in the street',
+        description: 'Runs in the street without warning',
       },
       {
         sprite: this.crossingCar.sprite,
@@ -79,15 +79,15 @@ export default class ChildRunsSituation extends Situation {
   getDecisions() {
     return {
       'humanist': {
-        text: 'both breaking and continuing have a high risk on human lives, so crash onto the car parked on the left.',
+        text: 'A sudden break will provoke a crash with the ambulance, but continuing ahead will hurt the child. Best course of action is to change lanes and crash with the other car, as both are crash-safe',
         actionFunction: () => this.decisionCrashCrossingCar()
       },
       'profit': {
-        text: 'the child appeared out of nowhere and you had a green light, so you are protected by the law. Breaking or turning left will incur in higher car damage and costs.',
+        text: 'Breaking or turning left will incur in high car damages even risk of lawsuit. The child crossed with warning and with a red light, so you are protected by the law if you drive through.',
         actionFunction: () => this.decisionAdvance()
       },
       'protector': {
-        text: 'breaking or turning left will damage the car and potentially hurt you, continuing will only produce minor aesthetical damage in the car.',
+        text: 'Breaking or turning left will damage the car and potentially hurt you, while driving ahead will produce only slight car damage and no risk to passengers.',
         actionFunction: () => this.decisionAdvance()
       },
     };
@@ -113,7 +113,7 @@ export default class ChildRunsSituation extends Situation {
   }
 
   getDescription() {
-    return 'When reaching a crossing and having a green light, a child suddenly runs onto the street from behind a parked car. At the same time, an ambulance with lights and siren is coming behind you fast.';
+    return 'When arriving at a crossing and with a green light, a child suddenly runs onto the street. At the same time, an ambulance with lights and siren is driving behind your.';
   }
 
   moveAgentInPosition() {

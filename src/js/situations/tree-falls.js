@@ -59,19 +59,19 @@ export default class TreeFallsSituation extends Situation {
         sprite: this.view.agentCar.sprite,
         color: Situation.HighlightAgentColor,
         name: 'Autonomous car',
-        description: 'Property value: medium<br><b>Warning! Front passenger not wearing seat belt.</b>',
+        description: 'Warning! The front passenger is not wearing seat belt.',
       },
       {
         sprite: this.cyclist.sprite,
         color: Situation.HighlightOthersColor,
         name: 'Cyclist',
-        description: 'Insurance: unknown',
+        description: 'An ordinary cyclist driving in the opposite lane.',
       },
       {
         sprite: this.tree.sprite,
         color: Situation.HighlightOthersColor,
         name: 'Fallen Tree',
-        description: 'Hard. Try not to crash unto it.',
+        description: 'Crashing into it could be fatal.',
       },
     ];
   }
@@ -79,22 +79,22 @@ export default class TreeFallsSituation extends Situation {
   getDecisions() {
     return {
       'humanist': {
-        text: 'a sudden break would send the passenger without seatbelt forward through the glass, potentially killing them. Swerving might avoid the collision with the tree, but could also harm the passenger. Solution: turn right and break, crashing into the tree softly, with the passenger without seatbelt protected by the one on its side and by its airbag.',
+        text: 'A sudden break would send the front passenger forward through the windshield, potentially killing them. Changing lanes would certainly kill the cyclist. Solution: break slowly while turning right, sending the front passenger against the driver, which would cause only minor concussions.',
         actionFunction: () => this.softlyCrashTree()
       },
       'profit': {
-        text: 'Crashing with the tree will cost the insurers money. Swerving might avoid the collision with the tree, but as the floor is wet it could also potentially turn around the car, damaging it. As the car has warned the passenger to wear the seat belt but they have not, any injury will be their own responsibility. Changing lanes would kill the cyclist, but its insurance status is unknown, so its a financial risk. Solution: a sudden break, fully protecting the car and passengers that wear a seat belt.',
+        text: "Crashing with the tree damage  destroy the car and be expensive for the insurers. Changing lanes would kill the cyclist and also carry a high cost to the insurers. A sudden break risks the front passenger's life, but as they are not wearing a seat belt, it is not the insurers resposibility.",
         actionFunction: () => this.fullBreak()
       },
       'protector': {
-        text: 'Crashing with the tree or swerving would hurt the passenger without seatbelt. Solution: slow down and change lanes, potentially killing the cyclist but saving all passengers.',
+        text: 'Crashing with the tree or turning right would hurt the passenger without seatbelt. Solution: slow down and change lanes, potentially killing the cyclist but saving all passengers.',
         actionFunction: () => this.crashCyclist()
       },
     };
   }
 
   getDescription() {
-    return 'a tree falls in front of the car. The person in the front passenger seat has no seat belt. A cyclist is riding through the opposite lane. Options: Sudden break, slow down and turn left, slow down and turn right.';
+    return 'A tree falls in front of the car. The person in the front passenger seat has no seat belt. A cyclist is riding through the opposite lane. Options: Sudden break, slow down and turn left, or change lanes.';
   }
 
   moveCyclistInPosition() {
