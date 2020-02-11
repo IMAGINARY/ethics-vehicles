@@ -1,3 +1,4 @@
+const KeyEnter = 13;
 
 export default class CountdownButton {
   constructor(text, onClick) {
@@ -10,13 +11,19 @@ export default class CountdownButton {
     this.htmlButton.on('click', () => this.doClick());
     this.htmlButton.show();
     this.timeoutRunner = null;
+
+    window.onkeydown = event => {
+      if (event.which == KeyEnter)
+        this.doClick();
+    };
   }
 
   doClick() {
+    window.onkeydown = () => {};
     if (this.timeoutRunner != null)
       clearTimeout(this.timeoutRunner);
 
-      this.htmlButton.hide();
+    this.htmlButton.hide();
     return this.onClick();
   }
 
