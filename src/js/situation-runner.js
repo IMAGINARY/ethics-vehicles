@@ -3,6 +3,7 @@
 import { Policies } from './policies';
 import { highlightSprite } from './pixi-help';
 import Menu from './menu';
+import CountdownButton from './countdown-button';
 
 export default class SituationRunner {
   constructor(view, report, infoBoxes) {
@@ -56,17 +57,11 @@ export default class SituationRunner {
     });
   }
 
-  waitForAdvanceButton(text = 'Next') {
+  waitForAdvanceButton(text = 'Next', timeout = 10000) {
     return new Promise ((resolve) => {
-      $('#advanceText').text(text);
-
-      const button = $('#advanceButton');
-      button.show();
-      button.on('click', () => {
-        button.hide();
-        resolve('clicked');
-      })
-    });
+      const cb = new CountdownButton(text, resolve);
+      cb.setTimeout(timeout);
+   });
   }
 
   waitForKeyPress() {
