@@ -4,7 +4,6 @@ import SceneElement from './scene-element';
 import { LANES } from './lanes';
 import { IDLE_ANIMATION_TIME, ViewSize } from './constants';
 import { POINT_ZERO } from './pixi-help';
-import { Sounds } from './audio';
 import Report from './report';
 import InfoBoxes from './info-boxes';
 
@@ -54,7 +53,6 @@ export default class View {
     this.agentCar.hide();
     this.agentCar.show();
     this.agentCar.placeInLane(currentLane, 0, true);
-    Sounds.carIdling2000ms.play();
     return this.agentCar.driveInLaneUntilPosition(1.0, IDLE_ANIMATION_TIME);
   }
 

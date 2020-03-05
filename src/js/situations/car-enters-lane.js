@@ -2,7 +2,6 @@
 import { ViewSize, STREET_LANE_OFFSET, BorderBlockSize, SPRITE_WIDTH} from '../constants';
 import SceneElement from '../scene-element';
 import Situation from '../situation';
-import { Sounds } from '../audio';
 import Car from '../car';
 import { LANES } from '../lanes';
 
@@ -114,19 +113,16 @@ export default class CarEntersLaneSituation extends Situation {
 
   // eslint-disable-next-line class-methods-use-this
   decisionAdvace() {
-    Sounds.crash250ms.play();
     return Promise.all([this.blackCar.advanceAndTurn(BlackCarCrashVector, 0, 150),
                         this.view.agentCar.advanceAndTurn(AgentCrashVector, 0, 150)]);
   }
 
   decisionTurnLeft() {
-    Sounds.crash250ms.play();
     return Promise.all([this.moveBlackCarToFinalPosition(),
                         this.view.agentCar.advanceAndTurn(TurnLeftVector, -30, 250)]);
   }
 
   decisionTurnRight() {
-    Sounds.crash500ms.play();
     return Promise.all([this.moveBlackCarToFinalPosition(),
                         this.view.agentCar.advanceAndTurn(TurnRightVector, 30, 250)]);
   }
