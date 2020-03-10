@@ -5,6 +5,7 @@ import Situation from '../situation';
 import { LANES } from '../lanes';
 import { screenPosFromFraction, pixiMoveTo } from '../pixi-help';
 import { STREET_LANE_OFFSET } from '../constants';
+import { Texts } from '../texts';
 
 const AGENT_LANE = 4;
 const CROSSING_CAR_POSITION = 1/4;
@@ -28,6 +29,7 @@ export default class ChildRunsSituation extends Situation {
     this.child = new SceneElement(this.view, 'assets/images/child.png', childStartPos);
     this.crossingCar = new Car(this.view, 'assets/images/blue_car.png');
     this.ambulance = new Car(this.view, 'assets/images/ambulance.png');
+    this.Texts = Texts.ChildRuns;
   }
 
   setup() {
@@ -52,26 +54,22 @@ export default class ChildRunsSituation extends Situation {
       {
         sprite: this.view.agentCar.sprite,
         color: Situation.HighlightAgentColor,
-        name: 'Autonomous car',
-        description: 'About to enter a crossroad, suddenly detects a child',
+        ...this.Texts.AutonomousCar
       },
       {
         sprite: this.ambulance.sprite,
         color: Situation.HighlightOthersColor,
-        name: 'Ambulance',
-        description: 'Carrying a patient to the hospital',
+        ...this.Texts.Ambulance
       },
       {
         sprite: this.child.sprite,
         color: Situation.HighlightOthersColor,
-        name: 'Child',
-        description: 'Runs in the street without warning',
+        ...this.Texts.Child
       },
       {
         sprite: this.crossingCar.sprite,
         color: Situation.HighlightOthersColor,
-        name: 'A Car',
-        description: 'Probably will not stop',
+        ...this.Texts.OtherCar
       },
     ];
   }
@@ -79,15 +77,15 @@ export default class ChildRunsSituation extends Situation {
   getDecisions() {
     return {
       'humanist': {
-        text: 'A sudden break will provoke a crash with the ambulance, but continuing ahead will hurt the child. Best course of action is to change lanes and crash with the other car, as both are crash-safe',
+        text: this.Texts.Humanist,
         actionFunction: () => this.decisionCrashCrossingCar()
       },
       'profit': {
-        text: 'Breaking or turning left will incur in high car damages even risk of lawsuit. The child crossed with warning and with a red light, so you are protected by the law if you drive through.',
+        text: this.Texts.Profit,
         actionFunction: () => this.decisionAdvance()
       },
       'protector': {
-        text: 'Breaking or turning left will damage the car and potentially hurt you, while driving ahead will produce only slight car damage and no risk to passengers.',
+        text: this.Texts.Protector,
         actionFunction: () => this.decisionAdvance()
       },
     };
@@ -113,7 +111,7 @@ export default class ChildRunsSituation extends Situation {
   }
 
   getDescription() {
-    return 'When arriving at a crossing and with a green light, a child suddenly runs onto the street. At the same time, an ambulance with lights and siren is driving behind your.';
+    return this.Texts.Description;
   }
 
   moveAgentInPosition() {
