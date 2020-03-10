@@ -27,7 +27,7 @@ body {
   position: absolute;
   border-radius: 15px;
   background-color: #afdde9ff;
-  z-index: 100;
+  z-index: 1000;
 }
 
 #menu_cursor_area {
@@ -143,8 +143,7 @@ h3 {
   background-color: #FFF280;
   box-shadow: 10px 15px 10px -5px rgba(0, 0, 0, 0.5);
   border-radius: 20px;  
-  visibility: hidden;
-
+  opacity: 0;
   font-size: 22px;
   font-family: 'Barlow', sans-serif;
 }

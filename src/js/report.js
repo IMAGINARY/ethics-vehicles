@@ -1,3 +1,4 @@
+import { tweenOpacity } from './style-help';
 
 export default class Report {
   constructor(htmlElement) {
@@ -13,11 +14,11 @@ export default class Report {
     this.policyNameElement.innerHTML = policy.name;
     this.policyObjectiveElement.innerHTML = policy.objective;
     this.situationDescriptionElement.innerHTML = situation.getDescription();
-    this.htmlElement.style.visibility = 'visible';
+    return tweenOpacity(this.htmlElement, 1, 250);
   }
   
   hide () {
-    this.htmlElement.style.visibility = 'hidden';
+    return tweenOpacity(this.htmlElement, 0, 250);
   }
 }
   
