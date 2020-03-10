@@ -38,7 +38,7 @@ export const Texts = {
       name: 'Bus Stop',
       description: 'Full of people waiting for their bus',
     },
-    Humanist: 'Turning left will risk the people in the track. Turning right with probably risk even more people at the stop. Solution: breaking and crashing into the car in front will probably not result in fatalities.',
+    Humanist: 'Turning left will risk the people in the track. Turning right will probably risk even more people at the stop. Solution: breaking and crashing into the car in front will probably not result in fatalities.',
     Profit: 'The car facing you is very expensive, and crashing into it might mean long legal battles for your insurance. Crashing into the bus stop will risk high payouts to the victims in or their families. Solution: turn left towards the parked car, as it is cheap and if the risk of casualties is lower.',
     Protector: 'Crashing into either car will potentially damage the autonomous car and harm its passengers. Solution: turn right and crash into the bus stop, as people are softer than cars.',
   },
@@ -83,7 +83,7 @@ export const Texts = {
       description: 'Crashing into it could be fatal.',
     },
     Humanist: 'A sudden break would send the front passenger forward through the windshield, potentially killing them. Changing lanes would certainly kill the cyclist. Solution: break slowly while turning right, sending the front passenger against the driver, which would cause only minor concussions.',
-    Profit: "Crashing with the tree will destroy the car and be expensive for the insurers. Changing lanes would kill the cyclist and also carry a high cost to the insurers. A sudden break risks the front passenger's life, but as they are not wearing a seat belt, it is not the insurers resposibility.",
+    Profit: "Crashing with the tree will destroy the car and be expensive for the insurers. Changing lanes would kill the cyclist and also carry a high cost to the insurers. A sudden break risks the front passenger's life, but as they are not wearing a seat belt, it is not the insurer's responsibility.",
     Protector: 'Crashing with the tree or turning right would hurt the passenger without seatbelt. Solution: slow down and change lanes, potentially killing the cyclist but saving all passengers.',
   }
 };
