@@ -12,15 +12,12 @@ export function createSprite(sourceImage, scale, anchor = 0.5) {
 
 export function highlightSprite(sprite, color) {
   const graphics = new PIXI.Graphics();
-  graphics.beginFill(color, 0.5);
-  graphics.drawRoundedRect (
-    sprite.x - sprite.width / 2 - 10,
-    sprite.y - sprite.height / 2 - 10,
-    sprite.width + 20,
-    sprite.height + 20,
-    10
+  graphics.lineStyle(5, color, 1, 0.5);
+  graphics.drawCircle(
+    sprite.x,
+    sprite.y,
+    Math.max(sprite.width, sprite.height)/2 + 10,
   );
-  graphics.endFill();
   return graphics;
 }
 
