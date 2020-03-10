@@ -5,6 +5,7 @@ import Situation from '../situation';
 import { STREET_LANE_OFFSET, StreetOffsetFromCenter } from '../constants';
 import { LANES } from '../lanes';
 import { Texts } from '../texts';
+import InfoPos from '../info-positions';
 
 const AGENT_LANE = 1;
 const CYCLIST_STOP_POSITION = 3/8;
@@ -60,16 +61,19 @@ export default class TreeFallsSituation extends Situation {
       {
         sprite: this.view.agentCar.sprite,
         color: Situation.HighlightAgentColor,
+        infopos: InfoPos.TopLeft,
         ...this.Texts.AutonomousCar
       },
       {
         sprite: this.cyclist.sprite,
         color: Situation.HighlightOthersColor,
+        infopos: InfoPos.BottomLeft,
         ...this.Texts.Cyclist
       },
       {
         sprite: this.tree.sprite,
         color: Situation.HighlightOthersColor,
+        infopos: InfoPos.BottomLeft.left(),
         ...this.Texts.FallenTree
       },
     ];
