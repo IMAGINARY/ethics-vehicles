@@ -8,15 +8,24 @@ export default class Report {
     this.policyObjectiveElement = this.htmlElement.querySelector('#policy_objective');
     this.situationDescriptionElement = this.htmlElement.querySelector('#situation_description');
   }
-  
-  show(situation, policy, decision) {
-    this.decisionElement.innerHTML = decision;
-    this.policyNameElement.innerHTML = policy.name;
-    this.policyObjectiveElement.innerHTML = policy.objective;
-    this.situationDescriptionElement.innerHTML = situation.getDescription();
+
+  show() {
     return tweenOpacity(this.htmlElement, 1, 250);
   }
-  
+
+  setSituation(situation) {
+    this.situationDescriptionElement.innerHTML = situation.getDescription();
+  }
+
+  setPolicy(policy) {
+    this.policyNameElement.innerHTML = policy.name;
+    this.policyObjectiveElement.innerHTML = policy.objective;
+  }
+
+  setDecision(decision) {
+    this.decisionElement.innerHTML = decision;
+  }
+
   hide () {
     return tweenOpacity(this.htmlElement, 0, 250);
   }

@@ -24,16 +24,21 @@ export default class SituationRunner {
       .then(() => situation.wait(1000))
       .then(() => this.showElementsInfo(situation.getElements()))
 
-      .then(() => this.waitForPolicy(situation))
-      .then(() => this.hideElementsInfo())
-      .then(() => this.showDecision(situation))
-      .then(() => situation.wait(1000))
-      .then(() => this.waitForAdvanceButton(Texts.Show))
-      .then(() => this.hideDecision())
+      .then(() => this.report.setSituation(situation))
+      .then(() => this.report.show())
 
+      .then(() => this.waitForPolicy(situation))
+      .then(() => this.report.setPolicy(this.currentPolicy))
+      .then(() => this.hideElementsInfo())
+      .then(() => situation.wait(1000))
+      
       .then(() => this.playOutDecision())
       .then(() => situation.wait(1000))
+      .then(() => this.report.setDecision(this.currentDecision.text))
+      .then(() => situation.wait(2500))
       .then(() => this.waitForAdvanceButton(Texts.Restart))
+
+      .then(() => this.report.hide())
       .then(() => situation.clearSprites())
       .then(() => situation.teardown())
       .then(() => this.view.start());
@@ -92,14 +97,6 @@ export default class SituationRunner {
 
       resolve('clean');
     });
-  }
-
-  showDecision(situation) {
-    return this.report.show(situation,this.currentPolicy, this.currentDecision.text);
-  }
-
-  hideDecision() {
-    return this.report.hide();
   }
 
   playOutDecision() {
