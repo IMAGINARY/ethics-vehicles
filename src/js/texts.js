@@ -1,6 +1,8 @@
 
 export const Texts = {
+  ChooseSituation: 'Choose a Situation',
   CarEntersLane: {
+    name: 'A Car enters your Lane',
     Description: 'A car enters your lane and there is no time to break. The car can either crash against it, turn left and crash against a parked car, or turn right and drive over a bus stop full of people',
     AutonomousCar: {
       name:'Autonomous car',
@@ -23,6 +25,7 @@ export const Texts = {
     Protector: 'Crashing into either car will potentially damage the autonomous car and harm its passengers. Solution: turn right and crash into the bus stop, as people are softer than cars.',
   },
   ChildRuns: {
+    name: 'A Child runs in the Street',
     Description: 'When arriving at a crossing and with a green light, a child suddenly runs onto the street. At the same time, an ambulance with lights and siren is driving behind your.',
     AutonomousCar: {
       name:'Autonomous car',
@@ -45,6 +48,7 @@ export const Texts = {
     Protector: 'Breaking or turning left will damage the car and potentially hurt you, while driving ahead will produce only slight car damage and no risk to passengers.',
   },
   TreeFalls: {
+    name: 'A Tree falls',
     Description: 'A tree falls in front of the car. The person in the front passenger seat has no seat belt. A cyclist is riding through the opposite lane. Options: Sudden break, slow down and turn left, or change lanes.',
     AutonomousCar: {
       name: 'Autonomous car',

@@ -10,6 +10,7 @@ import InfoBoxes from './info-boxes';
 import Situation from './situation';
 import SituationRunner from './situation-runner';
 import Menu from './menu.js';
+import { Texts } from './texts';
 
 export default class View {
   constructor(element) {
@@ -36,10 +37,10 @@ export default class View {
     this.afterIdleAction = () => {};
    
     this.SituationMenu = new Menu('menu', [
-      {text: 'A tree falls', action: () => this.startSituation('tree-falls') },
-      {text: 'A car enters your lane', action: () => this.startSituation('car-enters-lane') },
-      {text: 'A child runs in the street', action: () => this.startSituation('child-runs') },
-    ], 'Choose a scenario');
+      {text: Texts.TreeFalls.name, action: () => this.startSituation('tree-falls') },
+      {text: Texts.CarEntersLane.name, action: () => this.startSituation('car-enters-lane') },
+      {text: Texts.ChildRuns.name, action: () => this.startSituation('child-runs') },
+    ], Texts.ChooseSituation);
 
     this.runner = new SituationRunner(this,
       new Report($('#report')[0]),
