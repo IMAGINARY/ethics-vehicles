@@ -4,6 +4,7 @@ import { Policies } from './policies';
 import { highlightSprite } from './pixi-help';
 import Menu from './menu';
 import CountdownButton from './countdown-button';
+import { Texts } from './texts';
 
 export default class SituationRunner {
   constructor(view, report, infoBoxes) {
@@ -27,12 +28,12 @@ export default class SituationRunner {
       .then(() => this.hideElementsInfo())
       .then(() => this.showDecision(situation))
       .then(() => situation.wait(1000))
-      .then(() => this.waitForAdvanceButton('Show'))
+      .then(() => this.waitForAdvanceButton(Texts.Show))
       .then(() => this.hideDecision())
 
       .then(() => this.playOutDecision())
       .then(() => situation.wait(1000))
-      .then(() => this.waitForAdvanceButton('Restart'))
+      .then(() => this.waitForAdvanceButton(Texts.Restart))
       .then(() => situation.clearSprites())
       .then(() => situation.teardown())
       .then(() => this.view.start());
@@ -52,12 +53,12 @@ export default class SituationRunner {
           }
         };
       });
-      this.policyMenu = new Menu('menu', options, 'Choose a policy');
+      this.policyMenu = new Menu('menu', options, Texts.ChoosePolicy);
       this.policyMenu.show();
     });
   }
 
-  waitForAdvanceButton(text = 'Next', timeout = 10000) {
+  waitForAdvanceButton(text = Texts.Next, timeout = 10000) {
     return new Promise ((resolve) => {
       const cb = new CountdownButton(text, resolve);
       cb.setTimeout(timeout);

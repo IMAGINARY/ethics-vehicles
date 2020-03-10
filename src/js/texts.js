@@ -1,6 +1,10 @@
 
 export const Texts = {
   ChooseSituation: 'Choose a Situation',
+  Show: 'Show',
+  Restart: 'Restart',
+  ChoosePolicy: 'Choose a Policy',
+  Next: 'Next',
   CarEntersLane: {
     name: 'A Car enters your Lane',
     description: 'A car enters your lane and there is no time to break. The car can either crash against it, turn left and crash against a parked car, or turn right and drive over a bus stop full of people',
