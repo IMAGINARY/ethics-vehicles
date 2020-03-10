@@ -12,7 +12,6 @@ export default class InfoBox {
     this.htmlElement.querySelector('#name').innerText = element.name;
     this.htmlElement.querySelector('#description').innerHTML = element.description;
     setLeftTopCSSFromCoord(this.htmlElement, element.infopos);
-    this.htmlElement.style.visibility = 'visible';
   }
 
   fadeShow(element, time) {
@@ -21,7 +20,7 @@ export default class InfoBox {
   }
 
   hide() {
-    this.htmlElement.style.visibility = 'hidden';
+    return tweenOpacity(this.htmlElement, 0, 200);
   }
 
   static hideAll() {
