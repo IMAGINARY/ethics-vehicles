@@ -1,4 +1,4 @@
-import { tweenOpacity } from './style-help';
+import { tweenOpacity, tweenStyle } from './style-help';
 
 export default class Report {
   constructor(htmlElement) {
@@ -15,9 +15,14 @@ export default class Report {
   }
 
   show() {
-    this.decisionBlock.style.visibility = "hidden";
-    this.policyBlock.style.visibility = "hidden";
+    this.decisionBlock.style.display = "none";
+    this.policyBlock.style.display = "none";
+    this.htmlElement.style.top = "300px";
     return tweenOpacity(this.htmlElement, 1, 250);
+  }
+
+  pullUp() {
+    this.htmlElement.style.top = "30px";
   }
 
   setSituation(situation) {
@@ -25,13 +30,13 @@ export default class Report {
   }
 
   setPolicy(policy) {
-    this.policyBlock.style.visibility = "visible";
+    this.policyBlock.style.display = "block";
     this.policyNameElement.innerHTML = policy.name;
     this.policyObjectiveElement.innerHTML = policy.objective;
   }
 
   setDecision(decision) {
-    this.decisionBlock.style.visibility = "visible";
+    this.decisionBlock.style.display = "block";
     this.decisionElement.innerHTML = decision;
   }
 

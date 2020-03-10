@@ -30,6 +30,7 @@ export default class SituationRunner {
       .then(() => this.waitForPolicy(situation))
       .then(() => this.report.setPolicy(this.currentPolicy))
       .then(() => this.hideElementsInfo())
+      .then(() => this.report.pullUp())
       .then(() => situation.wait(1000))
       
       .then(() => this.playOutDecision())

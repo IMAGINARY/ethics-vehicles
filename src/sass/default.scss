@@ -21,17 +21,16 @@ body {
 
 #central_info {
   position: absolute;
-  width: 50vw;
-  height: 54vh;
-  left: 25vw;
-  top: 28vh;
+  width: 960px;
+  left: 480px;
+  top: 300px;
 }
 
 #report {
   z-index: 100;
   position: relative;
   margin: 0 auto;
-  top: 30px;
+  top: 300px;
   width: 830px;
   padding: 20px;
   background-color: #FFF280;
@@ -45,8 +44,11 @@ body {
 #menu {
   width: 480px;
   height: 280px;
+  max-height: 280px;
+  left: 240px;
   margin: 0 auto;
-  position: relative;
+  overflow: hidden;
+  position: absolute;
   border-radius: 15px;
   background-color: #afdde9ff;
   z-index: 1000;
@@ -130,6 +132,11 @@ body {
   margin: 10px 10px 2px 10px;
 }
 
+h2 {
+  font-size: 26px;
+  text-align: center;
+  margin: 10px 0 15px 0;
+}
 h3 {
   font-size: 20px;
   margin: 0 0 2px 0;
