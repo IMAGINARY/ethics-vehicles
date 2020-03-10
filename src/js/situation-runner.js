@@ -5,12 +5,12 @@ import { highlightSprite } from './pixi-help';
 import Menu from './menu';
 import CountdownButton from './countdown-button';
 import { Texts } from './texts';
+import InfoBox from './info-boxes';
 
 export default class SituationRunner {
-  constructor(view, report, infoBoxes) {
+  constructor(view, report) {
     this.view = view;
     this.report = report;
-    this.infoBoxes = infoBoxes;
     this.currentDecision = null;
     this.tempElements = [];
     this.currentPolicy = null;
@@ -79,7 +79,7 @@ export default class SituationRunner {
     elements.forEach((element, index) => {
       promise = promise.then( r => {
         this.highlight(element.sprite, element.color);
-        return this.infoBoxes.fadeShow(index, element, 1000);
+        return InfoBox.get(index).fadeShow(element, 1000);
        });
     });
    return promise;
@@ -88,7 +88,7 @@ export default class SituationRunner {
   hideElementsInfo() {
     return new Promise((resolve) => {
       this.removeTempElements();
-      this.infoBoxes.hideAll();
+      InfoBox.hideAll();
 
       resolve('clean');
     });

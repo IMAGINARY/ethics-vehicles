@@ -68,21 +68,25 @@ export default class CarEntersLaneSituation extends Situation {
       {
         sprite: this.view.agentCar.sprite,
         color: Situation.HighlightOthersColor,
+        infopos: { x: 100, y: 100},
         ...this.Texts.AutonomousCar,
       },
       {
         sprite: this.blackCar.sprite,
         color: Situation.HighlightOthersColor,
+        infopos: { x: 200, y: 100},
         ...this.Texts.LuxuryCar,
       },
       {
         sprite: this.truck.sprite,
         color: Situation.HighlightOthersColor,
+        infopos: { x: 100, y: 300},
         ...this.Texts.Truck,
       },
       {
         sprite: this.busStop.sprite,
         color: Situation.HighlightOthersColor,
+        infopos: { x: 400, y: 200},
         ...this.Texts.BusStop
       },
     ];

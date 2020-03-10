@@ -5,12 +5,13 @@ import { LANES } from './lanes';
 import { IDLE_ANIMATION_TIME, ViewSize } from './constants';
 import { POINT_ZERO } from './pixi-help';
 import Report from './report';
-import InfoBoxes from './info-boxes';
+import './info-boxes';
 
 import Situation from './situation';
 import SituationRunner from './situation-runner';
 import Menu from './menu.js';
 import { Texts } from './texts';
+import { setLeftTopCSSFromCoord } from './style-help';
 
 export default class View {
   constructor(element) {
@@ -42,9 +43,7 @@ export default class View {
       {text: Texts.ChildRuns.name, action: () => this.startSituation('child-runs') },
     ], Texts.ChooseSituation);
 
-    this.runner = new SituationRunner(this,
-      new Report($('#report')[0]),
-      new InfoBoxes($('#info_elements')[0]));
+    this.runner = new SituationRunner(this, new Report($('#report')[0]));
 
     this.app.ticker.add( () => TWEEN.update() );
   }
