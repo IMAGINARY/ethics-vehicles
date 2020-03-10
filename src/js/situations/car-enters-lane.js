@@ -106,7 +106,7 @@ export default class CarEntersLaneSituation extends Situation {
   }
 
   getDescription() {
-    return this.Texts.Description;
+    return this.Texts.description;
   }
 
   // eslint-disable-next-line class-methods-use-this

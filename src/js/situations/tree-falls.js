@@ -93,7 +93,7 @@ export default class TreeFallsSituation extends Situation {
   }
 
   getDescription() {
-    return this.Texts.Description;
+    return this.Texts.description;
   }
 
   moveCyclistInPosition() {

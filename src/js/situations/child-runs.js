@@ -111,7 +111,7 @@ export default class ChildRunsSituation extends Situation {
   }
 
   getDescription() {
-    return this.Texts.Description;
+    return this.Texts.description;
   }
 
   moveAgentInPosition() {
