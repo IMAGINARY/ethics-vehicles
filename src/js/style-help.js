@@ -9,3 +9,10 @@ export function tweenOpacity(element, toOpacity, time = 1000) {
             .start();
     });
 }
+
+
+export function setLeftTopCSSFromCoord(element, coord) {
+    element.style.left = coord.x + 'px';
+    element.style.top = coord.y + 'px';
+}
+
