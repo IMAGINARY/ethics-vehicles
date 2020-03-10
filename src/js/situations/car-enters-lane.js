@@ -5,6 +5,7 @@ import Situation from '../situation';
 import Car from '../car';
 import { LANES } from '../lanes';
 import { Texts } from '../texts';
+import InfoPos from '../info-positions';
 
 const BUS_STOP_X = (ViewSize.width/2) - BorderBlockSize.width + (SPRITE_WIDTH/2);
 const BUS_STOP_Y = -0.06 * ViewSize.height;
@@ -68,25 +69,25 @@ export default class CarEntersLaneSituation extends Situation {
       {
         sprite: this.view.agentCar.sprite,
         color: Situation.HighlightOthersColor,
-        infopos: { x: 100, y: 100},
+        infopos: InfoPos.BottomRight,
         ...this.Texts.AutonomousCar,
       },
       {
         sprite: this.blackCar.sprite,
         color: Situation.HighlightOthersColor,
-        infopos: { x: 200, y: 100},
+        infopos: InfoPos.TopRight,
         ...this.Texts.LuxuryCar,
       },
       {
         sprite: this.truck.sprite,
         color: Situation.HighlightOthersColor,
-        infopos: { x: 100, y: 300},
+        infopos: InfoPos.TopRight.left(),
         ...this.Texts.Truck,
       },
       {
         sprite: this.busStop.sprite,
         color: Situation.HighlightOthersColor,
-        infopos: { x: 400, y: 200},
+        infopos: InfoPos.TopRight.right(),
         ...this.Texts.BusStop
       },
     ];
