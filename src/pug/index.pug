@@ -1,8 +1,6 @@
 extends tpl/base
 
 block body
-  #floating
-
   #info_elements
     .text-center
 
@@ -19,27 +17,28 @@ block body
     h3#name
     #description
 
-  #menu
-    h2#menu_title Menu
-    #menu_cursor_area
-      #menu_cursor
-    #menu_options_area
+  #central_info
+    #menu
+      h2#menu_title Menu
+      #menu_cursor_area
+        #menu_cursor
+      #menu_options_area
+    #report
+      .text-center
+      h2 Report
+      p
+        span#situation_description
+      h3#policy
+        | Policy:&nbsp;
+        span#policy_name
+        | &nbsp;-&nbsp; 
+        span#policy_objective
+      br
+      h3#decision
+        | Decision:
+      span#decision_text
 
   #game
-  #report
-    .text-center
-    h2 Report
-    p
-      span#situation_description
-    h3
-      | Policy:&nbsp;
-      span#policy_name
-      | &nbsp;-&nbsp; 
-      span#policy_objective
-    br
-    b
-      | Decision:
-    span#decision
 
   button#advanceButton(class="menu_option")
     span#advanceText

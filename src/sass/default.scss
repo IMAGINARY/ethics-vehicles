@@ -19,12 +19,34 @@ body {
   margin: 0px;
 }
 
+#central_info {
+  position: absolute;
+  width: 50vw;
+  height: 54vh;
+  left: 25vw;
+  top: 28vh;
+}
+
+#report {
+  z-index: 100;
+  position: relative;
+  margin: 0 auto;
+  top: 30px;
+  width: 830px;
+  padding: 20px;
+  background-color: #FFF280;
+  box-shadow: 10px 15px 10px -5px rgba(0, 0, 0, 0.5);
+  border-radius: 20px;  
+  opacity: 0;
+  font-size: 22px;
+  font-family: 'Barlow', sans-serif;
+}
+
 #menu {
   width: 480px;
   height: 280px;
-  left: 720px;
-  top: 300px;
-  position: absolute;
+  margin: 0 auto;
+  position: relative;
   border-radius: 15px;
   background-color: #afdde9ff;
   z-index: 1000;
@@ -130,21 +152,6 @@ h3 {
     margin: 0px;
     display: block;
   }
-}
-
-#report {
-  z-index: 100;
-  position: absolute;
-  left: 540px;
-  top: 300px;
-  width: 830px;
-  padding: 20px;
-  background-color: #FFF280;
-  box-shadow: 10px 15px 10px -5px rgba(0, 0, 0, 0.5);
-  border-radius: 20px;  
-  opacity: 0;
-  font-size: 22px;
-  font-family: 'Barlow', sans-serif;
 }
 
 button {
