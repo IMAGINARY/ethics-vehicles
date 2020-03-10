@@ -34,7 +34,7 @@ export const Texts = {
       name: 'Parked car',
       description: 'An old truck in bad shape, with four passengers'
     },
-    BusTop: {
+    BusStop: {
       name: 'Bus Stop',
       description: 'Full of people waiting for their bus',
     },
