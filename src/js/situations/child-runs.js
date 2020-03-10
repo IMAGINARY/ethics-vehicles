@@ -6,9 +6,10 @@ import { LANES } from '../lanes';
 import { screenPosFromFraction, pixiMoveTo } from '../pixi-help';
 import { STREET_LANE_OFFSET } from '../constants';
 import { Texts } from '../texts';
+import InfoPos from '../info-positions';
 
 const AGENT_LANE = 4;
-const CROSSING_CAR_POSITION = 1/4;
+const CROSSING_CAR_POSITION = 1/4 + 1/32;
 const AGENT_CAR_POSITION = 1/2 + 1/8;
 const AMBULANCE_POSITION = 1/2 + 1/16;
 const childStartPos = screenPosFromFraction(1/4 + 1/32, 1/16);
@@ -54,21 +55,25 @@ export default class ChildRunsSituation extends Situation {
       {
         sprite: this.view.agentCar.sprite,
         color: Situation.HighlightAgentColor,
+        infopos: InfoPos.TopRight.left().left(),
         ...this.Texts.AutonomousCar
       },
       {
         sprite: this.ambulance.sprite,
         color: Situation.HighlightOthersColor,
+        infopos: InfoPos.TopRight.left(),
         ...this.Texts.Ambulance
       },
       {
         sprite: this.child.sprite,
         color: Situation.HighlightOthersColor,
+        infopos: InfoPos.TopLeft,
         ...this.Texts.Child
       },
       {
         sprite: this.crossingCar.sprite,
         color: Situation.HighlightOthersColor,
+        infopos: InfoPos.TopLeft.down(),
         ...this.Texts.OtherCar
       },
     ];
