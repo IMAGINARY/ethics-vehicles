@@ -48,6 +48,10 @@ export default class View {
     this.app.ticker.add( () => TWEEN.update() );
   }
 
+  spriteToScreenPos(sprite) {
+    return { x: sprite.x + this.app.screen.width/2, y: sprite.y + this.app.screen.height/2 };
+  }
+
   doIdleAnimation() {
     const currentLane = LANES[Math.floor((Math.random() * LANES.length))];
     this.agentCar.hide();
