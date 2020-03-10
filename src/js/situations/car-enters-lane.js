@@ -4,6 +4,7 @@ import SceneElement from '../scene-element';
 import Situation from '../situation';
 import Car from '../car';
 import { LANES } from '../lanes';
+import { Texts } from '../texts';
 
 const BUS_STOP_X = (ViewSize.width/2) - BorderBlockSize.width + (SPRITE_WIDTH/2);
 const BUS_STOP_Y = -0.06 * ViewSize.height;
@@ -44,6 +45,7 @@ export default class CarEntersLaneSituation extends Situation {
     this.blackCar = new Car(view, 'assets/images/car_black.png');
     this.truck = new Car(view, 'assets/images/small_truck.png');
     this.busStop = new SceneElement(view, 'assets/images/bus_stop.png', new PIXI.Point(BUS_STOP_X, BUS_STOP_Y));
+    this.Texts = Texts.CarEntersLane;
   }
 
   setup() {
@@ -66,26 +68,22 @@ export default class CarEntersLaneSituation extends Situation {
       {
         sprite: this.view.agentCar.sprite,
         color: Situation.HighlightOthersColor,
-        name: 'Autonomous car',
-        description: 'While reaching a bus stop, a car enters its lane in front of it',
+        ...this.Texts.AutonomousCar,
       },
       {
         sprite: this.blackCar.sprite,
         color: Situation.HighlightOthersColor,
-        name: 'Luxury car',
-        description: 'A very expensive car suddenly enters your lane.',
+        ...this.Texts.LuxuryCar,
       },
       {
         sprite: this.truck.sprite,
         color: Situation.HighlightOthersColor,
-        name: 'Parked car',
-        description: 'An old truck in bad shape, with four passengers',
+        ...this.Texts.Truck,
       },
       {
         sprite: this.busStop.sprite,
         color: Situation.HighlightOthersColor,
-        name: 'Bus Stop',
-        description: 'Full of people waiting for their bus',
+        ...this.Texts.BusStop
       },
     ];
   }
@@ -93,22 +91,22 @@ export default class CarEntersLaneSituation extends Situation {
   getDecisions() {
     return {
       'humanist': {
-        text: 'Turning left will risk the people in the track. Turning right with probably risk even more people at the stop. Solution: breaking and crashing into the car in front will probably not result in fatalities.',
+        text: this.Texts.Humanist,
         actionFunction: () => this.decisionAdvace(),
       },
       'profit': {
-        text: 'The car facing you is very expensive, and crashing into it might mean long legal battles for your insurance. Crashing into the bus stop will risk high payouts to the victims in or their families. Solution: turn left towards the parked car, as it is cheap and if the risk of casualties is lower.',
+        text: this.Texts.Profit,
         actionFunction: () => this.decisionTurnLeft(),
       },
       'protector': {
-        text: 'Crashing into either car will potentially damage the autonomous car and harm its passengers. Solution: turn right and crash into the bus stop, as people are softer than cars.',
+        text: this.Texts.Protector,
         actionFunction: () => this.decisionTurnRight(),
       },
     };
   }
 
   getDescription() {
-    return 'A car enters your lane and there is no time to break. The car can either crash against it, turn left and crash against a parked car, or turn right and drive over a bus stop full of people';
+    return this.Texts.Description;
   }
 
   // eslint-disable-next-line class-methods-use-this
