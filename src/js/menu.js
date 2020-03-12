@@ -11,6 +11,7 @@ export default class Menu {
     this.currentOption = 0;
     this.visible = false;
     this.options = Array.from(optionsArray);
+    this.buttons = [];
     this.titleText = title;
     this.htmlElement = $(`#${elementId}`)
     this.optionsArea = this.htmlElement.find('#menu_options_area');
@@ -21,6 +22,8 @@ export default class Menu {
   show() {
     this.createHTMLOptions();
     this.currentOption = 0;
+    this.select(this.currentOption);
+
     this.title.text(this.titleText);
     window.onkeydown = event => {
       switch (event.which) {
@@ -49,11 +52,10 @@ export default class Menu {
   }
 
   createHTMLOptions() {
-    this.options.forEach(element => {
-      const button = $(`<input type="button" value="${element.text}" class="menu_option">`);
-      $('#menu_options_area').append(button);
-      button.click(element.action);
-    });
+    this.buttons = this.options.map( element => 
+      $(`<input type="button" value="${element.text}" class="menu_option">`).click(element.action) );
+
+    this.buttons.forEach(button => $('#menu_options_area').append(button) );
   }
 
   clearHTML() {
@@ -66,15 +68,29 @@ export default class Menu {
     action();
   }
 
+  select(index) {
+    this.buttons[index].addClass('selected');
+  }
+
+  deselect(index) {
+    this.buttons[index].removeClass('selected');
+  }
+
   down() {
+    this.deselect(this.currentOption);
     if (this.currentOption < this.options.length - 1)
       this.currentOption++;
+
+    this.select(this.currentOption);
     this.updateCursorPosition();
   }
 
   up() {
+    this.deselect(this.currentOption);
     if (this.currentOption > 0)
       this.currentOption--;
+
+    this.select(this.currentOption);
     this.updateCursorPosition();
   }
 

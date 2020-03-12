@@ -2,6 +2,10 @@ $color-black: #303030;
 $color-bondi: #308090;
 $color-gray-light: #F0F0F0;
 
+$color-yellow: #ffec02;
+$color-grey: #666666;
+$color-violet: #8f1a81;
+
 $options-bar-height: 80px;
 $game-canvas-width: 1920px;
 $game-canvas-height: 1080px;
@@ -103,7 +107,8 @@ body {
   overflow: hidden;
   position: absolute;
   border-radius: 15px;
-  background-color: #afdde9ff;
+  background-color: white;
+  border: 5px solid $color-grey;
   z-index: 1000;
 }
 
@@ -132,10 +137,10 @@ body {
   height: 60px;
   margin: 0 0 15px 0;
   padding: 0px 10px 0 10px;
-  border: 0;
+  border: 5px solid $color-yellow;
   border-radius: 15px;
-  color: white;
-  background-color: #ff5555ff;
+  color: black;
+  background-color: white;
 
   display:table-cell;
   vertical-align: middle;
@@ -147,13 +152,17 @@ body {
   font-size: 20px;
 }
 
+.selected {
+  background-color: $color-yellow;
+}
+
 #menu_cursor {
   width: 0; 
   height: 0; 
   margin: 15px 0 0 0;
   border-top: 15px solid transparent;
   border-bottom: 15px solid transparent;
-  border-left: 30px solid black;
+  border-left: 30px solid $color-grey;
 }
 
 #info_elements {
