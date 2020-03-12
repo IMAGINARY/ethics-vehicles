@@ -7,6 +7,8 @@ import CountdownButton from './countdown-button';
 import { Texts } from './texts';
 import InfoBox from './info-boxes';
 
+import { HighlightColor } from './design';
+
 export default class SituationRunner {
   constructor(view, report) {
     this.view = view;
@@ -85,7 +87,7 @@ export default class SituationRunner {
     var promise = new Promise( (r) => r('start fades') );
     elements.forEach((element, index) => {
       promise = promise.then( r => {
-        this.highlight(element.sprite, element.color);
+        this.highlight(element.sprite);
         return InfoBox.get(index).fadeShow(element, 1000);
        });
     });
@@ -105,8 +107,8 @@ export default class SituationRunner {
     return this.currentDecision.actionFunction();
   }
   
-  highlight(sprite, color) {
-    this.addTempElement(highlightSprite(sprite, color));
+  highlight(sprite) {
+    this.addTempElement(highlightSprite(sprite, HighlightColor));
   }
 
   addTempElement(element) {
