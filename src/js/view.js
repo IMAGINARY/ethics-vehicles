@@ -11,7 +11,6 @@ import Situation from './situation';
 import SituationRunner from './situation-runner';
 import Menu from './menu.js';
 import { Texts } from './texts';
-import { setLeftTopCSSFromCoord } from './style-help';
 
 export default class View {
   constructor(element) {

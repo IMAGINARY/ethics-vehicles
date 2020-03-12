@@ -33,9 +33,9 @@ export default class SceneElement {
     return new Promise( resolve => {
       this.view.container.removeChild(this.sprite);
       this.visible = false;
-    resolve();
-  });
-}
+      resolve();
+    });
+  }
 
   reset() {
     this.sprite.x = this.initialPosition.x;

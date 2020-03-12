@@ -4,8 +4,6 @@ const KeyArrowUp = 38;
 const KeyArrowDown = 40;
 const KeyEnter = 13;
 
-// example use
-
 export default class Menu {
   constructor(elementId, optionsArray, title, menuClass) {
     this.currentOption = 0;

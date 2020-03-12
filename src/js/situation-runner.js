@@ -29,12 +29,10 @@ export default class SituationRunner {
       .then(() => this.report.setSituation(situation))
       .then(() => this.report.show())
       .then(() => this.waitForAdvanceButton(Texts.Next), 3000)
-//      .then(() => this.report.pullDown())
 
       .then(() => this.waitForPolicy(situation))
       .then(() => this.report.setPolicy(this.currentPolicy))
       .then(() => this.hideElementsInfo())
-//      .then(() => this.report.pullUp())
       .then(() => situation.wait(1000))
       
       .then(() => this.playOutDecision())

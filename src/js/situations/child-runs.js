@@ -34,7 +34,6 @@ export default class ChildRunsSituation extends Situation {
     this.Texts = Texts.ChildRuns;
   }
 
-
   setup() {
     return this.child.show();
   }
