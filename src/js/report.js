@@ -17,12 +17,17 @@ export default class Report {
   show() {
     this.decisionBlock.style.display = "none";
     this.policyBlock.style.display = "none";
-    this.htmlElement.style.top = "300px";
-    return tweenOpacity(this.htmlElement, 1, 250);
+    return tweenOpacity(this.htmlElement, 1, 500);
   }
 
-  pullUp() {
-    this.htmlElement.style.top = "30px";
+  pullUp(time = 1000) {
+    this.htmlElement.classList.add('report_up');
+    return new Promise(r => setTimeout(r, time));
+  }
+
+  pullDown(time = 1000) {
+    this.htmlElement.classList.add('report_down');
+    return new Promise(r => setTimeout(r, time));
   }
 
   setSituation(situation) {

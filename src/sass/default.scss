@@ -62,7 +62,7 @@ body {
   z-index: 100;
   position: relative;
   margin: 0 auto;
-  top: 300px;
+  top: 30px;
   width: 830px;
   padding: 20px;
   background-color: #FFF280;
@@ -70,6 +70,28 @@ body {
   border-radius: 20px;  
   opacity: 0;
   font-size: 22px;
+}
+
+.report_down {
+  animation-duration: 1s;
+  animation-name: reportDown;
+  animation-fill-mode: forwards;
+}
+
+.report_up {
+  animation-duration: 1s;
+  animation-name: reportUp;
+  animation-fill-mode: forwards;
+}
+
+@keyframes reportDown {
+  from { top: 30px; }
+  to { top: 300px; }
+}
+
+@keyframes reportUp {
+  from { top: 300px; }
+  to { top: 30px; }
 }
 
 #menu {
