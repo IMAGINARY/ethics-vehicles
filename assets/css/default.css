@@ -82,7 +82,8 @@ body {
   overflow: hidden;
   position: absolute;
   border-radius: 15px;
-  background-color: #afdde9ff;
+  background-color: white;
+  border: 5px solid #666666;
   z-index: 1000; }
 
 #menu_cursor_area {
@@ -109,10 +110,10 @@ body {
   height: 60px;
   margin: 0 0 15px 0;
   padding: 0px 10px 0 10px;
-  border: 0;
+  border: 5px solid #ffec02;
   border-radius: 15px;
-  color: white;
-  background-color: #ff5555ff;
+  color: black;
+  background-color: white;
   display: table-cell;
   vertical-align: middle;
   line-height: 80%;
@@ -121,13 +122,16 @@ body {
   font-family: 'Exo 2';
   font-size: 20px; }
 
+.selected {
+  background-color: #ffec02; }
+
 #menu_cursor {
   width: 0;
   height: 0;
   margin: 15px 0 0 0;
   border-top: 15px solid transparent;
   border-bottom: 15px solid transparent;
-  border-left: 30px solid black; }
+  border-left: 30px solid #666666; }
 
 #info_elements {
   width: 960px;

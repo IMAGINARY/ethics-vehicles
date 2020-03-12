@@ -132,7 +132,7 @@ function () {
 
 exports["default"] = Car;
 
-},{"./constants":2,"./lane":6,"./pixi-help":10}],2:[function(require,module,exports){
+},{"./constants":2,"./lane":7,"./pixi-help":11}],2:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -258,6 +258,19 @@ exports["default"] = CountdownButton;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports.HighlightColor = void 0;
+var Violet = 0x8f1a81;
+var Yellow = 0xffec02;
+var Grey = 0x666666;
+var HighlightColor = Yellow;
+exports.HighlightColor = HighlightColor;
+
+},{}],5:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 exports["default"] = void 0;
 
 var _styleHelp = require("./style-help");
@@ -319,7 +332,7 @@ InfoBox.Boxes = $(".info_element").get().map(function (html) {
   return new InfoBox(html);
 });
 
-},{"./style-help":19}],5:[function(require,module,exports){
+},{"./style-help":20}],6:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -376,7 +389,7 @@ InfoPos.TopRight = new InfoPos(1420, 90);
 InfoPos.BottomRight = new InfoPos(1420, 790);
 InfoPos.BottomLeft = new InfoPos(300, 790);
 
-},{}],6:[function(require,module,exports){
+},{}],7:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -445,7 +458,7 @@ exports.Lane = Lane;
 var NO_LANE = new Lane(_pixiHelp.POINT_ZERO, new PIXI.Point(1, 0));
 exports.NO_LANE = NO_LANE;
 
-},{"./pixi-help":10}],7:[function(require,module,exports){
+},{"./pixi-help":11}],8:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -482,7 +495,7 @@ setOppositeLanes(LANES[2], LANES[3]);
 setOppositeLanes(LANES[4], LANES[5]);
 setOppositeLanes(LANES[6], LANES[7]);
 
-},{"./constants":2,"./lane":6}],8:[function(require,module,exports){
+},{"./constants":2,"./lane":7}],9:[function(require,module,exports){
 "use strict";
 
 var _view = _interopRequireDefault(require("./view"));
@@ -508,7 +521,7 @@ $('#debugButton').on('click', () => {
 
 view.start();
 
-},{"./situations/car-enters-lane":16,"./situations/child-runs":17,"./situations/tree-falls":18,"./view":21}],9:[function(require,module,exports){
+},{"./situations/car-enters-lane":17,"./situations/child-runs":18,"./situations/tree-falls":19,"./view":22}],10:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -537,6 +550,7 @@ function () {
     this.currentOption = 0;
     this.visible = false;
     this.options = Array.from(optionsArray);
+    this.buttons = [];
     this.titleText = title;
     this.htmlElement = $("#".concat(elementId));
     this.optionsArea = this.htmlElement.find('#menu_options_area');
@@ -551,6 +565,7 @@ function () {
 
       this.createHTMLOptions();
       this.currentOption = 0;
+      this.select(this.currentOption);
       this.title.text(this.titleText);
 
       window.onkeydown = function (event) {
@@ -599,10 +614,11 @@ function () {
   }, {
     key: "createHTMLOptions",
     value: function createHTMLOptions() {
-      this.options.forEach(function (element) {
-        var button = $("<input type=\"button\" value=\"".concat(element.text, "\" class=\"menu_option\">"));
-        $('#menu_options_area').append(button);
-        button.click(element.action);
+      this.buttons = this.options.map(function (element) {
+        return $("<input type=\"button\" value=\"".concat(element.text, "\" class=\"menu_option\">")).click(element.action);
+      });
+      this.buttons.forEach(function (button) {
+        return $('#menu_options_area').append(button);
       });
     }
   }, {
@@ -618,15 +634,29 @@ function () {
       action();
     }
   }, {
+    key: "select",
+    value: function select(index) {
+      this.buttons[index].addClass('selected');
+    }
+  }, {
+    key: "deselect",
+    value: function deselect(index) {
+      this.buttons[index].removeClass('selected');
+    }
+  }, {
     key: "down",
     value: function down() {
+      this.deselect(this.currentOption);
       if (this.currentOption < this.options.length - 1) this.currentOption++;
+      this.select(this.currentOption);
       this.updateCursorPosition();
     }
   }, {
     key: "up",
     value: function up() {
+      this.deselect(this.currentOption);
       if (this.currentOption > 0) this.currentOption--;
+      this.select(this.currentOption);
       this.updateCursorPosition();
     }
   }, {
@@ -641,7 +671,7 @@ function () {
 
 exports["default"] = Menu;
 
-},{"./style-help":19}],10:[function(require,module,exports){
+},{"./style-help":20}],11:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -725,7 +755,7 @@ function pixiMoveTo(element, dest) {
 var POINT_ZERO = new PIXI.Point(0, 0);
 exports.POINT_ZERO = POINT_ZERO;
 
-},{"./constants":2}],11:[function(require,module,exports){
+},{"./constants":2}],12:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -751,7 +781,7 @@ var Policies = [_objectSpread({
 }, _texts.Texts.Protector)];
 exports.Policies = Policies;
 
-},{"./texts":20}],12:[function(require,module,exports){
+},{"./texts":21}],13:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -792,6 +822,8 @@ function () {
     key: "pullUp",
     value: function pullUp() {
       var time = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1000;
+      this.htmlElement.classList.remove('report_down');
+      this.htmlElement.classList.remove('report_up');
       this.htmlElement.classList.add('report_up');
       return new Promise(function (r) {
         return setTimeout(r, time);
@@ -801,6 +833,8 @@ function () {
     key: "pullDown",
     value: function pullDown() {
       var time = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1000;
+      this.htmlElement.classList.remove('report_down');
+      this.htmlElement.classList.remove('report_up');
       this.htmlElement.classList.add('report_down');
       return new Promise(function (r) {
         return setTimeout(r, time);
@@ -836,7 +870,7 @@ function () {
 
 exports["default"] = Report;
 
-},{"./style-help":19}],13:[function(require,module,exports){
+},{"./style-help":20}],14:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -916,7 +950,7 @@ function () {
 
 exports["default"] = SceneElement;
 
-},{"./constants":2,"./pixi-help":10}],14:[function(require,module,exports){
+},{"./constants":2,"./pixi-help":11}],15:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -935,6 +969,8 @@ var _countdownButton = _interopRequireDefault(require("./countdown-button"));
 var _texts = require("./texts");
 
 var _infoBoxes = _interopRequireDefault(require("./info-boxes"));
+
+var _design = require("./design");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
@@ -1062,7 +1098,7 @@ function () {
       });
       elements.forEach(function (element, index) {
         promise = promise.then(function (r) {
-          _this3.highlight(element.sprite, element.color);
+          _this3.highlight(element.sprite);
 
           return _infoBoxes["default"].get(index).fadeShow(element, 1000);
         });
@@ -1089,8 +1125,8 @@ function () {
     }
   }, {
     key: "highlight",
-    value: function highlight(sprite, color) {
-      this.addTempElement((0, _pixiHelp.highlightSprite)(sprite, color));
+    value: function highlight(sprite) {
+      this.addTempElement((0, _pixiHelp.highlightSprite)(sprite, _design.HighlightColor));
     }
   }, {
     key: "addTempElement",
@@ -1115,7 +1151,7 @@ function () {
 
 exports["default"] = SituationRunner;
 
-},{"./countdown-button":3,"./info-boxes":4,"./menu":9,"./pixi-help":10,"./policies":11,"./texts":20}],15:[function(require,module,exports){
+},{"./countdown-button":3,"./design":4,"./info-boxes":5,"./menu":10,"./pixi-help":11,"./policies":12,"./texts":21}],16:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -1207,7 +1243,7 @@ Situation.situations = {};
 Situation.HighlightAgentColor = 0xFFF200;
 Situation.HighlightOthersColor = 0xFF8000;
 
-},{}],16:[function(require,module,exports){
+},{}],17:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -1437,7 +1473,7 @@ exports["default"] = CarEntersLaneSituation;
 
 _situation["default"].registerSituation('car-enters-lane', CarEntersLaneSituation);
 
-},{"../car":1,"../constants":2,"../info-positions":5,"../lanes":7,"../scene-element":13,"../situation":15,"../texts":20}],17:[function(require,module,exports){
+},{"../car":1,"../constants":2,"../info-positions":6,"../lanes":8,"../scene-element":14,"../situation":16,"../texts":21}],18:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -1659,7 +1695,7 @@ exports["default"] = ChildRunsSituation;
 
 _situation["default"].registerSituation('child-runs', ChildRunsSituation);
 
-},{"../car":1,"../constants":2,"../info-positions":5,"../lanes":7,"../pixi-help":10,"../scene-element":13,"../situation":15,"../texts":20}],18:[function(require,module,exports){
+},{"../car":1,"../constants":2,"../info-positions":6,"../lanes":8,"../pixi-help":11,"../scene-element":14,"../situation":16,"../texts":21}],19:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -1879,7 +1915,7 @@ exports["default"] = TreeFallsSituation;
 
 _situation["default"].registerSituation('tree-falls', TreeFallsSituation);
 
-},{"../car":1,"../constants":2,"../info-positions":5,"../lanes":7,"../scene-element":13,"../situation":15,"../texts":20}],19:[function(require,module,exports){
+},{"../car":1,"../constants":2,"../info-positions":6,"../lanes":8,"../scene-element":14,"../situation":16,"../texts":21}],20:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -1905,7 +1941,7 @@ function setLeftTopCSSFromCoord(element, coord) {
   element.style.top = coord.y + 'px';
 }
 
-},{}],20:[function(require,module,exports){
+},{}],21:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -1998,7 +2034,7 @@ var Texts = {
 };
 exports.Texts = Texts;
 
-},{}],21:[function(require,module,exports){
+},{}],22:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -2146,4 +2182,4 @@ function () {
 
 exports["default"] = View;
 
-},{"./car":1,"./constants":2,"./info-boxes":4,"./lanes":7,"./menu.js":9,"./pixi-help":10,"./report":12,"./scene-element":13,"./situation":15,"./situation-runner":14,"./style-help":19,"./texts":20}]},{},[8]);
+},{"./car":1,"./constants":2,"./info-boxes":5,"./lanes":8,"./menu.js":10,"./pixi-help":11,"./report":13,"./scene-element":14,"./situation":16,"./situation-runner":15,"./style-help":20,"./texts":21}]},{},[9]);
