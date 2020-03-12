@@ -544,11 +544,12 @@ var KeyEnter = 13; // example use
 var Menu =
 /*#__PURE__*/
 function () {
-  function Menu(elementId, optionsArray, title) {
+  function Menu(elementId, optionsArray, title, menuClass) {
     _classCallCheck(this, Menu);
 
     this.currentOption = 0;
     this.visible = false;
+    this.menuClass = menuClass;
     this.options = Array.from(optionsArray);
     this.buttons = [];
     this.titleText = title;
@@ -565,6 +566,8 @@ function () {
 
       this.createHTMLOptions();
       this.currentOption = 0;
+      this.htmlElement.removeClass();
+      this.htmlElement.addClass(this.menuClass);
       this.select(this.currentOption);
       this.title.text(this.titleText);
 
@@ -677,6 +680,7 @@ exports["default"] = Menu;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports.createAnimatedSprite = createAnimatedSprite;
 exports.createSprite = createSprite;
 exports.highlightSprite = highlightSprite;
 exports.vectorBetweenPoints = vectorBetweenPoints;
@@ -689,6 +693,18 @@ exports.POINT_ZERO = void 0;
 var _constants = require("./constants");
 
 /* global PIXI */
+function createAnimatedSprite(sourceImages, scale) {
+  var anchor = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 0.5;
+  var textures = sourceImages.map(function (image) {
+    return PIXI.Texture.from(image);
+  });
+  var sprite = new PIXI.AnimatedSprite(textures);
+  sprite.scale.x = scale;
+  sprite.scale.y = scale;
+  sprite.anchor.set(anchor);
+  return sprite;
+}
+
 function createSprite(sourceImage, scale) {
   var anchor = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 0.5;
   var texture = PIXI.Texture.from(sourceImage);
@@ -808,13 +824,14 @@ function () {
     this.policyBlock = this.htmlElement.querySelector('#policy');
     this.policyNameElement = this.htmlElement.querySelector('#policy_name');
     this.policyObjectiveElement = this.htmlElement.querySelector('#policy_objective');
+    this.decisionBlock = this.htmlElement.querySelector('#decision');
     this.decisionElement = this.htmlElement.querySelector('#decision_text');
   }
 
   _createClass(Report, [{
     key: "show",
     value: function show() {
-      this.decisionElement.style.display = "none";
+      this.decisionBlock.style.display = "none";
       this.policyBlock.style.display = "none";
       return (0, _styleHelp.tweenOpacity)(this.htmlElement, 1, 500);
     }
@@ -855,7 +872,7 @@ function () {
   }, {
     key: "setDecision",
     value: function setDecision(decision) {
-      this.decisionElement.style.display = "block";
+      this.decisionBlock.style.display = "block";
       this.decisionElement.innerHTML = decision;
     }
   }, {
@@ -898,14 +915,18 @@ function () {
     _classCallCheck(this, SceneElement);
 
     this.view = view;
-    this.sprite = (0, _pixiHelp.createSprite)(imageFile, scale);
-    this.sprite.x = position.x;
-    this.sprite.y = position.y;
     this.initialPosition = position;
     this.visible = false;
+    this.setSprite((0, _pixiHelp.createSprite)(imageFile, scale));
   }
 
   _createClass(SceneElement, [{
+    key: "setSprite",
+    value: function setSprite(sprite) {
+      this.sprite = sprite;
+      this.reset();
+    }
+  }, {
     key: "fadeIn",
     value: function fadeIn(time) {
       this.show();
@@ -1012,17 +1033,15 @@ function () {
         return _this.report.show();
       }).then(function () {
         return _this.waitForAdvanceButton(_texts.Texts.Next);
-      }, 3000).then(function () {
-        return _this.report.pullDown();
-      }).then(function () {
+      }, 3000) //      .then(() => this.report.pullDown())
+      .then(function () {
         return _this.waitForPolicy(situation);
       }).then(function () {
         return _this.report.setPolicy(_this.currentPolicy);
       }).then(function () {
         return _this.hideElementsInfo();
-      }).then(function () {
-        return _this.report.pullUp();
-      }).then(function () {
+      }) //      .then(() => this.report.pullUp())
+      .then(function () {
         return situation.wait(1000);
       }).then(function () {
         return _this.playOutDecision();
@@ -1062,7 +1081,7 @@ function () {
           };
         });
 
-        _this2.policyMenu = new _menu["default"]('menu', options, _texts.Texts.ChoosePolicy);
+        _this2.policyMenu = new _menu["default"]('menu', options, _texts.Texts.ChoosePolicy, 'bottom_menu');
 
         _this2.policyMenu.show();
       });
@@ -1549,6 +1568,11 @@ function (_Situation) {
     _this.agentLane = _lanes.LANES[AGENT_LANE];
     _this.oppositeLane = _this.agentLane.oppositeLane;
     _this.child = new _sceneElement["default"](_this.view, 'assets/images/child.png', childStartPos);
+
+    _this.child.setSprite((0, _pixiHelp.createAnimatedSprite)([1, 2, 3].map(function (index) {
+      return "assets/images/child_sprite_" + index + ".png";
+    }), _constants.CAR_SCALE));
+
     _this.crossingCar = new _car["default"](_this.view, 'assets/images/blue_car.png');
     _this.ambulance = new _car["default"](_this.view, 'assets/images/ambulance.png');
     _this.Texts = _texts.Texts.ChildRuns;
@@ -1682,8 +1706,13 @@ function (_Situation) {
     value: function childRuns() {
       var _this6 = this;
 
+      this.child.sprite.loop = true;
       return this.wait(CHILD_DELAY).then(function () {
+        return _this6.child.sprite.play();
+      }).then(function () {
         return (0, _pixiHelp.pixiMoveTo)(_this6.child.sprite, childEndPos, SETUP_TIME - CHILD_DELAY);
+      }).then(function () {
+        return _this6.child.sprite.stop();
       });
     }
   }]);
@@ -2117,7 +2146,7 @@ function () {
       action: function action() {
         return _this.startSituation('child-runs');
       }
-    }], _texts.Texts.ChooseSituation);
+    }], _texts.Texts.ChooseSituation, 'top_menu');
     this.runner = new _situationRunner["default"](this, new _report["default"]($('#report')[0]));
     this.app.ticker.add(function () {
       return TWEEN.update();
