@@ -2,10 +2,11 @@
 import SceneElement from '../scene-element';
 import Car from '../car';
 import Situation from '../situation';
-import { STREET_LANE_OFFSET, StreetOffsetFromCenter } from '../constants';
+import { STREET_LANE_OFFSET, StreetOffsetFromCenter, CAR_SCALE } from '../constants';
 import { LANES } from '../lanes';
 import { Texts } from '../texts';
 import InfoPos from '../info-positions';
+import { createAnimatedSprite } from '../pixi-help';
 
 const AGENT_LANE = 1;
 const CYCLIST_STOP_POSITION = 3/8;
@@ -33,6 +34,7 @@ export default class TreeFallsSituation extends Situation {
       this.view,
       'assets/images/cyclist.png'
     );
+    this.cyclist.sprite = createAnimatedSprite([1,2,3].map( index => "assets/images/cyclist_" + index + ".png"), CAR_SCALE);
 
     this.agentLane = LANES[AGENT_LANE];
     this.bicycleLane = this.agentLane.oppositeLane;
@@ -103,7 +105,9 @@ export default class TreeFallsSituation extends Situation {
   moveCyclistInPosition() {
     this.cyclist.show();
     this.cyclist.placeInLane(this.bicycleLane);
-    return this.cyclist.driveInLaneUntilPosition(CYCLIST_STOP_POSITION, SETUP_TIME);
+    this.cyclist.sprite.play();
+    return this.cyclist.driveInLaneUntilPosition(CYCLIST_STOP_POSITION, SETUP_TIME)
+                       .then( () => this.cyclist.sprite.stop() );
   }
 
   moveAgentInPosition() {
