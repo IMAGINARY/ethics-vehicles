@@ -41,7 +41,7 @@ export default class View {
       {text: Texts.TreeFalls.name, action: () => this.startSituation('tree-falls') },
       {text: Texts.CarEntersLane.name, action: () => this.startSituation('car-enters-lane') },
       {text: Texts.ChildRuns.name, action: () => this.startSituation('child-runs') },
-    ], Texts.ChooseSituation);
+    ], Texts.ChooseSituation, 'top_menu');
 
     this.runner = new SituationRunner(this, new Report($('#report')[0]));
 

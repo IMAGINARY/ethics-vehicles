@@ -7,9 +7,10 @@ const KeyEnter = 13;
 // example use
 
 export default class Menu {
-  constructor(elementId, optionsArray, title) {
+  constructor(elementId, optionsArray, title, menuClass) {
     this.currentOption = 0;
     this.visible = false;
+    this.menuClass = menuClass;
     this.options = Array.from(optionsArray);
     this.buttons = [];
     this.titleText = title;
@@ -22,6 +23,8 @@ export default class Menu {
   show() {
     this.createHTMLOptions();
     this.currentOption = 0;
+    this.htmlElement.removeClass();
+    this.htmlElement.addClass(this.menuClass);
     this.select(this.currentOption);
 
     this.title.text(this.titleText);
