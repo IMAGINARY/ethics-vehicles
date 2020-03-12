@@ -308,13 +308,15 @@ function () {
   }, {
     key: "hide",
     value: function hide() {
-      return (0, _styleHelp.tweenOpacity)(this.htmlElement, 0, 200);
+      var time = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1000;
+      return (0, _styleHelp.tweenOpacity)(this.htmlElement, 0, time);
     }
   }], [{
     key: "hideAll",
     value: function hideAll() {
+      var time = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1000;
       InfoBox.Boxes.forEach(function (box) {
-        return box.hide();
+        return box.hide(time);
       });
     }
   }, {
@@ -1029,6 +1031,8 @@ function () {
       }).then(function () {
         return _this.report.setPolicy(_this.currentPolicy);
       }).then(function () {
+        return situation.wait(1000);
+      }).then(function () {
         return _this.hideElementsInfo();
       }).then(function () {
         return situation.wait(1000);
@@ -1118,12 +1122,13 @@ function () {
     value: function hideElementsInfo() {
       var _this4 = this;
 
+      var time = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1000;
       return new Promise(function (resolve) {
         _this4.removeTempElements();
 
-        _infoBoxes["default"].hideAll();
+        _infoBoxes["default"].hideAll(time);
 
-        resolve('clean');
+        setTimeout(resolve, time);
       });
     }
   }, {
