@@ -39,7 +39,7 @@ export default class Menu {
   }
 
   hide() {
-    this.htmlElement.hide();
+    this.htmlElement.addClass('fade_out');
     window.onkeydown = function() {};
     this.clearHTML();
   }
@@ -54,7 +54,7 @@ export default class Menu {
 
   createHTMLOptions() {
     this.buttons = this.options.map( element => 
-      $(`<input type="button" value="${element.text}" class="menu_option">`).click(element.action) );
+      $(`<input type="button" value="${element.text}" class="menu_option fade_in">`).click(element.action) );
 
     this.buttons.forEach(button => $('#menu_options_area').append(button) );
   }
