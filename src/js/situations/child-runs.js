@@ -3,8 +3,8 @@ import SceneElement from '../scene-element';
 import Car from '../car';
 import Situation from '../situation';
 import { LANES } from '../lanes';
-import { screenPosFromFraction, pixiMoveTo } from '../pixi-help';
-import { STREET_LANE_OFFSET } from '../constants';
+import { screenPosFromFraction, pixiMoveTo, createAnimatedSprite } from '../pixi-help';
+import { STREET_LANE_OFFSET, CAR_SCALE } from '../constants';
 import { Texts } from '../texts';
 import InfoPos from '../info-positions';
 
@@ -28,13 +28,15 @@ export default class ChildRunsSituation extends Situation {
     this.oppositeLane = this.agentLane.oppositeLane;
 
     this.child = new SceneElement(this.view, 'assets/images/child.png', childStartPos);
+    this.child.setSprite(createAnimatedSprite([1,2,3].map( index => "assets/images/child_sprite_" + index + ".png"), CAR_SCALE));
     this.crossingCar = new Car(this.view, 'assets/images/blue_car.png');
     this.ambulance = new Car(this.view, 'assets/images/ambulance.png');
     this.Texts = Texts.ChildRuns;
   }
 
+
   setup() {
-      return this.child.show();
+    return this.child.show();
   }
 
   start() {
@@ -144,8 +146,11 @@ export default class ChildRunsSituation extends Situation {
   }
 
   childRuns() {
+    this.child.sprite.loop = true;
     return this.wait(CHILD_DELAY)
-               .then(() => pixiMoveTo(this.child.sprite, childEndPos, SETUP_TIME - CHILD_DELAY));
+               .then( () => this.child.sprite.play() )
+               .then(() => pixiMoveTo(this.child.sprite, childEndPos, SETUP_TIME - CHILD_DELAY))
+               .then( () => this.child.sprite.stop() );
   }
 }
 

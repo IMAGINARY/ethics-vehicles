@@ -1,6 +1,15 @@
 /* global PIXI */
 import { ViewSize } from './constants';
 
+export function createAnimatedSprite(sourceImages, scale, anchor = 0.5) {
+  const textures = sourceImages.map( image => PIXI.Texture.from(image) );
+  const sprite = new PIXI.AnimatedSprite(textures);
+  sprite.scale.x = scale;
+  sprite.scale.y = scale;
+  sprite.anchor.set(anchor);
+  return sprite;
+}
+
 export function createSprite(sourceImage, scale, anchor = 0.5) {
   const texture = PIXI.Texture.from(sourceImage);
   const sprite = new PIXI.Sprite(texture);
