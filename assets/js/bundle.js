@@ -778,14 +778,13 @@ function () {
     this.policyBlock = this.htmlElement.querySelector('#policy');
     this.policyNameElement = this.htmlElement.querySelector('#policy_name');
     this.policyObjectiveElement = this.htmlElement.querySelector('#policy_objective');
-    this.decisionBlock = this.htmlElement.querySelector('#decision');
     this.decisionElement = this.htmlElement.querySelector('#decision_text');
   }
 
   _createClass(Report, [{
     key: "show",
     value: function show() {
-      this.decisionBlock.style.display = "none";
+      this.decisionElement.style.display = "none";
       this.policyBlock.style.display = "none";
       return (0, _styleHelp.tweenOpacity)(this.htmlElement, 1, 500);
     }
@@ -822,7 +821,7 @@ function () {
   }, {
     key: "setDecision",
     value: function setDecision(decision) {
-      this.decisionBlock.style.display = "block";
+      this.decisionElement.style.display = "block";
       this.decisionElement.innerHTML = decision;
     }
   }, {
