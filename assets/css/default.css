@@ -218,7 +218,7 @@ button {
   padding: 4px 8px 4px 8px; }
 
 #advanceButton {
-  z-index: 101;
+  z-index: 1001;
   position: absolute;
   display: none;
   left: 840px;

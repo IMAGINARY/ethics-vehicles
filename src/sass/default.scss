@@ -264,7 +264,7 @@ $advance-button-width: 240px;
 $advance-button-left: ($game-canvas-width - $advance-button-width)/2;
 
 #advanceButton {
-  z-index: 101;
+  z-index: 1001;
   position: absolute;
   display: none;
   left: $advance-button-left;
