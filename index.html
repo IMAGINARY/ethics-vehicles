@@ -20,37 +20,40 @@
   <body>
     <div id="info_elements">
       <div class="text-center"></div>
-      <div class="info_element" id="info_element_0">
-        <h3 id="name"></h3>
-        <div id="description"></div>
-      </div>
-      <div class="info_element" id="info_element_1">
-        <h3 id="name"></h3>
-        <div id="description"></div>
-      </div>
-      <div class="info_element" id="info_element_2">
-        <h3 id="name"></h3>
-        <div id="description"></div>
-      </div>
-      <div class="info_element" id="info_element_3">
-        <h3 id="name"></h3>
-        <div id="description"></div>
-      </div>
     </div>
-    <div id="menu">
-      <h2 id="menu_title">Menu</h2>
-      <div id="menu_cursor_area">
-        <div id="menu_cursor"></div>
+    <div class="info_element" id="info_element_0">
+      <h3 id="name"></h3>
+      <div id="description"></div>
+    </div>
+    <div class="info_element" id="info_element_1">
+      <h3 id="name"></h3>
+      <div id="description"></div>
+    </div>
+    <div class="info_element" id="info_element_2">
+      <h3 id="name"></h3>
+      <div id="description"></div>
+    </div>
+    <div class="info_element" id="info_element_3">
+      <h3 id="name"></h3>
+      <div id="description"></div>
+    </div>
+    <div id="central_info">
+      <div id="menu">
+        <h2 id="menu_title">Menu</h2>
+        <div id="menu_cursor_area">
+          <div id="menu_cursor"></div>
+        </div>
+        <div id="menu_options_area"></div>
       </div>
-      <div id="menu_options_area"></div>
+      <div id="report">
+        <div class="text-center report_text"></div>
+        <h2 class="report_text">Report</h2>
+        <p><span class="report_text" id="situation_description"></span></p>
+        <h3 class="report_text" id="policy">Policy:&nbsp;<span class="report_text" id="policy_name"></span>&nbsp;-&nbsp; <span class="report_text" id="policy_objective"></span></h3><br>
+        <h3 class="report_text" id="decision">Decision:</h3><span class="report_text" id="decision_text"></span>
+      </div>
     </div>
     <div id="game"></div>
-    <div id="report">
-      <div class="text-center"></div>
-      <h2>Report</h2>
-      <p><span id="situation_description"></span></p>
-      <h3>Policy:&nbsp;<span id="policy_name"></span>&nbsp;-&nbsp; <span id="policy_objective"></span></h3><br><b>Decision:</b><span id="decision"></span>
-    </div>
     <button class="menu_option" id="advanceButton"><span id="advanceText"></span></button>
     <script src="vendor/jquery/jquery-3.3.1.slim.min.js"></script>
     <script src="vendor/popper/popper.min.js"></script>

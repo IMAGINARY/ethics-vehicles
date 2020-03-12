@@ -4,60 +4,6 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.Sounds = exports["default"] = void 0;
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-var Sound =
-/*#__PURE__*/
-function () {
-  function Sound() {
-    _classCallCheck(this, Sound);
-
-    for (var _len = arguments.length, mediaFiles = new Array(_len), _key = 0; _key < _len; _key++) {
-      mediaFiles[_key] = arguments[_key];
-    }
-
-    this.media = mediaFiles.map(function (arg) {
-      return new Audio(arg);
-    });
-  }
-
-  _createClass(Sound, [{
-    key: "getAudio",
-    value: function getAudio() {
-      var index = Math.floor(Math.random() * Math.floor(this.media.length));
-      return this.media[index];
-    }
-  }, {
-    key: "play",
-    value: function play() {
-      this.getAudio().play();
-    }
-  }]);
-
-  return Sound;
-}();
-
-exports["default"] = Sound;
-var Sounds = {
-  crash500ms: new Sound('assets/audio/crash_500ms.mp3'),
-  crash250ms: new Sound('assets/audio/crash_250ms.mp3'),
-  carIdling2000ms: new Sound('assets/audio/passing_by_1_2000ms.mp3', 'assets/audio/passing_by_2_2000ms.mp3', 'assets/audio/passing_by_3_2000ms.mp3')
-};
-exports.Sounds = Sounds;
-Object.freeze(Sounds);
-
-},{}],2:[function(require,module,exports){
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
 exports["default"] = void 0;
 
 var _constants = require("./constants");
@@ -186,7 +132,7 @@ function () {
 
 exports["default"] = Car;
 
-},{"./constants":3,"./lane":5,"./pixi-help":9}],3:[function(require,module,exports){
+},{"./constants":2,"./lane":6,"./pixi-help":10}],2:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -223,6 +169,89 @@ exports.STREET_LANE_OFFSET = STREET_LANE_OFFSET;
 var SPRITE_WIDTH = 256 * CAR_SCALE;
 exports.SPRITE_WIDTH = SPRITE_WIDTH;
 
+},{}],3:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+var KeyEnter = 13;
+
+var CountdownButton =
+/*#__PURE__*/
+function () {
+  function CountdownButton(text, onClick) {
+    var _this = this;
+
+    _classCallCheck(this, CountdownButton);
+
+    this.htmlButton = $('#advanceButton');
+    this.htmlText = $('#advanceText');
+    this.text = text;
+    this.onClick = onClick;
+    this.htmlText.text(text);
+    this.htmlButton.on('click', function () {
+      return _this.doClick();
+    });
+    this.htmlButton.show();
+    this.timeoutRunner = null;
+
+    window.onkeydown = function (event) {
+      if (event.which == KeyEnter) _this.doClick();
+    };
+  }
+
+  _createClass(CountdownButton, [{
+    key: "doClick",
+    value: function doClick() {
+      window.onkeydown = function () {};
+
+      if (this.timeoutRunner != null) clearTimeout(this.timeoutRunner);
+      this.htmlButton.hide();
+      return this.onClick();
+    }
+  }, {
+    key: "setTimeout",
+    value: function (_setTimeout) {
+      function setTimeout(_x) {
+        return _setTimeout.apply(this, arguments);
+      }
+
+      setTimeout.toString = function () {
+        return _setTimeout.toString();
+      };
+
+      return setTimeout;
+    }(function (timeout) {
+      var _this2 = this;
+
+      if (timeout >= 1000) this.htmlText.text(this.text + " (" + Math.floor(timeout / 1000) + ")");
+
+      if (timeout <= 1000) {
+        this.timeoutRunner = setTimeout(function () {
+          return _this2.doClick();
+        }, timeout);
+      } else {
+        this.timeoutRunner = setTimeout(function () {
+          return _this2.setTimeout(timeout - 1000);
+        }, 1000);
+      }
+    })
+  }]);
+
+  return CountdownButton;
+}();
+
+exports["default"] = CountdownButton;
+
 },{}],4:[function(require,module,exports){
 "use strict";
 
@@ -241,54 +270,113 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 var INFO_BOX_OPACITY = 0.75;
 
-var InfoBoxes =
+var InfoBox =
 /*#__PURE__*/
 function () {
-  function InfoBoxes(htmlElement) {
-    _classCallCheck(this, InfoBoxes);
+  function InfoBox(htmlElement) {
+    _classCallCheck(this, InfoBox);
 
     this.htmlElement = htmlElement;
-    this.infoElements = Array.from($('.info_element'));
   }
 
-  _createClass(InfoBoxes, [{
+  _createClass(InfoBox, [{
     key: "show",
-    value: function show(index, element) {
-      var infoElement = this.infoElements[index];
-      infoElement.querySelector('#name').innerText = element.name;
-      infoElement.querySelector('#description').innerHTML = element.description;
-      infoElement.style.visibility = 'visible';
+    value: function show(element) {
+      this.htmlElement.querySelector('#name').innerText = element.name;
+      this.htmlElement.querySelector('#description').innerHTML = element.description;
+      (0, _styleHelp.setLeftTopCSSFromCoord)(this.htmlElement, element.infopos);
     }
   }, {
     key: "fadeShow",
-    value: function fadeShow(index, element, time) {
-      this.show(index, element);
-      var infoElement = this.infoElements[index];
-      infoElement.style.opacity = 0;
-      return (0, _styleHelp.tweenOpacity)(infoElement, INFO_BOX_OPACITY, time);
+    value: function fadeShow(element, time) {
+      this.show(element);
+      return (0, _styleHelp.tweenOpacity)(this.htmlElement, INFO_BOX_OPACITY, time);
     }
   }, {
     key: "hide",
-    value: function hide(index) {
-      this.infoElements[index].style.visibility = 'hidden';
+    value: function hide() {
+      return (0, _styleHelp.tweenOpacity)(this.htmlElement, 0, 200);
     }
-  }, {
+  }], [{
     key: "hideAll",
     value: function hideAll() {
-      var _this = this;
-
-      this.infoElements.forEach(function (element, index) {
-        return _this.hide(index);
+      InfoBox.Boxes.forEach(function (box) {
+        return box.hide();
       });
+    }
+  }, {
+    key: "get",
+    value: function get(index) {
+      return InfoBox.Boxes[index];
     }
   }]);
 
-  return InfoBoxes;
+  return InfoBox;
 }();
 
-exports["default"] = InfoBoxes;
+exports["default"] = InfoBox;
+InfoBox.Boxes = $(".info_element").get().map(function (html) {
+  return new InfoBox(html);
+});
 
-},{"./style-help":18}],5:[function(require,module,exports){
+},{"./style-help":19}],5:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+var BoxSpace = 220;
+
+var InfoPos =
+/*#__PURE__*/
+function () {
+  function InfoPos(x, y) {
+    _classCallCheck(this, InfoPos);
+
+    this.x = x;
+    this.y = y;
+  }
+
+  _createClass(InfoPos, [{
+    key: "right",
+    value: function right() {
+      return new InfoPos(this.x + BoxSpace, this.y);
+    }
+  }, {
+    key: "left",
+    value: function left() {
+      return new InfoPos(this.x - BoxSpace, this.y);
+    }
+  }, {
+    key: "up",
+    value: function up() {
+      return new InfoPos(this.x, this.y - BoxSpace);
+    }
+  }, {
+    key: "down",
+    value: function down() {
+      return new InfoPos(this.x, this.y + BoxSpace);
+    }
+  }]);
+
+  return InfoPos;
+}();
+
+exports["default"] = InfoPos;
+InfoPos.TopLeft = new InfoPos(300, 90);
+InfoPos.TopRight = new InfoPos(1420, 90);
+InfoPos.BottomRight = new InfoPos(1420, 790);
+InfoPos.BottomLeft = new InfoPos(300, 790);
+
+},{}],6:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -357,7 +445,7 @@ exports.Lane = Lane;
 var NO_LANE = new Lane(_pixiHelp.POINT_ZERO, new PIXI.Point(1, 0));
 exports.NO_LANE = NO_LANE;
 
-},{"./pixi-help":9}],6:[function(require,module,exports){
+},{"./pixi-help":10}],7:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -394,7 +482,7 @@ setOppositeLanes(LANES[2], LANES[3]);
 setOppositeLanes(LANES[4], LANES[5]);
 setOppositeLanes(LANES[6], LANES[7]);
 
-},{"./constants":3,"./lane":5}],7:[function(require,module,exports){
+},{"./constants":2,"./lane":6}],8:[function(require,module,exports){
 "use strict";
 
 var _view = _interopRequireDefault(require("./view"));
@@ -420,7 +508,7 @@ $('#debugButton').on('click', () => {
 
 view.start();
 
-},{"./situations/car-enters-lane":15,"./situations/child-runs":16,"./situations/tree-falls":17,"./view":19}],8:[function(require,module,exports){
+},{"./situations/car-enters-lane":16,"./situations/child-runs":17,"./situations/tree-falls":18,"./view":21}],9:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -553,7 +641,7 @@ function () {
 
 exports["default"] = Menu;
 
-},{"./style-help":18}],9:[function(require,module,exports){
+},{"./style-help":19}],10:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -583,9 +671,8 @@ function createSprite(sourceImage, scale) {
 
 function highlightSprite(sprite, color) {
   var graphics = new PIXI.Graphics();
-  graphics.beginFill(color, 0.5);
-  graphics.drawRoundedRect(sprite.x - sprite.width / 2 - 10, sprite.y - sprite.height / 2 - 10, sprite.width + 20, sprite.height + 20, 10);
-  graphics.endFill();
+  graphics.lineStyle(5, color, 1, 0.5);
+  graphics.drawCircle(sprite.x, sprite.y, Math.max(sprite.width, sprite.height) / 2 + 10);
   return graphics;
 }
 
@@ -638,36 +725,41 @@ function pixiMoveTo(element, dest) {
 var POINT_ZERO = new PIXI.Point(0, 0);
 exports.POINT_ZERO = POINT_ZERO;
 
-},{"./constants":3}],10:[function(require,module,exports){
+},{"./constants":2}],11:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.Policies = void 0;
+
+var _texts = require("./texts");
+
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 // eslint-disable-next-line import/prefer-default-export
-var Policies = [{
-  id: 'humanist',
-  name: 'Humanist',
-  objective: 'Minimize human injuries'
-}, {
-  id: 'profit',
-  name: 'Profit-based',
-  objective: 'Minimize insurance costs'
-}, {
-  id: 'protector',
-  name: 'Protector',
-  objective: 'Protect car passengers'
-}];
+var Policies = [_objectSpread({
+  id: 'humanist'
+}, _texts.Texts.Humanist), _objectSpread({
+  id: 'profit'
+}, _texts.Texts.Profit), _objectSpread({
+  id: 'protector'
+}, _texts.Texts.Protector)];
 exports.Policies = Policies;
 
-},{}],11:[function(require,module,exports){
+},{"./texts":20}],12:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports["default"] = void 0;
+
+var _styleHelp = require("./style-help");
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -682,25 +774,61 @@ function () {
     _classCallCheck(this, Report);
 
     this.htmlElement = htmlElement;
-    this.decisionElement = this.htmlElement.querySelector('#decision');
+    this.situationDescriptionElement = this.htmlElement.querySelector('#situation_description');
+    this.policyBlock = this.htmlElement.querySelector('#policy');
     this.policyNameElement = this.htmlElement.querySelector('#policy_name');
     this.policyObjectiveElement = this.htmlElement.querySelector('#policy_objective');
-    this.situationDescriptionElement = this.htmlElement.querySelector('#situation_description');
+    this.decisionBlock = this.htmlElement.querySelector('#decision');
+    this.decisionElement = this.htmlElement.querySelector('#decision_text');
   }
 
   _createClass(Report, [{
     key: "show",
-    value: function show(situation, policy, decision) {
-      this.decisionElement.innerHTML = decision;
+    value: function show() {
+      this.decisionBlock.style.display = "none";
+      this.policyBlock.style.display = "none";
+      return (0, _styleHelp.tweenOpacity)(this.htmlElement, 1, 500);
+    }
+  }, {
+    key: "pullUp",
+    value: function pullUp() {
+      var time = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1000;
+      this.htmlElement.classList.add('report_up');
+      return new Promise(function (r) {
+        return setTimeout(r, time);
+      });
+    }
+  }, {
+    key: "pullDown",
+    value: function pullDown() {
+      var time = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1000;
+      this.htmlElement.classList.add('report_down');
+      return new Promise(function (r) {
+        return setTimeout(r, time);
+      });
+    }
+  }, {
+    key: "setSituation",
+    value: function setSituation(situation) {
+      this.situationDescriptionElement.innerHTML = situation.getDescription();
+    }
+  }, {
+    key: "setPolicy",
+    value: function setPolicy(policy) {
+      this.policyBlock.style.display = "block";
       this.policyNameElement.innerHTML = policy.name;
       this.policyObjectiveElement.innerHTML = policy.objective;
-      this.situationDescriptionElement.innerHTML = situation.getDescription();
-      this.htmlElement.style.visibility = 'visible';
+    }
+  }, {
+    key: "setDecision",
+    value: function setDecision(decision) {
+      this.decisionBlock.style.display = "block";
+      this.decisionElement.innerHTML = decision;
     }
   }, {
     key: "hide",
     value: function hide() {
-      this.htmlElement.style.visibility = 'hidden';
+      return (0, _styleHelp.tweenOpacity)(this.htmlElement, 0, 250);
     }
   }]);
 
@@ -709,7 +837,7 @@ function () {
 
 exports["default"] = Report;
 
-},{}],12:[function(require,module,exports){
+},{"./style-help":19}],13:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -789,7 +917,7 @@ function () {
 
 exports["default"] = SceneElement;
 
-},{"./constants":3,"./pixi-help":9}],13:[function(require,module,exports){
+},{"./constants":2,"./pixi-help":10}],14:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -803,6 +931,12 @@ var _pixiHelp = require("./pixi-help");
 
 var _menu = _interopRequireDefault(require("./menu"));
 
+var _countdownButton = _interopRequireDefault(require("./countdown-button"));
+
+var _texts = require("./texts");
+
+var _infoBoxes = _interopRequireDefault(require("./info-boxes"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -814,12 +948,11 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 var SituationRunner =
 /*#__PURE__*/
 function () {
-  function SituationRunner(view, report, infoBoxes) {
+  function SituationRunner(view, report) {
     _classCallCheck(this, SituationRunner);
 
     this.view = view;
     this.report = report;
-    this.infoBoxes = infoBoxes;
     this.currentDecision = null;
     this.tempElements = [];
     this.currentPolicy = null;
@@ -839,23 +972,33 @@ function () {
       }).then(function () {
         return _this.showElementsInfo(situation.getElements());
       }).then(function () {
+        return _this.report.setSituation(situation);
+      }).then(function () {
+        return _this.report.show();
+      }).then(function () {
+        return _this.waitForAdvanceButton(_texts.Texts.Next);
+      }, 3000).then(function () {
+        return _this.report.pullDown();
+      }).then(function () {
         return _this.waitForPolicy(situation);
+      }).then(function () {
+        return _this.report.setPolicy(_this.currentPolicy);
       }).then(function () {
         return _this.hideElementsInfo();
       }).then(function () {
-        return _this.showDecision(situation);
+        return _this.report.pullUp();
       }).then(function () {
         return situation.wait(1000);
-      }).then(function () {
-        return _this.waitForAdvanceButton('Show');
-      }).then(function () {
-        return _this.hideDecision();
       }).then(function () {
         return _this.playOutDecision();
       }).then(function () {
         return situation.wait(1000);
       }).then(function () {
-        return _this.waitForAdvanceButton('Restart');
+        return _this.report.setDecision(_this.currentDecision.text);
+      }).then(function () {
+        return _this.waitForAdvanceButton(_texts.Texts.Restart);
+      }, 15000).then(function () {
+        return _this.report.hide();
       }).then(function () {
         return situation.clearSprites();
       }).then(function () {
@@ -884,7 +1027,7 @@ function () {
           };
         });
 
-        _this2.policyMenu = new _menu["default"]('menu', options, 'Choose a policy');
+        _this2.policyMenu = new _menu["default"]('menu', options, _texts.Texts.ChoosePolicy);
 
         _this2.policyMenu.show();
       });
@@ -892,15 +1035,11 @@ function () {
   }, {
     key: "waitForAdvanceButton",
     value: function waitForAdvanceButton() {
-      var text = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'Next';
+      var text = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : _texts.Texts.Next;
+      var timeout = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 10000;
       return new Promise(function (resolve) {
-        $('#advanceText').text(text);
-        var button = $('#advanceButton');
-        button.show();
-        button.on('click', function () {
-          button.hide();
-          resolve('clicked');
-        });
+        var cb = new _countdownButton["default"](text, resolve);
+        cb.setTimeout(timeout);
       });
     }
   }, {
@@ -926,7 +1065,7 @@ function () {
         promise = promise.then(function (r) {
           _this3.highlight(element.sprite, element.color);
 
-          return _this3.infoBoxes.fadeShow(index, element, 1000);
+          return _infoBoxes["default"].get(index).fadeShow(element, 1000);
         });
       });
       return promise;
@@ -939,20 +1078,10 @@ function () {
       return new Promise(function (resolve) {
         _this4.removeTempElements();
 
-        _this4.infoBoxes.hideAll();
+        _infoBoxes["default"].hideAll();
 
         resolve('clean');
       });
-    }
-  }, {
-    key: "showDecision",
-    value: function showDecision(situation) {
-      return this.report.show(situation, this.currentPolicy, this.currentDecision.text);
-    }
-  }, {
-    key: "hideDecision",
-    value: function hideDecision() {
-      return this.report.hide();
     }
   }, {
     key: "playOutDecision",
@@ -987,7 +1116,7 @@ function () {
 
 exports["default"] = SituationRunner;
 
-},{"./menu":8,"./pixi-help":9,"./policies":10}],14:[function(require,module,exports){
+},{"./countdown-button":3,"./info-boxes":4,"./menu":9,"./pixi-help":10,"./policies":11,"./texts":20}],15:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -1079,7 +1208,7 @@ Situation.situations = {};
 Situation.HighlightAgentColor = 0xFFF200;
 Situation.HighlightOthersColor = 0xFF8000;
 
-},{}],15:[function(require,module,exports){
+},{}],16:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -1093,15 +1222,23 @@ var _sceneElement = _interopRequireDefault(require("../scene-element"));
 
 var _situation = _interopRequireDefault(require("../situation"));
 
-var _audio = require("../audio");
-
 var _car = _interopRequireDefault(require("../car"));
 
 var _lanes = require("../lanes");
 
+var _texts = require("../texts");
+
+var _infoPositions = _interopRequireDefault(require("../info-positions"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
-function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -1160,6 +1297,7 @@ function (_Situation) {
     _this.blackCar = new _car["default"](view, 'assets/images/car_black.png');
     _this.truck = new _car["default"](view, 'assets/images/small_truck.png');
     _this.busStop = new _sceneElement["default"](view, 'assets/images/bus_stop.png', new PIXI.Point(BUS_STOP_X, BUS_STOP_Y));
+    _this.Texts = _texts.Texts.CarEntersLane;
     return _this;
   }
 
@@ -1186,27 +1324,23 @@ function (_Situation) {
   }, {
     key: "getElements",
     value: function getElements() {
-      return [{
+      return [_objectSpread({
         sprite: this.view.agentCar.sprite,
         color: _situation["default"].HighlightOthersColor,
-        name: 'Autonomous car',
-        description: 'While reaching a bus stop, a car enters its lane in front of it'
-      }, {
+        infopos: _infoPositions["default"].BottomRight
+      }, this.Texts.AutonomousCar), _objectSpread({
         sprite: this.blackCar.sprite,
         color: _situation["default"].HighlightOthersColor,
-        name: 'Luxury car',
-        description: 'A very expensive car suddenly enters your lane.'
-      }, {
+        infopos: _infoPositions["default"].TopRight
+      }, this.Texts.LuxuryCar), _objectSpread({
         sprite: this.truck.sprite,
         color: _situation["default"].HighlightOthersColor,
-        name: 'Parked car',
-        description: 'An old truck in bad shape, with four passengers'
-      }, {
+        infopos: _infoPositions["default"].TopRight.left()
+      }, this.Texts.Truck), _objectSpread({
         sprite: this.busStop.sprite,
         color: _situation["default"].HighlightOthersColor,
-        name: 'Bus Stop',
-        description: 'Full of people waiting for their bus'
-      }];
+        infopos: _infoPositions["default"].TopRight.right()
+      }, this.Texts.BusStop)];
     }
   }, {
     key: "getDecisions",
@@ -1215,19 +1349,19 @@ function (_Situation) {
 
       return {
         'humanist': {
-          text: 'Turning left will risk the people in the track. Turning right with probably risk even more people at the stop. Solution: breaking and crashing into the car in front will probably not result in fatalities.',
+          text: this.Texts.Humanist,
           actionFunction: function actionFunction() {
             return _this3.decisionAdvace();
           }
         },
         'profit': {
-          text: 'The car facing you is very expensive, and crashing into it might mean long legal battles for your insurance. Crashing into the bus stop will risk high payouts to the victims in or their families. Solution: turn left towards the parked car, as it is cheap and if the risk of casualties is lower.',
+          text: this.Texts.Profit,
           actionFunction: function actionFunction() {
             return _this3.decisionTurnLeft();
           }
         },
         'protector': {
-          text: 'Crashing into either car will potentially damage the autonomous car and harm its passengers. Solution: turn right and crash into the bus stop, as people are softer than cars.',
+          text: this.Texts.Protector,
           actionFunction: function actionFunction() {
             return _this3.decisionTurnRight();
           }
@@ -1237,28 +1371,22 @@ function (_Situation) {
   }, {
     key: "getDescription",
     value: function getDescription() {
-      return 'A car enters your lane and there is no time to break. The car can either crash against it, turn left and crash against a parked car, or turn right and drive over a bus stop full of people';
+      return this.Texts.description;
     } // eslint-disable-next-line class-methods-use-this
 
   }, {
     key: "decisionAdvace",
     value: function decisionAdvace() {
-      _audio.Sounds.crash250ms.play();
-
       return Promise.all([this.blackCar.advanceAndTurn(BlackCarCrashVector, 0, 150), this.view.agentCar.advanceAndTurn(AgentCrashVector, 0, 150)]);
     }
   }, {
     key: "decisionTurnLeft",
     value: function decisionTurnLeft() {
-      _audio.Sounds.crash250ms.play();
-
       return Promise.all([this.moveBlackCarToFinalPosition(), this.view.agentCar.advanceAndTurn(TurnLeftVector, -30, 250)]);
     }
   }, {
     key: "decisionTurnRight",
     value: function decisionTurnRight() {
-      _audio.Sounds.crash500ms.play();
-
       return Promise.all([this.moveBlackCarToFinalPosition(), this.view.agentCar.advanceAndTurn(TurnRightVector, 30, 250)]);
     }
   }, {
@@ -1310,7 +1438,7 @@ exports["default"] = CarEntersLaneSituation;
 
 _situation["default"].registerSituation('car-enters-lane', CarEntersLaneSituation);
 
-},{"../audio":1,"../car":2,"../constants":3,"../lanes":6,"../scene-element":12,"../situation":14}],16:[function(require,module,exports){
+},{"../car":1,"../constants":2,"../info-positions":5,"../lanes":7,"../scene-element":13,"../situation":15,"../texts":20}],17:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -1330,9 +1458,19 @@ var _pixiHelp = require("../pixi-help");
 
 var _constants = require("../constants");
 
+var _texts = require("../texts");
+
+var _infoPositions = _interopRequireDefault(require("../info-positions"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
-function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -1351,7 +1489,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
 var AGENT_LANE = 4;
-var CROSSING_CAR_POSITION = 1 / 4;
+var CROSSING_CAR_POSITION = 1 / 4 + 1 / 32;
 var AGENT_CAR_POSITION = 1 / 2 + 1 / 8;
 var AMBULANCE_POSITION = 1 / 2 + 1 / 16;
 var childStartPos = (0, _pixiHelp.screenPosFromFraction)(1 / 4 + 1 / 32, 1 / 16);
@@ -1378,6 +1516,7 @@ function (_Situation) {
     _this.child = new _sceneElement["default"](_this.view, 'assets/images/child.png', childStartPos);
     _this.crossingCar = new _car["default"](_this.view, 'assets/images/blue_car.png');
     _this.ambulance = new _car["default"](_this.view, 'assets/images/ambulance.png');
+    _this.Texts = _texts.Texts.ChildRuns;
     return _this;
   }
 
@@ -1399,27 +1538,23 @@ function (_Situation) {
   }, {
     key: "getElements",
     value: function getElements() {
-      return [{
+      return [_objectSpread({
         sprite: this.view.agentCar.sprite,
         color: _situation["default"].HighlightAgentColor,
-        name: 'Autonomous car',
-        description: 'About to enter a crossroad, suddenly detects a child'
-      }, {
+        infopos: _infoPositions["default"].TopRight.left().left()
+      }, this.Texts.AutonomousCar), _objectSpread({
         sprite: this.ambulance.sprite,
         color: _situation["default"].HighlightOthersColor,
-        name: 'Ambulance',
-        description: 'Carrying a patient to the hospital'
-      }, {
+        infopos: _infoPositions["default"].TopRight.left()
+      }, this.Texts.Ambulance), _objectSpread({
         sprite: this.child.sprite,
         color: _situation["default"].HighlightOthersColor,
-        name: 'Child',
-        description: 'Runs in the street without warning'
-      }, {
+        infopos: _infoPositions["default"].TopLeft
+      }, this.Texts.Child), _objectSpread({
         sprite: this.crossingCar.sprite,
         color: _situation["default"].HighlightOthersColor,
-        name: 'A Car',
-        description: 'Probably will not stop'
-      }];
+        infopos: _infoPositions["default"].TopLeft.down()
+      }, this.Texts.OtherCar)];
     }
   }, {
     key: "getDecisions",
@@ -1428,19 +1563,19 @@ function (_Situation) {
 
       return {
         'humanist': {
-          text: 'A sudden break will provoke a crash with the ambulance, but continuing ahead will hurt the child. Best course of action is to change lanes and crash with the other car, as both are crash-safe',
+          text: this.Texts.Humanist,
           actionFunction: function actionFunction() {
             return _this2.decisionCrashCrossingCar();
           }
         },
         'profit': {
-          text: 'Breaking or turning left will incur in high car damages even risk of lawsuit. The child crossed with warning and with a red light, so you are protected by the law if you drive through.',
+          text: this.Texts.Profit,
           actionFunction: function actionFunction() {
             return _this2.decisionAdvance();
           }
         },
         'protector': {
-          text: 'Breaking or turning left will damage the car and potentially hurt you, while driving ahead will produce only slight car damage and no risk to passengers.',
+          text: this.Texts.Protector,
           actionFunction: function actionFunction() {
             return _this2.decisionAdvance();
           }
@@ -1472,7 +1607,7 @@ function (_Situation) {
   }, {
     key: "getDescription",
     value: function getDescription() {
-      return 'When arriving at a crossing and with a green light, a child suddenly runs onto the street. At the same time, an ambulance with lights and siren is driving behind your.';
+      return this.Texts.description;
     }
   }, {
     key: "moveAgentInPosition",
@@ -1525,7 +1660,7 @@ exports["default"] = ChildRunsSituation;
 
 _situation["default"].registerSituation('child-runs', ChildRunsSituation);
 
-},{"../car":2,"../constants":3,"../lanes":6,"../pixi-help":9,"../scene-element":12,"../situation":14}],17:[function(require,module,exports){
+},{"../car":1,"../constants":2,"../info-positions":5,"../lanes":7,"../pixi-help":10,"../scene-element":13,"../situation":15,"../texts":20}],18:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -1543,9 +1678,19 @@ var _constants = require("../constants");
 
 var _lanes = require("../lanes");
 
+var _texts = require("../texts");
+
+var _infoPositions = _interopRequireDefault(require("../info-positions"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
-function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -1586,6 +1731,7 @@ function (_Situation) {
     _this.cyclist = new _car["default"](_this.view, 'assets/images/cyclist.png');
     _this.agentLane = _lanes.LANES[AGENT_LANE];
     _this.bicycleLane = _this.agentLane.oppositeLane;
+    _this.Texts = _texts.Texts.TreeFalls;
     return _this;
   }
 
@@ -1615,22 +1761,19 @@ function (_Situation) {
   }, {
     key: "getElements",
     value: function getElements() {
-      return [{
+      return [_objectSpread({
         sprite: this.view.agentCar.sprite,
         color: _situation["default"].HighlightAgentColor,
-        name: 'Autonomous car',
-        description: 'Warning! The front passenger is not wearing seat belt.'
-      }, {
+        infopos: _infoPositions["default"].TopLeft
+      }, this.Texts.AutonomousCar), _objectSpread({
         sprite: this.cyclist.sprite,
         color: _situation["default"].HighlightOthersColor,
-        name: 'Cyclist',
-        description: 'An ordinary cyclist driving in the opposite lane.'
-      }, {
+        infopos: _infoPositions["default"].BottomLeft
+      }, this.Texts.Cyclist), _objectSpread({
         sprite: this.tree.sprite,
         color: _situation["default"].HighlightOthersColor,
-        name: 'Fallen Tree',
-        description: 'Crashing into it could be fatal.'
-      }];
+        infopos: _infoPositions["default"].BottomLeft.left()
+      }, this.Texts.FallenTree)];
     }
   }, {
     key: "getDecisions",
@@ -1639,19 +1782,19 @@ function (_Situation) {
 
       return {
         'humanist': {
-          text: 'A sudden break would send the front passenger forward through the windshield, potentially killing them. Changing lanes would certainly kill the cyclist. Solution: break slowly while turning right, sending the front passenger against the driver, which would cause only minor concussions.',
+          text: this.Texts.Humanist,
           actionFunction: function actionFunction() {
             return _this3.softlyCrashTree();
           }
         },
         'profit': {
-          text: "Crashing with the tree damage  destroy the car and be expensive for the insurers. Changing lanes would kill the cyclist and also carry a high cost to the insurers. A sudden break risks the front passenger's life, but as they are not wearing a seat belt, it is not the insurers resposibility.",
+          text: this.Texts.Profit,
           actionFunction: function actionFunction() {
             return _this3.fullBreak();
           }
         },
         'protector': {
-          text: 'Crashing with the tree or turning right would hurt the passenger without seatbelt. Solution: slow down and change lanes, potentially killing the cyclist but saving all passengers.',
+          text: this.Texts.Protector,
           actionFunction: function actionFunction() {
             return _this3.crashCyclist();
           }
@@ -1661,7 +1804,7 @@ function (_Situation) {
   }, {
     key: "getDescription",
     value: function getDescription() {
-      return 'A tree falls in front of the car. The person in the front passenger seat has no seat belt. A cyclist is riding through the opposite lane. Options: Sudden break, slow down and turn left, or change lanes.';
+      return this.Texts.description;
     }
   }, {
     key: "moveCyclistInPosition",
@@ -1737,13 +1880,14 @@ exports["default"] = TreeFallsSituation;
 
 _situation["default"].registerSituation('tree-falls', TreeFallsSituation);
 
-},{"../car":2,"../constants":3,"../lanes":6,"../scene-element":12,"../situation":14}],18:[function(require,module,exports){
+},{"../car":1,"../constants":2,"../info-positions":5,"../lanes":7,"../scene-element":13,"../situation":15,"../texts":20}],19:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.tweenOpacity = tweenOpacity;
+exports.setLeftTopCSSFromCoord = setLeftTopCSSFromCoord;
 
 /* globals TWEEN, PIXI */
 function tweenOpacity(element, toOpacity) {
@@ -1757,7 +1901,105 @@ function tweenOpacity(element, toOpacity) {
   });
 }
 
-},{}],19:[function(require,module,exports){
+function setLeftTopCSSFromCoord(element, coord) {
+  element.style.left = coord.x + 'px';
+  element.style.top = coord.y + 'px';
+}
+
+},{}],20:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.Texts = void 0;
+var Texts = {
+  ChooseSituation: 'Choose a Situation',
+  Show: 'Show',
+  Restart: 'Restart',
+  ChoosePolicy: 'Choose a Policy',
+  Next: 'Next',
+  Humanist: {
+    name: 'Humanist',
+    objective: 'Minimize human injuries'
+  },
+  Profit: {
+    name: 'Profit-based',
+    objective: 'Minimize insurance costs'
+  },
+  Protector: {
+    name: 'Protector',
+    objective: 'Protect car passengers'
+  },
+  CarEntersLane: {
+    name: 'A Car enters your Lane',
+    description: 'A car enters your lane and there is no time to break. The car can either crash against it, turn left and crash against a parked car, or turn right and drive over a bus stop full of people',
+    AutonomousCar: {
+      name: 'Autonomous car',
+      description: 'While reaching a bus stop, a car enters its lane in front of it'
+    },
+    LuxuryCar: {
+      name: 'Luxury car',
+      description: 'A very expensive car suddenly enters your lane.'
+    },
+    Truck: {
+      name: 'Parked car',
+      description: 'An old truck in bad shape, with four passengers'
+    },
+    BusStop: {
+      name: 'Bus Stop',
+      description: 'Full of people waiting for their bus'
+    },
+    Humanist: 'Turning left will risk the people in the track. Turning right will probably risk even more people at the stop. Solution: breaking and crashing into the car in front will probably not result in fatalities.',
+    Profit: 'The car facing you is very expensive, and crashing into it might mean long legal battles for your insurance. Crashing into the bus stop will risk high payouts to the victims in or their families. Solution: turn left towards the parked car, as it is cheap and if the risk of casualties is lower.',
+    Protector: 'Crashing into either car will potentially damage the autonomous car and harm its passengers. Solution: turn right and crash into the bus stop, as people are softer than cars.'
+  },
+  ChildRuns: {
+    name: 'A Child runs in the Street',
+    description: 'When arriving at a crossing and with a green light, a child suddenly runs onto the street. At the same time, an ambulance with lights and siren is driving behind your.',
+    AutonomousCar: {
+      name: 'Autonomous car',
+      description: 'About to enter a crossroad, suddenly detects a child'
+    },
+    Ambulance: {
+      name: 'Ambulance',
+      description: 'Carrying a patient to the hospital'
+    },
+    Child: {
+      name: 'Child',
+      description: 'Runs in the street without warning'
+    },
+    OtherCar: {
+      name: 'A Car',
+      description: 'Probably will not stop'
+    },
+    Humanist: 'A sudden break will provoke a crash with the ambulance, but continuing ahead will hurt the child. Best course of action is to change lanes and crash with the other car, as both are crash-safe',
+    Profit: 'Breaking or turning left will incur in high car damages even risk of lawsuit. The child crossed with warning and with a red light, so you are protected by the law if you drive through.',
+    Protector: 'Breaking or turning left will damage the car and potentially hurt you, while driving ahead will produce only slight car damage and no risk to passengers.'
+  },
+  TreeFalls: {
+    name: 'A Tree falls',
+    description: 'A tree falls in front of the car. The person in the front passenger seat has no seat belt. A cyclist is riding through the opposite lane. Options: Sudden break, slow down and turn left, or change lanes.',
+    AutonomousCar: {
+      name: 'Autonomous car',
+      description: 'Warning! The front passenger is not wearing seat belt.'
+    },
+    Cyclist: {
+      name: 'Cyclist',
+      description: 'An ordinary cyclist driving in the opposite lane.'
+    },
+    FallenTree: {
+      name: 'Fallen Tree',
+      description: 'Crashing into it could be fatal.'
+    },
+    Humanist: 'A sudden break would send the front passenger forward through the windshield, potentially killing them. Changing lanes would certainly kill the cyclist. Solution: break slowly while turning right, sending the front passenger against the driver, which would cause only minor concussions.',
+    Profit: "Crashing with the tree will destroy the car and be expensive for the insurers. Changing lanes would kill the cyclist and also carry a high cost to the insurers. A sudden break risks the front passenger's life, but as they are not wearing a seat belt, it is not the insurer's responsibility.",
+    Protector: 'Crashing with the tree or turning right would hurt the passenger without seatbelt. Solution: slow down and change lanes, potentially killing the cyclist but saving all passengers.'
+  }
+};
+exports.Texts = Texts;
+
+},{}],21:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -1775,17 +2017,19 @@ var _constants = require("./constants");
 
 var _pixiHelp = require("./pixi-help");
 
-var _audio = require("./audio");
-
 var _report = _interopRequireDefault(require("./report"));
 
-var _infoBoxes = _interopRequireDefault(require("./info-boxes"));
+require("./info-boxes");
 
 var _situation = _interopRequireDefault(require("./situation"));
 
 var _situationRunner = _interopRequireDefault(require("./situation-runner"));
 
 var _menu = _interopRequireDefault(require("./menu.js"));
+
+var _texts = require("./texts");
+
+var _styleHelp = require("./style-help");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
@@ -1824,28 +2068,36 @@ function () {
     this.afterIdleAction = function () {};
 
     this.SituationMenu = new _menu["default"]('menu', [{
-      text: 'A tree falls',
+      text: _texts.Texts.TreeFalls.name,
       action: function action() {
         return _this.startSituation('tree-falls');
       }
     }, {
-      text: 'A car enters your lane',
+      text: _texts.Texts.CarEntersLane.name,
       action: function action() {
         return _this.startSituation('car-enters-lane');
       }
     }, {
-      text: 'A child runs in the street',
+      text: _texts.Texts.ChildRuns.name,
       action: function action() {
         return _this.startSituation('child-runs');
       }
-    }], 'Choose a scenario');
-    this.runner = new _situationRunner["default"](this, new _report["default"]($('#report')[0]), new _infoBoxes["default"]($('#info_elements')[0]));
+    }], _texts.Texts.ChooseSituation);
+    this.runner = new _situationRunner["default"](this, new _report["default"]($('#report')[0]));
     this.app.ticker.add(function () {
       return TWEEN.update();
     });
   }
 
   _createClass(View, [{
+    key: "spriteToScreenPos",
+    value: function spriteToScreenPos(sprite) {
+      return {
+        x: sprite.x + this.app.screen.width / 2,
+        y: sprite.y + this.app.screen.height / 2
+      };
+    }
+  }, {
     key: "doIdleAnimation",
     value: function doIdleAnimation() {
       var currentLane = _lanes.LANES[Math.floor(Math.random() * _lanes.LANES.length)];
@@ -1853,9 +2105,6 @@ function () {
       this.agentCar.hide();
       this.agentCar.show();
       this.agentCar.placeInLane(currentLane, 0, true);
-
-      _audio.Sounds.carIdling2000ms.play();
-
       return this.agentCar.driveInLaneUntilPosition(1.0, _constants.IDLE_ANIMATION_TIME);
     }
   }, {
@@ -1898,4 +2147,4 @@ function () {
 
 exports["default"] = View;
 
-},{"./audio":1,"./car":2,"./constants":3,"./info-boxes":4,"./lanes":6,"./menu.js":8,"./pixi-help":9,"./report":11,"./scene-element":12,"./situation":14,"./situation-runner":13}]},{},[7]);
+},{"./car":1,"./constants":2,"./info-boxes":4,"./lanes":7,"./menu.js":9,"./pixi-help":10,"./report":12,"./scene-element":13,"./situation":15,"./situation-runner":14,"./style-help":19,"./texts":20}]},{},[8]);
