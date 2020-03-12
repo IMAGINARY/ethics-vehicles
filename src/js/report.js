@@ -10,12 +10,11 @@ export default class Report {
     this.policyNameElement = this.htmlElement.querySelector('#policy_name');
     this.policyObjectiveElement = this.htmlElement.querySelector('#policy_objective');
 
-    this.decisionBlock = this.htmlElement.querySelector('#decision')
     this.decisionElement = this.htmlElement.querySelector('#decision_text');
   }
 
   show() {
-    this.decisionBlock.style.display = "none";
+    this.decisionElement.style.display = "none";
     this.policyBlock.style.display = "none";
     return tweenOpacity(this.htmlElement, 1, 500);
   }
@@ -41,7 +40,7 @@ export default class Report {
   }
 
   setDecision(decision) {
-    this.decisionBlock.style.display = "block";
+    this.decisionElement.style.display = "block";
     this.decisionElement.innerHTML = decision;
   }
 
