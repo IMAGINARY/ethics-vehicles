@@ -19,12 +19,12 @@ export default class InfoBox {
     return tweenOpacity(this.htmlElement, INFO_BOX_OPACITY, time);
   }
 
-  hide() {
-    return tweenOpacity(this.htmlElement, 0, 200);
+  hide(time = 1000) {
+    return tweenOpacity(this.htmlElement, 0, time);
   }
 
-  static hideAll() {
-    InfoBox.Boxes.forEach( box => box.hide() );
+  static hideAll(time = 1000) {
+    InfoBox.Boxes.forEach( box => box.hide(time) );
   }
   static get(index) {
     return InfoBox.Boxes[index];

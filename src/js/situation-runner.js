@@ -32,6 +32,7 @@ export default class SituationRunner {
 
       .then(() => this.waitForPolicy(situation))
       .then(() => this.report.setPolicy(this.currentPolicy))
+      .then(() => situation.wait(1000))
       .then(() => this.hideElementsInfo())
       .then(() => situation.wait(1000))
       
@@ -92,12 +93,11 @@ export default class SituationRunner {
    return promise;
   }
 
-  hideElementsInfo() {
+  hideElementsInfo(time = 1000) {
     return new Promise((resolve) => {
       this.removeTempElements();
-      InfoBox.hideAll();
-
-      resolve('clean');
+      InfoBox.hideAll(time);
+      setTimeout(resolve, time);
     });
   }
 
