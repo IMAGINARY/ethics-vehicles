@@ -91,8 +91,6 @@ p.report_paragraph {
   margin: 0 auto;
   overflow: hidden;
   border-radius: 15px;
-  background-color: white;
-  border: 5px solid #666666;
   z-index: 1000; }
 
 #menu_cursor_area {
@@ -130,6 +128,28 @@ p.report_paragraph {
   word-wrap: break-word;
   font-family: 'Exo 2';
   font-size: 20px; }
+
+.fade_in {
+  animation: fade_in;
+  animation-duration: 0.5s;
+  animation-fill-mode: forwards; }
+
+.fade_out {
+  animation: fade_out;
+  animation-duration: 0.5s;
+  animation-fill-mode: forwards; }
+
+@keyframes fade_in {
+  from {
+    opacity: 0; }
+  to {
+    opacity: 1; } }
+
+@keyframes fade_out {
+  from {
+    opacity: 1; }
+  to {
+    opacity: 0; } }
 
 .selected {
   background-color: #ffec02; }

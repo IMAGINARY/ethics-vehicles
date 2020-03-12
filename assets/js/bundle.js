@@ -510,15 +510,6 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "d
 
 /* globals $ */
 var view = new _view["default"]($('#game')[0]);
-/*
-$('#debugButton').on('click', () => {
-  if (view.debugLayer.visible)
-    view.debugLayer.hide();
-  else
-    view.debugLayer.show();
-});
-*/
-
 view.start();
 
 },{"./situations/car-enters-lane":17,"./situations/child-runs":18,"./situations/tree-falls":19,"./view":22}],10:[function(require,module,exports){
@@ -539,7 +530,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 var KeyArrowUp = 38;
 var KeyArrowDown = 40;
-var KeyEnter = 13; // example use
+var KeyEnter = 13;
 
 var Menu =
 /*#__PURE__*/
@@ -597,7 +588,7 @@ function () {
   }, {
     key: "hide",
     value: function hide() {
-      this.htmlElement.hide();
+      this.htmlElement.addClass('fade_out');
 
       window.onkeydown = function () {};
 
@@ -618,7 +609,7 @@ function () {
     key: "createHTMLOptions",
     value: function createHTMLOptions() {
       this.buttons = this.options.map(function (element) {
-        return $("<input type=\"button\" value=\"".concat(element.text, "\" class=\"menu_option\">")).click(element.action);
+        return $("<input type=\"button\" value=\"".concat(element.text, "\" class=\"menu_option fade_in\">")).click(element.action);
       });
       this.buttons.forEach(function (button) {
         return $('#menu_options_area').append(button);
@@ -1033,15 +1024,13 @@ function () {
         return _this.report.show();
       }).then(function () {
         return _this.waitForAdvanceButton(_texts.Texts.Next);
-      }, 3000) //      .then(() => this.report.pullDown())
-      .then(function () {
+      }, 3000).then(function () {
         return _this.waitForPolicy(situation);
       }).then(function () {
         return _this.report.setPolicy(_this.currentPolicy);
       }).then(function () {
         return _this.hideElementsInfo();
-      }) //      .then(() => this.report.pullUp())
-      .then(function () {
+      }).then(function () {
         return situation.wait(1000);
       }).then(function () {
         return _this.playOutDecision();
@@ -1746,6 +1735,8 @@ var _texts = require("../texts");
 
 var _infoPositions = _interopRequireDefault(require("../info-positions"));
 
+var _pixiHelp = require("../pixi-help");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -1793,6 +1784,9 @@ function (_Situation) {
     _this.waterPuddle = new _sceneElement["default"](_this.view, 'assets/images/water_puddle.png', new PIXI.Point(-_constants.StreetOffsetFromCenter.x - _constants.STREET_LANE_OFFSET, -_constants.STREET_LANE_OFFSET));
     _this.tree = new _sceneElement["default"](_this.view, 'assets/images/tree.png', new PIXI.Point(-_constants.StreetOffsetFromCenter.x - _constants.STREET_LANE_OFFSET * 3, 0));
     _this.cyclist = new _car["default"](_this.view, 'assets/images/cyclist.png');
+    _this.cyclist.sprite = (0, _pixiHelp.createAnimatedSprite)([1, 2, 3].map(function (index) {
+      return "assets/images/cyclist_" + index + ".png";
+    }), _constants.CAR_SCALE);
     _this.agentLane = _lanes.LANES[AGENT_LANE];
     _this.bicycleLane = _this.agentLane.oppositeLane;
     _this.Texts = _texts.Texts.TreeFalls;
@@ -1873,9 +1867,14 @@ function (_Situation) {
   }, {
     key: "moveCyclistInPosition",
     value: function moveCyclistInPosition() {
+      var _this4 = this;
+
       this.cyclist.show();
       this.cyclist.placeInLane(this.bicycleLane);
-      return this.cyclist.driveInLaneUntilPosition(CYCLIST_STOP_POSITION, SETUP_TIME);
+      this.cyclist.sprite.play();
+      return this.cyclist.driveInLaneUntilPosition(CYCLIST_STOP_POSITION, SETUP_TIME).then(function () {
+        return _this4.cyclist.sprite.stop();
+      });
     }
   }, {
     key: "moveAgentInPosition",
@@ -1887,12 +1886,12 @@ function (_Situation) {
   }, {
     key: "fellTree",
     value: function fellTree() {
-      var _this4 = this;
+      var _this5 = this;
 
       return new Promise(function (resolve) {
-        new TWEEN.Tween(_this4.tree.sprite).to({
+        new TWEEN.Tween(_this5.tree.sprite).to({
           angle: 90,
-          x: _this4.tree.sprite.x + _constants.STREET_LANE_OFFSET * 1.5
+          x: _this5.tree.sprite.x + _constants.STREET_LANE_OFFSET * 1.5
         }, SETUP_TIME - TREE_FALL_TIME).easing(TWEEN.Easing.Quadratic.In).delay(TREE_FALL_TIME).onComplete(function () {
           return resolve('fell');
         }).start();
@@ -1901,13 +1900,13 @@ function (_Situation) {
   }, {
     key: "crashCyclist",
     value: function crashCyclist() {
-      var _this5 = this;
+      var _this6 = this;
 
       var carMovement = new Promise(function (resolve) {
-        new TWEEN.Tween(_this5.view.agentCar).to({
-          x: _this5.view.agentCar.x + _constants.STREET_LANE_OFFSET * 2,
-          y: _this5.view.agentCar.y + _constants.STREET_LANE_OFFSET * 2,
-          angle: _this5.view.agentCar.angle - 45
+        new TWEEN.Tween(_this6.view.agentCar).to({
+          x: _this6.view.agentCar.x + _constants.STREET_LANE_OFFSET * 2,
+          y: _this6.view.agentCar.y + _constants.STREET_LANE_OFFSET * 2,
+          angle: _this6.view.agentCar.angle - 45
         }, CRASH_TIME).easing(TWEEN.Easing.Quadratic.Out).onComplete(function () {
           return resolve('crash');
         }).start();
@@ -1923,13 +1922,13 @@ function (_Situation) {
   }, {
     key: "softlyCrashTree",
     value: function softlyCrashTree() {
-      var _this6 = this;
+      var _this7 = this;
 
       return new Promise(function (resolve) {
-        new TWEEN.Tween(_this6.view.agentCar).to({
-          x: _this6.view.agentCar.x - _constants.STREET_LANE_OFFSET,
-          y: _this6.view.agentCar.y + _constants.STREET_LANE_OFFSET * 2,
-          angle: _this6.view.agentCar.angle + 70
+        new TWEEN.Tween(_this7.view.agentCar).to({
+          x: _this7.view.agentCar.x - _constants.STREET_LANE_OFFSET,
+          y: _this7.view.agentCar.y + _constants.STREET_LANE_OFFSET * 2,
+          angle: _this7.view.agentCar.angle + 70
         }, CRASH_TIME).easing(TWEEN.Easing.Quadratic.Out).onComplete(function () {
           return resolve('crash');
         }).start();
@@ -1944,7 +1943,7 @@ exports["default"] = TreeFallsSituation;
 
 _situation["default"].registerSituation('tree-falls', TreeFallsSituation);
 
-},{"../car":1,"../constants":2,"../info-positions":6,"../lanes":8,"../scene-element":14,"../situation":16,"../texts":21}],20:[function(require,module,exports){
+},{"../car":1,"../constants":2,"../info-positions":6,"../lanes":8,"../pixi-help":11,"../scene-element":14,"../situation":16,"../texts":21}],20:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -2093,8 +2092,6 @@ var _menu = _interopRequireDefault(require("./menu.js"));
 
 var _texts = require("./texts");
 
-var _styleHelp = require("./style-help");
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -2124,10 +2121,8 @@ function () {
     this.container.x = this.app.screen.width / 2;
     this.container.y = this.app.screen.height / 2;
     this.background = new _sceneElement["default"](this, 'assets/images/street.png', _pixiHelp.POINT_ZERO, 1);
-    this.debugLayer = new _sceneElement["default"](this, 'assets/images/debug.png', _pixiHelp.POINT_ZERO, 1);
     this.agentCar = new _car["default"](this, 'assets/images/car.png');
     this.background.show();
-    this.debugLayer.hide();
 
     this.afterIdleAction = function () {};
 
@@ -2211,4 +2206,4 @@ function () {
 
 exports["default"] = View;
 
-},{"./car":1,"./constants":2,"./info-boxes":5,"./lanes":8,"./menu.js":10,"./pixi-help":11,"./report":13,"./scene-element":14,"./situation":16,"./situation-runner":15,"./style-help":20,"./texts":21}]},{},[9]);
+},{"./car":1,"./constants":2,"./info-boxes":5,"./lanes":8,"./menu.js":10,"./pixi-help":11,"./report":13,"./scene-element":14,"./situation":16,"./situation-runner":15,"./texts":21}]},{},[9]);
