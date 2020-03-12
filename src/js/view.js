@@ -30,10 +30,8 @@ export default class View {
     this.container.y = this.app.screen.height / 2;
 
     this.background = new SceneElement(this, 'assets/images/street.png', POINT_ZERO, 1);
-    this.debugLayer = new SceneElement(this, 'assets/images/debug.png', POINT_ZERO, 1);
     this.agentCar = new Car(this, 'assets/images/car.png');
     this.background.show();
-    this.debugLayer.hide();
 
     this.afterIdleAction = () => {};
    
