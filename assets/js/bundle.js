@@ -514,7 +514,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "d
 var view = new _view["default"]($('#game')[0]);
 view.start();
 
-},{"./situations/car-enters-lane":17,"./situations/child-runs":18,"./situations/tree-falls":19,"./view":22}],10:[function(require,module,exports){
+},{"./situations/car-enters-lane":17,"./situations/child-runs":18,"./situations/tree-falls":19,"./view":23}],10:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -790,7 +790,7 @@ var Policies = [_objectSpread({
 }, _texts.Texts.Protector)];
 exports.Policies = Policies;
 
-},{"./texts":21}],13:[function(require,module,exports){
+},{"./texts":22}],13:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -1164,7 +1164,7 @@ function () {
 
 exports["default"] = SituationRunner;
 
-},{"./countdown-button":3,"./design":4,"./info-boxes":5,"./menu":10,"./pixi-help":11,"./policies":12,"./texts":21}],16:[function(require,module,exports){
+},{"./countdown-button":3,"./design":4,"./info-boxes":5,"./menu":10,"./pixi-help":11,"./policies":12,"./texts":22}],16:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -1280,7 +1280,7 @@ var _infoPositions = _interopRequireDefault(require("../info-positions"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
-function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
@@ -1486,7 +1486,7 @@ exports["default"] = CarEntersLaneSituation;
 
 _situation["default"].registerSituation('car-enters-lane', CarEntersLaneSituation);
 
-},{"../car":1,"../constants":2,"../info-positions":6,"../lanes":8,"../scene-element":14,"../situation":16,"../texts":21}],18:[function(require,module,exports){
+},{"../car":1,"../constants":2,"../info-positions":6,"../lanes":8,"../scene-element":14,"../situation":16,"../texts":22}],18:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -1512,7 +1512,7 @@ var _infoPositions = _interopRequireDefault(require("../info-positions"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
-function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
@@ -1718,7 +1718,7 @@ exports["default"] = ChildRunsSituation;
 
 _situation["default"].registerSituation('child-runs', ChildRunsSituation);
 
-},{"../car":1,"../constants":2,"../info-positions":6,"../lanes":8,"../pixi-help":11,"../scene-element":14,"../situation":16,"../texts":21}],19:[function(require,module,exports){
+},{"../car":1,"../constants":2,"../info-positions":6,"../lanes":8,"../pixi-help":11,"../scene-element":14,"../situation":16,"../texts":22}],19:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -1744,7 +1744,7 @@ var _pixiHelp = require("../pixi-help");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
-function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
@@ -1948,7 +1948,7 @@ exports["default"] = TreeFallsSituation;
 
 _situation["default"].registerSituation('tree-falls', TreeFallsSituation);
 
-},{"../car":1,"../constants":2,"../info-positions":6,"../lanes":8,"../pixi-help":11,"../scene-element":14,"../situation":16,"../texts":21}],20:[function(require,module,exports){
+},{"../car":1,"../constants":2,"../info-positions":6,"../lanes":8,"../pixi-help":11,"../scene-element":14,"../situation":16,"../texts":22}],20:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -1982,92 +1982,111 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.Texts = void 0;
 var Texts = {
-  ChooseSituation: 'Choose a Situation',
-  Show: 'Show',
-  Restart: 'Restart',
-  ChoosePolicy: 'Choose a Policy',
-  Next: 'Next',
+  ChooseSituation: 'Wähle ein Szenario',
+  Show: 'Anzeigen',
+  Restart: 'Starte neu',
+  ChoosePolicy: 'Wähle eine Leitlinie',
+  Next: 'Weiter',
   Humanist: {
-    name: 'Humanist',
-    objective: 'Minimize human injuries'
+    name: 'Humanistisch',
+    objective: 'Minimiere Schaden an Menschen'
   },
   Profit: {
-    name: 'Profit-based',
-    objective: 'Minimize insurance costs'
+    name: 'Gewinnorientiert',
+    objective: 'Minimiere Versicherungskosten'
   },
   Protector: {
-    name: 'Protector',
-    objective: 'Protect car passengers'
+    name: 'Schützend',
+    objective: 'Schütze die Insassen'
   },
   CarEntersLane: {
-    name: 'A Car enters your Lane',
-    description: 'A car enters your lane and there is no time to break. The car can either crash against it, turn left and crash against a parked car, or turn right and drive over a bus stop full of people',
+    name: 'Ein Auto fährt auf Deine Fahrspur',
+    description: 'Ein Auto fährt auf Deine Fahrspur, und es ist keine Zeit zum Bremsen. Das Auto kann entweder dagegen prallen, links ausweichen und gegen ein geparktes Auto prallen oder rechts ausweichen und auf eine Bushaltestelle voller Menschen fahren.',
     AutonomousCar: {
-      name: 'Autonomous car',
-      description: 'While reaching a bus stop, a car enters its lane in front of it'
+      name: 'Selbstfahrendes Fahrzeug',
+      description: 'Beim Erreichen einer Bushaltestelle fährt ein anderes Auto vor Dir auf die Fahrspur.'
     },
     LuxuryCar: {
-      name: 'Luxury car',
-      description: 'A very expensive car suddenly enters your lane.'
+      name: 'Luxusauto',
+      description: 'Ein sehr teures Auto fährt plötzlich auf Deine Fahrspur.'
     },
     Truck: {
-      name: 'Parked car',
-      description: 'An old truck in bad shape, with four passengers'
+      name: 'Geparktes Fahrzeug',
+      description: 'Ein alter Lastwagen in schlechtem Zustand mit vier Passagieren steht am Straßenrand.'
     },
     BusStop: {
-      name: 'Bus Stop',
-      description: 'Full of people waiting for their bus'
+      name: 'Bushaltestelle',
+      description: 'Die Bushaltestelle ist voller Leute, die auf ihren Bus warten.'
     },
-    Humanist: 'Turning left will risk the people in the track. Turning right will probably risk even more people at the stop. Solution: breaking and crashing into the car in front will probably not result in fatalities.',
-    Profit: 'The car facing you is very expensive, and crashing into it might mean long legal battles for your insurance. Crashing into the bus stop will risk high payouts to the victims in or their families. Solution: turn left towards the parked car, as it is cheap and if the risk of casualties is lower.',
-    Protector: 'Crashing into either car will potentially damage the autonomous car and harm its passengers. Solution: turn right and crash into the bus stop, as people are softer than cars.'
+    Humanist: 'Wenn Du nach links ausweichst, gefährdest Du die Personen im geparkten Lastwagen. Wenn Du nach rechts ausweichst, gefährdest Du wahrscheinlich noch mehr Personen an der Haltestelle. Lösung: Bremsen und ein Zusammenstoß mit dem entgegenkommenden Fahrzeug führt wahrscheinlich nicht zu Todesfällen.',
+    Profit: 'Das Auto, das Dir entgegenkommt, ist sehr teuer, und ein Zusammenstoß kann lange Rechtsstreitigkeiten für Deine Versicherung zur Folge haben. Ein Unfall in der Bushaltestelle birgt das Risiko hoher Zahlungsforderungen der Opfer oder ihrer Familien. Lösung: Weiche nach links aus in Richtung des geparkten Fahrzeugs, da es billig ist und weniger Menschen gefährdet werden.',
+    Protector: 'Ein Zusammenstoß mit einem der beiden Fahrzeuge kann möglicherweise Dich (das selbstfahrende Auto) und Deine Passagiere beschädigen. Lösung: Weiche nach rechts aus und fahre in die Bushaltestelle, da Leute weicher sind als Autos.'
   },
   ChildRuns: {
-    name: 'A Child runs in the Street',
-    description: 'When arriving at a crossing and with a green light, a child suddenly runs onto the street. At the same time, an ambulance with lights and siren is driving behind your.',
+    name: 'Ein Kind rennt auf die Straße',
+    description: 'Du erreichst eine Ampelkreuzung und hast grün. Ein Kind rennt plötzlich auf die Straße. Gleichzeitig fährt ein Krankenwagen mit Blaulicht und Sirene hinter Dir her.',
     AutonomousCar: {
-      name: 'Autonomous car',
-      description: 'About to enter a crossroad, suddenly detects a child'
+      name: 'Selbstfahrendes Fahrzeug',
+      description: 'Kurz bevor Du den Kreuzungsbereich erreichst, bemerkst Du plötzlich ein Kind vor Dir.'
     },
     Ambulance: {
-      name: 'Ambulance',
-      description: 'Carrying a patient to the hospital'
+      name: 'Krankenwagen',
+      description: 'Er transportiert einen Patienten ins Krankenhaus.'
     },
     Child: {
-      name: 'Child',
-      description: 'Runs in the street without warning'
+      name: 'Kind',
+      description: 'Es rennt plötzlich ohne Vorwarnung auf die Straße'
     },
     OtherCar: {
-      name: 'A Car',
-      description: 'Probably will not stop'
+      name: 'Entgegenkommendes Fahrzeug',
+      description: 'Es wird vermutlich nicht anhalten.'
     },
-    Humanist: 'A sudden break will provoke a crash with the ambulance, but continuing ahead will hurt the child. Best course of action is to change lanes and crash with the other car, as both are crash-safe',
-    Profit: 'Breaking or turning left will incur in high car damages even risk of lawsuit. The child crossed with warning and with a red light, so you are protected by the law if you drive through.',
-    Protector: 'Breaking or turning left will damage the car and potentially hurt you, while driving ahead will produce only slight car damage and no risk to passengers.'
+    Humanist: 'Plötzliches Bremsen hätte einen Unfall mit dem Krankenwagen zur Folge, aber wenn Du weiterfährst, wird das Kind verletzt. Lösung: Wechsle die Fahrspur und riskiere den Zusammenstoß mit dem entgegenkommenden Fahrzeug.',
+    Profit: 'Durch scharfes Bremsen oder Ausweichen nach links entstehen hohe Schäden am Auto, und es besteht die Gefahr eines Rechtsstreits über die Kosten. Das Kind rennt ohne Vorwarnung auf die Straße, obwohl die Fußgängerampel rot ist. Bei einem Unfall ist deshalb kein Rechtsstreit zu erwarten. Lösung: Fahre weiter geradeaus, kein Bremsen, keine Richtungsänderung.',
+    Protector: 'Durch scharfes Bremsen oder Ausweichen nach links wird das Auto beschädigt und Insassen möglicherweise verletzt. Lösung: Fahre weiter geradeaus, kein Bremsen, keine Richtungsänderung. So wird das Auto nur geringfügig beschädigt, und es besteht kein Risiko für die Insassen.'
   },
   TreeFalls: {
-    name: 'A Tree falls',
-    description: 'A tree falls in front of the car. The person in the front passenger seat has no seat belt. A cyclist is riding through the opposite lane. Options: Sudden break, slow down and turn left, or change lanes.',
+    name: 'Ein Baum fällt auf die Straße',
+    description: 'Ein Baum fällt plötzlich vor Dir auf die Straße. Die Person auf dem Beifahrersitz hat keinen Sicherheitsgurt angelegt. Eine Person auf einem Fahrrad fährt auf der Gegenfahrbahn. Optionen: Plötzliches Bremsen, langsamer fahren und nach rechts ausweichen, oder die Spur wechseln.',
     AutonomousCar: {
-      name: 'Autonomous car',
-      description: 'Warning! The front passenger is not wearing seat belt.'
+      name: 'Selbstfahrendes Fahrzeug',
+      description: 'Achtung! Die Person auf dem Beifahrersitz hat keinen Sicherheitsgurt angelegt.'
     },
     Cyclist: {
-      name: 'Cyclist',
-      description: 'An ordinary cyclist driving in the opposite lane.'
+      name: 'Person auf dem Fahrrad',
+      description: 'Normale Person, die Dir auf dem Fahrrad entgegenkommt.'
     },
     FallenTree: {
-      name: 'Fallen Tree',
-      description: 'Crashing into it could be fatal.'
+      name: 'Umgestürzter Baum',
+      description: 'Ein Aufprall könnte tödlich enden.'
     },
-    Humanist: 'A sudden break would send the front passenger forward through the windshield, potentially killing them. Changing lanes would certainly kill the cyclist. Solution: break slowly while turning right, sending the front passenger against the driver, which would cause only minor concussions.',
-    Profit: "Crashing with the tree will destroy the car and be expensive for the insurers. Changing lanes would kill the cyclist and also carry a high cost to the insurers. A sudden break risks the front passenger's life, but as they are not wearing a seat belt, it is not the insurer's responsibility.",
-    Protector: 'Crashing with the tree or turning right would hurt the passenger without seatbelt. Solution: slow down and change lanes, potentially killing the cyclist but saving all passengers.'
+    Humanist: 'Durch plötzliches Bremsen würde die Person auf dem Beifahrersitz durch die Windschutzscheibe geschleudert und möglicherweise tödlich verletzt werden. Ein Fahrbahnwechsel hätte sicherlich den Tod der Person auf dem Fahrrad zur Folge. Lösung: Bremse langsam ab, und weiche gleichzeitig nach rechts aus. So wird die Person auf dem Beifahrersitz gegen den Fahrersitz gedrückt, was nur geringfügige Verletzungen zur Folge hätte.',
+    Profit: 'Ein Zusammenprall mit dem Baum hätte starke Schäden am Auto zur Folge, wofür die Versicherung haften muss. Ein Fahrbahnwechsel würde die Person auf dem Fahrrad töten, was ebenfalls hohe Versicherungskosten zur Folge haben kann. Plötzliches Bremsen gefährdet zwar das Leben der Person auf dem Beifahrersitz, aber da kein Sicherheitsgurt angelegt ist, muss Deine Versicherung nicht für den Schaden bezahlen.',
+    Protector: 'Ein Zusammenprall mit dem Baum oder Ausweichen nach rechts würde die Person auf dem Beifahrersitz gefährden, da kein Sicherheitsgurt angelegt ist. Lösung: Langsamer werden und auf die Gegenfahrbahn wechseln, wodurch möglicherweise die Person auf dem Fahrrad getötet wird, aber alle Insassen geschützt werden.'
   }
 };
 exports.Texts = Texts;
 
 },{}],22:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _textsDe = require("./texts-de");
+
+Object.keys(_textsDe).forEach(function (key) {
+  if (key === "default" || key === "__esModule") return;
+  Object.defineProperty(exports, key, {
+    enumerable: true,
+    get: function get() {
+      return _textsDe[key];
+    }
+  });
+});
+
+},{"./texts-de":21}],23:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -2211,4 +2230,4 @@ function () {
 
 exports["default"] = View;
 
-},{"./car":1,"./constants":2,"./info-boxes":5,"./lanes":8,"./menu.js":10,"./pixi-help":11,"./report":13,"./scene-element":14,"./situation":16,"./situation-runner":15,"./texts":21}]},{},[9]);
+},{"./car":1,"./constants":2,"./info-boxes":5,"./lanes":8,"./menu.js":10,"./pixi-help":11,"./report":13,"./scene-element":14,"./situation":16,"./situation-runner":15,"./texts":22}]},{},[9]);
