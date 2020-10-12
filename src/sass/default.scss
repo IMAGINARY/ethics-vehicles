@@ -10,6 +10,8 @@ $options-bar-height: 80px;
 $game-canvas-width: 1920px;
 $game-canvas-height: 1080px;
 
+$font-scale: 0.8;
+
 /* inconsolata-regular - latin */
 @font-face {
   font-family: 'Inconsolata';
@@ -78,7 +80,7 @@ p.report_paragraph {
   box-shadow: 10px 15px 10px -5px rgba(0, 0, 0, 0.5);
   border-radius: 20px;  
   opacity: 0;
-  font-size: 22px;
+  font-size: $font-scale * 20px;
 }
 
 .report_down {
@@ -159,7 +161,7 @@ p.report_paragraph {
   text-align: left;
   word-wrap: break-word;
   font-family: 'Exo 2';
-  font-size: 20px;
+  font-size: $font-scale * 18px;
 }
 
 .fade_in {
@@ -208,22 +210,22 @@ p.report_paragraph {
   border-radius: 2px;
   opacity: 0;
   padding: 10px;
-  font-size: 18px;
+  font-size: $font-scale * 16px;
 }
 
 #menu_title {
-  font-size: 24px;
+  font-size: $font-scale * 22px;
   text-align: center;
   margin: 10px 10px 2px 10px;
 }
 
 h2 {
-  font-size: 26px;
+  font-size: $font-scale * 24px;
   text-align: center;
   margin: 10px 0 15px 0;
 }
 h3 {
-  font-size: 24px;
+  font-size: $font-scale * 22px;
   font-weight: bold;
   margin: 0 0 2px 0;
 }
@@ -255,7 +257,7 @@ button {
   text-align: center;
   text-decoration: none;
   display: inline-block;
-  font-size: 16px;
+  font-size: $font-scale * 14px;
   border-radius: 5px;
   padding: 4px 8px 4px 8px;
 }
