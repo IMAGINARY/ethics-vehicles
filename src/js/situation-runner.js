@@ -28,7 +28,7 @@ export default class SituationRunner {
 
       .then(() => this.report.setSituation(situation))
       .then(() => this.report.show())
-      .then(() => this.waitForAdvanceButton(Texts.Next, 60000))
+      .then(() => this.waitForAdvanceButton(Texts.Next, -1))
 
       .then(() => this.waitForPolicy(situation))
       .then(() => this.report.setPolicy(this.currentPolicy))
@@ -39,7 +39,7 @@ export default class SituationRunner {
       .then(() => this.playOutDecision())
       .then(() => situation.wait(1000))
       .then(() => this.report.setDecision(this.currentDecision.text))
-      .then(() => this.waitForAdvanceButton(Texts.Restart, 120000))
+      .then(() => this.waitForAdvanceButton(Texts.Restart, -1))
 
       .then(() => this.report.hide())
       .then(() => situation.clearSprites())

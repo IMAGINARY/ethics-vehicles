@@ -28,13 +28,20 @@ export default class CountdownButton {
   }
 
   setTimeout(timeout) {
-    if (timeout >= 1000)
-      this.htmlText.text(this.text + " (" + (Math.floor(timeout/1000)) + ")");
+    clearTimeout(this.timeoutRunner);
 
-    if (timeout <= 1000) {
-      this.timeoutRunner = setTimeout(() => this.doClick(), timeout);
+    if (timeout < 0) {
+      this.htmlText.text(this.text);
     } else {
-      this.timeoutRunner = setTimeout(() => this.setTimeout(timeout - 1000), 1000);
+      if (timeout >= 1000) {
+        this.htmlText.text(this.text + " (" + (Math.floor(timeout / 1000)) + ")");
+      }
+
+      if (timeout <= 1000) {
+        this.timeoutRunner = setTimeout(() => this.doClick(), timeout);
+      } else {
+        this.timeoutRunner = setTimeout(() => this.setTimeout(timeout - 1000), 1000);
+      }
     }
   }
 }

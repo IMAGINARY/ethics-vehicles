@@ -233,16 +233,24 @@ function () {
     }(function (timeout) {
       var _this2 = this;
 
-      if (timeout >= 1000) this.htmlText.text(this.text + " (" + Math.floor(timeout / 1000) + ")");
+      clearTimeout(this.timeoutRunner);
 
-      if (timeout <= 1000) {
-        this.timeoutRunner = setTimeout(function () {
-          return _this2.doClick();
-        }, timeout);
+      if (timeout < 0) {
+        this.htmlText.text(this.text);
       } else {
-        this.timeoutRunner = setTimeout(function () {
-          return _this2.setTimeout(timeout - 1000);
-        }, 1000);
+        if (timeout >= 1000) {
+          this.htmlText.text(this.text + " (" + Math.floor(timeout / 1000) + ")");
+        }
+
+        if (timeout <= 1000) {
+          this.timeoutRunner = setTimeout(function () {
+            return _this2.doClick();
+          }, timeout);
+        } else {
+          this.timeoutRunner = setTimeout(function () {
+            return _this2.setTimeout(timeout - 1000);
+          }, 1000);
+        }
       }
     })
   }]);
@@ -1025,7 +1033,7 @@ function () {
       }).then(function () {
         return _this.report.show();
       }).then(function () {
-        return _this.waitForAdvanceButton(_texts.Texts.Next, 60000);
+        return _this.waitForAdvanceButton(_texts.Texts.Next, -1);
       }).then(function () {
         return _this.waitForPolicy(situation);
       }).then(function () {
@@ -1043,7 +1051,7 @@ function () {
       }).then(function () {
         return _this.report.setDecision(_this.currentDecision.text);
       }).then(function () {
-        return _this.waitForAdvanceButton(_texts.Texts.Restart, 120000);
+        return _this.waitForAdvanceButton(_texts.Texts.Restart, -1);
       }).then(function () {
         return _this.report.hide();
       }).then(function () {
