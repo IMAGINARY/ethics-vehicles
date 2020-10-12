@@ -1025,8 +1025,8 @@ function () {
       }).then(function () {
         return _this.report.show();
       }).then(function () {
-        return _this.waitForAdvanceButton(_texts.Texts.Next);
-      }, 3000).then(function () {
+        return _this.waitForAdvanceButton(_texts.Texts.Next, 60000);
+      }).then(function () {
         return _this.waitForPolicy(situation);
       }).then(function () {
         return _this.report.setPolicy(_this.currentPolicy);
@@ -1043,8 +1043,8 @@ function () {
       }).then(function () {
         return _this.report.setDecision(_this.currentDecision.text);
       }).then(function () {
-        return _this.waitForAdvanceButton(_texts.Texts.Restart);
-      }, 15000).then(function () {
+        return _this.waitForAdvanceButton(_texts.Texts.Restart, 120000);
+      }).then(function () {
         return _this.report.hide();
       }).then(function () {
         return situation.clearSprites();
