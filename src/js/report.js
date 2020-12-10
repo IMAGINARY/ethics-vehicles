@@ -55,4 +55,3 @@ export default class Report {
     return tweenOpacity(this.htmlElement, 0, 250);
   }
 }
-  

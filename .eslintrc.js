@@ -14,6 +14,7 @@ module.exports = {
     ecmaVersion: 2018,
   },
   rules: {
+    "eol-last": ["error", "always"],
     "prefer-destructuring": ["error", {
       "VariableDeclarator": {
         "array": false,
