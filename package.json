@@ -4,7 +4,7 @@
   "description": "I AM AI exhibition module",
   "main": "index.html",
   "dependencies": {
-    "http-server": "^0.12.1",
+    "http-server": "^0.12.3",
     "pixi.js": "^5.2.0",
     "tweenjs": "^1.0.2"
   },
