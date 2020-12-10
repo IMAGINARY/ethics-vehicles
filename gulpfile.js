@@ -62,7 +62,10 @@ function scripts() {
     debug: true,
   })
     .transform('babelify', {
-      presets: ['@babel/env'],
+      presets: [['@babel/preset-env', {
+        useBuiltIns: 'usage',
+        corejs: 3,
+      }]],
       sourceMaps: true,
     })
     .on('error', (msg) => {
