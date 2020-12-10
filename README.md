@@ -13,14 +13,13 @@ This exhibit is built using several compilable languages:
 To make any modifications re-compilation is necessary. You should install:
 
 - **node** and **npm**
-- **yarn**
 - **gulp** (install globally)
 
 Afterwards run the following in the command line:
 
 ```
 cd src
-yarn
+npm install
 ```
 
 After it runs succesfuly you can compile as needed:
@@ -42,13 +41,13 @@ After it runs succesfuly you can compile as needed:
 
 - **all**
     ```
-    yarn run build
+    gulp build
     ```
 
 Start a web server at localhost:8080, from where you can use the exhibit:
 
     ```
-    yarn run start
+    npm run start
     ```
 
 Car crash audio files (modified) downloaded from Audiosoundclips.com
