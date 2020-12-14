@@ -36,8 +36,25 @@ export default class Situation {
 
   }
 
-  getDescription() {
-    
+  _buildDecisionsWithActions({ humanist, profit, protector }) {
+    return {
+      humanist: {
+        textKey: this._getI18nKey('Humanist'),
+        actionFunction: humanist,
+      },
+      profit: {
+        textKey: this._getI18nKey('Profit'),
+        actionFunction: profit,
+      },
+      protector: {
+        textKey: this._getI18nKey('Protector'),
+        actionFunction: protector,
+      },
+    };
+  }
+
+  getDescriptionKey() {
+    return this._getI18nKey('description');
   }
 
   getDecision(policyId) {
@@ -55,6 +72,21 @@ export default class Situation {
 
   wait(time = 1000) {
     return new Promise( resolve => setTimeout(resolve, time) );
+  }
+
+  _getI18nPrefix() {
+
+  }
+
+  _getI18nKey(...keyParts) {
+    return [this._getI18nPrefix(), ...keyParts].join('.');
+  }
+
+  _getElementsI18nKeys(elementName) {
+    return {
+      nameKey: this._getI18nKey(elementName, 'name'),
+      descriptionKey: this._getI18nKey(elementName, 'description'),
+    };
   }
 }
 

@@ -64,8 +64,9 @@ async function main() {
     const configUrl = customConfigUrl || defaultConfigUrl;
     const config = { ...defaultConfig, ...await loadConfig(configUrl.href) };
 
-    const i18next = await createI18next(config.languages); // TODO: i18n with i18next
-    const view = new View($('#game')[0]);
+    const i18next = await createI18next(config.languages, true); // TODO: i18n with i18next
+
+    const view = new View($('#game')[0], i18next, config);
     window.view = view;
     view.start();
   } catch (err) {

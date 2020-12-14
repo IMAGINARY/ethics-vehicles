@@ -2,9 +2,8 @@
 import SceneElement from '../scene-element';
 import Car from '../car';
 import Situation from '../situation';
-import { STREET_LANE_OFFSET, StreetOffsetFromCenter, CAR_SCALE } from '../constants';
+import { CAR_SCALE, STREET_LANE_OFFSET, StreetOffsetFromCenter } from '../constants';
 import { LANES } from '../lanes';
-import { Texts } from '../texts';
 import InfoPos from '../info-positions';
 import { createAnimatedSprite } from '../pixi-help';
 
@@ -38,7 +37,6 @@ export default class TreeFallsSituation extends Situation {
 
     this.agentLane = LANES[AGENT_LANE];
     this.bicycleLane = this.agentLane.oppositeLane;
-    this.Texts = Texts.TreeFalls;
   }
 
   setup() {
@@ -64,42 +62,29 @@ export default class TreeFallsSituation extends Situation {
         sprite: this.view.agentCar.sprite,
         color: Situation.HighlightAgentColor,
         infopos: InfoPos.TopLeft,
-        ...this.Texts.AutonomousCar
+        ...this._getElementsI18nKeys('AutonomousCar'),
       },
       {
         sprite: this.cyclist.sprite,
         color: Situation.HighlightOthersColor,
         infopos: InfoPos.BottomLeft,
-        ...this.Texts.Cyclist
+        ...this._getElementsI18nKeys('Cyclist'),
       },
       {
         sprite: this.tree.sprite,
         color: Situation.HighlightOthersColor,
         infopos: InfoPos.BottomLeft.left(),
-        ...this.Texts.FallenTree
+        ...this._getElementsI18nKeys('FallenTree'),
       },
     ];
   }
 
   getDecisions() {
-    return {
-      'humanist': {
-        text: this.Texts.Humanist,
-        actionFunction: () => this.softlyCrashTree()
-      },
-      'profit': {
-        text: this.Texts.Profit,
-        actionFunction: () => this.fullBreak()
-      },
-      'protector': {
-        text: this.Texts.Protector,
-        actionFunction: () => this.crashCyclist()
-      },
-    };
-  }
-
-  getDescription() {
-    return this.Texts.description;
+    return this._buildDecisionsWithActions({
+      humanist: () => this.softlyCrashTree(),
+      profit: () => this.fullBreak(),
+      protector: () => this.crashCyclist(),
+    });
   }
 
   moveCyclistInPosition() {
@@ -157,6 +142,11 @@ export default class TreeFallsSituation extends Situation {
         .onComplete( () => resolve('crash') )
         .start();
     });
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  _getI18nPrefix() {
+    return 'TreeFalls';
   }
 }
 

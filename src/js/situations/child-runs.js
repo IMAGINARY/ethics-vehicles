@@ -5,7 +5,6 @@ import Situation from '../situation';
 import { LANES } from '../lanes';
 import { screenPosFromFraction, pixiMoveTo, createAnimatedSprite } from '../pixi-help';
 import { STREET_LANE_OFFSET, CAR_SCALE } from '../constants';
-import { Texts } from '../texts';
 import InfoPos from '../info-positions';
 
 const AGENT_LANE = 4;
@@ -31,7 +30,6 @@ export default class ChildRunsSituation extends Situation {
     this.child.setSprite(createAnimatedSprite([1,2,3].map( index => "assets/images/child_sprite_" + index + ".png"), CAR_SCALE));
     this.crossingCar = new Car(this.view, 'assets/images/blue_car.png');
     this.ambulance = new Car(this.view, 'assets/images/ambulance.png');
-    this.Texts = Texts.ChildRuns;
   }
 
   setup() {
@@ -57,44 +55,35 @@ export default class ChildRunsSituation extends Situation {
         sprite: this.view.agentCar.sprite,
         color: Situation.HighlightAgentColor,
         infopos: InfoPos.TopRight.left().left(),
-        ...this.Texts.AutonomousCar
+        ...this._getElementsI18nKeys('AutonomousCar'),
       },
       {
         sprite: this.ambulance.sprite,
         color: Situation.HighlightOthersColor,
         infopos: InfoPos.TopRight.left(),
-        ...this.Texts.Ambulance
+        ...this._getElementsI18nKeys('Ambulance'),
       },
       {
         sprite: this.child.sprite,
         color: Situation.HighlightOthersColor,
         infopos: InfoPos.TopLeft,
-        ...this.Texts.Child
+        ...this._getElementsI18nKeys('Child'),
       },
       {
         sprite: this.crossingCar.sprite,
         color: Situation.HighlightOthersColor,
         infopos: InfoPos.TopLeft.down(),
-        ...this.Texts.OtherCar
+        ...this._getElementsI18nKeys('OtherCar'),
       },
     ];
   }
 
   getDecisions() {
-    return {
-      'humanist': {
-        text: this.Texts.Humanist,
-        actionFunction: () => this.decisionCrashCrossingCar()
-      },
-      'profit': {
-        text: this.Texts.Profit,
-        actionFunction: () => this.decisionAdvance()
-      },
-      'protector': {
-        text: this.Texts.Protector,
-        actionFunction: () => this.decisionAdvance()
-      },
-    };
+    return this._buildDecisionsWithActions({
+      humanist: () => this.decisionCrashCrossingCar(),
+      profit: () => this.decisionAdvance(),
+      protector: () => this.decisionAdvance(),
+    });
   }
 
   decisionAdvance() {
@@ -114,10 +103,6 @@ export default class ChildRunsSituation extends Situation {
     });
     const crossingCarMovement = this.crossingCar.driveInLaneUntilPosition(1/4 + 1/16, CRASH_TIME);
     return Promise.all([carMovement, crossingCarMovement]);
-  }
-
-  getDescription() {
-    return this.Texts.description;
   }
 
   moveAgentInPosition() {
@@ -150,6 +135,12 @@ export default class ChildRunsSituation extends Situation {
                .then( () => this.child.sprite.play() )
                .then(() => pixiMoveTo(this.child.sprite, childEndPos, SETUP_TIME - CHILD_DELAY))
                .then( () => this.child.sprite.stop() );
+  }
+
+
+  // eslint-disable-next-line class-methods-use-this
+  _getI18nPrefix() {
+    return 'ChildRuns';
   }
 }
 

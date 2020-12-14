@@ -15,6 +15,9 @@ module.exports = {
   },
   rules: {
     "eol-last": ["error", "always"],
+    "no-underscore-dangle": ["error", {
+      "allowAfterThis": true,
+    }],
     "prefer-destructuring": ["error", {
       "VariableDeclarator": {
         "array": false,

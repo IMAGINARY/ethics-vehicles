@@ -1,10 +1,9 @@
 /* globals PIXI */
-import { ViewSize, STREET_LANE_OFFSET, BorderBlockSize, SPRITE_WIDTH} from '../constants';
+import { BorderBlockSize, SPRITE_WIDTH, STREET_LANE_OFFSET, ViewSize } from '../constants';
 import SceneElement from '../scene-element';
 import Situation from '../situation';
 import Car from '../car';
 import { LANES } from '../lanes';
-import { Texts } from '../texts';
 import InfoPos from '../info-positions';
 
 const BUS_STOP_X = (ViewSize.width/2) - BorderBlockSize.width + (SPRITE_WIDTH/2);
@@ -46,7 +45,6 @@ export default class CarEntersLaneSituation extends Situation {
     this.blackCar = new Car(view, 'assets/images/car_black.png');
     this.truck = new Car(view, 'assets/images/small_truck.png');
     this.busStop = new SceneElement(view, 'assets/images/bus_stop.png', new PIXI.Point(BUS_STOP_X, BUS_STOP_Y));
-    this.Texts = Texts.CarEntersLane;
   }
 
   setup() {
@@ -70,48 +68,35 @@ export default class CarEntersLaneSituation extends Situation {
         sprite: this.view.agentCar.sprite,
         color: Situation.HighlightOthersColor,
         infopos: InfoPos.BottomRight,
-        ...this.Texts.AutonomousCar,
+        ...this._getElementsI18nKeys('AutonomousCar'),
       },
       {
         sprite: this.blackCar.sprite,
         color: Situation.HighlightOthersColor,
         infopos: InfoPos.TopRight,
-        ...this.Texts.LuxuryCar,
+        ...this._getElementsI18nKeys('LuxuryCar'),
       },
       {
         sprite: this.truck.sprite,
         color: Situation.HighlightOthersColor,
         infopos: InfoPos.TopRight.left(),
-        ...this.Texts.Truck,
+        ...this._getElementsI18nKeys('Truck'),
       },
       {
         sprite: this.busStop.sprite,
         color: Situation.HighlightOthersColor,
         infopos: InfoPos.TopRight.right(),
-        ...this.Texts.BusStop
+        ...this._getElementsI18nKeys('BusStop'),
       },
     ];
   }
 
   getDecisions() {
-    return {
-      'humanist': {
-        text: this.Texts.Humanist,
-        actionFunction: () => this.decisionAdvace(),
-      },
-      'profit': {
-        text: this.Texts.Profit,
-        actionFunction: () => this.decisionTurnLeft(),
-      },
-      'protector': {
-        text: this.Texts.Protector,
-        actionFunction: () => this.decisionTurnRight(),
-      },
-    };
-  }
-
-  getDescription() {
-    return this.Texts.description;
+    return this._buildDecisionsWithActions({
+      humanist: () => this.decisionAdvace(),
+      profit: () => this.decisionTurnLeft(),
+      protector: () => this.decisionTurnRight(),
+    });
   }
 
   // eslint-disable-next-line class-methods-use-this
@@ -156,6 +141,11 @@ export default class CarEntersLaneSituation extends Situation {
               this.view.agentCar.placeInLane(this.agentLane);
               this.view.agentCar.driveInLaneUntilPosition(AGENT_STOP_POSITION, SETUP_TIME - AGENT_ENTER_DELAY);
             });
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  _getI18nPrefix() {
+    return 'CarEntersLane';
   }
 }
 

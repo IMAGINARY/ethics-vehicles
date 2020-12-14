@@ -6,14 +6,14 @@ import { IDLE_ANIMATION_TIME, ViewSize } from './constants';
 import { POINT_ZERO } from './pixi-help';
 import Report from './report';
 import './info-boxes';
+import { eventFilter, eventFilters } from './event-help';
 
 import Situation from './situation';
 import SituationRunner from './situation-runner';
-import Menu from './menu.js';
-import { Texts } from './texts';
+import Menu from './menu';
 
 export default class View {
-  constructor(element) {
+  constructor(element, i18next, config) {
     this.app = new PIXI.Application({
       width: ViewSize.width,
       height: ViewSize.height,
@@ -21,6 +21,9 @@ export default class View {
       resolution: window.devicePixelRatio || 1,
     });
     element.appendChild(this.app.view);
+
+    this.i18next = i18next;
+    this.config = config;
 
     this.container = new PIXI.Container();
     this.container.sortableChildren = true;
@@ -32,21 +35,35 @@ export default class View {
     this.agentCar = new Car(this, 'assets/images/car.png');
     this.background.show();
 
-    this.afterIdleAction = () => {};
-   
-    this.SituationMenu = new Menu('menu', [
-      {text: Texts.TreeFalls.name, action: () => this.startSituation('tree-falls') },
-      {text: Texts.CarEntersLane.name, action: () => this.startSituation('car-enters-lane') },
-      {text: Texts.ChildRuns.name, action: () => this.startSituation('child-runs') },
-    ], Texts.ChooseSituation, 'top_menu');
+    this.afterIdleAction = () => {
+    };
+
+    const tf = (...args) => () => this.i18next.t(...args);
+    const buildMenuOption = (key, situationId) => ({
+      label: tf(key),
+      action: () => this.startSituation(situationId),
+    });
+    const menuOptions = [
+      buildMenuOption('TreeFalls.name', 'tree-falls'),
+      buildMenuOption('CarEntersLane.name', 'car-enters-lane'),
+      buildMenuOption('ChildRuns.name', 'child-runs'),
+    ];
+    this.SituationMenu = new Menu('menu', menuOptions, () => tf('ChooseSituation'), 'top_menu');
+    this.i18next.on('languageChanged', () => this.SituationMenu.refreshTexts());
 
     this.runner = new SituationRunner(this, new Report($('#report')[0]));
 
-    this.app.ticker.add( () => TWEEN.update() );
+    this.app.ticker.add(() => TWEEN.update());
+
+    const handleKeyDownL = eventFilter(eventFilters.KEY_L, this.switchToNextLanguage.bind(this));
+    window.addEventListener('keydown', handleKeyDownL);
   }
 
   spriteToScreenPos(sprite) {
-    return { x: sprite.x + this.app.screen.width/2, y: sprite.y + this.app.screen.height/2 };
+    return {
+      x: sprite.x + this.app.screen.width / 2,
+      y: sprite.y + this.app.screen.height / 2
+    };
   }
 
   doIdleAnimation() {
@@ -59,14 +76,15 @@ export default class View {
 
   startIdleAnimation() {
     this.afterIdleAction = this.startIdleAnimation;
-    this.doIdleAnimation().then(() => this.afterIdleAction());
+    this.doIdleAnimation()
+      .then(() => this.afterIdleAction());
   }
 
   start() {
     this.SituationMenu.show();
     this.startIdleAnimation();
   }
-  
+
   startSituation(situationID) {
     this.SituationMenu.hide();
     this.queueAction(() => {
@@ -77,5 +95,18 @@ export default class View {
 
   queueAction(action) {
     this.afterIdleAction = action;
+  }
+
+  switchToNextLanguage() {
+    const { languages } = this.config;
+    const lngIndex = this.i18next.languages.reduce(
+      (accIndex, curLng) => (accIndex !== -1 ? accIndex : languages.indexOf(curLng)),
+      -1
+    );
+    if (lngIndex !== -1) {
+      const newLngIndex = (lngIndex + 1) % languages.length;
+      const newLng = languages[newLngIndex];
+      this.i18next.changeLanguage(newLng);
+    }
   }
 }
