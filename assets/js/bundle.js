@@ -2211,4 +2211,5 @@ function () {
 
 exports["default"] = View;
 
-},{"./car":1,"./constants":2,"./info-boxes":5,"./lanes":8,"./menu.js":10,"./pixi-help":11,"./report":13,"./scene-element":14,"./situation":16,"./situation-runner":15,"./texts":21}]},{},[9]);
+},{"./car":1,"./constants":2,"./info-boxes":5,"./lanes":8,"./menu.js":10,"./pixi-help":11,"./report":13,"./scene-element":14,"./situation":16,"./situation-runner":15,"./texts":21}]},{},[9])
+

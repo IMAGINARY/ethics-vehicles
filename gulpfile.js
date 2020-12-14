@@ -59,8 +59,12 @@ function scripts() {
   return browserify({
     extensions: ['.js', '.jsx'],
     entries: './src/js/main.js',
+    debug: true,
   })
-    .transform('babelify', { presets: ['@babel/env'] })
+    .transform('babelify', {
+      presets: ['@babel/env'],
+      sourceMaps: true,
+    })
     .on('error', (msg) => {
       // eslint-disable-next-line no-console
       console.error(msg);
@@ -68,7 +72,7 @@ function scripts() {
     .bundle()
     .pipe(source(`${JS_BUNDLE_NAME}.js`))
     .pipe(buffer())
-    .pipe(sourcemaps.init())
+    .pipe(sourcemaps.init({ loadMaps: true }))
     .pipe(gulp.dest(paths.scripts.dest))
     .pipe(uglify())
     .pipe(rename(`${JS_BUNDLE_NAME}.min.js`))
