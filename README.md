@@ -2,6 +2,19 @@
 
 An exhibit for the I AM AI exhibition.
 
+## Configuration
+The exhibit can be configured using a config file located at the same level as the `index.html` file.
+By default, `./config.json` is used. A different config file can be specified via the
+`config` query string variable, e.g. `index.html?config=myconfig.json`.
+
+Possible config options include:
+- `defaultLanguage` (string, default: `"en"`): Default language to use. Can be overridden by the
+  `lang` query string.
+- `languages` (array of strings, default: ['de', 'en']): The languages loaded for i18n.
+  Must match `.json` locale files in `./assets/locales`.
+- `showLanguageSwitcher` (boolean, default: `true`): Whether to show a button for switching
+  languages. If the button is hidden, languages can still be switched using the <kbd>l</kbd> key.
+
 ## Compilation
 
 This exhibit is built using several compilable languages:
@@ -50,6 +63,8 @@ Start a web server at localhost:8080, from where you can use the exhibit:
     npm run start
     ```
 
-Car crash audio files (modified) downloaded from Audiosoundclips.com
-Cars passing by audio files (modified) from http://audio-stock.com, downloaded from https://freesound.org/
+### Third-party asset licensing
 
+- Car crash audio files (modified) downloaded from Audiosoundclips.com
+- Cars passing by audio files (modified) from http://audio-stock.com, downloaded from https://freesound.org/
+- Language switcher icon downloaded from https://fontawesome.com/v5.10.2/icons/language?style=solid (CC-BY 4.0)
