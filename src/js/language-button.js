@@ -14,6 +14,12 @@ export default class LanguageButton {
     this.$button.click(this.switchToNextLanguage.bind(this));
 
     this.updateLabel();
+
+    if (config.showLanguageSwitcher) {
+      this.show();
+    } else {
+      this.hide();
+    }
   }
 
   switchToNextLanguage() {
@@ -33,5 +39,13 @@ export default class LanguageButton {
   updateLabel() {
     const lng = this.i18next.language;
     this.$buttonLabel.text(langmap[lng].nativeName);
+  }
+
+  hide() {
+    this.$button.hide();
+  }
+
+  show() {
+    this.$button.show();
   }
 }

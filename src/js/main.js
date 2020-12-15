@@ -1,14 +1,11 @@
 /* globals $ */
+import defaultConfig from './default-config';
 import View from './view';
 import './situations/car-enters-lane';
 import './situations/tree-falls';
 import './situations/child-runs';
 import createI18next from './i18n';
 
-const defaultConfig = {
-  defaultLanguage: 'en',
-  languages: ['de', 'en'],
-};
 
 /**
  * Loads the config file from an external JSON file

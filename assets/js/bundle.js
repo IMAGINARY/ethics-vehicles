@@ -12169,7 +12169,7 @@ function () {
 
 exports["default"] = Car;
 
-},{"./constants":225,"./lane":233,"./pixi-help":238,"core-js/modules/es.object.define-property":139,"core-js/modules/es.object.to-string":145,"core-js/modules/es.promise":146}],225:[function(require,module,exports){
+},{"./constants":225,"./lane":234,"./pixi-help":239,"core-js/modules/es.object.define-property":139,"core-js/modules/es.object.to-string":145,"core-js/modules/es.promise":146}],225:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -12462,6 +12462,20 @@ exports["default"] = Countdown;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports["default"] = void 0;
+var defaultConfig = {
+  defaultLanguage: 'en',
+  languages: ['de', 'en'],
+  showLanguageSwitcher: true
+};
+exports["default"] = defaultConfig;
+
+},{}],229:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 exports.HighlightColor = void 0;
 var Violet = 0x8f1a81;
 var Yellow = 0xffec02;
@@ -12469,7 +12483,7 @@ var Grey = 0x666666;
 var HighlightColor = Yellow;
 exports.HighlightColor = HighlightColor;
 
-},{}],229:[function(require,module,exports){
+},{}],230:[function(require,module,exports){
 "use strict";
 
 require("core-js/modules/es.array.for-each");
@@ -12510,7 +12524,7 @@ var eventFilters = {
 };
 exports.eventFilters = eventFilters;
 
-},{"core-js/modules/es.array.for-each":127,"core-js/modules/web.dom-collections.for-each":155}],230:[function(require,module,exports){
+},{"core-js/modules/es.array.for-each":127,"core-js/modules/web.dom-collections.for-each":155}],231:[function(require,module,exports){
 "use strict";
 
 require("core-js/modules/es.symbol");
@@ -12654,7 +12668,7 @@ function _createI18next() {
   return _createI18next.apply(this, arguments);
 }
 
-},{"core-js/modules/es.array.concat":124,"core-js/modules/es.array.from":128,"core-js/modules/es.array.is-array":130,"core-js/modules/es.array.iterator":131,"core-js/modules/es.date.to-string":135,"core-js/modules/es.object.keys":143,"core-js/modules/es.object.to-string":145,"core-js/modules/es.promise":146,"core-js/modules/es.regexp.to-string":148,"core-js/modules/es.string.iterator":150,"core-js/modules/es.symbol":154,"core-js/modules/es.symbol.description":152,"core-js/modules/es.symbol.iterator":153,"core-js/modules/web.dom-collections.iterator":156,"i18next":166,"i18next-browser-languagedetector":161,"i18next-http-backend":163,"lodash/uniq":221,"regenerator-runtime/runtime":223}],231:[function(require,module,exports){
+},{"core-js/modules/es.array.concat":124,"core-js/modules/es.array.from":128,"core-js/modules/es.array.is-array":130,"core-js/modules/es.array.iterator":131,"core-js/modules/es.date.to-string":135,"core-js/modules/es.object.keys":143,"core-js/modules/es.object.to-string":145,"core-js/modules/es.promise":146,"core-js/modules/es.regexp.to-string":148,"core-js/modules/es.string.iterator":150,"core-js/modules/es.symbol":154,"core-js/modules/es.symbol.description":152,"core-js/modules/es.symbol.iterator":153,"core-js/modules/web.dom-collections.iterator":156,"i18next":166,"i18next-browser-languagedetector":161,"i18next-http-backend":163,"lodash/uniq":221,"regenerator-runtime/runtime":223}],232:[function(require,module,exports){
 "use strict";
 
 require("core-js/modules/es.array.for-each");
@@ -12739,7 +12753,7 @@ InfoBox.Boxes = $('.info_element').get().map(function (html) {
   return new InfoBox(html);
 });
 
-},{"./style-help":247,"core-js/modules/es.array.for-each":127,"core-js/modules/es.array.map":133,"core-js/modules/es.object.define-property":139,"core-js/modules/web.dom-collections.for-each":155}],232:[function(require,module,exports){
+},{"./style-help":248,"core-js/modules/es.array.for-each":127,"core-js/modules/es.array.map":133,"core-js/modules/es.object.define-property":139,"core-js/modules/web.dom-collections.for-each":155}],233:[function(require,module,exports){
 "use strict";
 
 require("core-js/modules/es.object.define-property");
@@ -12798,7 +12812,7 @@ InfoPos.TopRight = new InfoPos(1420, 90);
 InfoPos.BottomRight = new InfoPos(1420, 790);
 InfoPos.BottomLeft = new InfoPos(300, 790);
 
-},{"core-js/modules/es.object.define-property":139}],233:[function(require,module,exports){
+},{"core-js/modules/es.object.define-property":139}],234:[function(require,module,exports){
 "use strict";
 
 require("core-js/modules/es.object.define-property");
@@ -12869,7 +12883,7 @@ exports.Lane = Lane;
 var NO_LANE = new Lane(_pixiHelp.POINT_ZERO, new PIXI.Point(1, 0));
 exports.NO_LANE = NO_LANE;
 
-},{"./pixi-help":238,"core-js/modules/es.object.define-property":139}],234:[function(require,module,exports){
+},{"./pixi-help":239,"core-js/modules/es.object.define-property":139}],235:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -12906,7 +12920,7 @@ setOppositeLanes(LANES[2], LANES[3]);
 setOppositeLanes(LANES[4], LANES[5]);
 setOppositeLanes(LANES[6], LANES[7]);
 
-},{"./constants":225,"./lane":233}],235:[function(require,module,exports){
+},{"./constants":225,"./lane":234}],236:[function(require,module,exports){
 "use strict";
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -12952,6 +12966,12 @@ function () {
     window.addEventListener('keydown', handleKeyDownL);
     this.$button.click(this.switchToNextLanguage.bind(this));
     this.updateLabel();
+
+    if (config.showLanguageSwitcher) {
+      this.show();
+    } else {
+      this.hide();
+    }
   }
 
   _createClass(LanguageButton, [{
@@ -12978,6 +12998,16 @@ function () {
       var lng = this.i18next.language;
       this.$buttonLabel.text(langmap[lng].nativeName);
     }
+  }, {
+    key: "hide",
+    value: function hide() {
+      this.$button.hide();
+    }
+  }, {
+    key: "show",
+    value: function show() {
+      this.$button.show();
+    }
   }]);
 
   return LanguageButton;
@@ -12985,7 +13015,7 @@ function () {
 
 exports["default"] = LanguageButton;
 
-},{"./event-help":229,"core-js/modules/es.array.index-of":129,"core-js/modules/es.array.reduce":134,"core-js/modules/es.function.bind":136,"core-js/modules/es.object.define-property":139,"langmap":167}],236:[function(require,module,exports){
+},{"./event-help":230,"core-js/modules/es.array.index-of":129,"core-js/modules/es.array.reduce":134,"core-js/modules/es.function.bind":136,"core-js/modules/es.object.define-property":139,"langmap":167}],237:[function(require,module,exports){
 "use strict";
 
 require("core-js/modules/es.symbol");
@@ -13030,6 +13060,8 @@ require("core-js/modules/web.url");
 
 require("regenerator-runtime/runtime");
 
+var _defaultConfig = _interopRequireDefault(require("./default-config"));
+
 var _view = _interopRequireDefault(require("./view"));
 
 require("./situations/car-enters-lane");
@@ -13052,17 +13084,12 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
-var defaultConfig = {
-  defaultLanguage: 'en',
-  languages: ['de', 'en']
-};
 /**
  * Loads the config file from an external JSON file
  *
  * @param {String} uri
  * @return {Promise<any>}
  */
-
 function loadConfig(_x) {
   return _loadConfig.apply(this, arguments);
 }
@@ -13164,7 +13191,7 @@ function _main() {
             configUrl = customConfigUrl || defaultConfigUrl;
             _context2.t0 = _objectSpread;
             _context2.t1 = {};
-            _context2.t2 = defaultConfig;
+            _context2.t2 = _defaultConfig["default"];
             _context2.t3 = {};
             _context2.next = 10;
             return loadConfig(configUrl.href);
@@ -13204,7 +13231,7 @@ main().then(function () {
   return undefined;
 });
 
-},{"./i18n":230,"./situations/car-enters-lane":244,"./situations/child-runs":245,"./situations/tree-falls":246,"./view":248,"core-js/modules/es.array.concat":124,"core-js/modules/es.array.filter":125,"core-js/modules/es.array.for-each":127,"core-js/modules/es.array.iterator":131,"core-js/modules/es.date.to-string":135,"core-js/modules/es.object.define-properties":138,"core-js/modules/es.object.define-property":139,"core-js/modules/es.object.get-own-property-descriptor":140,"core-js/modules/es.object.get-own-property-descriptors":141,"core-js/modules/es.object.keys":143,"core-js/modules/es.object.to-string":145,"core-js/modules/es.promise":146,"core-js/modules/es.regexp.exec":147,"core-js/modules/es.regexp.to-string":148,"core-js/modules/es.string.iterator":150,"core-js/modules/es.string.search":151,"core-js/modules/es.symbol":154,"core-js/modules/web.dom-collections.for-each":155,"core-js/modules/web.dom-collections.iterator":156,"core-js/modules/web.url":159,"regenerator-runtime/runtime":223}],237:[function(require,module,exports){
+},{"./default-config":228,"./i18n":231,"./situations/car-enters-lane":245,"./situations/child-runs":246,"./situations/tree-falls":247,"./view":249,"core-js/modules/es.array.concat":124,"core-js/modules/es.array.filter":125,"core-js/modules/es.array.for-each":127,"core-js/modules/es.array.iterator":131,"core-js/modules/es.date.to-string":135,"core-js/modules/es.object.define-properties":138,"core-js/modules/es.object.define-property":139,"core-js/modules/es.object.get-own-property-descriptor":140,"core-js/modules/es.object.get-own-property-descriptors":141,"core-js/modules/es.object.keys":143,"core-js/modules/es.object.to-string":145,"core-js/modules/es.promise":146,"core-js/modules/es.regexp.exec":147,"core-js/modules/es.regexp.to-string":148,"core-js/modules/es.string.iterator":150,"core-js/modules/es.string.search":151,"core-js/modules/es.symbol":154,"core-js/modules/web.dom-collections.for-each":155,"core-js/modules/web.dom-collections.iterator":156,"core-js/modules/web.url":159,"regenerator-runtime/runtime":223}],238:[function(require,module,exports){
 "use strict";
 
 require("core-js/modules/es.array.find");
@@ -13383,7 +13410,7 @@ function () {
 
 exports["default"] = Menu;
 
-},{"./style-help":247,"core-js/modules/es.array.find":126,"core-js/modules/es.array.for-each":127,"core-js/modules/es.array.from":128,"core-js/modules/es.array.map":133,"core-js/modules/es.function.bind":136,"core-js/modules/es.object.define-property":139,"core-js/modules/es.string.iterator":150,"core-js/modules/web.dom-collections.for-each":155}],238:[function(require,module,exports){
+},{"./style-help":248,"core-js/modules/es.array.find":126,"core-js/modules/es.array.for-each":127,"core-js/modules/es.array.from":128,"core-js/modules/es.array.map":133,"core-js/modules/es.function.bind":136,"core-js/modules/es.object.define-property":139,"core-js/modules/es.string.iterator":150,"core-js/modules/web.dom-collections.for-each":155}],239:[function(require,module,exports){
 "use strict";
 
 require("core-js/modules/es.array.map");
@@ -13488,7 +13515,7 @@ function pixiMoveTo(element, dest) {
 var POINT_ZERO = new PIXI.Point(0, 0);
 exports.POINT_ZERO = POINT_ZERO;
 
-},{"./constants":225,"core-js/modules/es.array.map":133,"core-js/modules/es.object.to-string":145,"core-js/modules/es.promise":146,"core-js/modules/es.string.anchor":149}],239:[function(require,module,exports){
+},{"./constants":225,"core-js/modules/es.array.map":133,"core-js/modules/es.object.to-string":145,"core-js/modules/es.promise":146,"core-js/modules/es.string.anchor":149}],240:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -13511,7 +13538,7 @@ var Policies = [{
 }];
 exports.Policies = Policies;
 
-},{}],240:[function(require,module,exports){
+},{}],241:[function(require,module,exports){
 "use strict";
 
 require("core-js/modules/es.object.define-property");
@@ -13609,7 +13636,7 @@ function () {
 
 exports["default"] = Report;
 
-},{"./style-help":247,"core-js/modules/es.object.define-property":139,"core-js/modules/es.object.to-string":145,"core-js/modules/es.promise":146,"core-js/modules/web.timers":157}],241:[function(require,module,exports){
+},{"./style-help":248,"core-js/modules/es.object.define-property":139,"core-js/modules/es.object.to-string":145,"core-js/modules/es.promise":146,"core-js/modules/web.timers":157}],242:[function(require,module,exports){
 "use strict";
 
 require("core-js/modules/es.object.define-property");
@@ -13699,7 +13726,7 @@ function () {
 
 exports["default"] = SceneElement;
 
-},{"./constants":225,"./pixi-help":238,"core-js/modules/es.object.define-property":139,"core-js/modules/es.object.to-string":145,"core-js/modules/es.promise":146}],242:[function(require,module,exports){
+},{"./constants":225,"./pixi-help":239,"core-js/modules/es.object.define-property":139,"core-js/modules/es.object.to-string":145,"core-js/modules/es.promise":146}],243:[function(require,module,exports){
 "use strict";
 
 require("core-js/modules/es.array.concat");
@@ -14194,7 +14221,7 @@ function () {
 
 exports["default"] = SituationRunner;
 
-},{"./countdown-button":226,"./design":228,"./info-boxes":231,"./menu":237,"./pixi-help":238,"./policies":239,"core-js/modules/es.array.concat":124,"core-js/modules/es.array.for-each":127,"core-js/modules/es.array.map":133,"core-js/modules/es.function.bind":136,"core-js/modules/es.object.define-property":139,"core-js/modules/es.object.to-string":145,"core-js/modules/es.promise":146,"core-js/modules/web.dom-collections.for-each":155,"core-js/modules/web.timers":157,"regenerator-runtime/runtime":223}],243:[function(require,module,exports){
+},{"./countdown-button":226,"./design":229,"./info-boxes":232,"./menu":238,"./pixi-help":239,"./policies":240,"core-js/modules/es.array.concat":124,"core-js/modules/es.array.for-each":127,"core-js/modules/es.array.map":133,"core-js/modules/es.function.bind":136,"core-js/modules/es.object.define-property":139,"core-js/modules/es.object.to-string":145,"core-js/modules/es.promise":146,"core-js/modules/web.dom-collections.for-each":155,"core-js/modules/web.timers":157,"regenerator-runtime/runtime":223}],244:[function(require,module,exports){
 "use strict";
 
 require("core-js/modules/es.array.concat");
@@ -14345,7 +14372,7 @@ Situation.situations = {};
 Situation.HighlightAgentColor = 0xFFF200;
 Situation.HighlightOthersColor = 0xFF8000;
 
-},{"core-js/modules/es.array.concat":124,"core-js/modules/es.array.for-each":127,"core-js/modules/es.array.join":132,"core-js/modules/es.object.define-property":139,"core-js/modules/es.object.to-string":145,"core-js/modules/es.promise":146,"core-js/modules/web.dom-collections.for-each":155,"core-js/modules/web.timers":157}],244:[function(require,module,exports){
+},{"core-js/modules/es.array.concat":124,"core-js/modules/es.array.for-each":127,"core-js/modules/es.array.join":132,"core-js/modules/es.object.define-property":139,"core-js/modules/es.object.to-string":145,"core-js/modules/es.promise":146,"core-js/modules/web.dom-collections.for-each":155,"core-js/modules/web.timers":157}],245:[function(require,module,exports){
 "use strict";
 
 require("core-js/modules/es.symbol");
@@ -14602,7 +14629,7 @@ exports["default"] = CarEntersLaneSituation;
 
 _situation["default"].registerSituation('car-enters-lane', CarEntersLaneSituation);
 
-},{"../car":224,"../constants":225,"../info-positions":232,"../lanes":234,"../scene-element":241,"../situation":243,"core-js/modules/es.array.filter":125,"core-js/modules/es.array.for-each":127,"core-js/modules/es.array.iterator":131,"core-js/modules/es.object.create":137,"core-js/modules/es.object.define-properties":138,"core-js/modules/es.object.define-property":139,"core-js/modules/es.object.get-own-property-descriptor":140,"core-js/modules/es.object.get-own-property-descriptors":141,"core-js/modules/es.object.get-prototype-of":142,"core-js/modules/es.object.keys":143,"core-js/modules/es.object.set-prototype-of":144,"core-js/modules/es.object.to-string":145,"core-js/modules/es.promise":146,"core-js/modules/es.string.iterator":150,"core-js/modules/es.symbol":154,"core-js/modules/es.symbol.description":152,"core-js/modules/es.symbol.iterator":153,"core-js/modules/web.dom-collections.for-each":155,"core-js/modules/web.dom-collections.iterator":156}],245:[function(require,module,exports){
+},{"../car":224,"../constants":225,"../info-positions":233,"../lanes":235,"../scene-element":242,"../situation":244,"core-js/modules/es.array.filter":125,"core-js/modules/es.array.for-each":127,"core-js/modules/es.array.iterator":131,"core-js/modules/es.object.create":137,"core-js/modules/es.object.define-properties":138,"core-js/modules/es.object.define-property":139,"core-js/modules/es.object.get-own-property-descriptor":140,"core-js/modules/es.object.get-own-property-descriptors":141,"core-js/modules/es.object.get-prototype-of":142,"core-js/modules/es.object.keys":143,"core-js/modules/es.object.set-prototype-of":144,"core-js/modules/es.object.to-string":145,"core-js/modules/es.promise":146,"core-js/modules/es.string.iterator":150,"core-js/modules/es.symbol":154,"core-js/modules/es.symbol.description":152,"core-js/modules/es.symbol.iterator":153,"core-js/modules/web.dom-collections.for-each":155,"core-js/modules/web.dom-collections.iterator":156}],246:[function(require,module,exports){
 "use strict";
 
 require("core-js/modules/es.symbol");
@@ -14863,7 +14890,7 @@ exports["default"] = ChildRunsSituation;
 
 _situation["default"].registerSituation('child-runs', ChildRunsSituation);
 
-},{"../car":224,"../constants":225,"../info-positions":232,"../lanes":234,"../pixi-help":238,"../scene-element":241,"../situation":243,"core-js/modules/es.array.filter":125,"core-js/modules/es.array.for-each":127,"core-js/modules/es.array.iterator":131,"core-js/modules/es.array.map":133,"core-js/modules/es.object.create":137,"core-js/modules/es.object.define-properties":138,"core-js/modules/es.object.define-property":139,"core-js/modules/es.object.get-own-property-descriptor":140,"core-js/modules/es.object.get-own-property-descriptors":141,"core-js/modules/es.object.get-prototype-of":142,"core-js/modules/es.object.keys":143,"core-js/modules/es.object.set-prototype-of":144,"core-js/modules/es.object.to-string":145,"core-js/modules/es.promise":146,"core-js/modules/es.string.iterator":150,"core-js/modules/es.symbol":154,"core-js/modules/es.symbol.description":152,"core-js/modules/es.symbol.iterator":153,"core-js/modules/web.dom-collections.for-each":155,"core-js/modules/web.dom-collections.iterator":156}],246:[function(require,module,exports){
+},{"../car":224,"../constants":225,"../info-positions":233,"../lanes":235,"../pixi-help":239,"../scene-element":242,"../situation":244,"core-js/modules/es.array.filter":125,"core-js/modules/es.array.for-each":127,"core-js/modules/es.array.iterator":131,"core-js/modules/es.array.map":133,"core-js/modules/es.object.create":137,"core-js/modules/es.object.define-properties":138,"core-js/modules/es.object.define-property":139,"core-js/modules/es.object.get-own-property-descriptor":140,"core-js/modules/es.object.get-own-property-descriptors":141,"core-js/modules/es.object.get-prototype-of":142,"core-js/modules/es.object.keys":143,"core-js/modules/es.object.set-prototype-of":144,"core-js/modules/es.object.to-string":145,"core-js/modules/es.promise":146,"core-js/modules/es.string.iterator":150,"core-js/modules/es.symbol":154,"core-js/modules/es.symbol.description":152,"core-js/modules/es.symbol.iterator":153,"core-js/modules/web.dom-collections.for-each":155,"core-js/modules/web.dom-collections.iterator":156}],247:[function(require,module,exports){
 "use strict";
 
 require("core-js/modules/es.symbol");
@@ -15122,7 +15149,7 @@ exports["default"] = TreeFallsSituation;
 
 _situation["default"].registerSituation('tree-falls', TreeFallsSituation);
 
-},{"../car":224,"../constants":225,"../info-positions":232,"../lanes":234,"../pixi-help":238,"../scene-element":241,"../situation":243,"core-js/modules/es.array.filter":125,"core-js/modules/es.array.for-each":127,"core-js/modules/es.array.iterator":131,"core-js/modules/es.array.map":133,"core-js/modules/es.object.create":137,"core-js/modules/es.object.define-properties":138,"core-js/modules/es.object.define-property":139,"core-js/modules/es.object.get-own-property-descriptor":140,"core-js/modules/es.object.get-own-property-descriptors":141,"core-js/modules/es.object.get-prototype-of":142,"core-js/modules/es.object.keys":143,"core-js/modules/es.object.set-prototype-of":144,"core-js/modules/es.object.to-string":145,"core-js/modules/es.promise":146,"core-js/modules/es.string.iterator":150,"core-js/modules/es.symbol":154,"core-js/modules/es.symbol.description":152,"core-js/modules/es.symbol.iterator":153,"core-js/modules/web.dom-collections.for-each":155,"core-js/modules/web.dom-collections.iterator":156}],247:[function(require,module,exports){
+},{"../car":224,"../constants":225,"../info-positions":233,"../lanes":235,"../pixi-help":239,"../scene-element":242,"../situation":244,"core-js/modules/es.array.filter":125,"core-js/modules/es.array.for-each":127,"core-js/modules/es.array.iterator":131,"core-js/modules/es.array.map":133,"core-js/modules/es.object.create":137,"core-js/modules/es.object.define-properties":138,"core-js/modules/es.object.define-property":139,"core-js/modules/es.object.get-own-property-descriptor":140,"core-js/modules/es.object.get-own-property-descriptors":141,"core-js/modules/es.object.get-prototype-of":142,"core-js/modules/es.object.keys":143,"core-js/modules/es.object.set-prototype-of":144,"core-js/modules/es.object.to-string":145,"core-js/modules/es.promise":146,"core-js/modules/es.string.iterator":150,"core-js/modules/es.symbol":154,"core-js/modules/es.symbol.description":152,"core-js/modules/es.symbol.iterator":153,"core-js/modules/web.dom-collections.for-each":155,"core-js/modules/web.dom-collections.iterator":156}],248:[function(require,module,exports){
 "use strict";
 
 require("core-js/modules/es.object.to-string");
@@ -15152,7 +15179,7 @@ function setLeftTopCSSFromCoord(element, coord) {
   element.style.top = coord.y + 'px';
 }
 
-},{"core-js/modules/es.object.to-string":145,"core-js/modules/es.promise":146}],248:[function(require,module,exports){
+},{"core-js/modules/es.object.to-string":145,"core-js/modules/es.promise":146}],249:[function(require,module,exports){
 "use strict";
 
 require("core-js/modules/es.object.define-property");
@@ -15313,5 +15340,5 @@ function () {
 
 exports["default"] = View;
 
-},{"./car":224,"./constants":225,"./info-boxes":231,"./lanes":234,"./language-button":235,"./menu":237,"./pixi-help":238,"./report":240,"./scene-element":241,"./situation":243,"./situation-runner":242,"core-js/modules/es.object.define-property":139}]},{},[236])
+},{"./car":224,"./constants":225,"./info-boxes":232,"./lanes":235,"./language-button":236,"./menu":238,"./pixi-help":239,"./report":241,"./scene-element":242,"./situation":244,"./situation-runner":243,"core-js/modules/es.object.define-property":139}]},{},[237])
 

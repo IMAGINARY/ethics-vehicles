@@ -3,5 +3,6 @@
   "languages": [
     "de",
     "en"
-  ]
+  ],
+  "showLanguageSwitcher": true
 }
