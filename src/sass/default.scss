@@ -142,8 +142,7 @@ p.report_paragraph {
   line-height: 15px;
 }
 
-.menu_option {
-  width: 380px;
+.button {
   height: 60px;
   margin: 0 0 15px 0;
   padding: 0px 10px 0 10px;
@@ -160,6 +159,19 @@ p.report_paragraph {
   word-wrap: break-word;
   font-family: 'Exo 2';
   font-size: 20px;
+}
+
+.button:focus {
+  outline: none;
+}
+
+.button:active {
+  background-color: mix($color-yellow, white, 25%);
+}
+
+.menu_option {
+  @extend .button;
+  width: 380px;
 }
 
 .fade_in {
@@ -270,4 +282,28 @@ $advance-button-left: ($game-canvas-width - $advance-button-width)/2;
   left: $advance-button-left;
   width: $advance-button-width;
   bottom: 200px;
+}
+
+#languageButton {
+  z-index: 1001;
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+}
+
+#languageButton span.icon {
+  position: relative;
+  display: inline-block;
+  height: 0px;
+  line-height: 0px;
+  vertical-align: middle;
+  margin-left: 1ex;
+}
+
+$language-icon-height: 2.5em;
+#languageButton * img.icon {
+  position: relative;
+  vertical-align: middle;
+  height: $language-icon-height;
+  top: -1.1*($language-icon-height/2);
 }

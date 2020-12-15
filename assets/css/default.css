@@ -112,8 +112,7 @@ p.report_paragraph {
   margin: 0;
   line-height: 15px; }
 
-.menu_option {
-  width: 380px;
+.button, .menu_option {
   height: 60px;
   margin: 0 0 15px 0;
   padding: 0px 10px 0 10px;
@@ -128,6 +127,15 @@ p.report_paragraph {
   word-wrap: break-word;
   font-family: 'Exo 2';
   font-size: 20px; }
+
+.button:focus, .menu_option:focus {
+  outline: none; }
+
+.button:active, .menu_option:active {
+  background-color: #fffac0; }
+
+.menu_option {
+  width: 380px; }
 
 .fade_in {
   animation: fade_in;
@@ -224,5 +232,25 @@ button {
   left: 840px;
   width: 240px;
   bottom: 200px; }
+
+#languageButton {
+  z-index: 1001;
+  position: absolute;
+  bottom: 20px;
+  right: 20px; }
+
+#languageButton span.icon {
+  position: relative;
+  display: inline-block;
+  height: 0px;
+  line-height: 0px;
+  vertical-align: middle;
+  margin-left: 1ex; }
+
+#languageButton * img.icon {
+  position: relative;
+  vertical-align: middle;
+  height: 2.5em;
+  top: -1.375em; }
 
 /*# sourceMappingURL=default.css.map */

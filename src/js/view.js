@@ -6,11 +6,11 @@ import { IDLE_ANIMATION_TIME, ViewSize } from './constants';
 import { POINT_ZERO } from './pixi-help';
 import Report from './report';
 import './info-boxes';
-import { eventFilter, eventFilters } from './event-help';
 
 import Situation from './situation';
 import SituationRunner from './situation-runner';
 import Menu from './menu';
+import LanguageButton from './language-button';
 
 export default class View {
   constructor(element, i18next, config) {
@@ -49,14 +49,12 @@ export default class View {
       buildMenuOption('ChildRuns.name', 'child-runs'),
     ];
     this.SituationMenu = new Menu('menu', menuOptions, () => tf('ChooseSituation'), 'top_menu');
+    this.languageButton = new LanguageButton(this.i18next, this.config);
     this.i18next.on('languageChanged', () => this.SituationMenu.refreshTexts());
 
     this.runner = new SituationRunner(this, new Report($('#report')[0]));
 
     this.app.ticker.add(() => TWEEN.update());
-
-    const handleKeyDownL = eventFilter(eventFilters.KEY_L, this.switchToNextLanguage.bind(this));
-    window.addEventListener('keydown', handleKeyDownL);
   }
 
   spriteToScreenPos(sprite) {
@@ -95,18 +93,5 @@ export default class View {
 
   queueAction(action) {
     this.afterIdleAction = action;
-  }
-
-  switchToNextLanguage() {
-    const { languages } = this.config;
-    const lngIndex = this.i18next.languages.reduce(
-      (accIndex, curLng) => (accIndex !== -1 ? accIndex : languages.indexOf(curLng)),
-      -1
-    );
-    if (lngIndex !== -1) {
-      const newLngIndex = (lngIndex + 1) % languages.length;
-      const newLng = languages[newLngIndex];
-      this.i18next.changeLanguage(newLng);
-    }
   }
 }

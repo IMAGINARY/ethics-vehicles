@@ -6434,7 +6434,7 @@ if (typeof require !== 'undefined' && (typeof window === 'undefined' || typeof w
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 
-},{"node-fetch":221}],163:[function(require,module,exports){
+},{"node-fetch":222}],163:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -9101,6 +9101,874 @@ var i18next = new I18n();
 module.exports = i18next;
 
 },{"@babel/runtime/helpers/assertThisInitialized":1,"@babel/runtime/helpers/classCallCheck":2,"@babel/runtime/helpers/createClass":3,"@babel/runtime/helpers/getPrototypeOf":5,"@babel/runtime/helpers/inherits":6,"@babel/runtime/helpers/objectSpread":7,"@babel/runtime/helpers/possibleConstructorReturn":8,"@babel/runtime/helpers/typeof":10}],167:[function(require,module,exports){
+(function(root, factory) {
+  if (typeof define === 'function' && define.amd) {
+    define(function() {
+      return (root.languageMappingList = factory());
+    });
+  } else if (typeof exports === 'object') {
+    module.exports = factory();
+  } else {
+    root.languageMappingList = factory();
+  }
+}(this, function() {
+  return {
+    'ach': {
+      nativeName: "Lwo",
+      englishName: "Acholi"
+    },
+    'ady': {
+      nativeName: "Адыгэбзэ",
+      englishName: "Adyghe"
+    },
+    'af': {
+      nativeName: "Afrikaans",
+      englishName: "Afrikaans"
+    },
+    'af-NA': {
+      nativeName: "Afrikaans (Namibia)",
+      englishName: "Afrikaans (Namibia)"
+    },
+    'af-ZA': {
+      nativeName: "Afrikaans (South Africa)",
+      englishName: "Afrikaans (South Africa)"
+    },
+    'ak': {
+      nativeName: "Tɕɥi",
+      englishName: "Akan"
+    },
+    'ar': {
+      nativeName: "العربية",
+      englishName: "Arabic"
+    },
+    'ar-AR': {
+      nativeName: "العربية",
+      englishName: "Arabic"
+    },
+    'ar-MA': {
+      nativeName: "العربية",
+      englishName: "Arabic (Morocco)"
+    },
+    'ar-SA': {
+      nativeName: "العربية (السعودية)",
+      englishName: "Arabic (Saudi Arabia)"
+    },
+    'ay-BO': {
+      nativeName: "Aymar aru",
+      englishName: "Aymara"
+    },
+    'az': {
+      nativeName: "Azərbaycan dili",
+      englishName: "Azerbaijani"
+    },
+    'az-AZ': {
+      nativeName: "Azərbaycan dili",
+      englishName: "Azerbaijani"
+    },
+    'be-BY': {
+      nativeName: "Беларуская",
+      englishName: "Belarusian"
+    },
+    'bg': {
+      nativeName: "Български",
+      englishName: "Bulgarian"
+    },
+    'bg-BG': {
+      nativeName: "Български",
+      englishName: "Bulgarian"
+    },
+    'bn': {
+      nativeName: "বাংলা",
+      englishName: "Bengali"
+    },
+    'bn-IN': {
+      nativeName: "বাংলা (ভারত)",
+      englishName: "Bengali (India)"
+    },
+    'bn-BD': {
+      nativeName: "বাংলা(বাংলাদেশ)",
+      englishName: "Bengali (Bangladesh)"
+    },
+    'bs-BA': {
+      nativeName: "Bosanski",
+      englishName: "Bosnian"
+    },
+    'ca': {
+      nativeName: "Català",
+      englishName: "Catalan"
+    },
+    'ca-ES': {
+      nativeName: "Català",
+      englishName: "Catalan"
+    },
+    'cak': {
+      nativeName: "Maya Kaqchikel",
+      englishName: "Kaqchikel"
+    },
+    'ck-US': {
+      nativeName: "ᏣᎳᎩ (tsalagi)",
+      englishName: "Cherokee"
+    },
+    'cs': {
+      nativeName: "Čeština",
+      englishName: "Czech"
+    },
+    'cs-CZ': {
+      nativeName: "Čeština",
+      englishName: "Czech"
+    },
+    'cy': {
+      nativeName: "Cymraeg",
+      englishName: "Welsh"
+    },
+    'cy-GB': {
+      nativeName: "Cymraeg",
+      englishName: "Welsh"
+    },
+    'da': {
+      nativeName: "Dansk",
+      englishName: "Danish"
+    },
+    'da-DK': {
+      nativeName: "Dansk",
+      englishName: "Danish"
+    },
+    'de': {
+      nativeName: "Deutsch",
+      englishName: "German"
+    },
+    'de-AT': {
+      nativeName: "Deutsch (Österreich)",
+      englishName: "German (Austria)"
+    },
+    'de-DE': {
+      nativeName: "Deutsch (Deutschland)",
+      englishName: "German (Germany)"
+    },
+    'de-CH': {
+      nativeName: "Deutsch (Schweiz)",
+      englishName: "German (Switzerland)"
+    },
+    'dsb': {
+      nativeName: "Dolnoserbšćina",
+      englishName: "Lower Sorbian"
+    },
+    'el': {
+      nativeName: "Ελληνικά",
+      englishName: "Greek"
+    },
+    'el-GR': {
+      nativeName: "Ελληνικά",
+      englishName: "Greek (Greece)"
+    },
+    'en': {
+      nativeName: "English",
+      englishName: "English"
+    },
+    'en-GB': {
+      nativeName: "English (UK)",
+      englishName: "English (UK)"
+    },
+    'en-AU': {
+      nativeName: "English (Australia)",
+      englishName: "English (Australia)"
+    },
+    'en-CA': {
+      nativeName: "English (Canada)",
+      englishName: "English (Canada)"
+    },
+    'en-IE': {
+      nativeName: "English (Ireland)",
+      englishName: "English (Ireland)"
+    },
+    'en-IN': {
+      nativeName: "English (India)",
+      englishName: "English (India)"
+    },
+    'en-PI': {
+      nativeName: "English (Pirate)",
+      englishName: "English (Pirate)"
+    },
+    'en-UD': {
+      nativeName: "English (Upside Down)",
+      englishName: "English (Upside Down)"
+    },
+    'en-US': {
+      nativeName: "English (US)",
+      englishName: "English (US)"
+    },
+    'en-ZA': {
+      nativeName: "English (South Africa)",
+      englishName: "English (South Africa)"
+    },
+    'en@pirate': {
+      nativeName: "English (Pirate)",
+      englishName: "English (Pirate)"
+    },
+    'eo': {
+      nativeName: "Esperanto",
+      englishName: "Esperanto"
+    },
+    'eo-EO': {
+      nativeName: "Esperanto",
+      englishName: "Esperanto"
+    },
+    'es': {
+      nativeName: "Español",
+      englishName: "Spanish"
+    },
+    'es-AR': {
+      nativeName: "Español (Argentine)",
+      englishName: "Spanish (Argentina)"
+    },
+    'es-419': {
+      nativeName: "Español (Latinoamérica)",
+      englishName: "Spanish (Latin America)"
+    },
+    'es-CL': {
+      nativeName: "Español (Chile)",
+      englishName: "Spanish (Chile)"
+    },
+    'es-CO': {
+      nativeName: "Español (Colombia)",
+      englishName: "Spanish (Colombia)"
+    },
+    'es-EC': {
+      nativeName: "Español (Ecuador)",
+      englishName: "Spanish (Ecuador)"
+    },
+    'es-ES': {
+      nativeName: "Español (España)",
+      englishName: "Spanish (Spain)"
+    },
+    'es-LA': {
+      nativeName: "Español (Latinoamérica)",
+      englishName: "Spanish (Latin America)"
+    },
+    'es-NI': {
+      nativeName: "Español (Nicaragua)",
+      englishName: "Spanish (Nicaragua)"
+    },
+    'es-MX': {
+      nativeName: "Español (México)",
+      englishName: "Spanish (Mexico)"
+    },
+    'es-US': {
+      nativeName: "Español (Estados Unidos)",
+      englishName: "Spanish (United States)"
+    },
+    'es-VE': {
+      nativeName: "Español (Venezuela)",
+      englishName: "Spanish (Venezuela)"
+    },
+    'et': {
+      nativeName: "eesti keel",
+      englishName: "Estonian"
+    },
+    'et-EE': {
+      nativeName: "Eesti (Estonia)",
+      englishName: "Estonian (Estonia)"
+    },
+    'eu': {
+      nativeName: "Euskara",
+      englishName: "Basque"
+    },
+    'eu-ES': {
+      nativeName: "Euskara",
+      englishName: "Basque"
+    },
+    'fa': {
+      nativeName: "فارسی",
+      englishName: "Persian"
+    },
+    'fa-IR': {
+      nativeName: "فارسی",
+      englishName: "Persian"
+    },
+    'fb-LT': {
+      nativeName: "Leet Speak",
+      englishName: "Leet"
+    },
+    'ff': {
+      nativeName: "Fulah",
+      englishName: "Fulah"
+    },
+    'fi': {
+      nativeName: "Suomi",
+      englishName: "Finnish"
+    },
+    'fi-FI': {
+      nativeName: "Suomi",
+      englishName: "Finnish"
+    },
+    'fo-FO': {
+      nativeName: "Føroyskt",
+      englishName: "Faroese"
+    },
+    'fr': {
+      nativeName: "Français",
+      englishName: "French"
+    },
+    'fr-CA': {
+      nativeName: "Français (Canada)",
+      englishName: "French (Canada)"
+    },
+    'fr-FR': {
+      nativeName: "Français (France)",
+      englishName: "French (France)"
+    },
+    'fr-BE': {
+      nativeName: "Français (Belgique)",
+      englishName: "French (Belgium)"
+    },
+    'fr-CH': {
+      nativeName: "Français (Suisse)",
+      englishName: "French (Switzerland)"
+    },
+    'fy-NL': {
+      nativeName: "Frysk",
+      englishName: "Frisian (West)"
+    },
+    'ga': {
+      nativeName: "Gaeilge",
+      englishName: "Irish"
+    },
+    'ga-IE': {
+      nativeName: "Gaeilge (Gaelic)",
+      englishName: "Irish (Gaelic)"
+    },
+    'gl': {
+      nativeName: "Galego",
+      englishName: "Galician"
+    },
+    'gl-ES': {
+      nativeName: "Galego",
+      englishName: "Galician"
+    },
+    'gn-PY': {
+      nativeName: "Avañe'ẽ",
+      englishName: "Guarani"
+    },
+    'gu-IN': {
+      nativeName: "ગુજરાતી",
+      englishName: "Gujarati"
+    },
+    'gx-GR': {
+      nativeName: "Ἑλληνική ἀρχαία",
+      englishName: "Classical Greek"
+    },
+    'he': {
+      nativeName: "עברית‏",
+      englishName: "Hebrew"
+    },
+    'he-IL': {
+      nativeName: "עברית‏",
+      englishName: "Hebrew"
+    },
+    'hi': {
+      nativeName: "हिन्दी",
+      englishName: "Hindi"
+    },
+    'hi-IN': {
+      nativeName: "हिन्दी",
+      englishName: "Hindi"
+    },
+    'hr': {
+      nativeName: "Hrvatski",
+      englishName: "Croatian"
+    },
+    'hr-HR': {
+      nativeName: "Hrvatski",
+      englishName: "Croatian"
+    },
+    'hsb': {
+      nativeName: "Hornjoserbšćina",
+      englishName: "Upper Sorbian"
+    },
+    'ht': {
+      nativeName: "Kreyòl",
+      englishName: "Haitian Creole"
+    },
+    'hu': {
+      nativeName: "Magyar",
+      englishName: "Hungarian"
+    },
+    'hu-HU': {
+      nativeName: "Magyar",
+      englishName: "Hungarian"
+    },
+    'hy-AM': {
+      nativeName: "Հայերեն",
+      englishName: "Armenian"
+    },
+    'id': {
+      nativeName: "Bahasa Indonesia",
+      englishName: "Indonesian"
+    },
+    'id-ID': {
+      nativeName: "Bahasa Indonesia",
+      englishName: "Indonesian"
+    },
+    'is': {
+      nativeName: "Íslenska",
+      englishName: "Icelandic"
+    },
+    'is-IS': {
+      nativeName: "Íslenska (Iceland)",
+      englishName: "Icelandic (Iceland)"
+    },
+    'it': {
+      nativeName: "Italiano",
+      englishName: "Italian"
+    },
+    'it-IT': {
+      nativeName: "Italiano",
+      englishName: "Italian"
+    },
+    'ja': {
+      nativeName: "日本語",
+      englishName: "Japanese"
+    },
+    'ja-JP': {
+      nativeName: "日本語",
+      englishName: "Japanese"
+    },
+    'jv-ID': {
+      nativeName: "Basa Jawa",
+      englishName: "Javanese"
+    },
+    'ka-GE': {
+      nativeName: "ქართული",
+      englishName: "Georgian"
+    },
+    'kk-KZ': {
+      nativeName: "Қазақша",
+      englishName: "Kazakh"
+    },
+    'km': {
+      nativeName: "ភាសាខ្មែរ",
+      englishName: "Khmer"
+    },
+    'km-KH': {
+      nativeName: "ភាសាខ្មែរ",
+      englishName: "Khmer"
+    },
+    'kab': {
+      nativeName: "Taqbaylit",
+      englishName: "Kabyle"
+    },
+    'kn': {
+      nativeName: "ಕನ್ನಡ",
+      englishName: "Kannada"
+    },
+    'kn-IN': {
+      nativeName: "ಕನ್ನಡ (India)",
+      englishName: "Kannada (India)"
+    },
+    'ko': {
+      nativeName: "한국어",
+      englishName: "Korean"
+    },
+    'ko-KR': {
+      nativeName: "한국어 (韩国)",
+      englishName: "Korean (Korea)"
+    },
+    'ku-TR': {
+      nativeName: "Kurdî",
+      englishName: "Kurdish"
+    },
+    'la': {
+      nativeName: "Latin",
+      englishName: "Latin"
+    },
+    'la-VA': {
+      nativeName: "Latin",
+      englishName: "Latin"
+    },
+    'lb': {
+      nativeName: "Lëtzebuergesch",
+      englishName: "Luxembourgish"
+    },
+    'li-NL': {
+      nativeName: "Lèmbörgs",
+      englishName: "Limburgish"
+    },
+    'lt': {
+      nativeName: "Lietuvių",
+      englishName: "Lithuanian"
+    },
+    'lt-LT': {
+      nativeName: "Lietuvių",
+      englishName: "Lithuanian"
+    },
+    'lv': {
+      nativeName: "Latviešu",
+      englishName: "Latvian"
+    },
+    'lv-LV': {
+      nativeName: "Latviešu",
+      englishName: "Latvian"
+    },
+    'mai': {
+      nativeName: "मैथिली, মৈথিলী",
+      englishName: "Maithili"
+    },
+    'mg-MG': {
+      nativeName: "Malagasy",
+      englishName: "Malagasy"
+    },
+    'mk': {
+      nativeName: "Македонски",
+      englishName: "Macedonian"
+    },
+    'mk-MK': {
+      nativeName: "Македонски (Македонски)",
+      englishName: "Macedonian (Macedonian)"
+    },
+    'ml': {
+      nativeName: "മലയാളം",
+      englishName: "Malayalam"
+    },
+    'ml-IN': {
+      nativeName: "മലയാളം",
+      englishName: "Malayalam"
+    },
+    'mn-MN': {
+      nativeName: "Монгол",
+      englishName: "Mongolian"
+    },
+    'mr': {
+      nativeName: "मराठी",
+      englishName: "Marathi"
+    },
+    'mr-IN': {
+      nativeName: "मराठी",
+      englishName: "Marathi"
+    },
+    'ms': {
+      nativeName: "Bahasa Melayu",
+      englishName: "Malay"
+    },
+    'ms-MY': {
+      nativeName: "Bahasa Melayu",
+      englishName: "Malay"
+    },
+    'mt': {
+      nativeName: "Malti",
+      englishName: "Maltese"
+    },
+    'mt-MT': {
+      nativeName: "Malti",
+      englishName: "Maltese"
+    },
+    'my': {
+      nativeName: "ဗမာစကာ",
+      englishName: "Burmese"
+    },
+    'no': {
+      nativeName: "Norsk",
+      englishName: "Norwegian"
+    },
+    'nb': {
+      nativeName: "Norsk (bokmål)",
+      englishName: "Norwegian (bokmal)"
+    },
+    'nb-NO': {
+      nativeName: "Norsk (bokmål)",
+      englishName: "Norwegian (bokmal)"
+    },
+    'ne': {
+      nativeName: "नेपाली",
+      englishName: "Nepali"
+    },
+    'ne-NP': {
+      nativeName: "नेपाली",
+      englishName: "Nepali"
+    },
+    'nl': {
+      nativeName: "Nederlands",
+      englishName: "Dutch"
+    },
+    'nl-BE': {
+      nativeName: "Nederlands (België)",
+      englishName: "Dutch (Belgium)"
+    },
+    'nl-NL': {
+      nativeName: "Nederlands (Nederland)",
+      englishName: "Dutch (Netherlands)"
+    },
+    'nn-NO': {
+      nativeName: "Norsk (nynorsk)",
+      englishName: "Norwegian (nynorsk)"
+    },
+    'oc': {
+      nativeName: "Occitan",
+      englishName: "Occitan"
+    },
+    'or-IN': {
+      nativeName: "ଓଡ଼ିଆ",
+      englishName: "Oriya"
+    },
+    'pa': {
+      nativeName: "ਪੰਜਾਬੀ",
+      englishName: "Punjabi"
+    },
+    'pa-IN': {
+      nativeName: "ਪੰਜਾਬੀ (ਭਾਰਤ ਨੂੰ)",
+      englishName: "Punjabi (India)"
+    },
+    'pl': {
+      nativeName: "Polski",
+      englishName: "Polish"
+    },
+    'pl-PL': {
+      nativeName: "Polski",
+      englishName: "Polish"
+    },
+    'ps-AF': {
+      nativeName: "پښتو",
+      englishName: "Pashto"
+    },
+    'pt': {
+      nativeName: "Português",
+      englishName: "Portuguese"
+    },
+    'pt-BR': {
+      nativeName: "Português (Brasil)",
+      englishName: "Portuguese (Brazil)"
+    },
+    'pt-PT': {
+      nativeName: "Português (Portugal)",
+      englishName: "Portuguese (Portugal)"
+    },
+    'qu-PE': {
+      nativeName: "Qhichwa",
+      englishName: "Quechua"
+    },
+    'rm-CH': {
+      nativeName: "Rumantsch",
+      englishName: "Romansh"
+    },
+    'ro': {
+      nativeName: "Română",
+      englishName: "Romanian"
+    },
+    'ro-RO': {
+      nativeName: "Română",
+      englishName: "Romanian"
+    },
+    'ru': {
+      nativeName: "Русский",
+      englishName: "Russian"
+    },
+    'ru-RU': {
+      nativeName: "Русский",
+      englishName: "Russian"
+    },
+    'sa-IN': {
+      nativeName: "संस्कृतम्",
+      englishName: "Sanskrit"
+    },
+    'se-NO': {
+      nativeName: "Davvisámegiella",
+      englishName: "Northern Sámi"
+    },
+    'si-LK': {
+      nativeName: "පළාත",
+      englishName: "Sinhala (Sri Lanka)"
+    },
+    'sk': {
+      nativeName: "Slovenčina",
+      englishName: "Slovak"
+    },
+    'sk-SK': {
+      nativeName: "Slovenčina (Slovakia)",
+      englishName: "Slovak (Slovakia)"
+    },
+    'sl': {
+      nativeName: "Slovenščina",
+      englishName: "Slovenian"
+    },
+    'sl-SI': {
+      nativeName: "Slovenščina",
+      englishName: "Slovenian"
+    },
+    'so-SO': {
+      nativeName: "Soomaaliga",
+      englishName: "Somali"
+    },
+    'sq': {
+      nativeName: "Shqip",
+      englishName: "Albanian"
+    },
+    'sq-AL': {
+      nativeName: "Shqip",
+      englishName: "Albanian"
+    },
+    'sr': {
+      nativeName: "Српски",
+      englishName: "Serbian"
+    },
+    'sr-RS': {
+      nativeName: "Српски (Serbia)",
+      englishName: "Serbian (Serbia)"
+    },
+    'su': {
+      nativeName: "Basa Sunda",
+      englishName: "Sundanese"
+    },
+    'sv': {
+      nativeName: "Svenska",
+      englishName: "Swedish"
+    },
+    'sv-SE': {
+      nativeName: "Svenska",
+      englishName: "Swedish"
+    },
+    'sw': {
+      nativeName: "Kiswahili",
+      englishName: "Swahili"
+    },
+    'sw-KE': {
+      nativeName: "Kiswahili",
+      englishName: "Swahili (Kenya)"
+    },
+    'ta': {
+      nativeName: "தமிழ்",
+      englishName: "Tamil"
+    },
+    'ta-IN': {
+      nativeName: "தமிழ்",
+      englishName: "Tamil"
+    },
+    'te': {
+      nativeName: "తెలుగు",
+      englishName: "Telugu"
+    },
+    'te-IN': {
+      nativeName: "తెలుగు",
+      englishName: "Telugu"
+    },
+    'tg': {
+      nativeName: "забо́ни тоҷикӣ́",
+      englishName: "Tajik"
+    },
+    'tg-TJ': {
+      nativeName: "тоҷикӣ",
+      englishName: "Tajik"
+    },
+    'th': {
+      nativeName: "ภาษาไทย",
+      englishName: "Thai"
+    },
+    'th-TH': {
+      nativeName: "ภาษาไทย (ประเทศไทย)",
+      englishName: "Thai (Thailand)"
+    },
+    'tl': {
+      nativeName: "Filipino",
+      englishName: "Filipino"
+    },
+    'tl-PH': {
+      nativeName: "Filipino",
+      englishName: "Filipino"
+    },
+    'tlh': {
+      nativeName: "tlhIngan-Hol",
+      englishName: "Klingon"
+    },
+    'tr': {
+      nativeName: "Türkçe",
+      englishName: "Turkish"
+    },
+    'tr-TR': {
+      nativeName: "Türkçe",
+      englishName: "Turkish"
+    },
+    'tt-RU': {
+      nativeName: "татарча",
+      englishName: "Tatar"
+    },
+    'uk': {
+      nativeName: "Українська",
+      englishName: "Ukrainian"
+    },
+    'uk-UA': {
+      nativeName: "Українська",
+      englishName: "Ukrainian"
+    },
+    'ur': {
+      nativeName: "اردو",
+      englishName: "Urdu"
+    },
+    'ur-PK': {
+      nativeName: "اردو",
+      englishName: "Urdu"
+    },
+    'uz': {
+      nativeName: "O'zbek",
+      englishName: "Uzbek"
+    },
+    'uz-UZ': {
+      nativeName: "O'zbek",
+      englishName: "Uzbek"
+    },
+    'vi': {
+      nativeName: "Tiếng Việt",
+      englishName: "Vietnamese"
+    },
+    'vi-VN': {
+      nativeName: "Tiếng Việt",
+      englishName: "Vietnamese"
+    },
+    'xh-ZA': {
+      nativeName: "isiXhosa",
+      englishName: "Xhosa"
+    },
+    'yi': {
+      nativeName: "ייִדיש",
+      englishName: "Yiddish"
+    },
+    'yi-DE': {
+      nativeName: "ייִדיש (German)",
+      englishName: "Yiddish (German)"
+    },
+    'zh': {
+      nativeName: "中文",
+      englishName: "Chinese"
+    },
+    'zh-Hans': {
+      nativeName: "中文简体",
+      englishName: "Chinese Simplified"
+    },
+    'zh-Hant': {
+      nativeName: "中文繁體",
+      englishName: "Chinese Traditional"
+    },
+    'zh-CN': {
+      nativeName: "中文（中国）",
+      englishName: "Chinese Simplified (China)"
+    },
+    'zh-HK': {
+      nativeName: "中文（香港）",
+      englishName: "Chinese Traditional (Hong Kong)"
+    },
+    'zh-SG': {
+      nativeName: "中文（新加坡）",
+      englishName: "Chinese Simplified (Singapore)"
+    },
+    'zh-TW': {
+      nativeName: "中文（台灣）",
+      englishName: "Chinese Traditional (Taiwan)"
+    },
+    'zu-ZA': {
+      nativeName: "isiZulu",
+      englishName: "Zulu"
+    }
+  };
+}));
+
+},{}],168:[function(require,module,exports){
 var hashClear = require('./_hashClear'),
     hashDelete = require('./_hashDelete'),
     hashGet = require('./_hashGet'),
@@ -9134,7 +10002,7 @@ Hash.prototype.set = hashSet;
 
 module.exports = Hash;
 
-},{"./_hashClear":191,"./_hashDelete":192,"./_hashGet":193,"./_hashHas":194,"./_hashSet":195}],168:[function(require,module,exports){
+},{"./_hashClear":192,"./_hashDelete":193,"./_hashGet":194,"./_hashHas":195,"./_hashSet":196}],169:[function(require,module,exports){
 var listCacheClear = require('./_listCacheClear'),
     listCacheDelete = require('./_listCacheDelete'),
     listCacheGet = require('./_listCacheGet'),
@@ -9168,7 +10036,7 @@ ListCache.prototype.set = listCacheSet;
 
 module.exports = ListCache;
 
-},{"./_listCacheClear":198,"./_listCacheDelete":199,"./_listCacheGet":200,"./_listCacheHas":201,"./_listCacheSet":202}],169:[function(require,module,exports){
+},{"./_listCacheClear":199,"./_listCacheDelete":200,"./_listCacheGet":201,"./_listCacheHas":202,"./_listCacheSet":203}],170:[function(require,module,exports){
 var getNative = require('./_getNative'),
     root = require('./_root');
 
@@ -9177,7 +10045,7 @@ var Map = getNative(root, 'Map');
 
 module.exports = Map;
 
-},{"./_getNative":188,"./_root":210}],170:[function(require,module,exports){
+},{"./_getNative":189,"./_root":211}],171:[function(require,module,exports){
 var mapCacheClear = require('./_mapCacheClear'),
     mapCacheDelete = require('./_mapCacheDelete'),
     mapCacheGet = require('./_mapCacheGet'),
@@ -9211,7 +10079,7 @@ MapCache.prototype.set = mapCacheSet;
 
 module.exports = MapCache;
 
-},{"./_mapCacheClear":203,"./_mapCacheDelete":204,"./_mapCacheGet":205,"./_mapCacheHas":206,"./_mapCacheSet":207}],171:[function(require,module,exports){
+},{"./_mapCacheClear":204,"./_mapCacheDelete":205,"./_mapCacheGet":206,"./_mapCacheHas":207,"./_mapCacheSet":208}],172:[function(require,module,exports){
 var getNative = require('./_getNative'),
     root = require('./_root');
 
@@ -9220,7 +10088,7 @@ var Set = getNative(root, 'Set');
 
 module.exports = Set;
 
-},{"./_getNative":188,"./_root":210}],172:[function(require,module,exports){
+},{"./_getNative":189,"./_root":211}],173:[function(require,module,exports){
 var MapCache = require('./_MapCache'),
     setCacheAdd = require('./_setCacheAdd'),
     setCacheHas = require('./_setCacheHas');
@@ -9249,7 +10117,7 @@ SetCache.prototype.has = setCacheHas;
 
 module.exports = SetCache;
 
-},{"./_MapCache":170,"./_setCacheAdd":211,"./_setCacheHas":212}],173:[function(require,module,exports){
+},{"./_MapCache":171,"./_setCacheAdd":212,"./_setCacheHas":213}],174:[function(require,module,exports){
 var root = require('./_root');
 
 /** Built-in value references. */
@@ -9257,7 +10125,7 @@ var Symbol = root.Symbol;
 
 module.exports = Symbol;
 
-},{"./_root":210}],174:[function(require,module,exports){
+},{"./_root":211}],175:[function(require,module,exports){
 var baseIndexOf = require('./_baseIndexOf');
 
 /**
@@ -9276,7 +10144,7 @@ function arrayIncludes(array, value) {
 
 module.exports = arrayIncludes;
 
-},{"./_baseIndexOf":179}],175:[function(require,module,exports){
+},{"./_baseIndexOf":180}],176:[function(require,module,exports){
 /**
  * This function is like `arrayIncludes` except that it accepts a comparator.
  *
@@ -9300,7 +10168,7 @@ function arrayIncludesWith(array, value, comparator) {
 
 module.exports = arrayIncludesWith;
 
-},{}],176:[function(require,module,exports){
+},{}],177:[function(require,module,exports){
 var eq = require('./eq');
 
 /**
@@ -9323,7 +10191,7 @@ function assocIndexOf(array, key) {
 
 module.exports = assocIndexOf;
 
-},{"./eq":216}],177:[function(require,module,exports){
+},{"./eq":217}],178:[function(require,module,exports){
 /**
  * The base implementation of `_.findIndex` and `_.findLastIndex` without
  * support for iteratee shorthands.
@@ -9349,7 +10217,7 @@ function baseFindIndex(array, predicate, fromIndex, fromRight) {
 
 module.exports = baseFindIndex;
 
-},{}],178:[function(require,module,exports){
+},{}],179:[function(require,module,exports){
 var Symbol = require('./_Symbol'),
     getRawTag = require('./_getRawTag'),
     objectToString = require('./_objectToString');
@@ -9379,7 +10247,7 @@ function baseGetTag(value) {
 
 module.exports = baseGetTag;
 
-},{"./_Symbol":173,"./_getRawTag":189,"./_objectToString":209}],179:[function(require,module,exports){
+},{"./_Symbol":174,"./_getRawTag":190,"./_objectToString":210}],180:[function(require,module,exports){
 var baseFindIndex = require('./_baseFindIndex'),
     baseIsNaN = require('./_baseIsNaN'),
     strictIndexOf = require('./_strictIndexOf');
@@ -9401,7 +10269,7 @@ function baseIndexOf(array, value, fromIndex) {
 
 module.exports = baseIndexOf;
 
-},{"./_baseFindIndex":177,"./_baseIsNaN":180,"./_strictIndexOf":214}],180:[function(require,module,exports){
+},{"./_baseFindIndex":178,"./_baseIsNaN":181,"./_strictIndexOf":215}],181:[function(require,module,exports){
 /**
  * The base implementation of `_.isNaN` without support for number objects.
  *
@@ -9415,7 +10283,7 @@ function baseIsNaN(value) {
 
 module.exports = baseIsNaN;
 
-},{}],181:[function(require,module,exports){
+},{}],182:[function(require,module,exports){
 var isFunction = require('./isFunction'),
     isMasked = require('./_isMasked'),
     isObject = require('./isObject'),
@@ -9464,7 +10332,7 @@ function baseIsNative(value) {
 
 module.exports = baseIsNative;
 
-},{"./_isMasked":197,"./_toSource":215,"./isFunction":217,"./isObject":218}],182:[function(require,module,exports){
+},{"./_isMasked":198,"./_toSource":216,"./isFunction":218,"./isObject":219}],183:[function(require,module,exports){
 var SetCache = require('./_SetCache'),
     arrayIncludes = require('./_arrayIncludes'),
     arrayIncludesWith = require('./_arrayIncludesWith'),
@@ -9538,7 +10406,7 @@ function baseUniq(array, iteratee, comparator) {
 
 module.exports = baseUniq;
 
-},{"./_SetCache":172,"./_arrayIncludes":174,"./_arrayIncludesWith":175,"./_cacheHas":183,"./_createSet":185,"./_setToArray":213}],183:[function(require,module,exports){
+},{"./_SetCache":173,"./_arrayIncludes":175,"./_arrayIncludesWith":176,"./_cacheHas":184,"./_createSet":186,"./_setToArray":214}],184:[function(require,module,exports){
 /**
  * Checks if a `cache` value for `key` exists.
  *
@@ -9553,7 +10421,7 @@ function cacheHas(cache, key) {
 
 module.exports = cacheHas;
 
-},{}],184:[function(require,module,exports){
+},{}],185:[function(require,module,exports){
 var root = require('./_root');
 
 /** Used to detect overreaching core-js shims. */
@@ -9561,7 +10429,7 @@ var coreJsData = root['__core-js_shared__'];
 
 module.exports = coreJsData;
 
-},{"./_root":210}],185:[function(require,module,exports){
+},{"./_root":211}],186:[function(require,module,exports){
 var Set = require('./_Set'),
     noop = require('./noop'),
     setToArray = require('./_setToArray');
@@ -9582,7 +10450,7 @@ var createSet = !(Set && (1 / setToArray(new Set([,-0]))[1]) == INFINITY) ? noop
 
 module.exports = createSet;
 
-},{"./_Set":171,"./_setToArray":213,"./noop":219}],186:[function(require,module,exports){
+},{"./_Set":172,"./_setToArray":214,"./noop":220}],187:[function(require,module,exports){
 (function (global){
 /** Detect free variable `global` from Node.js. */
 var freeGlobal = typeof global == 'object' && global && global.Object === Object && global;
@@ -9591,7 +10459,7 @@ module.exports = freeGlobal;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 
-},{}],187:[function(require,module,exports){
+},{}],188:[function(require,module,exports){
 var isKeyable = require('./_isKeyable');
 
 /**
@@ -9611,7 +10479,7 @@ function getMapData(map, key) {
 
 module.exports = getMapData;
 
-},{"./_isKeyable":196}],188:[function(require,module,exports){
+},{"./_isKeyable":197}],189:[function(require,module,exports){
 var baseIsNative = require('./_baseIsNative'),
     getValue = require('./_getValue');
 
@@ -9630,7 +10498,7 @@ function getNative(object, key) {
 
 module.exports = getNative;
 
-},{"./_baseIsNative":181,"./_getValue":190}],189:[function(require,module,exports){
+},{"./_baseIsNative":182,"./_getValue":191}],190:[function(require,module,exports){
 var Symbol = require('./_Symbol');
 
 /** Used for built-in method references. */
@@ -9678,7 +10546,7 @@ function getRawTag(value) {
 
 module.exports = getRawTag;
 
-},{"./_Symbol":173}],190:[function(require,module,exports){
+},{"./_Symbol":174}],191:[function(require,module,exports){
 /**
  * Gets the value at `key` of `object`.
  *
@@ -9693,7 +10561,7 @@ function getValue(object, key) {
 
 module.exports = getValue;
 
-},{}],191:[function(require,module,exports){
+},{}],192:[function(require,module,exports){
 var nativeCreate = require('./_nativeCreate');
 
 /**
@@ -9710,7 +10578,7 @@ function hashClear() {
 
 module.exports = hashClear;
 
-},{"./_nativeCreate":208}],192:[function(require,module,exports){
+},{"./_nativeCreate":209}],193:[function(require,module,exports){
 /**
  * Removes `key` and its value from the hash.
  *
@@ -9729,7 +10597,7 @@ function hashDelete(key) {
 
 module.exports = hashDelete;
 
-},{}],193:[function(require,module,exports){
+},{}],194:[function(require,module,exports){
 var nativeCreate = require('./_nativeCreate');
 
 /** Used to stand-in for `undefined` hash values. */
@@ -9761,7 +10629,7 @@ function hashGet(key) {
 
 module.exports = hashGet;
 
-},{"./_nativeCreate":208}],194:[function(require,module,exports){
+},{"./_nativeCreate":209}],195:[function(require,module,exports){
 var nativeCreate = require('./_nativeCreate');
 
 /** Used for built-in method references. */
@@ -9786,7 +10654,7 @@ function hashHas(key) {
 
 module.exports = hashHas;
 
-},{"./_nativeCreate":208}],195:[function(require,module,exports){
+},{"./_nativeCreate":209}],196:[function(require,module,exports){
 var nativeCreate = require('./_nativeCreate');
 
 /** Used to stand-in for `undefined` hash values. */
@@ -9811,7 +10679,7 @@ function hashSet(key, value) {
 
 module.exports = hashSet;
 
-},{"./_nativeCreate":208}],196:[function(require,module,exports){
+},{"./_nativeCreate":209}],197:[function(require,module,exports){
 /**
  * Checks if `value` is suitable for use as unique object key.
  *
@@ -9828,7 +10696,7 @@ function isKeyable(value) {
 
 module.exports = isKeyable;
 
-},{}],197:[function(require,module,exports){
+},{}],198:[function(require,module,exports){
 var coreJsData = require('./_coreJsData');
 
 /** Used to detect methods masquerading as native. */
@@ -9850,7 +10718,7 @@ function isMasked(func) {
 
 module.exports = isMasked;
 
-},{"./_coreJsData":184}],198:[function(require,module,exports){
+},{"./_coreJsData":185}],199:[function(require,module,exports){
 /**
  * Removes all key-value entries from the list cache.
  *
@@ -9865,7 +10733,7 @@ function listCacheClear() {
 
 module.exports = listCacheClear;
 
-},{}],199:[function(require,module,exports){
+},{}],200:[function(require,module,exports){
 var assocIndexOf = require('./_assocIndexOf');
 
 /** Used for built-in method references. */
@@ -9902,7 +10770,7 @@ function listCacheDelete(key) {
 
 module.exports = listCacheDelete;
 
-},{"./_assocIndexOf":176}],200:[function(require,module,exports){
+},{"./_assocIndexOf":177}],201:[function(require,module,exports){
 var assocIndexOf = require('./_assocIndexOf');
 
 /**
@@ -9923,7 +10791,7 @@ function listCacheGet(key) {
 
 module.exports = listCacheGet;
 
-},{"./_assocIndexOf":176}],201:[function(require,module,exports){
+},{"./_assocIndexOf":177}],202:[function(require,module,exports){
 var assocIndexOf = require('./_assocIndexOf');
 
 /**
@@ -9941,7 +10809,7 @@ function listCacheHas(key) {
 
 module.exports = listCacheHas;
 
-},{"./_assocIndexOf":176}],202:[function(require,module,exports){
+},{"./_assocIndexOf":177}],203:[function(require,module,exports){
 var assocIndexOf = require('./_assocIndexOf');
 
 /**
@@ -9969,7 +10837,7 @@ function listCacheSet(key, value) {
 
 module.exports = listCacheSet;
 
-},{"./_assocIndexOf":176}],203:[function(require,module,exports){
+},{"./_assocIndexOf":177}],204:[function(require,module,exports){
 var Hash = require('./_Hash'),
     ListCache = require('./_ListCache'),
     Map = require('./_Map');
@@ -9992,7 +10860,7 @@ function mapCacheClear() {
 
 module.exports = mapCacheClear;
 
-},{"./_Hash":167,"./_ListCache":168,"./_Map":169}],204:[function(require,module,exports){
+},{"./_Hash":168,"./_ListCache":169,"./_Map":170}],205:[function(require,module,exports){
 var getMapData = require('./_getMapData');
 
 /**
@@ -10012,7 +10880,7 @@ function mapCacheDelete(key) {
 
 module.exports = mapCacheDelete;
 
-},{"./_getMapData":187}],205:[function(require,module,exports){
+},{"./_getMapData":188}],206:[function(require,module,exports){
 var getMapData = require('./_getMapData');
 
 /**
@@ -10030,7 +10898,7 @@ function mapCacheGet(key) {
 
 module.exports = mapCacheGet;
 
-},{"./_getMapData":187}],206:[function(require,module,exports){
+},{"./_getMapData":188}],207:[function(require,module,exports){
 var getMapData = require('./_getMapData');
 
 /**
@@ -10048,7 +10916,7 @@ function mapCacheHas(key) {
 
 module.exports = mapCacheHas;
 
-},{"./_getMapData":187}],207:[function(require,module,exports){
+},{"./_getMapData":188}],208:[function(require,module,exports){
 var getMapData = require('./_getMapData');
 
 /**
@@ -10072,7 +10940,7 @@ function mapCacheSet(key, value) {
 
 module.exports = mapCacheSet;
 
-},{"./_getMapData":187}],208:[function(require,module,exports){
+},{"./_getMapData":188}],209:[function(require,module,exports){
 var getNative = require('./_getNative');
 
 /* Built-in method references that are verified to be native. */
@@ -10080,7 +10948,7 @@ var nativeCreate = getNative(Object, 'create');
 
 module.exports = nativeCreate;
 
-},{"./_getNative":188}],209:[function(require,module,exports){
+},{"./_getNative":189}],210:[function(require,module,exports){
 /** Used for built-in method references. */
 var objectProto = Object.prototype;
 
@@ -10104,7 +10972,7 @@ function objectToString(value) {
 
 module.exports = objectToString;
 
-},{}],210:[function(require,module,exports){
+},{}],211:[function(require,module,exports){
 var freeGlobal = require('./_freeGlobal');
 
 /** Detect free variable `self`. */
@@ -10115,7 +10983,7 @@ var root = freeGlobal || freeSelf || Function('return this')();
 
 module.exports = root;
 
-},{"./_freeGlobal":186}],211:[function(require,module,exports){
+},{"./_freeGlobal":187}],212:[function(require,module,exports){
 /** Used to stand-in for `undefined` hash values. */
 var HASH_UNDEFINED = '__lodash_hash_undefined__';
 
@@ -10136,7 +11004,7 @@ function setCacheAdd(value) {
 
 module.exports = setCacheAdd;
 
-},{}],212:[function(require,module,exports){
+},{}],213:[function(require,module,exports){
 /**
  * Checks if `value` is in the array cache.
  *
@@ -10152,7 +11020,7 @@ function setCacheHas(value) {
 
 module.exports = setCacheHas;
 
-},{}],213:[function(require,module,exports){
+},{}],214:[function(require,module,exports){
 /**
  * Converts `set` to an array of its values.
  *
@@ -10172,7 +11040,7 @@ function setToArray(set) {
 
 module.exports = setToArray;
 
-},{}],214:[function(require,module,exports){
+},{}],215:[function(require,module,exports){
 /**
  * A specialized version of `_.indexOf` which performs strict equality
  * comparisons of values, i.e. `===`.
@@ -10197,7 +11065,7 @@ function strictIndexOf(array, value, fromIndex) {
 
 module.exports = strictIndexOf;
 
-},{}],215:[function(require,module,exports){
+},{}],216:[function(require,module,exports){
 /** Used for built-in method references. */
 var funcProto = Function.prototype;
 
@@ -10225,7 +11093,7 @@ function toSource(func) {
 
 module.exports = toSource;
 
-},{}],216:[function(require,module,exports){
+},{}],217:[function(require,module,exports){
 /**
  * Performs a
  * [`SameValueZero`](http://ecma-international.org/ecma-262/7.0/#sec-samevaluezero)
@@ -10264,7 +11132,7 @@ function eq(value, other) {
 
 module.exports = eq;
 
-},{}],217:[function(require,module,exports){
+},{}],218:[function(require,module,exports){
 var baseGetTag = require('./_baseGetTag'),
     isObject = require('./isObject');
 
@@ -10303,7 +11171,7 @@ function isFunction(value) {
 
 module.exports = isFunction;
 
-},{"./_baseGetTag":178,"./isObject":218}],218:[function(require,module,exports){
+},{"./_baseGetTag":179,"./isObject":219}],219:[function(require,module,exports){
 /**
  * Checks if `value` is the
  * [language type](http://www.ecma-international.org/ecma-262/7.0/#sec-ecmascript-language-types)
@@ -10336,7 +11204,7 @@ function isObject(value) {
 
 module.exports = isObject;
 
-},{}],219:[function(require,module,exports){
+},{}],220:[function(require,module,exports){
 /**
  * This method returns `undefined`.
  *
@@ -10355,7 +11223,7 @@ function noop() {
 
 module.exports = noop;
 
-},{}],220:[function(require,module,exports){
+},{}],221:[function(require,module,exports){
 var baseUniq = require('./_baseUniq');
 
 /**
@@ -10382,7 +11250,7 @@ function uniq(array) {
 
 module.exports = uniq;
 
-},{"./_baseUniq":182}],221:[function(require,module,exports){
+},{"./_baseUniq":183}],222:[function(require,module,exports){
 (function (global){
 "use strict";
 
@@ -10411,7 +11279,7 @@ exports.Request = global.Request;
 exports.Response = global.Response;
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 
-},{}],222:[function(require,module,exports){
+},{}],223:[function(require,module,exports){
 /**
  * Copyright (c) 2014-present, Facebook, Inc.
  *
@@ -11161,7 +12029,7 @@ try {
   Function("r", "regeneratorRuntime = r")(runtime);
 }
 
-},{}],223:[function(require,module,exports){
+},{}],224:[function(require,module,exports){
 "use strict";
 
 require("core-js/modules/es.object.define-property");
@@ -11301,7 +12169,7 @@ function () {
 
 exports["default"] = Car;
 
-},{"./constants":224,"./lane":232,"./pixi-help":236,"core-js/modules/es.object.define-property":139,"core-js/modules/es.object.to-string":145,"core-js/modules/es.promise":146}],224:[function(require,module,exports){
+},{"./constants":225,"./lane":233,"./pixi-help":238,"core-js/modules/es.object.define-property":139,"core-js/modules/es.object.to-string":145,"core-js/modules/es.promise":146}],225:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -11338,7 +12206,7 @@ exports.STREET_LANE_OFFSET = STREET_LANE_OFFSET;
 var SPRITE_WIDTH = 256 * CAR_SCALE;
 exports.SPRITE_WIDTH = SPRITE_WIDTH;
 
-},{}],225:[function(require,module,exports){
+},{}],226:[function(require,module,exports){
 "use strict";
 
 require("core-js/modules/es.array.concat");
@@ -11478,7 +12346,7 @@ function countdownButton(label, timeout) {
   return advanceButton;
 }
 
-},{"./countdown":226,"core-js/modules/es.array.concat":124,"core-js/modules/es.function.bind":136,"core-js/modules/es.object.define-property":139,"core-js/modules/es.object.to-string":145,"core-js/modules/es.promise":146,"regenerator-runtime/runtime":222}],226:[function(require,module,exports){
+},{"./countdown":227,"core-js/modules/es.array.concat":124,"core-js/modules/es.function.bind":136,"core-js/modules/es.object.define-property":139,"core-js/modules/es.object.to-string":145,"core-js/modules/es.promise":146,"regenerator-runtime/runtime":223}],227:[function(require,module,exports){
 "use strict";
 
 require("core-js/modules/es.symbol");
@@ -11588,7 +12456,7 @@ function (_EventEmitter) {
 
 exports["default"] = Countdown;
 
-},{"core-js/modules/es.array.iterator":131,"core-js/modules/es.object.create":137,"core-js/modules/es.object.define-property":139,"core-js/modules/es.object.get-prototype-of":142,"core-js/modules/es.object.set-prototype-of":144,"core-js/modules/es.object.to-string":145,"core-js/modules/es.string.iterator":150,"core-js/modules/es.symbol":154,"core-js/modules/es.symbol.description":152,"core-js/modules/es.symbol.iterator":153,"core-js/modules/web.dom-collections.iterator":156,"core-js/modules/web.timers":157,"events":160}],227:[function(require,module,exports){
+},{"core-js/modules/es.array.iterator":131,"core-js/modules/es.object.create":137,"core-js/modules/es.object.define-property":139,"core-js/modules/es.object.get-prototype-of":142,"core-js/modules/es.object.set-prototype-of":144,"core-js/modules/es.object.to-string":145,"core-js/modules/es.string.iterator":150,"core-js/modules/es.symbol":154,"core-js/modules/es.symbol.description":152,"core-js/modules/es.symbol.iterator":153,"core-js/modules/web.dom-collections.iterator":156,"core-js/modules/web.timers":157,"events":160}],228:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -11601,7 +12469,7 @@ var Grey = 0x666666;
 var HighlightColor = Yellow;
 exports.HighlightColor = HighlightColor;
 
-},{}],228:[function(require,module,exports){
+},{}],229:[function(require,module,exports){
 "use strict";
 
 require("core-js/modules/es.array.for-each");
@@ -11642,7 +12510,7 @@ var eventFilters = {
 };
 exports.eventFilters = eventFilters;
 
-},{"core-js/modules/es.array.for-each":127,"core-js/modules/web.dom-collections.for-each":155}],229:[function(require,module,exports){
+},{"core-js/modules/es.array.for-each":127,"core-js/modules/web.dom-collections.for-each":155}],230:[function(require,module,exports){
 "use strict";
 
 require("core-js/modules/es.symbol");
@@ -11786,7 +12654,7 @@ function _createI18next() {
   return _createI18next.apply(this, arguments);
 }
 
-},{"core-js/modules/es.array.concat":124,"core-js/modules/es.array.from":128,"core-js/modules/es.array.is-array":130,"core-js/modules/es.array.iterator":131,"core-js/modules/es.date.to-string":135,"core-js/modules/es.object.keys":143,"core-js/modules/es.object.to-string":145,"core-js/modules/es.promise":146,"core-js/modules/es.regexp.to-string":148,"core-js/modules/es.string.iterator":150,"core-js/modules/es.symbol":154,"core-js/modules/es.symbol.description":152,"core-js/modules/es.symbol.iterator":153,"core-js/modules/web.dom-collections.iterator":156,"i18next":166,"i18next-browser-languagedetector":161,"i18next-http-backend":163,"lodash/uniq":220,"regenerator-runtime/runtime":222}],230:[function(require,module,exports){
+},{"core-js/modules/es.array.concat":124,"core-js/modules/es.array.from":128,"core-js/modules/es.array.is-array":130,"core-js/modules/es.array.iterator":131,"core-js/modules/es.date.to-string":135,"core-js/modules/es.object.keys":143,"core-js/modules/es.object.to-string":145,"core-js/modules/es.promise":146,"core-js/modules/es.regexp.to-string":148,"core-js/modules/es.string.iterator":150,"core-js/modules/es.symbol":154,"core-js/modules/es.symbol.description":152,"core-js/modules/es.symbol.iterator":153,"core-js/modules/web.dom-collections.iterator":156,"i18next":166,"i18next-browser-languagedetector":161,"i18next-http-backend":163,"lodash/uniq":221,"regenerator-runtime/runtime":223}],231:[function(require,module,exports){
 "use strict";
 
 require("core-js/modules/es.array.for-each");
@@ -11871,7 +12739,7 @@ InfoBox.Boxes = $('.info_element').get().map(function (html) {
   return new InfoBox(html);
 });
 
-},{"./style-help":245,"core-js/modules/es.array.for-each":127,"core-js/modules/es.array.map":133,"core-js/modules/es.object.define-property":139,"core-js/modules/web.dom-collections.for-each":155}],231:[function(require,module,exports){
+},{"./style-help":247,"core-js/modules/es.array.for-each":127,"core-js/modules/es.array.map":133,"core-js/modules/es.object.define-property":139,"core-js/modules/web.dom-collections.for-each":155}],232:[function(require,module,exports){
 "use strict";
 
 require("core-js/modules/es.object.define-property");
@@ -11930,7 +12798,7 @@ InfoPos.TopRight = new InfoPos(1420, 90);
 InfoPos.BottomRight = new InfoPos(1420, 790);
 InfoPos.BottomLeft = new InfoPos(300, 790);
 
-},{"core-js/modules/es.object.define-property":139}],232:[function(require,module,exports){
+},{"core-js/modules/es.object.define-property":139}],233:[function(require,module,exports){
 "use strict";
 
 require("core-js/modules/es.object.define-property");
@@ -12001,7 +12869,7 @@ exports.Lane = Lane;
 var NO_LANE = new Lane(_pixiHelp.POINT_ZERO, new PIXI.Point(1, 0));
 exports.NO_LANE = NO_LANE;
 
-},{"./pixi-help":236,"core-js/modules/es.object.define-property":139}],233:[function(require,module,exports){
+},{"./pixi-help":238,"core-js/modules/es.object.define-property":139}],234:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -12038,7 +12906,86 @@ setOppositeLanes(LANES[2], LANES[3]);
 setOppositeLanes(LANES[4], LANES[5]);
 setOppositeLanes(LANES[6], LANES[7]);
 
-},{"./constants":224,"./lane":232}],234:[function(require,module,exports){
+},{"./constants":225,"./lane":233}],235:[function(require,module,exports){
+"use strict";
+
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+require("core-js/modules/es.array.index-of");
+
+require("core-js/modules/es.array.reduce");
+
+require("core-js/modules/es.function.bind");
+
+require("core-js/modules/es.object.define-property");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
+var langmap = _interopRequireWildcard(require("langmap"));
+
+var _eventHelp = require("./event-help");
+
+function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function _getRequireWildcardCache() { return cache; }; return cache; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { "default": obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj["default"] = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+var LanguageButton =
+/*#__PURE__*/
+function () {
+  function LanguageButton(i18next, config) {
+    _classCallCheck(this, LanguageButton);
+
+    this.i18next = i18next;
+    this.config = config;
+    this.$button = $('#languageButton');
+    this.$buttonLabel = $('#languageText');
+    var handleKeyDownL = (0, _eventHelp.eventFilter)(_eventHelp.eventFilters.KEY_L, this.switchToNextLanguage.bind(this));
+    window.addEventListener('keydown', handleKeyDownL);
+    this.$button.click(this.switchToNextLanguage.bind(this));
+    this.updateLabel();
+  }
+
+  _createClass(LanguageButton, [{
+    key: "switchToNextLanguage",
+    value: function switchToNextLanguage() {
+      var _this = this;
+
+      var languages = this.config.languages;
+      var lngIndex = this.i18next.languages.reduce(function (accIndex, curLng) {
+        return accIndex !== -1 ? accIndex : languages.indexOf(curLng);
+      }, -1);
+
+      if (lngIndex !== -1) {
+        var newLngIndex = (lngIndex + 1) % languages.length;
+        var newLng = languages[newLngIndex];
+        this.i18next.changeLanguage(newLng).then(function () {
+          return _this.updateLabel();
+        });
+      }
+    }
+  }, {
+    key: "updateLabel",
+    value: function updateLabel() {
+      var lng = this.i18next.language;
+      this.$buttonLabel.text(langmap[lng].nativeName);
+    }
+  }]);
+
+  return LanguageButton;
+}();
+
+exports["default"] = LanguageButton;
+
+},{"./event-help":229,"core-js/modules/es.array.index-of":129,"core-js/modules/es.array.reduce":134,"core-js/modules/es.function.bind":136,"core-js/modules/es.object.define-property":139,"langmap":167}],236:[function(require,module,exports){
 "use strict";
 
 require("core-js/modules/es.symbol");
@@ -12257,7 +13204,7 @@ main().then(function () {
   return undefined;
 });
 
-},{"./i18n":229,"./situations/car-enters-lane":242,"./situations/child-runs":243,"./situations/tree-falls":244,"./view":246,"core-js/modules/es.array.concat":124,"core-js/modules/es.array.filter":125,"core-js/modules/es.array.for-each":127,"core-js/modules/es.array.iterator":131,"core-js/modules/es.date.to-string":135,"core-js/modules/es.object.define-properties":138,"core-js/modules/es.object.define-property":139,"core-js/modules/es.object.get-own-property-descriptor":140,"core-js/modules/es.object.get-own-property-descriptors":141,"core-js/modules/es.object.keys":143,"core-js/modules/es.object.to-string":145,"core-js/modules/es.promise":146,"core-js/modules/es.regexp.exec":147,"core-js/modules/es.regexp.to-string":148,"core-js/modules/es.string.iterator":150,"core-js/modules/es.string.search":151,"core-js/modules/es.symbol":154,"core-js/modules/web.dom-collections.for-each":155,"core-js/modules/web.dom-collections.iterator":156,"core-js/modules/web.url":159,"regenerator-runtime/runtime":222}],235:[function(require,module,exports){
+},{"./i18n":230,"./situations/car-enters-lane":244,"./situations/child-runs":245,"./situations/tree-falls":246,"./view":248,"core-js/modules/es.array.concat":124,"core-js/modules/es.array.filter":125,"core-js/modules/es.array.for-each":127,"core-js/modules/es.array.iterator":131,"core-js/modules/es.date.to-string":135,"core-js/modules/es.object.define-properties":138,"core-js/modules/es.object.define-property":139,"core-js/modules/es.object.get-own-property-descriptor":140,"core-js/modules/es.object.get-own-property-descriptors":141,"core-js/modules/es.object.keys":143,"core-js/modules/es.object.to-string":145,"core-js/modules/es.promise":146,"core-js/modules/es.regexp.exec":147,"core-js/modules/es.regexp.to-string":148,"core-js/modules/es.string.iterator":150,"core-js/modules/es.string.search":151,"core-js/modules/es.symbol":154,"core-js/modules/web.dom-collections.for-each":155,"core-js/modules/web.dom-collections.iterator":156,"core-js/modules/web.url":159,"regenerator-runtime/runtime":223}],237:[function(require,module,exports){
 "use strict";
 
 require("core-js/modules/es.array.find");
@@ -12436,7 +13383,7 @@ function () {
 
 exports["default"] = Menu;
 
-},{"./style-help":245,"core-js/modules/es.array.find":126,"core-js/modules/es.array.for-each":127,"core-js/modules/es.array.from":128,"core-js/modules/es.array.map":133,"core-js/modules/es.function.bind":136,"core-js/modules/es.object.define-property":139,"core-js/modules/es.string.iterator":150,"core-js/modules/web.dom-collections.for-each":155}],236:[function(require,module,exports){
+},{"./style-help":247,"core-js/modules/es.array.find":126,"core-js/modules/es.array.for-each":127,"core-js/modules/es.array.from":128,"core-js/modules/es.array.map":133,"core-js/modules/es.function.bind":136,"core-js/modules/es.object.define-property":139,"core-js/modules/es.string.iterator":150,"core-js/modules/web.dom-collections.for-each":155}],238:[function(require,module,exports){
 "use strict";
 
 require("core-js/modules/es.array.map");
@@ -12541,7 +13488,7 @@ function pixiMoveTo(element, dest) {
 var POINT_ZERO = new PIXI.Point(0, 0);
 exports.POINT_ZERO = POINT_ZERO;
 
-},{"./constants":224,"core-js/modules/es.array.map":133,"core-js/modules/es.object.to-string":145,"core-js/modules/es.promise":146,"core-js/modules/es.string.anchor":149}],237:[function(require,module,exports){
+},{"./constants":225,"core-js/modules/es.array.map":133,"core-js/modules/es.object.to-string":145,"core-js/modules/es.promise":146,"core-js/modules/es.string.anchor":149}],239:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -12564,7 +13511,7 @@ var Policies = [{
 }];
 exports.Policies = Policies;
 
-},{}],238:[function(require,module,exports){
+},{}],240:[function(require,module,exports){
 "use strict";
 
 require("core-js/modules/es.object.define-property");
@@ -12662,7 +13609,7 @@ function () {
 
 exports["default"] = Report;
 
-},{"./style-help":245,"core-js/modules/es.object.define-property":139,"core-js/modules/es.object.to-string":145,"core-js/modules/es.promise":146,"core-js/modules/web.timers":157}],239:[function(require,module,exports){
+},{"./style-help":247,"core-js/modules/es.object.define-property":139,"core-js/modules/es.object.to-string":145,"core-js/modules/es.promise":146,"core-js/modules/web.timers":157}],241:[function(require,module,exports){
 "use strict";
 
 require("core-js/modules/es.object.define-property");
@@ -12752,7 +13699,7 @@ function () {
 
 exports["default"] = SceneElement;
 
-},{"./constants":224,"./pixi-help":236,"core-js/modules/es.object.define-property":139,"core-js/modules/es.object.to-string":145,"core-js/modules/es.promise":146}],240:[function(require,module,exports){
+},{"./constants":225,"./pixi-help":238,"core-js/modules/es.object.define-property":139,"core-js/modules/es.object.to-string":145,"core-js/modules/es.promise":146}],242:[function(require,module,exports){
 "use strict";
 
 require("core-js/modules/es.array.concat");
@@ -13247,7 +14194,7 @@ function () {
 
 exports["default"] = SituationRunner;
 
-},{"./countdown-button":225,"./design":227,"./info-boxes":230,"./menu":235,"./pixi-help":236,"./policies":237,"core-js/modules/es.array.concat":124,"core-js/modules/es.array.for-each":127,"core-js/modules/es.array.map":133,"core-js/modules/es.function.bind":136,"core-js/modules/es.object.define-property":139,"core-js/modules/es.object.to-string":145,"core-js/modules/es.promise":146,"core-js/modules/web.dom-collections.for-each":155,"core-js/modules/web.timers":157,"regenerator-runtime/runtime":222}],241:[function(require,module,exports){
+},{"./countdown-button":226,"./design":228,"./info-boxes":231,"./menu":237,"./pixi-help":238,"./policies":239,"core-js/modules/es.array.concat":124,"core-js/modules/es.array.for-each":127,"core-js/modules/es.array.map":133,"core-js/modules/es.function.bind":136,"core-js/modules/es.object.define-property":139,"core-js/modules/es.object.to-string":145,"core-js/modules/es.promise":146,"core-js/modules/web.dom-collections.for-each":155,"core-js/modules/web.timers":157,"regenerator-runtime/runtime":223}],243:[function(require,module,exports){
 "use strict";
 
 require("core-js/modules/es.array.concat");
@@ -13398,7 +14345,7 @@ Situation.situations = {};
 Situation.HighlightAgentColor = 0xFFF200;
 Situation.HighlightOthersColor = 0xFF8000;
 
-},{"core-js/modules/es.array.concat":124,"core-js/modules/es.array.for-each":127,"core-js/modules/es.array.join":132,"core-js/modules/es.object.define-property":139,"core-js/modules/es.object.to-string":145,"core-js/modules/es.promise":146,"core-js/modules/web.dom-collections.for-each":155,"core-js/modules/web.timers":157}],242:[function(require,module,exports){
+},{"core-js/modules/es.array.concat":124,"core-js/modules/es.array.for-each":127,"core-js/modules/es.array.join":132,"core-js/modules/es.object.define-property":139,"core-js/modules/es.object.to-string":145,"core-js/modules/es.promise":146,"core-js/modules/web.dom-collections.for-each":155,"core-js/modules/web.timers":157}],244:[function(require,module,exports){
 "use strict";
 
 require("core-js/modules/es.symbol");
@@ -13655,7 +14602,7 @@ exports["default"] = CarEntersLaneSituation;
 
 _situation["default"].registerSituation('car-enters-lane', CarEntersLaneSituation);
 
-},{"../car":223,"../constants":224,"../info-positions":231,"../lanes":233,"../scene-element":239,"../situation":241,"core-js/modules/es.array.filter":125,"core-js/modules/es.array.for-each":127,"core-js/modules/es.array.iterator":131,"core-js/modules/es.object.create":137,"core-js/modules/es.object.define-properties":138,"core-js/modules/es.object.define-property":139,"core-js/modules/es.object.get-own-property-descriptor":140,"core-js/modules/es.object.get-own-property-descriptors":141,"core-js/modules/es.object.get-prototype-of":142,"core-js/modules/es.object.keys":143,"core-js/modules/es.object.set-prototype-of":144,"core-js/modules/es.object.to-string":145,"core-js/modules/es.promise":146,"core-js/modules/es.string.iterator":150,"core-js/modules/es.symbol":154,"core-js/modules/es.symbol.description":152,"core-js/modules/es.symbol.iterator":153,"core-js/modules/web.dom-collections.for-each":155,"core-js/modules/web.dom-collections.iterator":156}],243:[function(require,module,exports){
+},{"../car":224,"../constants":225,"../info-positions":232,"../lanes":234,"../scene-element":241,"../situation":243,"core-js/modules/es.array.filter":125,"core-js/modules/es.array.for-each":127,"core-js/modules/es.array.iterator":131,"core-js/modules/es.object.create":137,"core-js/modules/es.object.define-properties":138,"core-js/modules/es.object.define-property":139,"core-js/modules/es.object.get-own-property-descriptor":140,"core-js/modules/es.object.get-own-property-descriptors":141,"core-js/modules/es.object.get-prototype-of":142,"core-js/modules/es.object.keys":143,"core-js/modules/es.object.set-prototype-of":144,"core-js/modules/es.object.to-string":145,"core-js/modules/es.promise":146,"core-js/modules/es.string.iterator":150,"core-js/modules/es.symbol":154,"core-js/modules/es.symbol.description":152,"core-js/modules/es.symbol.iterator":153,"core-js/modules/web.dom-collections.for-each":155,"core-js/modules/web.dom-collections.iterator":156}],245:[function(require,module,exports){
 "use strict";
 
 require("core-js/modules/es.symbol");
@@ -13916,7 +14863,7 @@ exports["default"] = ChildRunsSituation;
 
 _situation["default"].registerSituation('child-runs', ChildRunsSituation);
 
-},{"../car":223,"../constants":224,"../info-positions":231,"../lanes":233,"../pixi-help":236,"../scene-element":239,"../situation":241,"core-js/modules/es.array.filter":125,"core-js/modules/es.array.for-each":127,"core-js/modules/es.array.iterator":131,"core-js/modules/es.array.map":133,"core-js/modules/es.object.create":137,"core-js/modules/es.object.define-properties":138,"core-js/modules/es.object.define-property":139,"core-js/modules/es.object.get-own-property-descriptor":140,"core-js/modules/es.object.get-own-property-descriptors":141,"core-js/modules/es.object.get-prototype-of":142,"core-js/modules/es.object.keys":143,"core-js/modules/es.object.set-prototype-of":144,"core-js/modules/es.object.to-string":145,"core-js/modules/es.promise":146,"core-js/modules/es.string.iterator":150,"core-js/modules/es.symbol":154,"core-js/modules/es.symbol.description":152,"core-js/modules/es.symbol.iterator":153,"core-js/modules/web.dom-collections.for-each":155,"core-js/modules/web.dom-collections.iterator":156}],244:[function(require,module,exports){
+},{"../car":224,"../constants":225,"../info-positions":232,"../lanes":234,"../pixi-help":238,"../scene-element":241,"../situation":243,"core-js/modules/es.array.filter":125,"core-js/modules/es.array.for-each":127,"core-js/modules/es.array.iterator":131,"core-js/modules/es.array.map":133,"core-js/modules/es.object.create":137,"core-js/modules/es.object.define-properties":138,"core-js/modules/es.object.define-property":139,"core-js/modules/es.object.get-own-property-descriptor":140,"core-js/modules/es.object.get-own-property-descriptors":141,"core-js/modules/es.object.get-prototype-of":142,"core-js/modules/es.object.keys":143,"core-js/modules/es.object.set-prototype-of":144,"core-js/modules/es.object.to-string":145,"core-js/modules/es.promise":146,"core-js/modules/es.string.iterator":150,"core-js/modules/es.symbol":154,"core-js/modules/es.symbol.description":152,"core-js/modules/es.symbol.iterator":153,"core-js/modules/web.dom-collections.for-each":155,"core-js/modules/web.dom-collections.iterator":156}],246:[function(require,module,exports){
 "use strict";
 
 require("core-js/modules/es.symbol");
@@ -14175,7 +15122,7 @@ exports["default"] = TreeFallsSituation;
 
 _situation["default"].registerSituation('tree-falls', TreeFallsSituation);
 
-},{"../car":223,"../constants":224,"../info-positions":231,"../lanes":233,"../pixi-help":236,"../scene-element":239,"../situation":241,"core-js/modules/es.array.filter":125,"core-js/modules/es.array.for-each":127,"core-js/modules/es.array.iterator":131,"core-js/modules/es.array.map":133,"core-js/modules/es.object.create":137,"core-js/modules/es.object.define-properties":138,"core-js/modules/es.object.define-property":139,"core-js/modules/es.object.get-own-property-descriptor":140,"core-js/modules/es.object.get-own-property-descriptors":141,"core-js/modules/es.object.get-prototype-of":142,"core-js/modules/es.object.keys":143,"core-js/modules/es.object.set-prototype-of":144,"core-js/modules/es.object.to-string":145,"core-js/modules/es.promise":146,"core-js/modules/es.string.iterator":150,"core-js/modules/es.symbol":154,"core-js/modules/es.symbol.description":152,"core-js/modules/es.symbol.iterator":153,"core-js/modules/web.dom-collections.for-each":155,"core-js/modules/web.dom-collections.iterator":156}],245:[function(require,module,exports){
+},{"../car":224,"../constants":225,"../info-positions":232,"../lanes":234,"../pixi-help":238,"../scene-element":241,"../situation":243,"core-js/modules/es.array.filter":125,"core-js/modules/es.array.for-each":127,"core-js/modules/es.array.iterator":131,"core-js/modules/es.array.map":133,"core-js/modules/es.object.create":137,"core-js/modules/es.object.define-properties":138,"core-js/modules/es.object.define-property":139,"core-js/modules/es.object.get-own-property-descriptor":140,"core-js/modules/es.object.get-own-property-descriptors":141,"core-js/modules/es.object.get-prototype-of":142,"core-js/modules/es.object.keys":143,"core-js/modules/es.object.set-prototype-of":144,"core-js/modules/es.object.to-string":145,"core-js/modules/es.promise":146,"core-js/modules/es.string.iterator":150,"core-js/modules/es.symbol":154,"core-js/modules/es.symbol.description":152,"core-js/modules/es.symbol.iterator":153,"core-js/modules/web.dom-collections.for-each":155,"core-js/modules/web.dom-collections.iterator":156}],247:[function(require,module,exports){
 "use strict";
 
 require("core-js/modules/es.object.to-string");
@@ -14205,14 +15152,8 @@ function setLeftTopCSSFromCoord(element, coord) {
   element.style.top = coord.y + 'px';
 }
 
-},{"core-js/modules/es.object.to-string":145,"core-js/modules/es.promise":146}],246:[function(require,module,exports){
+},{"core-js/modules/es.object.to-string":145,"core-js/modules/es.promise":146}],248:[function(require,module,exports){
 "use strict";
-
-require("core-js/modules/es.array.index-of");
-
-require("core-js/modules/es.array.reduce");
-
-require("core-js/modules/es.function.bind");
 
 require("core-js/modules/es.object.define-property");
 
@@ -14235,13 +15176,13 @@ var _report = _interopRequireDefault(require("./report"));
 
 require("./info-boxes");
 
-var _eventHelp = require("./event-help");
-
 var _situation = _interopRequireDefault(require("./situation"));
 
 var _situationRunner = _interopRequireDefault(require("./situation-runner"));
 
 var _menu = _interopRequireDefault(require("./menu"));
+
+var _languageButton = _interopRequireDefault(require("./language-button"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
@@ -14304,6 +15245,7 @@ function () {
     this.SituationMenu = new _menu["default"]('menu', menuOptions, function () {
       return tf('ChooseSituation');
     }, 'top_menu');
+    this.languageButton = new _languageButton["default"](this.i18next, this.config);
     this.i18next.on('languageChanged', function () {
       return _this.SituationMenu.refreshTexts();
     });
@@ -14311,8 +15253,6 @@ function () {
     this.app.ticker.add(function () {
       return TWEEN.update();
     });
-    var handleKeyDownL = (0, _eventHelp.eventFilter)(_eventHelp.eventFilters.KEY_L, this.switchToNextLanguage.bind(this));
-    window.addEventListener('keydown', handleKeyDownL);
   }
 
   _createClass(View, [{
@@ -14366,20 +15306,6 @@ function () {
     value: function queueAction(action) {
       this.afterIdleAction = action;
     }
-  }, {
-    key: "switchToNextLanguage",
-    value: function switchToNextLanguage() {
-      var languages = this.config.languages;
-      var lngIndex = this.i18next.languages.reduce(function (accIndex, curLng) {
-        return accIndex !== -1 ? accIndex : languages.indexOf(curLng);
-      }, -1);
-
-      if (lngIndex !== -1) {
-        var newLngIndex = (lngIndex + 1) % languages.length;
-        var newLng = languages[newLngIndex];
-        this.i18next.changeLanguage(newLng);
-      }
-    }
   }]);
 
   return View;
@@ -14387,5 +15313,5 @@ function () {
 
 exports["default"] = View;
 
-},{"./car":223,"./constants":224,"./event-help":228,"./info-boxes":230,"./lanes":233,"./menu":235,"./pixi-help":236,"./report":238,"./scene-element":239,"./situation":241,"./situation-runner":240,"core-js/modules/es.array.index-of":129,"core-js/modules/es.array.reduce":134,"core-js/modules/es.function.bind":136,"core-js/modules/es.object.define-property":139}]},{},[234])
+},{"./car":224,"./constants":225,"./info-boxes":231,"./lanes":234,"./language-button":235,"./menu":237,"./pixi-help":238,"./report":240,"./scene-element":241,"./situation":243,"./situation-runner":242,"core-js/modules/es.object.define-property":139}]},{},[236])
 
