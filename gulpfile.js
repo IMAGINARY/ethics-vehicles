@@ -17,7 +17,8 @@ const JS_BUNDLE_NAME = 'bundle';
 
 const paths = {
   html: {
-    src: ['./src/pug/**/*.pug', '!./src/pug/include/**/*.pug', '!./src/pug/tpl/**/*.pug', '!./src/pug/sections/**/*.pug'],
+    src: ['./src/pug/**/*.pug', '!./src/pug/include/**/*.pug', '!./src/pug/tpl/**/*.pug',
+      '!./src/pug/sections/**/*.pug'],
     dest: `${OUTPUT_DIR}`,
   },
   styles: {
@@ -25,13 +26,13 @@ const paths = {
     dest: `${OUTPUT_DIR}/assets/css`,
   },
   scripts: {
-    src: './src/js/*.js',
+    src: './src/js/**/*.js',
     dest: `${OUTPUT_DIR}/assets/js`,
   },
   audio: {
-    src: './src/audio/*.mp3',
-    dest: `${OUTPUT_DIR}/assets/audio`
-  }
+    src: './src/audio/**/*.mp3',
+    dest: `${OUTPUT_DIR}/assets/audio`,
+  },
 };
 
 function html() {
@@ -39,9 +40,11 @@ function html() {
     .pipe(pug({
       pretty: true,
       data: pugData,
-    })).pipe(rename({
+    }))
+    .pipe(rename({
       extname: '.html',
-    })).pipe(
+    }))
+    .pipe(
       gulp.dest(paths.html.dest)
     )
     .pipe(touch());
@@ -50,7 +53,8 @@ function html() {
 function styles() {
   return gulp.src(paths.styles.src, { sourcemaps: true })
     .pipe(sourcemaps.init())
-    .pipe(sass().on('error', sass.logError))
+    .pipe(sass()
+      .on('error', sass.logError))
     .pipe(sourcemaps.write('.'))
     .pipe(gulp.dest(paths.styles.dest));
 }
@@ -62,7 +66,10 @@ function scripts() {
     debug: true,
   })
     .transform('babelify', {
-      presets: ['@babel/env'],
+      presets: [['@babel/preset-env', {
+        useBuiltIns: 'usage',
+        corejs: 3,
+      }]],
       sourceMaps: true,
     })
     .on('error', (msg) => {
@@ -80,14 +87,16 @@ function scripts() {
     .pipe(gulp.dest(paths.scripts.dest));
 }
 
-function watch() {
-  gulp.watch(paths.styles.src, styles);
-  gulp.watch(paths.scripts.src, scripts);
-}
-
 function audio() {
   return gulp.src(paths.audio.src)
-             .pipe(gulp.dest(paths.audio.dest));
+    .pipe(gulp.dest(paths.audio.dest));
+}
+
+function watch() {
+  gulp.watch(paths.html.src, html);
+  gulp.watch(paths.styles.src, styles);
+  gulp.watch(paths.scripts.src, scripts);
+  gulp.watch(paths.audio.src, audio);
 }
 
 const build = gulp.parallel(html, styles, scripts, audio);

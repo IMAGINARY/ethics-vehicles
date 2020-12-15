@@ -1,40 +1,66 @@
+import Countdown from './countdown';
+
 const KeyEnter = 13;
 
-export default class CountdownButton {
-  constructor(text, onClick) {
+class AdvanceButton {
+  constructor(label, labelFormatter) {
     this.htmlButton = $('#advanceButton');
     this.htmlText = $('#advanceText');
-    this.text = text;
-    this.onClick = onClick;
+    this.labelFormatter = labelFormatter;
 
-    this.htmlText.text(text);
-    this.htmlButton.on('click', () => this.doClick());
-    this.htmlButton.show();
-    this.timeoutRunner = null;
+    this.triggerPromise = new Promise((resolve) => {
+      this.resolve = resolve;
+    });
 
-    window.onkeydown = event => {
-      if (event.which == KeyEnter)
-        this.doClick();
+    this.handleClick = this.trigger.bind(this);
+    this.handleKeyDown = (event) => {
+      if (event.keyCode === KeyEnter) {
+        this.trigger();
+      }
     };
+    this.htmlButton.on('click', this.handleClick);
+    window.addEventListener('keydown', this.handleKeyDown);
+
+    this.setLabel(label);
+    this.htmlButton.show();
   }
 
-  doClick() {
-    window.onkeydown = () => {};
-    if (this.timeoutRunner != null)
-      clearTimeout(this.timeoutRunner);
+  setLabel(label) {
+    this.label = label;
+    this.updateLabel();
+  }
+
+  updateLabel() {
+    this.htmlText.text(this.labelFormatter(this.label));
+  }
+
+  trigger() {
+    this.htmlButton.off('click', this.handleClick);
+    window.removeEventListener('keydown', this.handleKeyDown);
 
     this.htmlButton.hide();
-    return this.onClick();
+    this.resolve();
   }
 
-  setTimeout(timeout) {
-    if (timeout >= 1000)
-      this.htmlText.text(this.text + " (" + (Math.floor(timeout/1000)) + ")");
-
-    if (timeout <= 1000) {
-      this.timeoutRunner = setTimeout(() => this.doClick(), timeout);
-    } else {
-      this.timeoutRunner = setTimeout(() => this.setTimeout(timeout - 1000), 1000);
-    }
+  async wait() {
+    await this.triggerPromise;
   }
+}
+
+function formatCountdownLabel(label, countdown) {
+  const secondsLeft = Math.max(1, Math.floor(countdown.remainingMs() / 1000));
+  return `${label} (${secondsLeft})`;
+}
+
+export default function countdownButton(label, timeout) {
+  const countdown = new Countdown(timeout);
+  const countdownLabelFormatter = (l) => formatCountdownLabel(l, countdown);
+  const advanceButton = new AdvanceButton(label, countdownLabelFormatter);
+
+  countdown.on('tick', () => advanceButton.updateLabel());
+  countdown.on('done', () => advanceButton.trigger());
+  advanceButton.wait()
+    .then(() => countdown.abort());
+
+  return advanceButton;
 }

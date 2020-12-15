@@ -1,110 +1,145 @@
 /* eslint-disable class-methods-use-this */
-/* globals PIXI */
+
 import { Policies } from './policies';
 import { highlightSprite } from './pixi-help';
 import Menu from './menu';
-import CountdownButton from './countdown-button';
-import { Texts } from './texts';
+import countdownButton from './countdown-button';
 import InfoBox from './info-boxes';
 
 import { HighlightColor } from './design';
 
-export default class SituationRunner {
-  constructor(view, report) {
+class SituationRunnerInternal {
+  constructor(view, report, situation) {
     this.view = view;
+    this.t = (...args) => this.view.i18next.t(...args);
     this.report = report;
+    this.situation = situation;
+    this.elements = situation.getElements();
     this.currentDecision = null;
     this.tempElements = [];
     this.currentPolicy = null;
     this.policyMenu = null;
+    this.setInfoTextsHandler = this.setInfoTexts.bind(this);
   }
 
-  run(situation) {
+  async run() {
     this.view.agentCar.hide();
-    situation.setup()
-      .then(() => situation.start())
-      .then(() => situation.wait(1000))
-      .then(() => this.showElementsInfo(situation.getElements()))
+    await this.situation.setup();
+    await this.situation.start();
+    await this.situation.wait(1000);
+    await this.showElementsInfo();
 
-      .then(() => this.report.setSituation(situation))
-      .then(() => this.report.show())
-      .then(() => this.waitForAdvanceButton(Texts.Next), 3000)
+    const situationDescriptionKey = this.situation.getDescriptionKey();
+    const setReportDescription = () => this.report.setDescription(this.t(situationDescriptionKey));
+    setReportDescription();
+    this.view.i18next.on('languageChanged', setReportDescription);
 
-      .then(() => this.waitForPolicy(situation))
-      .then(() => this.report.setPolicy(this.currentPolicy))
-      .then(() => situation.wait(1000))
-      .then(() => this.hideElementsInfo())
-      .then(() => situation.wait(1000))
-      
-      .then(() => this.playOutDecision())
-      .then(() => situation.wait(1000))
-      .then(() => this.report.setDecision(this.currentDecision.text))
-      .then(() => this.waitForAdvanceButton(Texts.Restart), 15000)
+    await this.report.show();
+    await this.waitForAdvanceButton('Next', 3000);
 
-      .then(() => this.report.hide())
-      .then(() => situation.clearSprites())
-      .then(() => situation.teardown())
-      .then(() => this.view.start());
+    await this.waitForPolicy();
+
+    const policyNameKey = this.currentPolicy.nameKey;
+    const policyObjectiveKey = this.currentPolicy.objectiveKey;
+    const setReportPolicy = () => {
+      this.report.setPolicy(this.t(policyNameKey), this.t(policyObjectiveKey));
+    };
+    setReportPolicy();
+    this.view.i18next.on('languageChanged', setReportPolicy);
+
+    await this.situation.wait(1000);
+    await this.hideElementsInfo();
+    await this.situation.wait(1000);
+
+    await this.playOutDecision();
+    await this.situation.wait(1000);
+
+    const setReportDecision = () => this.report.setDecision(this.t(this.currentDecision.textKey));
+    setReportDecision();
+    this.view.i18next.on('languageChanged', setReportDecision);
+
+    await this.waitForAdvanceButton('Restart', 15000);
+
+    await this.report.hide();
+    await this.situation.clearSprites();
+    await this.situation.teardown();
+    await this.view.start();
+
+    this.view.i18next.off('languageChanged', setReportDescription);
+    this.view.i18next.off('languageChanged', setReportPolicy);
+    this.view.i18next.off('languageChanged', setReportDecision);
   }
 
-  waitForPolicy(situation) {
-
-    return new Promise ( resolve => {
-      const options = Policies.map ( policy => {
-        return {
-          text: policy.name + ": " + policy.objective,
-          action: () => {
-            this.currentPolicy = policy;
-            this.currentDecision = situation.getDecision(policy.id);
-            this.policyMenu.hide();
-            resolve(policy.name);
-          }
-        };
-      });
-      this.policyMenu = new Menu('menu', options, Texts.ChoosePolicy, 'bottom_menu');
+  async waitForPolicy() {
+    const languageChangedHandler = () => this.policyMenu.refreshTexts();
+    const policyId = await new Promise((resolve) => {
+      const options = Policies.map((policy) => ({
+        label: () => `${this.t(policy.nameKey)}: ${this.t(policy.objectiveKey)}`,
+        action: () => {
+          this.currentPolicy = policy;
+          this.currentDecision = this.situation.getDecision(policy.id);
+          this.policyMenu.hide();
+          resolve(policy.id);
+        },
+      }));
+      const title = () => this.t('ChoosePolicy');
+      this.policyMenu = new Menu('menu', options, title, 'bottom_menu');
+      this.view.i18next.on('languageChanged', languageChangedHandler);
       this.policyMenu.show();
     });
+    this.view.i18next.off('languageChanged', languageChangedHandler);
+    return policyId;
   }
 
-  waitForAdvanceButton(text = Texts.Next, timeout = 10000) {
-    return new Promise ((resolve) => {
-      const cb = new CountdownButton(text, resolve);
-      cb.setTimeout(timeout);
-   });
+  async waitForAdvanceButton(key = 'Next', timeout = 10000) {
+    const advanceButton = countdownButton(this.t(key), timeout);
+    const languageChangedHandler = () => advanceButton.setLabel(this.t(key));
+    this.view.i18next.on('languageChanged', languageChangedHandler);
+    await advanceButton.wait();
+    this.view.i18next.off('languageChanged', languageChangedHandler);
   }
 
   waitForKeyPress() {
     return new Promise((resolve) => {
       window.onkeydown = () => {
-        window.onkeydown = () => {};
+        window.onkeydown = () => {
+        };
         resolve('keydown');
       };
     });
   }
 
-  showElementsInfo(elements) {
-    var promise = new Promise( (r) => r('start fades') );
-    elements.forEach((element, index) => {
-      promise = promise.then( r => {
-        this.highlight(element.sprite);
-        return InfoBox.get(index).fadeShow(element, 1000);
-       });
-    });
-   return promise;
+  setInfoTexts() {
+    for (let i = 0; i < this.elements.length; i += 1) {
+      const element = this.elements[i];
+      const infoBox = InfoBox.get(i);
+      infoBox.setName(this.t(element.nameKey));
+      infoBox.setDescription(this.t(element.descriptionKey));
+    }
   }
 
-  hideElementsInfo(time = 1000) {
-    return new Promise((resolve) => {
-      this.removeTempElements();
-      InfoBox.hideAll(time);
-      setTimeout(resolve, time);
-    });
+  async showElementsInfo() {
+    this.setInfoTexts();
+    this.view.i18next.on('languageChanged', this.setInfoTextsHandler);
+    for (let i = 0; i < this.elements.length; i += 1) {
+      const element = this.elements[i];
+      const { infopos } = element;
+      const infoBox = InfoBox.get(i);
+      await infoBox.fadeShow(infopos, 1000); // eslint-disable-line no-await-in-loop
+    }
+  }
+
+  async hideElementsInfo(time = 1000) {
+    this.removeTempElements();
+    InfoBox.hideAll(time);
+    await new Promise((resolve) => setTimeout(resolve, time));
+    this.view.i18next.off('languageChanged', this.setInfoTextsHandler);
   }
 
   playOutDecision() {
     return this.currentDecision.actionFunction();
   }
-  
+
   highlight(sprite) {
     this.addTempElement(highlightSprite(sprite, HighlightColor));
   }
@@ -119,5 +154,16 @@ export default class SituationRunner {
       this.view.container.removeChild(element);
     });
     this.tempElements = [];
+  }
+}
+
+export default class SituationRunner {
+  constructor(view, report) {
+    this.view = view;
+    this.report = report;
+  }
+
+  async run(situation) {
+    await new SituationRunnerInternal(this.view, this.report, situation).run();
   }
 }
