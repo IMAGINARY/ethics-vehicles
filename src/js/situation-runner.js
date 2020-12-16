@@ -1,5 +1,4 @@
-/* eslint-disable class-methods-use-this */
-
+/* eslint-disable max-classes-per-file */
 import { Policies } from './policies';
 import { highlightSprite } from './pixi-help';
 import Menu from './menu';
@@ -99,7 +98,9 @@ class SituationRunnerInternal {
     this.view.i18next.off('languageChanged', languageChangedHandler);
   }
 
+  // eslint-disable-next-line class-methods-use-this
   waitForKeyPress() {
+    // FIXME: refactor using window.addEventListener()
     return new Promise((resolve) => {
       window.onkeydown = () => {
         window.onkeydown = () => {

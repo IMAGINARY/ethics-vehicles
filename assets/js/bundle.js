@@ -12240,7 +12240,7 @@ function _defineProperties(target, props) { for (var i = 0; i < props.length; i+
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
-var KeyEnter = 13;
+var KeyEnter = 13; // FIXME: Use eventFilter from event-help.js
 
 var AdvanceButton =
 /*#__PURE__*/
@@ -12476,12 +12476,14 @@ exports["default"] = defaultConfig;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.HighlightColor = void 0;
-var Violet = 0x8f1a81;
-var Yellow = 0xffec02;
-var Grey = 0x666666;
-var HighlightColor = Yellow;
-exports.HighlightColor = HighlightColor;
+exports["default"] = void 0;
+var colors = {
+  violet: 0x8f1a81,
+  yellow: 0xffec02,
+  grey: 0x666666
+};
+var HighlightColor = colors.yellow;
+exports["default"] = HighlightColor;
 
 },{}],230:[function(require,module,exports){
 "use strict";
@@ -12830,7 +12832,7 @@ function _defineProperties(target, props) { for (var i = 0; i < props.length; i+
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
-PIXI.Point.Lerp = function (start, end, k) {
+PIXI.Point.Lerp = function lerp(start, end, k) {
   return new PIXI.Point(start.x + k * (end.x - start.x), start.y + k * (end.y - start.y));
 };
 
@@ -12848,12 +12850,12 @@ function () {
   _createClass(Lane, [{
     key: "isVertical",
     value: function isVertical() {
-      return this.start.x == this.end.x;
+      return this.start.x === this.end.x;
     }
   }, {
     key: "isHorizontal",
     value: function isHorizontal() {
-      return this.start.y == this.end.y;
+      return this.start.y === this.end.y;
     }
   }, {
     key: "getDrivingAngle",
@@ -12895,7 +12897,6 @@ var _lane = require("./lane");
 
 var _constants = require("./constants");
 
-/* globals PIXI */
 function createHorizontalLane(verticalOffset, dirMultiplier) {
   return new _lane.Lane(new PIXI.Point(_constants.ViewSize.width / 2 * dirMultiplier, -verticalOffset), new PIXI.Point(-(_constants.ViewSize.width / 2) * dirMultiplier, -verticalOffset));
 }
@@ -13204,7 +13205,6 @@ function _main() {
 
           case 14:
             i18next = _context2.sent;
-            // TODO: i18n with i18next
             view = new _view["default"]($('#game')[0], i18next, config);
             window.view = view;
             view.start();
@@ -13436,7 +13436,6 @@ exports.POINT_ZERO = void 0;
 
 var _constants = require("./constants");
 
-/* global PIXI */
 function createAnimatedSprite(sourceImages, scale) {
   var anchor = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 0.5;
   var textures = sourceImages.map(function (image) {
@@ -13470,12 +13469,12 @@ function vectorBetweenPoints(a, b) {
   var v1 = new PIXI.Point(0, -1);
   var v2 = new PIXI.Point(b.x - a.x, b.y - a.y);
   var radians = Math.atan2(v2.y, v2.x) - Math.atan2(v1.y, v1.x);
-  return radians * 180 / Math.PI;
+  return radians * (180 / Math.PI);
 }
 /**
- * 
- * @param {fraction [0,1] of the screen, horizontally, starting from left} x 
- * @param {fraction [0,1] of the screen, vertically, starting from top} y 
+ *
+ * @param {Number} x Fraction [0,1] of the screen, horizontally, starting from left.
+ * @param {Number} y Fraction [0,1] of the screen, vertically, starting from top.
  */
 
 
@@ -14037,10 +14036,12 @@ function () {
       }
 
       return waitForAdvanceButton;
-    }()
+    }() // eslint-disable-next-line class-methods-use-this
+
   }, {
     key: "waitForKeyPress",
     value: function waitForKeyPress() {
+      // FIXME: refactor using window.addEventListener()
       return new Promise(function (resolve) {
         window.onkeydown = function () {
           window.onkeydown = function () {};
@@ -14359,8 +14360,8 @@ function () {
   }, {
     key: "getSituation",
     value: function getSituation(key, view) {
-      var situationClass = Situation.situations[key];
-      return new situationClass(view);
+      var SituationClass = Situation.situations[key];
+      return new SituationClass(view);
     }
   }]);
 
@@ -14745,7 +14746,7 @@ function (_Situation) {
     _this.child = new _sceneElement["default"](_this.view, 'assets/images/child.png', childStartPos);
 
     _this.child.setSprite((0, _pixiHelp.createAnimatedSprite)([1, 2, 3].map(function (index) {
-      return "assets/images/child_sprite_" + index + ".png";
+      return "assets/images/child_sprite_".concat(index, ".png");
     }), _constants.CAR_SCALE));
 
     _this.crossingCar = new _car["default"](_this.view, 'assets/images/blue_car.png');
@@ -14816,16 +14817,18 @@ function (_Situation) {
     value: function decisionCrashCrossingCar() {
       var _this3 = this;
 
+      var toOptions = {
+        x: this.view.agentCar.x - _constants.STREET_LANE_OFFSET,
+        y: this.view.agentCar.y + _constants.STREET_LANE_OFFSET * 1.5,
+        angle: this.view.agentCar.angle - 60
+      };
       var carMovement = new Promise(function (resolve) {
-        new TWEEN.Tween(_this3.view.agentCar).to({
-          x: _this3.view.agentCar.x - _constants.STREET_LANE_OFFSET,
-          y: _this3.view.agentCar.y + _constants.STREET_LANE_OFFSET * 1.5,
-          angle: _this3.view.agentCar.angle - 60
-        }, CRASH_TIME).easing(TWEEN.Easing.Quadratic.Out).onComplete(function () {
+        new TWEEN.Tween(_this3.view.agentCar).to(toOptions, CRASH_TIME).easing(TWEEN.Easing.Quadratic.Out).onComplete(function () {
           return resolve('crash');
         }).start();
       });
-      var crossingCarMovement = this.crossingCar.driveInLaneUntilPosition(1 / 4 + 1 / 16, CRASH_TIME);
+      var endPosition = 1 / 4 + 1 / 16;
+      var crossingCarMovement = this.crossingCar.driveInLaneUntilPosition(endPosition, CRASH_TIME);
       return Promise.all([carMovement, crossingCarMovement]);
     }
   }, {
@@ -15000,7 +15003,7 @@ function (_Situation) {
     _this.tree = new _sceneElement["default"](_this.view, 'assets/images/tree.png', new PIXI.Point(-_constants.StreetOffsetFromCenter.x - _constants.STREET_LANE_OFFSET * 3, 0));
     _this.cyclist = new _car["default"](_this.view, 'assets/images/cyclist.png');
     _this.cyclist.sprite = (0, _pixiHelp.createAnimatedSprite)([1, 2, 3].map(function (index) {
-      return "assets/images/cyclist_" + index + ".png";
+      return "assets/images/cyclist_".concat(index, ".png");
     }), _constants.CAR_SCALE);
     _this.agentLane = _lanes.LANES[AGENT_LANE];
     _this.bicycleLane = _this.agentLane.oppositeLane;
@@ -15088,11 +15091,12 @@ function (_Situation) {
     value: function fellTree() {
       var _this5 = this;
 
+      var toOptions = {
+        angle: 90,
+        x: this.tree.sprite.x + _constants.STREET_LANE_OFFSET * 1.5
+      };
       return new Promise(function (resolve) {
-        new TWEEN.Tween(_this5.tree.sprite).to({
-          angle: 90,
-          x: _this5.tree.sprite.x + _constants.STREET_LANE_OFFSET * 1.5
-        }, SETUP_TIME - TREE_FALL_TIME).easing(TWEEN.Easing.Quadratic.In).delay(TREE_FALL_TIME).onComplete(function () {
+        new TWEEN.Tween(_this5.tree.sprite).to(toOptions, SETUP_TIME - TREE_FALL_TIME).easing(TWEEN.Easing.Quadratic.In).delay(TREE_FALL_TIME).onComplete(function () {
           return resolve('fell');
         }).start();
       });
@@ -15102,12 +15106,13 @@ function (_Situation) {
     value: function crashCyclist() {
       var _this6 = this;
 
+      var toOptions = {
+        x: this.view.agentCar.x + _constants.STREET_LANE_OFFSET * 2,
+        y: this.view.agentCar.y + _constants.STREET_LANE_OFFSET * 2,
+        angle: this.view.agentCar.angle - 45
+      };
       var carMovement = new Promise(function (resolve) {
-        new TWEEN.Tween(_this6.view.agentCar).to({
-          x: _this6.view.agentCar.x + _constants.STREET_LANE_OFFSET * 2,
-          y: _this6.view.agentCar.y + _constants.STREET_LANE_OFFSET * 2,
-          angle: _this6.view.agentCar.angle - 45
-        }, CRASH_TIME).easing(TWEEN.Easing.Quadratic.Out).onComplete(function () {
+        new TWEEN.Tween(_this6.view.agentCar).to(toOptions, CRASH_TIME).easing(TWEEN.Easing.Quadratic.Out).onComplete(function () {
           return resolve('crash');
         }).start();
       });
@@ -15124,12 +15129,13 @@ function (_Situation) {
     value: function softlyCrashTree() {
       var _this7 = this;
 
+      var toOptions = {
+        x: this.view.agentCar.x - _constants.STREET_LANE_OFFSET,
+        y: this.view.agentCar.y + _constants.STREET_LANE_OFFSET * 2,
+        angle: this.view.agentCar.angle + 70
+      };
       return new Promise(function (resolve) {
-        new TWEEN.Tween(_this7.view.agentCar).to({
-          x: _this7.view.agentCar.x - _constants.STREET_LANE_OFFSET,
-          y: _this7.view.agentCar.y + _constants.STREET_LANE_OFFSET * 2,
-          angle: _this7.view.agentCar.angle + 70
-        }, CRASH_TIME).easing(TWEEN.Easing.Quadratic.Out).onComplete(function () {
+        new TWEEN.Tween(_this7.view.agentCar).to(toOptions, CRASH_TIME).easing(TWEEN.Easing.Quadratic.Out).onComplete(function () {
           return resolve('crash');
         }).start();
       });
@@ -15162,7 +15168,6 @@ Object.defineProperty(exports, "__esModule", {
 exports.tweenOpacity = tweenOpacity;
 exports.setLeftTopCSSFromCoord = setLeftTopCSSFromCoord;
 
-/* globals TWEEN, PIXI */
 function tweenOpacity(element, toOpacity) {
   var time = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 1000;
   return new Promise(function (resolve) {
@@ -15175,8 +15180,8 @@ function tweenOpacity(element, toOpacity) {
 }
 
 function setLeftTopCSSFromCoord(element, coord) {
-  element.style.left = coord.x + 'px';
-  element.style.top = coord.y + 'px';
+  element.style.left = "".concat(coord.x, "px");
+  element.style.top = "".concat(coord.y, "px");
 }
 
 },{"core-js/modules/es.object.to-string":145,"core-js/modules/es.promise":146}],249:[function(require,module,exports){

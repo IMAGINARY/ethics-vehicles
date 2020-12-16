@@ -1,6 +1,6 @@
 import Countdown from './countdown';
 
-const KeyEnter = 13;
+const KeyEnter = 13; // FIXME: Use eventFilter from event-help.js
 
 class AdvanceButton {
   constructor(label, labelFormatter) {

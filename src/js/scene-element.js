@@ -1,4 +1,3 @@
-/* globals TWEEN */
 import { createSprite, pixiFadeIn, POINT_ZERO } from './pixi-help';
 import { CAR_SCALE } from './constants';
 
@@ -22,7 +21,7 @@ export default class SceneElement {
   }
 
   show() {
-    return new Promise( resolve => {
+    return new Promise((resolve) => {
       this.view.container.addChild(this.sprite);
       this.visible = true;
       resolve();
@@ -30,7 +29,7 @@ export default class SceneElement {
   }
 
   hide() {
-    return new Promise( resolve => {
+    return new Promise((resolve) => {
       this.view.container.removeChild(this.sprite);
       this.visible = false;
       resolve();

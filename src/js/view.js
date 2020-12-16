@@ -1,4 +1,3 @@
-/* globals PIXI */
 import Car from './car';
 import SceneElement from './scene-element';
 import { LANES } from './lanes';
@@ -60,7 +59,7 @@ export default class View {
   spriteToScreenPos(sprite) {
     return {
       x: sprite.x + this.app.screen.width / 2,
-      y: sprite.y + this.app.screen.height / 2
+      y: sprite.y + this.app.screen.height / 2,
     };
   }
 

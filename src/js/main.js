@@ -1,4 +1,3 @@
-/* globals $ */
 import defaultConfig from './default-config';
 import View from './view';
 import './situations/car-enters-lane';
@@ -61,7 +60,7 @@ async function main() {
     const configUrl = customConfigUrl || defaultConfigUrl;
     const config = { ...defaultConfig, ...await loadConfig(configUrl.href) };
 
-    const i18next = await createI18next(config.languages, true); // TODO: i18n with i18next
+    const i18next = await createI18next(config.languages, true);
 
     const view = new View($('#game')[0], i18next, config);
     window.view = view;

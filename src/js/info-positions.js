@@ -1,4 +1,3 @@
-
 const BoxSpace = 220;
 
 export default class InfoPos {
@@ -6,15 +5,19 @@ export default class InfoPos {
     this.x = x;
     this.y = y;
   }
+
   right() {
     return new InfoPos(this.x + BoxSpace, this.y);
   }
+
   left() {
     return new InfoPos(this.x - BoxSpace, this.y);
   }
+
   up() {
     return new InfoPos(this.x, this.y - BoxSpace);
   }
+
   down() {
     return new InfoPos(this.x, this.y + BoxSpace);
   }

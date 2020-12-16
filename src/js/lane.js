@@ -1,10 +1,9 @@
-/* globals PIXI */
 import { POINT_ZERO, vectorBetweenPoints } from './pixi-help';
 
-PIXI.Point.Lerp = function (start, end, k) {
+PIXI.Point.Lerp = function lerp(start, end, k) {
   return new PIXI.Point(start.x + k * (end.x - start.x),
-                        start.y + k * (end.y - start.y));
-}
+    start.y + k * (end.y - start.y));
+};
 
 export class Lane {
   constructor(start, end) {
@@ -14,11 +13,11 @@ export class Lane {
   }
 
   isVertical() {
-    return this.start.x == this.end.x;
+    return this.start.x === this.end.x;
   }
 
   isHorizontal() {
-    return this.start.y == this.end.y;
+    return this.start.y === this.end.y;
   }
 
   getDrivingAngle() {

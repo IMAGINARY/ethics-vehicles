@@ -1,4 +1,3 @@
-/* global $ */
 import { tweenOpacity } from './style-help';
 
 const KeyArrowUp = 38;

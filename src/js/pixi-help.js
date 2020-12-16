@@ -1,8 +1,7 @@
-/* global PIXI */
 import { ViewSize } from './constants';
 
 export function createAnimatedSprite(sourceImages, scale, anchor = 0.5) {
-  const textures = sourceImages.map( image => PIXI.Texture.from(image) );
+  const textures = sourceImages.map((image) => PIXI.Texture.from(image));
   const sprite = new PIXI.AnimatedSprite(textures);
   sprite.scale.x = scale;
   sprite.scale.y = scale;
@@ -25,7 +24,7 @@ export function highlightSprite(sprite, color) {
   graphics.drawCircle(
     sprite.x,
     sprite.y,
-    Math.max(sprite.width, sprite.height)/2 + 10,
+    Math.max(sprite.width, sprite.height) / 2 + 10
   );
   return graphics;
 }
@@ -34,17 +33,17 @@ export function vectorBetweenPoints(a, b) {
   const v1 = new PIXI.Point(0, -1);
   const v2 = new PIXI.Point(b.x - a.x, b.y - a.y);
   const radians = Math.atan2(v2.y, v2.x) - Math.atan2(v1.y, v1.x);
-  return radians * 180 / Math.PI;
+  return radians * (180 / Math.PI);
 }
 
 /**
- * 
- * @param {fraction [0,1] of the screen, horizontally, starting from left} x 
- * @param {fraction [0,1] of the screen, vertically, starting from top} y 
+ *
+ * @param {Number} x Fraction [0,1] of the screen, horizontally, starting from left.
+ * @param {Number} y Fraction [0,1] of the screen, vertically, starting from top.
  */
 export function screenPosFromFraction(x, y) {
   return new PIXI.Point((x - 0.5) * ViewSize.width,
-                        (y - 0.5) * ViewSize.height);
+    (y - 0.5) * ViewSize.height);
 }
 
 export function moveToFraction(sprite, x, y) {
@@ -54,22 +53,25 @@ export function moveToFraction(sprite, x, y) {
 }
 
 export function pixiFadeIn(element, toOpacity, time = 1000) {
-  return new Promise ((resolve) => {
-      new TWEEN.Tween(element)
-          .to( { alpha: toOpacity }, time)
-          .easing(TWEEN.Easing.Quadratic.Out)
-          .onComplete( () => resolve('visible') )
-          .start();
+  return new Promise((resolve) => {
+    new TWEEN.Tween(element)
+      .to({ alpha: toOpacity }, time)
+      .easing(TWEEN.Easing.Quadratic.Out)
+      .onComplete(() => resolve('visible'))
+      .start();
   });
 }
 
 export function pixiMoveTo(element, dest, time = 1000) {
-  return new Promise ((resolve) => {
+  return new Promise((resolve) => {
     new TWEEN.Tween(element)
-        .to( { x: dest.x, y: dest.y }, time)
-        .easing(TWEEN.Easing.Linear.None)
-        .onComplete( () => resolve('moved') )
-        .start();
+      .to({
+        x: dest.x,
+        y: dest.y,
+      }, time)
+      .easing(TWEEN.Easing.Linear.None)
+      .onComplete(() => resolve('moved'))
+      .start();
   });
 }
 

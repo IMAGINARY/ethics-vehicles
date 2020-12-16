@@ -36,7 +36,11 @@ export default class Situation {
 
   }
 
-  _buildDecisionsWithActions({ humanist, profit, protector }) {
+  _buildDecisionsWithActions({
+    humanist,
+    profit,
+    protector,
+  }) {
     return {
       humanist: {
         textKey: this._getI18nKey('Humanist'),
@@ -66,12 +70,12 @@ export default class Situation {
   }
 
   static getSituation(key, view) {
-    const situationClass = Situation.situations[key];
-    return new situationClass(view);
+    const SituationClass = Situation.situations[key];
+    return new SituationClass(view);
   }
 
   wait(time = 1000) {
-    return new Promise( resolve => setTimeout(resolve, time) );
+    return new Promise((resolve) => setTimeout(resolve, time));
   }
 
   _getI18nPrefix() {

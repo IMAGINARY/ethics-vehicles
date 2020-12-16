@@ -49,26 +49,30 @@ export default class Car {
 
   driveInLaneUntilPosition(endPosition = 1.0, time = 500, easing = TWEEN.Easing.Linear.None) {
     const stopPosition = this.lane.getPositionCoordinates(endPosition);
-    return new Promise( (resolve) => {
+    return new Promise((resolve) => {
       new TWEEN.Tween(this.sprite)
-      .to( { x: stopPosition.x,
-             y: stopPosition.y},
-          time)
-      .easing(easing)
-      .onComplete( () => resolve('arrived') )
-      .start();
+        .to({
+          x: stopPosition.x,
+          y: stopPosition.y,
+        },
+        time)
+        .easing(easing)
+        .onComplete(() => resolve('arrived'))
+        .start();
     });
   }
- 
+
   advanceAndTurn(offsetPosition, offsetAngle = 0, time = 1000, easing = TWEEN.Easing.Linear.None) {
-    return new Promise( (resolve) => {
+    return new Promise((resolve) => {
       new TWEEN.Tween(this)
-        .to( { x: this.x + offsetPosition.x,
-               y: this.y + offsetPosition.y,
-              angle: this.angle + offsetAngle},
-              time)
+        .to({
+          x: this.x + offsetPosition.x,
+          y: this.y + offsetPosition.y,
+          angle: this.angle + offsetAngle,
+        },
+        time)
         .easing(easing)
-        .onComplete( () => resolve('crash') )
+        .onComplete(() => resolve('crash'))
         .start();
     });
   }
