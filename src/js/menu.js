@@ -1,8 +1,5 @@
+import { combineEventFilters, eventFilter, eventFilters } from './event-help';
 import { tweenOpacity } from './style-help';
-
-const KeyArrowUp = 38;
-const KeyArrowDown = 40;
-const KeyEnter = 13;
 
 export default class Menu {
   constructor(elementId, optionsArray, title, menuClass) {
@@ -17,7 +14,10 @@ export default class Menu {
     this.$cursor = this.$htmlElement.find('#menu_cursor');
     this.$title = this.$htmlElement.find('#menu_title');
 
-    this._keyDownHandler = this._handleKeyDown.bind(this);
+    const arrowUp = eventFilter(eventFilters.KEY_ARROW_UP, () => this.up());
+    const arrowDown = eventFilter(eventFilters.KEY_ARROW_DOWN, () => this.down());
+    const enter = eventFilter(eventFilters.KEY_ENTER, () => this.enterOption());
+    this._keyDownHandler = combineEventFilters(arrowUp, arrowDown, enter);
   }
 
   show() {
@@ -40,22 +40,6 @@ export default class Menu {
     this.$htmlElement.addClass('fade_out');
     window.removeEventListener('keydown', this._keyDownHandler);
     this.clearHTML();
-  }
-
-  _handleKeyDown(event) {
-    switch (event.keyCode) {
-      case KeyArrowUp:
-        this.up();
-        break;
-      case KeyArrowDown:
-        this.down();
-        break;
-      case KeyEnter:
-        this.enterOption();
-        break;
-      default:
-        break;
-    }
   }
 
   fadeInCursor() {

@@ -13,6 +13,16 @@ globals:
 parserOptions:
   ecmaVersion: 2018
 rules:
+  object-curly-newline:
+    - error
+    - ObjectExpression:
+        multiline: true
+      ObjectPattern:
+        multiline: true
+      ImportDeclaration:
+        multiline: true
+      ExportDeclaration:
+        multiline: true
   no-param-reassign:
     - error
     - props: false

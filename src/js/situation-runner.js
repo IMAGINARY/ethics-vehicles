@@ -5,7 +5,8 @@ import Menu from './menu';
 import countdownButton from './countdown-button';
 import InfoBox from './info-boxes';
 
-import { HighlightColor } from './design';
+import HighlightColor from './design';
+import { eventFilters, waitForEvent } from './event-help';
 
 class SituationRunnerInternal {
   constructor(view, report, situation) {
@@ -99,15 +100,10 @@ class SituationRunnerInternal {
   }
 
   // eslint-disable-next-line class-methods-use-this
-  waitForKeyPress() {
-    // FIXME: refactor using window.addEventListener()
-    return new Promise((resolve) => {
-      window.onkeydown = () => {
-        window.onkeydown = () => {
-        };
-        resolve('keydown');
-      };
-    });
+  async waitForKeyPress() {
+    const eventType = 'keydown';
+    await waitForEvent(window, eventType, eventFilters.TRUE);
+    return eventType;
   }
 
   setInfoTexts() {

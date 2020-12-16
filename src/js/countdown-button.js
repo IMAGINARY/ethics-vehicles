@@ -1,6 +1,5 @@
+import { eventFilter, eventFilters, once } from './event-help';
 import Countdown from './countdown';
-
-const KeyEnter = 13; // FIXME: Use eventFilter from event-help.js
 
 class AdvanceButton {
   constructor(label, labelFormatter) {
@@ -12,14 +11,9 @@ class AdvanceButton {
       this.resolve = resolve;
     });
 
-    this.handleClick = this.trigger.bind(this);
-    this.handleKeyDown = (event) => {
-      if (event.keyCode === KeyEnter) {
-        this.trigger();
-      }
-    };
-    this.htmlButton.on('click', this.handleClick);
-    window.addEventListener('keydown', this.handleKeyDown);
+    const triggerOnEnter = eventFilter(eventFilters.KEY_ENTER, () => this.trigger());
+    once(window, 'keydown', triggerOnEnter);
+    once(this.htmlButton, 'click', () => this.trigger());
 
     this.setLabel(label);
     this.htmlButton.show();
@@ -35,9 +29,6 @@ class AdvanceButton {
   }
 
   trigger() {
-    this.htmlButton.off('click', this.handleClick);
-    window.removeEventListener('keydown', this.handleKeyDown);
-
     this.htmlButton.hide();
     this.resolve();
   }

@@ -12211,8 +12211,6 @@ exports.SPRITE_WIDTH = SPRITE_WIDTH;
 
 require("core-js/modules/es.array.concat");
 
-require("core-js/modules/es.function.bind");
-
 require("core-js/modules/es.object.define-property");
 
 require("core-js/modules/es.object.to-string");
@@ -12225,6 +12223,8 @@ Object.defineProperty(exports, "__esModule", {
 exports["default"] = countdownButton;
 
 require("regenerator-runtime/runtime");
+
+var _eventHelp = require("./event-help");
 
 var _countdown = _interopRequireDefault(require("./countdown"));
 
@@ -12240,8 +12240,6 @@ function _defineProperties(target, props) { for (var i = 0; i < props.length; i+
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
-var KeyEnter = 13; // FIXME: Use eventFilter from event-help.js
-
 var AdvanceButton =
 /*#__PURE__*/
 function () {
@@ -12256,16 +12254,13 @@ function () {
     this.triggerPromise = new Promise(function (resolve) {
       _this.resolve = resolve;
     });
-    this.handleClick = this.trigger.bind(this);
-
-    this.handleKeyDown = function (event) {
-      if (event.keyCode === KeyEnter) {
-        _this.trigger();
-      }
-    };
-
-    this.htmlButton.on('click', this.handleClick);
-    window.addEventListener('keydown', this.handleKeyDown);
+    var triggerOnEnter = (0, _eventHelp.eventFilter)(_eventHelp.eventFilters.KEY_ENTER, function () {
+      return _this.trigger();
+    });
+    (0, _eventHelp.once)(window, 'keydown', triggerOnEnter);
+    (0, _eventHelp.once)(this.htmlButton, 'click', function () {
+      return _this.trigger();
+    });
     this.setLabel(label);
     this.htmlButton.show();
   }
@@ -12284,8 +12279,6 @@ function () {
   }, {
     key: "trigger",
     value: function trigger() {
-      this.htmlButton.off('click', this.handleClick);
-      window.removeEventListener('keydown', this.handleKeyDown);
       this.htmlButton.hide();
       this.resolve();
     }
@@ -12346,7 +12339,7 @@ function countdownButton(label, timeout) {
   return advanceButton;
 }
 
-},{"./countdown":227,"core-js/modules/es.array.concat":124,"core-js/modules/es.function.bind":136,"core-js/modules/es.object.define-property":139,"core-js/modules/es.object.to-string":145,"core-js/modules/es.promise":146,"regenerator-runtime/runtime":223}],227:[function(require,module,exports){
+},{"./countdown":227,"./event-help":230,"core-js/modules/es.array.concat":124,"core-js/modules/es.object.define-property":139,"core-js/modules/es.object.to-string":145,"core-js/modules/es.promise":146,"regenerator-runtime/runtime":223}],227:[function(require,module,exports){
 "use strict";
 
 require("core-js/modules/es.symbol");
@@ -12490,14 +12483,28 @@ exports["default"] = HighlightColor;
 
 require("core-js/modules/es.array.for-each");
 
+require("core-js/modules/es.function.bind");
+
+require("core-js/modules/es.object.to-string");
+
+require("core-js/modules/es.promise");
+
 require("core-js/modules/web.dom-collections.for-each");
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.eventFilter = eventFilter;
-exports.combineEventFilter = combineEventFilter;
+exports.combineEventFilters = combineEventFilters;
+exports.once = once;
+exports.waitForEvent = waitForEvent;
 exports.eventFilters = void 0;
+
+require("regenerator-runtime/runtime");
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
 function eventFilter(filterFunc, handler) {
   return function (event) {
@@ -12507,7 +12514,7 @@ function eventFilter(filterFunc, handler) {
   };
 }
 
-function combineEventFilter() {
+function combineEventFilters() {
   for (var _len = arguments.length, eventFilters = new Array(_len), _key = 0; _key < _len; _key++) {
     eventFilters[_key] = arguments[_key];
   }
@@ -12519,14 +12526,87 @@ function combineEventFilter() {
   };
 }
 
+function getEventOnOffFunctions(obj) {
+  var on;
+  var off;
+
+  if (typeof obj.addEventListener === 'function' && typeof obj.removeEventListener === 'function') {
+    on = obj.addEventListener.bind(obj);
+    off = obj.removeEventListener.bind(obj);
+  } else if (typeof obj.on === 'function' && typeof obj.off === 'function') {
+    on = obj.on.bind(obj);
+    off = obj.on.bind(obj);
+  }
+
+  return {
+    on: on,
+    off: off
+  };
+}
+
+function once(obj, eventType, handler) {
+  var _getEventOnOffFunctio = getEventOnOffFunctions(obj),
+      on = _getEventOnOffFunctio.on,
+      off = _getEventOnOffFunctio.off;
+
+  var handlerWrapper = function handlerWrapper() {
+    handler.apply(void 0, arguments);
+    off(eventType, handlerWrapper);
+  };
+
+  on(eventType, handlerWrapper);
+}
+
+function waitForEvent(_x, _x2, _x3) {
+  return _waitForEvent.apply(this, arguments);
+}
+
+function _waitForEvent() {
+  _waitForEvent = _asyncToGenerator(
+  /*#__PURE__*/
+  regeneratorRuntime.mark(function _callee(obj, eventType, filterFunc) {
+    return regeneratorRuntime.wrap(function _callee$(_context) {
+      while (1) {
+        switch (_context.prev = _context.next) {
+          case 0:
+            _context.next = 2;
+            return new Promise(function (resolve) {
+              return once(obj, eventType, eventFilter(filterFunc, resolve));
+            });
+
+          case 2:
+          case "end":
+            return _context.stop();
+        }
+      }
+    }, _callee);
+  }));
+  return _waitForEvent.apply(this, arguments);
+}
+
 var eventFilters = {
+  TRUE: function TRUE() {
+    return true;
+  },
+  FALSE: function FALSE() {
+    return false;
+  },
   KEY_L: function KEY_L(event) {
     return event.key === 'l' || event.key === 'L';
+  },
+  KEY_ARROW_DOWN: function KEY_ARROW_DOWN(event) {
+    return event.key === 'ArrowDown';
+  },
+  KEY_ARROW_UP: function KEY_ARROW_UP(event) {
+    return event.key === 'ArrowUp';
+  },
+  KEY_ENTER: function KEY_ENTER(event) {
+    return event.key === 'Enter';
   }
 };
 exports.eventFilters = eventFilters;
 
-},{"core-js/modules/es.array.for-each":127,"core-js/modules/web.dom-collections.for-each":155}],231:[function(require,module,exports){
+},{"core-js/modules/es.array.for-each":127,"core-js/modules/es.function.bind":136,"core-js/modules/es.object.to-string":145,"core-js/modules/es.promise":146,"core-js/modules/web.dom-collections.for-each":155,"regenerator-runtime/runtime":223}],231:[function(require,module,exports){
 "use strict";
 
 require("core-js/modules/es.symbol");
@@ -13242,8 +13322,6 @@ require("core-js/modules/es.array.from");
 
 require("core-js/modules/es.array.map");
 
-require("core-js/modules/es.function.bind");
-
 require("core-js/modules/es.object.define-property");
 
 require("core-js/modules/es.string.iterator");
@@ -13255,6 +13333,8 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports["default"] = void 0;
 
+var _eventHelp = require("./event-help");
+
 var _styleHelp = require("./style-help");
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -13263,14 +13343,12 @@ function _defineProperties(target, props) { for (var i = 0; i < props.length; i+
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
-var KeyArrowUp = 38;
-var KeyArrowDown = 40;
-var KeyEnter = 13;
-
 var Menu =
 /*#__PURE__*/
 function () {
   function Menu(elementId, optionsArray, title, menuClass) {
+    var _this = this;
+
     _classCallCheck(this, Menu);
 
     this.currentOption = 0;
@@ -13285,7 +13363,16 @@ function () {
     this.$optionsArea = this.$htmlElement.find('#menu_options_area');
     this.$cursor = this.$htmlElement.find('#menu_cursor');
     this.$title = this.$htmlElement.find('#menu_title');
-    this._keyDownHandler = this._handleKeyDown.bind(this);
+    var arrowUp = (0, _eventHelp.eventFilter)(_eventHelp.eventFilters.KEY_ARROW_UP, function () {
+      return _this.up();
+    });
+    var arrowDown = (0, _eventHelp.eventFilter)(_eventHelp.eventFilters.KEY_ARROW_DOWN, function () {
+      return _this.down();
+    });
+    var enter = (0, _eventHelp.eventFilter)(_eventHelp.eventFilters.KEY_ENTER, function () {
+      return _this.enterOption();
+    });
+    this._keyDownHandler = (0, _eventHelp.combineEventFilters)(arrowUp, arrowDown, enter);
   }
 
   _createClass(Menu, [{
@@ -13308,26 +13395,6 @@ function () {
       this.$htmlElement.addClass('fade_out');
       window.removeEventListener('keydown', this._keyDownHandler);
       this.clearHTML();
-    }
-  }, {
-    key: "_handleKeyDown",
-    value: function _handleKeyDown(event) {
-      switch (event.keyCode) {
-        case KeyArrowUp:
-          this.up();
-          break;
-
-        case KeyArrowDown:
-          this.down();
-          break;
-
-        case KeyEnter:
-          this.enterOption();
-          break;
-
-        default:
-          break;
-      }
     }
   }, {
     key: "fadeInCursor",
@@ -13396,10 +13463,10 @@ function () {
   }, {
     key: "refreshTexts",
     value: function refreshTexts() {
-      var _this = this;
+      var _this2 = this;
 
       this.buttons.forEach(function (button, i) {
-        return button.attr('value', _this.options[i].label());
+        return button.attr('value', _this2.options[i].label());
       });
       this.$title.text(this.title());
     }
@@ -13410,7 +13477,7 @@ function () {
 
 exports["default"] = Menu;
 
-},{"./style-help":248,"core-js/modules/es.array.find":126,"core-js/modules/es.array.for-each":127,"core-js/modules/es.array.from":128,"core-js/modules/es.array.map":133,"core-js/modules/es.function.bind":136,"core-js/modules/es.object.define-property":139,"core-js/modules/es.string.iterator":150,"core-js/modules/web.dom-collections.for-each":155}],239:[function(require,module,exports){
+},{"./event-help":230,"./style-help":248,"core-js/modules/es.array.find":126,"core-js/modules/es.array.for-each":127,"core-js/modules/es.array.from":128,"core-js/modules/es.array.map":133,"core-js/modules/es.object.define-property":139,"core-js/modules/es.string.iterator":150,"core-js/modules/web.dom-collections.for-each":155}],239:[function(require,module,exports){
 "use strict";
 
 require("core-js/modules/es.array.map");
@@ -13763,7 +13830,9 @@ var _countdownButton = _interopRequireDefault(require("./countdown-button"));
 
 var _infoBoxes = _interopRequireDefault(require("./info-boxes"));
 
-var _design = require("./design");
+var _design = _interopRequireDefault(require("./design"));
+
+var _eventHelp = require("./event-help");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
@@ -14040,16 +14109,36 @@ function () {
 
   }, {
     key: "waitForKeyPress",
-    value: function waitForKeyPress() {
-      // FIXME: refactor using window.addEventListener()
-      return new Promise(function (resolve) {
-        window.onkeydown = function () {
-          window.onkeydown = function () {};
+    value: function () {
+      var _waitForKeyPress = _asyncToGenerator(
+      /*#__PURE__*/
+      regeneratorRuntime.mark(function _callee4() {
+        var eventType;
+        return regeneratorRuntime.wrap(function _callee4$(_context4) {
+          while (1) {
+            switch (_context4.prev = _context4.next) {
+              case 0:
+                eventType = 'keydown';
+                _context4.next = 3;
+                return (0, _eventHelp.waitForEvent)(window, eventType, _eventHelp.eventFilters.TRUE);
 
-          resolve('keydown');
-        };
-      });
-    }
+              case 3:
+                return _context4.abrupt("return", eventType);
+
+              case 4:
+              case "end":
+                return _context4.stop();
+            }
+          }
+        }, _callee4);
+      }));
+
+      function waitForKeyPress() {
+        return _waitForKeyPress.apply(this, arguments);
+      }
+
+      return waitForKeyPress;
+    }()
   }, {
     key: "setInfoTexts",
     value: function setInfoTexts() {
@@ -14067,11 +14156,11 @@ function () {
     value: function () {
       var _showElementsInfo = _asyncToGenerator(
       /*#__PURE__*/
-      regeneratorRuntime.mark(function _callee4() {
+      regeneratorRuntime.mark(function _callee5() {
         var i, element, infopos, infoBox;
-        return regeneratorRuntime.wrap(function _callee4$(_context4) {
+        return regeneratorRuntime.wrap(function _callee5$(_context5) {
           while (1) {
-            switch (_context4.prev = _context4.next) {
+            switch (_context5.prev = _context5.next) {
               case 0:
                 this.setInfoTexts();
                 this.view.i18next.on('languageChanged', this.setInfoTextsHandler);
@@ -14079,27 +14168,27 @@ function () {
 
               case 3:
                 if (!(i < this.elements.length)) {
-                  _context4.next = 12;
+                  _context5.next = 12;
                   break;
                 }
 
                 element = this.elements[i];
                 infopos = element.infopos;
                 infoBox = _infoBoxes["default"].get(i);
-                _context4.next = 9;
+                _context5.next = 9;
                 return infoBox.fadeShow(infopos, 1000);
 
               case 9:
                 i += 1;
-                _context4.next = 3;
+                _context5.next = 3;
                 break;
 
               case 12:
               case "end":
-                return _context4.stop();
+                return _context5.stop();
             }
           }
-        }, _callee4, this);
+        }, _callee5, this);
       }));
 
       function showElementsInfo() {
@@ -14113,19 +14202,19 @@ function () {
     value: function () {
       var _hideElementsInfo = _asyncToGenerator(
       /*#__PURE__*/
-      regeneratorRuntime.mark(function _callee5() {
+      regeneratorRuntime.mark(function _callee6() {
         var time,
-            _args5 = arguments;
-        return regeneratorRuntime.wrap(function _callee5$(_context5) {
+            _args6 = arguments;
+        return regeneratorRuntime.wrap(function _callee6$(_context6) {
           while (1) {
-            switch (_context5.prev = _context5.next) {
+            switch (_context6.prev = _context6.next) {
               case 0:
-                time = _args5.length > 0 && _args5[0] !== undefined ? _args5[0] : 1000;
+                time = _args6.length > 0 && _args6[0] !== undefined ? _args6[0] : 1000;
                 this.removeTempElements();
 
                 _infoBoxes["default"].hideAll(time);
 
-                _context5.next = 5;
+                _context6.next = 5;
                 return new Promise(function (resolve) {
                   return setTimeout(resolve, time);
                 });
@@ -14135,10 +14224,10 @@ function () {
 
               case 6:
               case "end":
-                return _context5.stop();
+                return _context6.stop();
             }
           }
-        }, _callee5, this);
+        }, _callee6, this);
       }));
 
       function hideElementsInfo() {
@@ -14155,7 +14244,7 @@ function () {
   }, {
     key: "highlight",
     value: function highlight(sprite) {
-      this.addTempElement((0, _pixiHelp.highlightSprite)(sprite, _design.HighlightColor));
+      this.addTempElement((0, _pixiHelp.highlightSprite)(sprite, _design["default"]));
     }
   }, {
     key: "addTempElement",
@@ -14193,20 +14282,20 @@ function () {
     value: function () {
       var _run2 = _asyncToGenerator(
       /*#__PURE__*/
-      regeneratorRuntime.mark(function _callee6(situation) {
-        return regeneratorRuntime.wrap(function _callee6$(_context6) {
+      regeneratorRuntime.mark(function _callee7(situation) {
+        return regeneratorRuntime.wrap(function _callee7$(_context7) {
           while (1) {
-            switch (_context6.prev = _context6.next) {
+            switch (_context7.prev = _context7.next) {
               case 0:
-                _context6.next = 2;
+                _context7.next = 2;
                 return new SituationRunnerInternal(this.view, this.report, situation).run();
 
               case 2:
               case "end":
-                return _context6.stop();
+                return _context7.stop();
             }
           }
-        }, _callee6, this);
+        }, _callee7, this);
       }));
 
       function run(_x) {
@@ -14222,7 +14311,7 @@ function () {
 
 exports["default"] = SituationRunner;
 
-},{"./countdown-button":226,"./design":229,"./info-boxes":232,"./menu":238,"./pixi-help":239,"./policies":240,"core-js/modules/es.array.concat":124,"core-js/modules/es.array.for-each":127,"core-js/modules/es.array.map":133,"core-js/modules/es.function.bind":136,"core-js/modules/es.object.define-property":139,"core-js/modules/es.object.to-string":145,"core-js/modules/es.promise":146,"core-js/modules/web.dom-collections.for-each":155,"core-js/modules/web.timers":157,"regenerator-runtime/runtime":223}],244:[function(require,module,exports){
+},{"./countdown-button":226,"./design":229,"./event-help":230,"./info-boxes":232,"./menu":238,"./pixi-help":239,"./policies":240,"core-js/modules/es.array.concat":124,"core-js/modules/es.array.for-each":127,"core-js/modules/es.array.map":133,"core-js/modules/es.function.bind":136,"core-js/modules/es.object.define-property":139,"core-js/modules/es.object.to-string":145,"core-js/modules/es.promise":146,"core-js/modules/web.dom-collections.for-each":155,"core-js/modules/web.timers":157,"regenerator-runtime/runtime":223}],244:[function(require,module,exports){
 "use strict";
 
 require("core-js/modules/es.array.concat");
