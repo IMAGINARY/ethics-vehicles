@@ -38,15 +38,14 @@ $game-canvas-height: 1080px;
        url('../fonts/exo-2-v7-latin-regular.svg#Exo2') format('svg'); /* Legacy iOS */
 }
 
-html, body {
-  width: 100%;
-  height: 100%;
-}
-
 body {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: $game-canvas-width;
+  height: $game-canvas-height;
   font-family: 'Exo 2';
   background-color: black;
-  overflow: hidden;
   padding: 0px;
   margin: 0px;
 }
@@ -76,7 +75,7 @@ p.report_paragraph {
   padding: 20px;
   background-color: #FFF280;
   box-shadow: 10px 15px 10px -5px rgba(0, 0, 0, 0.5);
-  border-radius: 20px;  
+  border-radius: 20px;
   opacity: 0;
   font-size: 22px;
 }
@@ -201,8 +200,8 @@ p.report_paragraph {
 }
 
 #menu_cursor {
-  width: 0; 
-  height: 0; 
+  width: 0;
+  height: 0;
   margin: 15px 0 0 0;
   border-top: 15px solid transparent;
   border-bottom: 15px solid transparent;
@@ -251,8 +250,8 @@ h3 {
   margin: 0px;
 
   canvas {
-    max-width: $game-canvas-width;
-    max-height: $game-canvas-height;
+    width: 100%;
+    height: 100%;
     padding: 0px;
     margin: 0px;
     display: block;
@@ -289,6 +288,7 @@ $advance-button-left: ($game-canvas-width - $advance-button-width)/2;
   position: absolute;
   bottom: 20px;
   right: 20px;
+  margin-bottom: 0;
 }
 
 #languageButton span.icon {
