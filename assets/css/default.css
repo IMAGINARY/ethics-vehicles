@@ -1,22 +1,14 @@
-/* inconsolata-regular - latin */
 @font-face {
-  font-family: 'Inconsolata';
+  font-family: 'Exo 2';
   font-style: normal;
-  font-weight: 400;
-  src: url("../fonts/inconsolata-v18-latin-regular.eot");
-  /* IE9 Compat Modes */
-  src: local("Inconsolata Regular"), local("Inconsolata-Regular"), url("../fonts/inconsolata-v18-latin-regular.eot?#iefix") format("embedded-opentype"), url("../fonts/inconsolata-v18-latin-regular.woff2") format("woff2"), url("../fonts/inconsolata-v18-latin-regular.woff") format("woff"), url("../fonts/inconsolata-v18-latin-regular.ttf") format("truetype"), url("../fonts/inconsolata-v18-latin-regular.svg#Inconsolata") format("svg");
-  /* Legacy iOS */ }
+  font-weight: 300;
+  src: local("Exo 2 Light"), url("../fonts/Exo2-VariableFont_wght.ttf") format("truetype"); }
 
-/* exo-2-regular - latin */
 @font-face {
   font-family: 'Exo 2';
   font-style: normal;
   font-weight: 400;
-  src: url("../fonts/exo-2-v7-latin-regular.eot");
-  /* IE9 Compat Modes */
-  src: local("Exo 2 Regular"), local("Exo2-Regular"), url("../fonts/exo-2-v7-latin-regular.eot?#iefix") format("embedded-opentype"), url("../fonts/exo-2-v7-latin-regular.woff2") format("woff2"), url("../fonts/exo-2-v7-latin-regular.woff") format("woff"), url("../fonts/exo-2-v7-latin-regular.ttf") format("truetype"), url("../fonts/exo-2-v7-latin-regular.svg#Exo2") format("svg");
-  /* Legacy iOS */ }
+  src: local("Exo 2 Light"), url("../fonts/Exo2-VariableFont_wght.ttf") format("truetype"); }
 
 body {
   position: absolute;
@@ -25,6 +17,7 @@ body {
   width: 1920px;
   height: 1080px;
   font-family: 'Exo 2';
+  font-weight: 100;
   background-color: black;
   padding: 0px;
   margin: 0px; }
@@ -36,7 +29,7 @@ body {
   top: 300px; }
 
 .report_text {
-  font-family: 'Inconsolata'; }
+  font-family: 'Exo 2'; }
 
 p.report_paragraph {
   margin-block-start: 0.5em;
@@ -195,7 +188,6 @@ h2 {
 
 h3 {
   font-size: 24px;
-  font-weight: bold;
   margin: 0 0 2px 0; }
 
 .info_description {
