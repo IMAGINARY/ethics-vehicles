@@ -223,7 +223,8 @@ button {
   display: none;
   left: 840px;
   width: 240px;
-  bottom: 200px; }
+  bottom: 20px;
+  margin-bottom: 0; }
 
 #languageButton {
   z-index: 1001;

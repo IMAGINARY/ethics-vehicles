@@ -269,7 +269,8 @@ $advance-button-left: ($game-canvas-width - $advance-button-width)/2;
   display: none;
   left: $advance-button-left;
   width: $advance-button-width;
-  bottom: 200px;
+  bottom: 20px;
+  margin-bottom: 0;
 }
 
 #languageButton {
