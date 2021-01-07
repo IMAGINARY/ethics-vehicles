@@ -8,11 +8,11 @@ export default class InfoBox {
   }
 
   setName(name) {
-    this.htmlElement.querySelector('#name').innerText = name;
+    this.htmlElement.querySelector('.name').innerText = name;
   }
 
   setDescription(description) {
-    this.htmlElement.querySelector('#description').innerHTML = description;
+    this.htmlElement.querySelector('.description').innerHTML = description;
   }
 
   show(pos) {

@@ -174,7 +174,7 @@ p.report_paragraph {
   opacity: 0;
   padding: 10px;
   font-size: 18px; }
-  .info_element #name {
+  .info_element .name {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap; }

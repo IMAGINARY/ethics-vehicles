@@ -12798,12 +12798,12 @@ function () {
   _createClass(InfoBox, [{
     key: "setName",
     value: function setName(name) {
-      this.htmlElement.querySelector('#name').innerText = name;
+      this.htmlElement.querySelector('.name').innerText = name;
     }
   }, {
     key: "setDescription",
     value: function setDescription(description) {
-      this.htmlElement.querySelector('#description').innerHTML = description;
+      this.htmlElement.querySelector('.description').innerHTML = description;
     }
   }, {
     key: "show",
