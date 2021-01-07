@@ -1,2 +1,6 @@
 node_modules
 .vscode/settings.json
+
+# local config files used during development and testing
+config.local.json
+config.*.local.json
