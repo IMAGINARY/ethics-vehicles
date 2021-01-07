@@ -1,3 +1,4 @@
+$color-white: #FFFFFF;
 $color-black: #303030;
 $color-bondi: #308090;
 $color-gray-light: #F0F0F0;
@@ -219,12 +220,18 @@ p.report_paragraph {
   height: 176px;
   margin: 2px;
   float: left;
-  background-color: #D0D0D0F0;
+  color: $color-white;
   z-index: 100;
   border-radius: 2px;
   opacity: 0;
   padding: 10px;
   font-size: 18px;
+
+  #name {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
 }
 
 #menu_title {
