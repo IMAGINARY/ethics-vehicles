@@ -81,13 +81,21 @@ p.report_paragraph {
 }
 
 @keyframes reportDown {
-  from { top: 30px; }
-  to { top: 300px; }
+  from {
+    top: 30px;
+  }
+  to {
+    top: 300px;
+  }
 }
 
 @keyframes reportUp {
-  from { top: 300px; }
-  to { top: 30px; }
+  from {
+    top: 300px;
+  }
+  to {
+    top: 30px;
+  }
 }
 
 .top_menu {
@@ -118,6 +126,7 @@ p.report_paragraph {
   padding: 0;
   margin: 0;
 }
+
 #menu_options_area {
   position: absolute;
   top: 50px;
@@ -138,7 +147,7 @@ p.report_paragraph {
   color: black;
   background-color: white;
 
-  display:table-cell;
+  display: table-cell;
   vertical-align: middle;
 
   line-height: 80%;
@@ -174,13 +183,21 @@ p.report_paragraph {
 }
 
 @keyframes fade_in {
-  from { opacity: 0 }
-  to { opacity: 1 }
+  from {
+    opacity: 0
+  }
+  to {
+    opacity: 1
+  }
 }
 
 @keyframes fade_out {
-  from { opacity: 1 }
-  to { opacity: 0 }
+  from {
+    opacity: 1
+  }
+  to {
+    opacity: 0
+  }
 }
 
 .selected {
@@ -221,9 +238,10 @@ h2 {
   text-align: center;
   margin: 10px 0 15px 0;
 }
+
 h3 {
   font-size: 24px;
-//  font-weight: bold;
+  //  font-weight: bold;
   margin: 0 0 2px 0;
 }
 
