@@ -2,7 +2,7 @@
 import { Policies } from './policies';
 import { highlightSprite } from './pixi-help';
 import Menu from './menu';
-import countdownButton from './countdown-button';
+import createAdvanceButton from './create-advance-button';
 import InfoBox from './info-boxes';
 
 import HighlightColor from './design';
@@ -92,7 +92,9 @@ class SituationRunnerInternal {
   }
 
   async waitForAdvanceButton(key = 'Next', timeout = 10000) {
-    const advanceButton = countdownButton(this.t(key), timeout);
+    const advanceButton = this.view.config.autoAdvance
+      ? createAdvanceButton(this.t(key), timeout)
+      : createAdvanceButton(this.t(key));
     const languageChangedHandler = () => advanceButton.setLabel(this.t(key));
     this.view.i18next.on('languageChanged', languageChangedHandler);
     await advanceButton.wait();

@@ -4,5 +4,6 @@
     "de",
     "en"
   ],
-  "showLanguageSwitcher": true
+  "showLanguageSwitcher": true,
+  "autoAdvance": true
 }

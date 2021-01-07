@@ -14,6 +14,8 @@ Possible config options include:
   Must match `.json` locale files in `./assets/locales`.
 - `showLanguageSwitcher` (boolean, default: `true`): Whether to show a button for switching
   languages. If the button is hidden, languages can still be switched using the <kbd>l</kbd> key.
+- `autoAdvance` (boolean, default: `true`): Whether the app should automatically advance whenever
+  stepping forward is the only possible action.
 
 ## Compilation
 

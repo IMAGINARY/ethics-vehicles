@@ -5,7 +5,7 @@ class AdvanceButton {
   constructor(label, labelFormatter) {
     this.htmlButton = $('#advanceButton');
     this.htmlText = $('#advanceText');
-    this.labelFormatter = labelFormatter;
+    this.labelFormatter = labelFormatter ?? AdvanceButton.ID_LABEL_FORMATTER;
 
     this.triggerPromise = new Promise((resolve) => {
       this.resolve = resolve;
@@ -36,6 +36,10 @@ class AdvanceButton {
   async wait() {
     await this.triggerPromise;
   }
+
+  static ID_LABEL_FORMATTER(label) {
+    return label;
+  }
 }
 
 function formatCountdownLabel(label, countdown) {
@@ -43,7 +47,7 @@ function formatCountdownLabel(label, countdown) {
   return `${label} (${secondsLeft})`;
 }
 
-export default function countdownButton(label, timeout) {
+function createAdvanceButtonWithCountdown(label, timeout) {
   const countdown = new Countdown(timeout);
   const countdownLabelFormatter = (l) => formatCountdownLabel(l, countdown);
   const advanceButton = new AdvanceButton(label, countdownLabelFormatter);
@@ -54,4 +58,10 @@ export default function countdownButton(label, timeout) {
     .then(() => countdown.abort());
 
   return advanceButton;
+}
+
+export default function createAdvanceButton(label, timeout) {
+  return typeof timeout === 'undefined'
+    ? new AdvanceButton(label)
+    : createAdvanceButtonWithCountdown(label, timeout);
 }

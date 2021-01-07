@@ -12209,139 +12209,6 @@ exports.SPRITE_WIDTH = SPRITE_WIDTH;
 },{}],226:[function(require,module,exports){
 "use strict";
 
-require("core-js/modules/es.array.concat");
-
-require("core-js/modules/es.object.define-property");
-
-require("core-js/modules/es.object.to-string");
-
-require("core-js/modules/es.promise");
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports["default"] = countdownButton;
-
-require("regenerator-runtime/runtime");
-
-var _eventHelp = require("./event-help");
-
-var _countdown = _interopRequireDefault(require("./countdown"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-
-function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
-
-function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-var AdvanceButton =
-/*#__PURE__*/
-function () {
-  function AdvanceButton(label, labelFormatter) {
-    var _this = this;
-
-    _classCallCheck(this, AdvanceButton);
-
-    this.htmlButton = $('#advanceButton');
-    this.htmlText = $('#advanceText');
-    this.labelFormatter = labelFormatter;
-    this.triggerPromise = new Promise(function (resolve) {
-      _this.resolve = resolve;
-    });
-    var triggerOnEnter = (0, _eventHelp.eventFilter)(_eventHelp.eventFilters.KEY_ENTER, function () {
-      return _this.trigger();
-    });
-    (0, _eventHelp.once)(window, 'keydown', triggerOnEnter);
-    (0, _eventHelp.once)(this.htmlButton, 'click', function () {
-      return _this.trigger();
-    });
-    this.setLabel(label);
-    this.htmlButton.show();
-  }
-
-  _createClass(AdvanceButton, [{
-    key: "setLabel",
-    value: function setLabel(label) {
-      this.label = label;
-      this.updateLabel();
-    }
-  }, {
-    key: "updateLabel",
-    value: function updateLabel() {
-      this.htmlText.text(this.labelFormatter(this.label));
-    }
-  }, {
-    key: "trigger",
-    value: function trigger() {
-      this.htmlButton.hide();
-      this.resolve();
-    }
-  }, {
-    key: "wait",
-    value: function () {
-      var _wait = _asyncToGenerator(
-      /*#__PURE__*/
-      regeneratorRuntime.mark(function _callee() {
-        return regeneratorRuntime.wrap(function _callee$(_context) {
-          while (1) {
-            switch (_context.prev = _context.next) {
-              case 0:
-                _context.next = 2;
-                return this.triggerPromise;
-
-              case 2:
-              case "end":
-                return _context.stop();
-            }
-          }
-        }, _callee, this);
-      }));
-
-      function wait() {
-        return _wait.apply(this, arguments);
-      }
-
-      return wait;
-    }()
-  }]);
-
-  return AdvanceButton;
-}();
-
-function formatCountdownLabel(label, countdown) {
-  var secondsLeft = Math.max(1, Math.floor(countdown.remainingMs() / 1000));
-  return "".concat(label, " (").concat(secondsLeft, ")");
-}
-
-function countdownButton(label, timeout) {
-  var countdown = new _countdown["default"](timeout);
-
-  var countdownLabelFormatter = function countdownLabelFormatter(l) {
-    return formatCountdownLabel(l, countdown);
-  };
-
-  var advanceButton = new AdvanceButton(label, countdownLabelFormatter);
-  countdown.on('tick', function () {
-    return advanceButton.updateLabel();
-  });
-  countdown.on('done', function () {
-    return advanceButton.trigger();
-  });
-  advanceButton.wait().then(function () {
-    return countdown.abort();
-  });
-  return advanceButton;
-}
-
-},{"./countdown":227,"./event-help":230,"core-js/modules/es.array.concat":124,"core-js/modules/es.object.define-property":139,"core-js/modules/es.object.to-string":145,"core-js/modules/es.promise":146,"regenerator-runtime/runtime":223}],227:[function(require,module,exports){
-"use strict";
-
 require("core-js/modules/es.symbol");
 
 require("core-js/modules/es.symbol.description");
@@ -12449,7 +12316,149 @@ function (_EventEmitter) {
 
 exports["default"] = Countdown;
 
-},{"core-js/modules/es.array.iterator":131,"core-js/modules/es.object.create":137,"core-js/modules/es.object.define-property":139,"core-js/modules/es.object.get-prototype-of":142,"core-js/modules/es.object.set-prototype-of":144,"core-js/modules/es.object.to-string":145,"core-js/modules/es.string.iterator":150,"core-js/modules/es.symbol":154,"core-js/modules/es.symbol.description":152,"core-js/modules/es.symbol.iterator":153,"core-js/modules/web.dom-collections.iterator":156,"core-js/modules/web.timers":157,"events":160}],228:[function(require,module,exports){
+},{"core-js/modules/es.array.iterator":131,"core-js/modules/es.object.create":137,"core-js/modules/es.object.define-property":139,"core-js/modules/es.object.get-prototype-of":142,"core-js/modules/es.object.set-prototype-of":144,"core-js/modules/es.object.to-string":145,"core-js/modules/es.string.iterator":150,"core-js/modules/es.symbol":154,"core-js/modules/es.symbol.description":152,"core-js/modules/es.symbol.iterator":153,"core-js/modules/web.dom-collections.iterator":156,"core-js/modules/web.timers":157,"events":160}],227:[function(require,module,exports){
+"use strict";
+
+require("core-js/modules/es.array.concat");
+
+require("core-js/modules/es.object.define-property");
+
+require("core-js/modules/es.object.to-string");
+
+require("core-js/modules/es.promise");
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = createAdvanceButton;
+
+require("regenerator-runtime/runtime");
+
+var _eventHelp = require("./event-help");
+
+var _countdown = _interopRequireDefault(require("./countdown"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+var AdvanceButton =
+/*#__PURE__*/
+function () {
+  function AdvanceButton(label, labelFormatter) {
+    var _this = this;
+
+    _classCallCheck(this, AdvanceButton);
+
+    this.htmlButton = $('#advanceButton');
+    this.htmlText = $('#advanceText');
+    this.labelFormatter = labelFormatter !== null && labelFormatter !== void 0 ? labelFormatter : AdvanceButton.ID_LABEL_FORMATTER;
+    this.triggerPromise = new Promise(function (resolve) {
+      _this.resolve = resolve;
+    });
+    var triggerOnEnter = (0, _eventHelp.eventFilter)(_eventHelp.eventFilters.KEY_ENTER, function () {
+      return _this.trigger();
+    });
+    (0, _eventHelp.once)(window, 'keydown', triggerOnEnter);
+    (0, _eventHelp.once)(this.htmlButton, 'click', function () {
+      return _this.trigger();
+    });
+    this.setLabel(label);
+    this.htmlButton.show();
+  }
+
+  _createClass(AdvanceButton, [{
+    key: "setLabel",
+    value: function setLabel(label) {
+      this.label = label;
+      this.updateLabel();
+    }
+  }, {
+    key: "updateLabel",
+    value: function updateLabel() {
+      this.htmlText.text(this.labelFormatter(this.label));
+    }
+  }, {
+    key: "trigger",
+    value: function trigger() {
+      this.htmlButton.hide();
+      this.resolve();
+    }
+  }, {
+    key: "wait",
+    value: function () {
+      var _wait = _asyncToGenerator(
+      /*#__PURE__*/
+      regeneratorRuntime.mark(function _callee() {
+        return regeneratorRuntime.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                _context.next = 2;
+                return this.triggerPromise;
+
+              case 2:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, this);
+      }));
+
+      function wait() {
+        return _wait.apply(this, arguments);
+      }
+
+      return wait;
+    }()
+  }], [{
+    key: "ID_LABEL_FORMATTER",
+    value: function ID_LABEL_FORMATTER(label) {
+      return label;
+    }
+  }]);
+
+  return AdvanceButton;
+}();
+
+function formatCountdownLabel(label, countdown) {
+  var secondsLeft = Math.max(1, Math.floor(countdown.remainingMs() / 1000));
+  return "".concat(label, " (").concat(secondsLeft, ")");
+}
+
+function createAdvanceButtonWithCountdown(label, timeout) {
+  var countdown = new _countdown["default"](timeout);
+
+  var countdownLabelFormatter = function countdownLabelFormatter(l) {
+    return formatCountdownLabel(l, countdown);
+  };
+
+  var advanceButton = new AdvanceButton(label, countdownLabelFormatter);
+  countdown.on('tick', function () {
+    return advanceButton.updateLabel();
+  });
+  countdown.on('done', function () {
+    return advanceButton.trigger();
+  });
+  advanceButton.wait().then(function () {
+    return countdown.abort();
+  });
+  return advanceButton;
+}
+
+function createAdvanceButton(label, timeout) {
+  return typeof timeout === 'undefined' ? new AdvanceButton(label) : createAdvanceButtonWithCountdown(label, timeout);
+}
+
+},{"./countdown":226,"./event-help":230,"core-js/modules/es.array.concat":124,"core-js/modules/es.object.define-property":139,"core-js/modules/es.object.to-string":145,"core-js/modules/es.promise":146,"regenerator-runtime/runtime":223}],228:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -12459,7 +12468,8 @@ exports["default"] = void 0;
 var defaultConfig = {
   defaultLanguage: 'en',
   languages: ['de', 'en'],
-  showLanguageSwitcher: true
+  showLanguageSwitcher: true,
+  autoAdvance: true
 };
 exports["default"] = defaultConfig;
 
@@ -13826,7 +13836,7 @@ var _pixiHelp = require("./pixi-help");
 
 var _menu = _interopRequireDefault(require("./menu"));
 
-var _countdownButton = _interopRequireDefault(require("./countdown-button"));
+var _createAdvanceButton = _interopRequireDefault(require("./create-advance-button"));
 
 var _infoBoxes = _interopRequireDefault(require("./info-boxes"));
 
@@ -14079,7 +14089,7 @@ function () {
               case 0:
                 key = _args3.length > 0 && _args3[0] !== undefined ? _args3[0] : 'Next';
                 timeout = _args3.length > 1 && _args3[1] !== undefined ? _args3[1] : 10000;
-                advanceButton = (0, _countdownButton["default"])(this.t(key), timeout);
+                advanceButton = this.view.config.autoAdvance ? (0, _createAdvanceButton["default"])(this.t(key), timeout) : (0, _createAdvanceButton["default"])(this.t(key));
 
                 languageChangedHandler = function languageChangedHandler() {
                   return advanceButton.setLabel(_this4.t(key));
@@ -14311,7 +14321,7 @@ function () {
 
 exports["default"] = SituationRunner;
 
-},{"./countdown-button":226,"./design":229,"./event-help":230,"./info-boxes":232,"./menu":238,"./pixi-help":239,"./policies":240,"core-js/modules/es.array.concat":124,"core-js/modules/es.array.for-each":127,"core-js/modules/es.array.map":133,"core-js/modules/es.function.bind":136,"core-js/modules/es.object.define-property":139,"core-js/modules/es.object.to-string":145,"core-js/modules/es.promise":146,"core-js/modules/web.dom-collections.for-each":155,"core-js/modules/web.timers":157,"regenerator-runtime/runtime":223}],244:[function(require,module,exports){
+},{"./create-advance-button":227,"./design":229,"./event-help":230,"./info-boxes":232,"./menu":238,"./pixi-help":239,"./policies":240,"core-js/modules/es.array.concat":124,"core-js/modules/es.array.for-each":127,"core-js/modules/es.array.map":133,"core-js/modules/es.function.bind":136,"core-js/modules/es.object.define-property":139,"core-js/modules/es.object.to-string":145,"core-js/modules/es.promise":146,"core-js/modules/web.dom-collections.for-each":155,"core-js/modules/web.timers":157,"regenerator-runtime/runtime":223}],244:[function(require,module,exports){
 "use strict";
 
 require("core-js/modules/es.array.concat");
