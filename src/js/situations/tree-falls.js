@@ -1,9 +1,14 @@
 import SceneElement from '../scene-element';
 import Car from '../car';
 import Situation from '../situation';
-import { CAR_SCALE, STREET_LANE_OFFSET, StreetOffsetFromCenter } from '../constants';
+import {
+  CAR_SCALE,
+  STREET_LANE_OFFSET,
+  STREET_WIDTH,
+  StreetOffsetFromCenter,
+  ViewCenter,
+} from '../constants';
 import { LANES } from '../lanes';
-import InfoPos from '../info-positions';
 import { createAnimatedSprite } from '../pixi-help';
 
 const AGENT_LANE = 1;
@@ -57,23 +62,59 @@ export default class TreeFallsSituation extends Situation {
   }
 
   getElements() {
+    const refRects = {
+      agentCar: new DOMRect(
+        (ViewCenter.x - StreetOffsetFromCenter.x) - STREET_WIDTH / 2,
+        (ViewCenter.y - StreetOffsetFromCenter.y) + STREET_WIDTH / 2,
+        STREET_WIDTH / 2,
+        STREET_WIDTH / 4
+      ),
+      cyclist: new DOMRect(
+        (ViewCenter.x - StreetOffsetFromCenter.x),
+        (ViewCenter.y + StreetOffsetFromCenter.y) - STREET_WIDTH / 2 - STREET_WIDTH / 4,
+        STREET_WIDTH / 2,
+        STREET_WIDTH / 4
+      ),
+      tree: new DOMRect(
+        (ViewCenter.x - StreetOffsetFromCenter.x) - STREET_WIDTH / 2,
+        (ViewCenter.y + StreetOffsetFromCenter.y) - STREET_WIDTH / 2 - STREET_WIDTH / 4,
+        STREET_WIDTH / 2,
+        STREET_WIDTH / 4
+      ),
+    };
+
     return [
       {
         sprite: this.view.agentCar.sprite,
         color: Situation.HighlightAgentColor,
-        infopos: InfoPos.TopLeft,
+        infoBoxOptions: {
+          refRect: refRects.agentCar,
+          width: 2 * refRects.agentCar.x + refRects.agentCar.width,
+          placement: 'top',
+          alignment: 'center',
+        },
         ...this._getElementsI18nKeys('AutonomousCar'),
       },
       {
         sprite: this.cyclist.sprite,
         color: Situation.HighlightOthersColor,
-        infopos: InfoPos.BottomLeft,
+        infoBoxOptions: {
+          refRect: refRects.cyclist,
+          width: StreetOffsetFromCenter.x,
+          placement: 'bottom-start',
+          alignment: 'left',
+        },
         ...this._getElementsI18nKeys('Cyclist'),
       },
       {
         sprite: this.tree.sprite,
         color: Situation.HighlightOthersColor,
-        infopos: InfoPos.BottomLeft.left(),
+        infoBoxOptions: {
+          refRect: refRects.tree,
+          width: refRects.tree.x + refRects.tree.width,
+          placement: 'bottom-end',
+          alignment: 'right',
+        },
         ...this._getElementsI18nKeys('FallenTree'),
       },
     ];

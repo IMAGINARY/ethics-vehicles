@@ -1,3 +1,4 @@
+$color-white: #FFFFFF;
 $color-black: #303030;
 $color-bondi: #308090;
 $color-gray-light: #F0F0F0;
@@ -213,18 +214,39 @@ p.report_paragraph {
   border-left: 30px solid $color-grey;
 }
 
-.info_element {
+.info_elements {
   position: absolute;
-  width: 176px;
-  height: 176px;
-  margin: 2px;
-  float: left;
-  background-color: #D0D0D0F0;
-  z-index: 100;
-  border-radius: 2px;
-  opacity: 0;
-  padding: 10px;
-  font-size: 18px;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+
+  .ref {
+    position: absolute;
+    visibility: hidden;
+    background-color: yellow;
+    opacity: 0.25;
+  }
+
+  .info_element {
+    position: absolute;
+    margin: 2px;
+    float: left;
+    color: $color-white;
+    z-index: 100;
+    border-radius: 2px;
+    opacity: 0;
+    padding: 10px 20px 10px 20px;
+    font-size: 18px;
+
+    .alignment {
+      .name {
+      }
+
+      .description {
+      }
+    }
+  }
 }
 
 #menu_title {

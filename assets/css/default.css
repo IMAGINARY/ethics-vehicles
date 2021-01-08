@@ -162,18 +162,27 @@ p.report_paragraph {
   border-bottom: 15px solid transparent;
   border-left: 30px solid #666666; }
 
-.info_element {
+.info_elements {
   position: absolute;
-  width: 176px;
-  height: 176px;
-  margin: 2px;
-  float: left;
-  background-color: #D0D0D0F0;
-  z-index: 100;
-  border-radius: 2px;
-  opacity: 0;
-  padding: 10px;
-  font-size: 18px; }
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0; }
+  .info_elements .ref {
+    position: absolute;
+    visibility: hidden;
+    background-color: yellow;
+    opacity: 0.25; }
+  .info_elements .info_element {
+    position: absolute;
+    margin: 2px;
+    float: left;
+    color: #FFFFFF;
+    z-index: 100;
+    border-radius: 2px;
+    opacity: 0;
+    padding: 10px 20px 10px 20px;
+    font-size: 18px; }
 
 #menu_title {
   font-size: 24px;

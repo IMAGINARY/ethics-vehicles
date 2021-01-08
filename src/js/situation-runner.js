@@ -122,9 +122,13 @@ class SituationRunnerInternal {
     this.view.i18next.on('languageChanged', this.setInfoTextsHandler);
     for (let i = 0; i < this.elements.length; i += 1) {
       const element = this.elements[i];
-      const { infopos } = element;
+      const { infoBoxOptions: { refRect, width, height, placement, alignment } } = element;
       const infoBox = InfoBox.get(i);
-      await infoBox.fadeShow(infopos, 1000); // eslint-disable-line no-await-in-loop
+      infoBox.setRefRect(refRect);
+      infoBox.setSize(width, height);
+      infoBox.setPlacement(placement);
+      infoBox.setAlignment(alignment);
+      await infoBox.fadeShow(1000); // eslint-disable-line no-await-in-loop
     }
   }
 

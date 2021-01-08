@@ -3,8 +3,14 @@ import Car from '../car';
 import Situation from '../situation';
 import { LANES } from '../lanes';
 import { createAnimatedSprite, pixiMoveTo, screenPosFromFraction } from '../pixi-help';
-import { CAR_SCALE, STREET_LANE_OFFSET } from '../constants';
-import InfoPos from '../info-positions';
+import {
+  CAR_SCALE,
+  STREET_LANE_OFFSET,
+  STREET_WIDTH,
+  StreetOffsetFromCenter,
+  ViewCenter,
+  ViewSize,
+} from '../constants';
 
 const AGENT_LANE = 4;
 const CROSSING_CAR_POSITION = 1 / 4 + 1 / 32;
@@ -50,30 +56,78 @@ export default class ChildRunsSituation extends Situation {
   }
 
   getElements() {
+    const refRects = {
+      agentCar: new DOMRect(
+        ViewCenter.x + this.agentLane.getPositionCoordinates(AGENT_CAR_POSITION).x
+        - STREET_WIDTH / 4,
+        (ViewCenter.y - StreetOffsetFromCenter.y) - STREET_WIDTH / 2,
+        STREET_WIDTH / 2,
+        STREET_WIDTH / 2
+      ),
+      ambulance: new DOMRect(
+        ViewCenter.x + this.agentLane.getPositionCoordinates(AMBULANCE_POSITION).x
+        - STREET_WIDTH / 4,
+        (ViewCenter.y - StreetOffsetFromCenter.y) - STREET_WIDTH / 2,
+        STREET_WIDTH / 2,
+        STREET_WIDTH / 2
+      ),
+      child: new DOMRect(
+        (ViewCenter.x - StreetOffsetFromCenter.x) + STREET_WIDTH / 2,
+        (ViewCenter.y - StreetOffsetFromCenter.y) - STREET_WIDTH / 2,
+        STREET_WIDTH / 4,
+        STREET_WIDTH / 2
+      ),
+      crossingCar: new DOMRect(
+        (ViewCenter.x - StreetOffsetFromCenter.x) + STREET_WIDTH / 2,
+        (ViewCenter.y - StreetOffsetFromCenter.y),
+        STREET_WIDTH / 4,
+        STREET_WIDTH / 2
+      ),
+    };
+
     return [
       {
         sprite: this.view.agentCar.sprite,
         color: Situation.HighlightAgentColor,
-        infopos: InfoPos.TopRight.left()
-          .left(),
+        infoBoxOptions: {
+          refRect: refRects.agentCar,
+          width: (ViewSize.width - refRects.agentCar.x),
+          placement: 'bottom-start',
+          alignment: 'left',
+        },
         ...this._getElementsI18nKeys('AutonomousCar'),
       },
       {
         sprite: this.ambulance.sprite,
         color: Situation.HighlightOthersColor,
-        infopos: InfoPos.TopRight.left(),
+        infoBoxOptions: {
+          refRect: refRects.ambulance,
+          width: (ViewSize.width - refRects.ambulance.x + refRects.ambulance.width),
+          placement: 'right',
+          alignment: 'left',
+        },
         ...this._getElementsI18nKeys('Ambulance'),
       },
       {
         sprite: this.child.sprite,
         color: Situation.HighlightOthersColor,
-        infopos: InfoPos.TopLeft,
+        infoBoxOptions: {
+          refRect: refRects.child,
+          width: refRects.child.x,
+          placement: 'left',
+          alignment: 'right',
+        },
         ...this._getElementsI18nKeys('Child'),
       },
       {
         sprite: this.crossingCar.sprite,
         color: Situation.HighlightOthersColor,
-        infopos: InfoPos.TopLeft.down(),
+        infoBoxOptions: {
+          refRect: refRects.crossingCar,
+          width: refRects.crossingCar.x,
+          placement: 'left',
+          alignment: 'right',
+        },
         ...this._getElementsI18nKeys('OtherCar'),
       },
     ];
