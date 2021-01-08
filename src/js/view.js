@@ -47,7 +47,7 @@ export default class View {
       buildMenuOption('CarEntersLane.name', 'car-enters-lane'),
       buildMenuOption('ChildRuns.name', 'child-runs'),
     ];
-    this.SituationMenu = new Menu('menu', menuOptions, () => tf('ChooseSituation'), 'top_menu');
+    this.SituationMenu = new Menu('menu', menuOptions, () => tf('ChooseSituation'), 'middle_menu');
     this.languageButton = new LanguageButton(this.i18next, this.config);
     this.i18next.on('languageChanged', () => this.SituationMenu.refreshTexts());
 

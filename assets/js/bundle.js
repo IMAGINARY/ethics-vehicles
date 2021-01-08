@@ -15482,7 +15482,7 @@ function () {
     var menuOptions = [buildMenuOption('TreeFalls.name', 'tree-falls'), buildMenuOption('CarEntersLane.name', 'car-enters-lane'), buildMenuOption('ChildRuns.name', 'child-runs')];
     this.SituationMenu = new _menu["default"]('menu', menuOptions, function () {
       return tf('ChooseSituation');
-    }, 'top_menu');
+    }, 'middle_menu');
     this.languageButton = new _languageButton["default"](this.i18next, this.config);
     this.i18next.on('languageChanged', function () {
       return _this.SituationMenu.refreshTexts();
