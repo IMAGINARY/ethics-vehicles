@@ -2,13 +2,15 @@ import {
   BorderBlockSize,
   SPRITE_WIDTH,
   STREET_LANE_OFFSET,
+  STREET_WIDTH,
+  StreetOffsetFromCenter,
+  ViewCenter,
   ViewSize,
 } from '../constants';
 import SceneElement from '../scene-element';
 import Situation from '../situation';
 import Car from '../car';
 import { LANES } from '../lanes';
-import InfoPos from '../info-positions';
 
 const BUS_STOP_X = (ViewSize.width / 2) - BorderBlockSize.width + (SPRITE_WIDTH / 2);
 const BUS_STOP_Y = -0.06 * ViewSize.height;
@@ -71,29 +73,76 @@ export default class CarEntersLaneSituation extends Situation {
   }
 
   getElements() {
+    const refRects = {
+      agentCar: new DOMRect(
+        (ViewCenter.x + StreetOffsetFromCenter.x),
+        (ViewCenter.y + StreetOffsetFromCenter.y) - STREET_WIDTH / 2 - STREET_WIDTH / 4,
+        STREET_WIDTH / 2,
+        STREET_WIDTH / 4
+      ),
+      blackCar: new DOMRect(
+        (ViewCenter.x + StreetOffsetFromCenter.x),
+        (ViewCenter.y - StreetOffsetFromCenter.y) + STREET_WIDTH / 2,
+        STREET_WIDTH / 2,
+        STREET_WIDTH / 4
+      ),
+      truck: new DOMRect(
+        (ViewCenter.x + StreetOffsetFromCenter.x) - STREET_WIDTH / 2,
+        (ViewCenter.y - StreetOffsetFromCenter.y) + STREET_WIDTH / 2,
+        STREET_WIDTH / 2,
+        STREET_WIDTH / 4
+      ),
+      busStop: new DOMRect(
+        (ViewCenter.x + StreetOffsetFromCenter.x) + STREET_WIDTH / 2,
+        (ViewCenter.y + StreetOffsetFromCenter.y) - STREET_WIDTH / 2 - STREET_WIDTH / 4,
+        STREET_WIDTH / 2,
+        STREET_WIDTH / 4
+      ),
+    };
+
     return [
       {
         sprite: this.view.agentCar.sprite,
         color: Situation.HighlightOthersColor,
-        infopos: InfoPos.BottomRight,
+        infoBoxOptions: {
+          refRect: refRects.agentCar,
+          width: StreetOffsetFromCenter.x * (2 / 3),
+          placement: 'bottom-end',
+          alignment: 'right',
+        },
         ...this._getElementsI18nKeys('AutonomousCar'),
       },
       {
         sprite: this.blackCar.sprite,
         color: Situation.HighlightOthersColor,
-        infopos: InfoPos.TopRight,
+        infoBoxOptions: {
+          refRect: refRects.blackCar,
+          width: (ViewSize.width - refRects.blackCar.x),
+          placement: 'top-start',
+          alignment: 'left',
+        },
         ...this._getElementsI18nKeys('LuxuryCar'),
       },
       {
         sprite: this.truck.sprite,
         color: Situation.HighlightOthersColor,
-        infopos: InfoPos.TopRight.left(),
+        infoBoxOptions: {
+          refRect: refRects.truck,
+          width: StreetOffsetFromCenter.x * (3 / 4),
+          placement: 'top-end',
+          alignment: 'right',
+        },
         ...this._getElementsI18nKeys('Truck'),
       },
       {
         sprite: this.busStop.sprite,
         color: Situation.HighlightOthersColor,
-        infopos: InfoPos.TopRight.right(),
+        infoBoxOptions: {
+          refRect: refRects.busStop,
+          width: (ViewSize.width - refRects.busStop.x),
+          placement: 'bottom-start',
+          alignment: 'left',
+        },
         ...this._getElementsI18nKeys('BusStop'),
       },
     ];

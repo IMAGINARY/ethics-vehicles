@@ -3,6 +3,11 @@ export const ViewSize = {
   width: 1920,
   height: 1080,
 };
+export const ViewCenter = {
+  x: ViewSize.width / 2,
+  y: ViewSize.height / 2,
+};
+
 export const StreetOffsetFromCenter = {
   x: 560,
   y: 350,

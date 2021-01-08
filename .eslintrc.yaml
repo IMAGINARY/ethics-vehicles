@@ -8,6 +8,7 @@ globals:
   $: false
   PIXI: false
   TWEEN: false
+  Popper: false
   Atomics: readonly
   SharedArrayBuffer: readonly
 parserOptions:
