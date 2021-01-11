@@ -12773,7 +12773,8 @@ function _createI18next() {
             };
             i18nextOptions = {
               preload: preloadLanguages ? languages : false,
-              fallbackLng: (0, _uniq["default"])([].concat(_toConsumableArray(languages), ['en'])),
+              fallbackLng: 'en',
+              supportedLngs: (0, _uniq["default"])([].concat(_toConsumableArray(languages), ['en'])),
               cleanCode: true,
               detection: detectorOptions,
               backend: httpBackendOptions

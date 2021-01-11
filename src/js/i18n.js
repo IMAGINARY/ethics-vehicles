@@ -43,7 +43,8 @@ async function createI18next(languages, preloadLanguages = false) {
 
   const i18nextOptions = {
     preload: preloadLanguages ? languages : false,
-    fallbackLng: uniq([...languages, 'en']),
+    fallbackLng: 'en',
+    supportedLngs: uniq([...languages, 'en']),
     cleanCode: true,
     detection: detectorOptions,
     backend: httpBackendOptions,
