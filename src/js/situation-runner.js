@@ -72,20 +72,20 @@ class SituationRunnerInternal {
 
   async waitForPolicy() {
     const languageChangedHandler = () => this.policyMenu.refreshTexts();
-    const policyId = await new Promise((resolve) => {
+    // eslint-disable-next-line no-async-promise-executor
+    const policyId = await new Promise(async (resolve) => {
       const options = Policies.map((policy) => ({
         label: () => `${this.t(policy.nameKey)}: ${this.t(policy.objectiveKey)}`,
         action: () => {
           this.currentPolicy = policy;
           this.currentDecision = this.situation.getDecision(policy.id);
-          this.policyMenu.hide();
           resolve(policy.id);
         },
       }));
       const title = () => this.t('ChoosePolicy');
       this.policyMenu = new Menu('menu', options, title, 'bottom_menu');
       this.view.i18next.on('languageChanged', languageChangedHandler);
-      this.policyMenu.show();
+      await this.policyMenu.show();
     });
     this.view.i18next.off('languageChanged', languageChangedHandler);
     return policyId;

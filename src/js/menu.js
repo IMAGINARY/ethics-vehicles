@@ -11,7 +11,6 @@ export default class Menu {
     this.title = typeof title === 'function' ? title : () => title;
     this.$htmlElement = $(`#${elementId}`);
     this.$optionsArea = this.$htmlElement.find('#menu_options_area');
-    this.$cursor = this.$htmlElement.find('#menu_cursor');
     this.$title = this.$htmlElement.find('#menu_title');
 
     const arrowUp = eventFilter(eventFilters.KEY_ARROW_UP, () => this.up());
@@ -20,7 +19,7 @@ export default class Menu {
     this._keyDownHandler = combineEventFilters(arrowUp, arrowDown, enter);
   }
 
-  show() {
+  async show() {
     this.createHTMLOptions();
     this.refreshTexts();
 
@@ -31,73 +30,77 @@ export default class Menu {
 
     window.addEventListener('keydown', this._keyDownHandler);
 
-    this.updateCursorPosition();
-    this.$htmlElement.show();
-    this.fadeInCursor();
+    await tweenOpacity(this.$htmlElement.get(0), 1, 500)
+      .then(() => this.fadeInCursor());
   }
 
-  hide() {
-    this.$htmlElement.addClass('fade_out');
+  async hide() {
     window.removeEventListener('keydown', this._keyDownHandler);
-    this.clearHTML();
+    await tweenOpacity(this.$htmlElement.get(0), 0, 500)
+      .then(() => this.clearHTML());
   }
 
-  fadeInCursor() {
-    const domCursor = this.$cursor[0];
+  async fadeInCursor() {
+    const domCursor = this.rows[this.currentOption].children()
+      .get(0);
     domCursor.style.opacity = 0;
-    return tweenOpacity(domCursor, 1, 500)
+    await tweenOpacity(domCursor, 1, 500)
       .then(() => tweenOpacity(domCursor, 0.125, 500))
       .then(() => tweenOpacity(domCursor, 1, 500));
   }
 
   createHTMLOptions() {
-    this.buttons = this.options.map(
-      (element) => $('<input type="button" class="menu_option fade_in">')
-        .click(element.action)
+    const selectAndEnter = (index) => {
+      this.select(index);
+      this.enterOption();
+    };
+    this.rows = this.options.map(
+      () => $('<div>')
+        .append(
+          $('<div class="menu_cursor"><img src="./assets/images/play-solid.svg"/></div>'),
+          $('<div class="menu_option fade_in">'),
+          $('<div class="menu_cursor">')
+        )
     );
 
-    this.buttons.forEach((button) => $('#menu_options_area')
-      .append(button));
+    this.buttons = this.rows.map(($row) => $row.children('.menu_option'));
+    this.buttons.forEach(($button, index) => $button.click(() => selectAndEnter(index)));
+
+    $('#menu_options_area')
+      .append(...this.rows);
   }
 
   clearHTML() {
     this.$optionsArea.empty();
   }
 
-  enterOption() {
-    this.hide();
+  async enterOption() {
+    await this.hide();
     this.options[this.currentOption].action();
   }
 
   select(index) {
-    this.buttons[index].addClass('selected');
+    this.rows[index].addClass('selected');
   }
 
   deselect(index) {
-    this.buttons[index].removeClass('selected');
+    this.rows[index].removeClass('selected');
   }
 
   down() {
     this.deselect(this.currentOption);
     this.currentOption = Math.min(this.currentOption + 1, this.options.length - 1);
     this.select(this.currentOption);
-    this.updateCursorPosition();
   }
 
   up() {
     this.deselect(this.currentOption);
     this.currentOption = Math.max(0, this.currentOption - 1);
     this.select(this.currentOption);
-    this.updateCursorPosition();
-  }
-
-  updateCursorPosition() {
-    const pos = 15 + (this.currentOption * 75);
-    this.$cursor.css('margin-top', `${pos}px`);
   }
 
   refreshTexts() {
-    this.buttons.forEach((button, i) => button.attr('value', this.options[i].label()));
+    this.buttons.forEach(($button, i) => $button.text(this.options[i].label()));
     this.$title.text(this.title());
   }
 }

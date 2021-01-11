@@ -13362,28 +13362,62 @@ main().then(function () {
 },{"./default-config":230,"./i18n":233,"./situations/car-enters-lane":246,"./situations/child-runs":247,"./situations/tree-falls":248,"./view":250,"core-js/modules/es.array.concat":125,"core-js/modules/es.array.filter":127,"core-js/modules/es.array.for-each":129,"core-js/modules/es.array.iterator":133,"core-js/modules/es.date.to-string":137,"core-js/modules/es.object.define-properties":140,"core-js/modules/es.object.define-property":141,"core-js/modules/es.object.get-own-property-descriptor":142,"core-js/modules/es.object.get-own-property-descriptors":143,"core-js/modules/es.object.keys":145,"core-js/modules/es.object.to-string":147,"core-js/modules/es.promise":148,"core-js/modules/es.regexp.exec":149,"core-js/modules/es.regexp.to-string":150,"core-js/modules/es.string.iterator":152,"core-js/modules/es.string.search":153,"core-js/modules/es.symbol":156,"core-js/modules/web.dom-collections.for-each":157,"core-js/modules/web.dom-collections.iterator":158,"core-js/modules/web.url":161,"regenerator-runtime/runtime":225}],239:[function(require,module,exports){
 "use strict";
 
+require("core-js/modules/es.symbol");
+
+require("core-js/modules/es.symbol.description");
+
+require("core-js/modules/es.symbol.iterator");
+
 require("core-js/modules/es.array.find");
 
 require("core-js/modules/es.array.for-each");
 
 require("core-js/modules/es.array.from");
 
+require("core-js/modules/es.array.is-array");
+
+require("core-js/modules/es.array.iterator");
+
 require("core-js/modules/es.array.map");
 
+require("core-js/modules/es.date.to-string");
+
 require("core-js/modules/es.object.define-property");
+
+require("core-js/modules/es.object.to-string");
+
+require("core-js/modules/es.promise");
+
+require("core-js/modules/es.regexp.to-string");
 
 require("core-js/modules/es.string.iterator");
 
 require("core-js/modules/web.dom-collections.for-each");
+
+require("core-js/modules/web.dom-collections.iterator");
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports["default"] = void 0;
 
+require("regenerator-runtime/runtime");
+
 var _eventHelp = require("./event-help");
 
 var _styleHelp = require("./style-help");
+
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
+
+function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -13409,7 +13443,6 @@ function () {
     };
     this.$htmlElement = $("#".concat(elementId));
     this.$optionsArea = this.$htmlElement.find('#menu_options_area');
-    this.$cursor = this.$htmlElement.find('#menu_cursor');
     this.$title = this.$htmlElement.find('#menu_title');
     var arrowUp = (0, _eventHelp.eventFilter)(_eventHelp.eventFilters.KEY_ARROW_UP, function () {
       return _this.up();
@@ -13425,45 +13458,133 @@ function () {
 
   _createClass(Menu, [{
     key: "show",
-    value: function show() {
-      this.createHTMLOptions();
-      this.refreshTexts();
-      this.currentOption = 0;
-      this.$htmlElement.removeClass();
-      this.$htmlElement.addClass(this.menuClass);
-      this.select(this.currentOption);
-      window.addEventListener('keydown', this._keyDownHandler);
-      this.updateCursorPosition();
-      this.$htmlElement.show();
-      this.fadeInCursor();
-    }
+    value: function () {
+      var _show = _asyncToGenerator(
+      /*#__PURE__*/
+      regeneratorRuntime.mark(function _callee() {
+        var _this2 = this;
+
+        return regeneratorRuntime.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                this.createHTMLOptions();
+                this.refreshTexts();
+                this.currentOption = 0;
+                this.$htmlElement.removeClass();
+                this.$htmlElement.addClass(this.menuClass);
+                this.select(this.currentOption);
+                window.addEventListener('keydown', this._keyDownHandler);
+                _context.next = 9;
+                return (0, _styleHelp.tweenOpacity)(this.$htmlElement.get(0), 1, 500).then(function () {
+                  return _this2.fadeInCursor();
+                });
+
+              case 9:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, this);
+      }));
+
+      function show() {
+        return _show.apply(this, arguments);
+      }
+
+      return show;
+    }()
   }, {
     key: "hide",
-    value: function hide() {
-      this.$htmlElement.addClass('fade_out');
-      window.removeEventListener('keydown', this._keyDownHandler);
-      this.clearHTML();
-    }
+    value: function () {
+      var _hide = _asyncToGenerator(
+      /*#__PURE__*/
+      regeneratorRuntime.mark(function _callee2() {
+        var _this3 = this;
+
+        return regeneratorRuntime.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                window.removeEventListener('keydown', this._keyDownHandler);
+                _context2.next = 3;
+                return (0, _styleHelp.tweenOpacity)(this.$htmlElement.get(0), 0, 500).then(function () {
+                  return _this3.clearHTML();
+                });
+
+              case 3:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2, this);
+      }));
+
+      function hide() {
+        return _hide.apply(this, arguments);
+      }
+
+      return hide;
+    }()
   }, {
     key: "fadeInCursor",
-    value: function fadeInCursor() {
-      var domCursor = this.$cursor[0];
-      domCursor.style.opacity = 0;
-      return (0, _styleHelp.tweenOpacity)(domCursor, 1, 500).then(function () {
-        return (0, _styleHelp.tweenOpacity)(domCursor, 0.125, 500);
-      }).then(function () {
-        return (0, _styleHelp.tweenOpacity)(domCursor, 1, 500);
-      });
-    }
+    value: function () {
+      var _fadeInCursor = _asyncToGenerator(
+      /*#__PURE__*/
+      regeneratorRuntime.mark(function _callee3() {
+        var domCursor;
+        return regeneratorRuntime.wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                domCursor = this.rows[this.currentOption].children().get(0);
+                domCursor.style.opacity = 0;
+                _context3.next = 4;
+                return (0, _styleHelp.tweenOpacity)(domCursor, 1, 500).then(function () {
+                  return (0, _styleHelp.tweenOpacity)(domCursor, 0.125, 500);
+                }).then(function () {
+                  return (0, _styleHelp.tweenOpacity)(domCursor, 1, 500);
+                });
+
+              case 4:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3, this);
+      }));
+
+      function fadeInCursor() {
+        return _fadeInCursor.apply(this, arguments);
+      }
+
+      return fadeInCursor;
+    }()
   }, {
     key: "createHTMLOptions",
     value: function createHTMLOptions() {
-      this.buttons = this.options.map(function (element) {
-        return $('<input type="button" class="menu_option fade_in">').click(element.action);
+      var _this4 = this,
+          _$;
+
+      var selectAndEnter = function selectAndEnter(index) {
+        _this4.select(index);
+
+        _this4.enterOption();
+      };
+
+      this.rows = this.options.map(function () {
+        return $('<div>').append($('<div class="menu_cursor"><img src="./assets/images/play-solid.svg"/></div>'), $('<div class="menu_option fade_in">'), $('<div class="menu_cursor">'));
       });
-      this.buttons.forEach(function (button) {
-        return $('#menu_options_area').append(button);
+      this.buttons = this.rows.map(function ($row) {
+        return $row.children('.menu_option');
       });
+      this.buttons.forEach(function ($button, index) {
+        return $button.click(function () {
+          return selectAndEnter(index);
+        });
+      });
+
+      (_$ = $('#menu_options_area')).append.apply(_$, _toConsumableArray(this.rows));
     }
   }, {
     key: "clearHTML",
@@ -13472,19 +13593,43 @@ function () {
     }
   }, {
     key: "enterOption",
-    value: function enterOption() {
-      this.hide();
-      this.options[this.currentOption].action();
-    }
+    value: function () {
+      var _enterOption = _asyncToGenerator(
+      /*#__PURE__*/
+      regeneratorRuntime.mark(function _callee4() {
+        return regeneratorRuntime.wrap(function _callee4$(_context4) {
+          while (1) {
+            switch (_context4.prev = _context4.next) {
+              case 0:
+                _context4.next = 2;
+                return this.hide();
+
+              case 2:
+                this.options[this.currentOption].action();
+
+              case 3:
+              case "end":
+                return _context4.stop();
+            }
+          }
+        }, _callee4, this);
+      }));
+
+      function enterOption() {
+        return _enterOption.apply(this, arguments);
+      }
+
+      return enterOption;
+    }()
   }, {
     key: "select",
     value: function select(index) {
-      this.buttons[index].addClass('selected');
+      this.rows[index].addClass('selected');
     }
   }, {
     key: "deselect",
     value: function deselect(index) {
-      this.buttons[index].removeClass('selected');
+      this.rows[index].removeClass('selected');
     }
   }, {
     key: "down",
@@ -13492,7 +13637,6 @@ function () {
       this.deselect(this.currentOption);
       this.currentOption = Math.min(this.currentOption + 1, this.options.length - 1);
       this.select(this.currentOption);
-      this.updateCursorPosition();
     }
   }, {
     key: "up",
@@ -13500,21 +13644,14 @@ function () {
       this.deselect(this.currentOption);
       this.currentOption = Math.max(0, this.currentOption - 1);
       this.select(this.currentOption);
-      this.updateCursorPosition();
-    }
-  }, {
-    key: "updateCursorPosition",
-    value: function updateCursorPosition() {
-      var pos = 15 + this.currentOption * 75;
-      this.$cursor.css('margin-top', "".concat(pos, "px"));
     }
   }, {
     key: "refreshTexts",
     value: function refreshTexts() {
-      var _this2 = this;
+      var _this5 = this;
 
-      this.buttons.forEach(function (button, i) {
-        return button.attr('value', _this2.options[i].label());
+      this.buttons.forEach(function ($button, i) {
+        return $button.text(_this5.options[i].label());
       });
       this.$title.text(this.title());
     }
@@ -13525,7 +13662,7 @@ function () {
 
 exports["default"] = Menu;
 
-},{"./event-help":232,"./style-help":249,"core-js/modules/es.array.find":128,"core-js/modules/es.array.for-each":129,"core-js/modules/es.array.from":130,"core-js/modules/es.array.map":135,"core-js/modules/es.object.define-property":141,"core-js/modules/es.string.iterator":152,"core-js/modules/web.dom-collections.for-each":157}],240:[function(require,module,exports){
+},{"./event-help":232,"./style-help":249,"core-js/modules/es.array.find":128,"core-js/modules/es.array.for-each":129,"core-js/modules/es.array.from":130,"core-js/modules/es.array.is-array":132,"core-js/modules/es.array.iterator":133,"core-js/modules/es.array.map":135,"core-js/modules/es.date.to-string":137,"core-js/modules/es.object.define-property":141,"core-js/modules/es.object.to-string":147,"core-js/modules/es.promise":148,"core-js/modules/es.regexp.to-string":150,"core-js/modules/es.string.iterator":152,"core-js/modules/es.symbol":156,"core-js/modules/es.symbol.description":154,"core-js/modules/es.symbol.iterator":155,"core-js/modules/web.dom-collections.for-each":157,"core-js/modules/web.dom-collections.iterator":158,"regenerator-runtime/runtime":225}],240:[function(require,module,exports){
 "use strict";
 
 require("core-js/modules/es.array.map");
@@ -14048,58 +14185,79 @@ function () {
     value: function () {
       var _waitForPolicy = _asyncToGenerator(
       /*#__PURE__*/
-      regeneratorRuntime.mark(function _callee2() {
+      regeneratorRuntime.mark(function _callee3() {
         var _this3 = this;
 
         var languageChangedHandler, policyId;
-        return regeneratorRuntime.wrap(function _callee2$(_context2) {
+        return regeneratorRuntime.wrap(function _callee3$(_context3) {
           while (1) {
-            switch (_context2.prev = _context2.next) {
+            switch (_context3.prev = _context3.next) {
               case 0:
                 languageChangedHandler = function languageChangedHandler() {
                   return _this3.policyMenu.refreshTexts();
-                };
+                }; // eslint-disable-next-line no-async-promise-executor
 
-                _context2.next = 3;
-                return new Promise(function (resolve) {
-                  var options = _policies.Policies.map(function (policy) {
-                    return {
-                      label: function label() {
-                        return "".concat(_this3.t(policy.nameKey), ": ").concat(_this3.t(policy.objectiveKey));
-                      },
-                      action: function action() {
-                        _this3.currentPolicy = policy;
-                        _this3.currentDecision = _this3.situation.getDecision(policy.id);
 
-                        _this3.policyMenu.hide();
+                _context3.next = 3;
+                return new Promise(
+                /*#__PURE__*/
+                function () {
+                  var _ref = _asyncToGenerator(
+                  /*#__PURE__*/
+                  regeneratorRuntime.mark(function _callee2(resolve) {
+                    var options, title;
+                    return regeneratorRuntime.wrap(function _callee2$(_context2) {
+                      while (1) {
+                        switch (_context2.prev = _context2.next) {
+                          case 0:
+                            options = _policies.Policies.map(function (policy) {
+                              return {
+                                label: function label() {
+                                  return "".concat(_this3.t(policy.nameKey), ": ").concat(_this3.t(policy.objectiveKey));
+                                },
+                                action: function action() {
+                                  _this3.currentPolicy = policy;
+                                  _this3.currentDecision = _this3.situation.getDecision(policy.id);
+                                  resolve(policy.id);
+                                }
+                              };
+                            });
 
-                        resolve(policy.id);
+                            title = function title() {
+                              return _this3.t('ChoosePolicy');
+                            };
+
+                            _this3.policyMenu = new _menu["default"]('menu', options, title, 'bottom_menu');
+
+                            _this3.view.i18next.on('languageChanged', languageChangedHandler);
+
+                            _context2.next = 6;
+                            return _this3.policyMenu.show();
+
+                          case 6:
+                          case "end":
+                            return _context2.stop();
+                        }
                       }
-                    };
-                  });
+                    }, _callee2);
+                  }));
 
-                  var title = function title() {
-                    return _this3.t('ChoosePolicy');
+                  return function (_x) {
+                    return _ref.apply(this, arguments);
                   };
-
-                  _this3.policyMenu = new _menu["default"]('menu', options, title, 'bottom_menu');
-
-                  _this3.view.i18next.on('languageChanged', languageChangedHandler);
-
-                  _this3.policyMenu.show();
-                });
+                }());
 
               case 3:
-                policyId = _context2.sent;
+                policyId = _context3.sent;
                 this.view.i18next.off('languageChanged', languageChangedHandler);
-                return _context2.abrupt("return", policyId);
+                return _context3.abrupt("return", policyId);
 
               case 6:
               case "end":
-                return _context2.stop();
+                return _context3.stop();
             }
           }
-        }, _callee2, this);
+        }, _callee3, this);
       }));
 
       function waitForPolicy() {
@@ -14113,20 +14271,20 @@ function () {
     value: function () {
       var _waitForAdvanceButton = _asyncToGenerator(
       /*#__PURE__*/
-      regeneratorRuntime.mark(function _callee3() {
+      regeneratorRuntime.mark(function _callee4() {
         var _this4 = this;
 
         var key,
             timeout,
             advanceButton,
             languageChangedHandler,
-            _args3 = arguments;
-        return regeneratorRuntime.wrap(function _callee3$(_context3) {
+            _args4 = arguments;
+        return regeneratorRuntime.wrap(function _callee4$(_context4) {
           while (1) {
-            switch (_context3.prev = _context3.next) {
+            switch (_context4.prev = _context4.next) {
               case 0:
-                key = _args3.length > 0 && _args3[0] !== undefined ? _args3[0] : 'Next';
-                timeout = _args3.length > 1 && _args3[1] !== undefined ? _args3[1] : 10000;
+                key = _args4.length > 0 && _args4[0] !== undefined ? _args4[0] : 'Next';
+                timeout = _args4.length > 1 && _args4[1] !== undefined ? _args4[1] : 10000;
                 advanceButton = this.view.config.autoAdvance ? (0, _createAdvanceButton["default"])(this.t(key), timeout) : (0, _createAdvanceButton["default"])(this.t(key));
 
                 languageChangedHandler = function languageChangedHandler() {
@@ -14134,7 +14292,7 @@ function () {
                 };
 
                 this.view.i18next.on('languageChanged', languageChangedHandler);
-                _context3.next = 7;
+                _context4.next = 7;
                 return advanceButton.wait();
 
               case 7:
@@ -14142,10 +14300,10 @@ function () {
 
               case 8:
               case "end":
-                return _context3.stop();
+                return _context4.stop();
             }
           }
-        }, _callee3, this);
+        }, _callee4, this);
       }));
 
       function waitForAdvanceButton() {
@@ -14160,25 +14318,25 @@ function () {
     value: function () {
       var _waitForKeyPress = _asyncToGenerator(
       /*#__PURE__*/
-      regeneratorRuntime.mark(function _callee4() {
+      regeneratorRuntime.mark(function _callee5() {
         var eventType;
-        return regeneratorRuntime.wrap(function _callee4$(_context4) {
+        return regeneratorRuntime.wrap(function _callee5$(_context5) {
           while (1) {
-            switch (_context4.prev = _context4.next) {
+            switch (_context5.prev = _context5.next) {
               case 0:
                 eventType = 'keydown';
-                _context4.next = 3;
+                _context5.next = 3;
                 return (0, _eventHelp.waitForEvent)(window, eventType, _eventHelp.eventFilters.TRUE);
 
               case 3:
-                return _context4.abrupt("return", eventType);
+                return _context5.abrupt("return", eventType);
 
               case 4:
               case "end":
-                return _context4.stop();
+                return _context5.stop();
             }
           }
-        }, _callee4);
+        }, _callee5);
       }));
 
       function waitForKeyPress() {
@@ -14204,12 +14362,12 @@ function () {
     value: function () {
       var _showElementsInfo = _asyncToGenerator(
       /*#__PURE__*/
-      regeneratorRuntime.mark(function _callee5() {
+      regeneratorRuntime.mark(function _callee6() {
         var i, element, _element$infoBoxOptio, refRect, width, height, placement, alignment, infoBox;
 
-        return regeneratorRuntime.wrap(function _callee5$(_context5) {
+        return regeneratorRuntime.wrap(function _callee6$(_context6) {
           while (1) {
-            switch (_context5.prev = _context5.next) {
+            switch (_context6.prev = _context6.next) {
               case 0:
                 this.setInfoTexts();
                 this.view.i18next.on('languageChanged', this.setInfoTextsHandler);
@@ -14217,7 +14375,7 @@ function () {
 
               case 3:
                 if (!(i < this.elements.length)) {
-                  _context5.next = 16;
+                  _context6.next = 16;
                   break;
                 }
 
@@ -14228,20 +14386,20 @@ function () {
                 infoBox.setSize(width, height);
                 infoBox.setPlacement(placement);
                 infoBox.setAlignment(alignment);
-                _context5.next = 13;
+                _context6.next = 13;
                 return infoBox.fadeShow(1000);
 
               case 13:
                 i += 1;
-                _context5.next = 3;
+                _context6.next = 3;
                 break;
 
               case 16:
               case "end":
-                return _context5.stop();
+                return _context6.stop();
             }
           }
-        }, _callee5, this);
+        }, _callee6, this);
       }));
 
       function showElementsInfo() {
@@ -14255,19 +14413,19 @@ function () {
     value: function () {
       var _hideElementsInfo = _asyncToGenerator(
       /*#__PURE__*/
-      regeneratorRuntime.mark(function _callee6() {
+      regeneratorRuntime.mark(function _callee7() {
         var time,
-            _args6 = arguments;
-        return regeneratorRuntime.wrap(function _callee6$(_context6) {
+            _args7 = arguments;
+        return regeneratorRuntime.wrap(function _callee7$(_context7) {
           while (1) {
-            switch (_context6.prev = _context6.next) {
+            switch (_context7.prev = _context7.next) {
               case 0:
-                time = _args6.length > 0 && _args6[0] !== undefined ? _args6[0] : 1000;
+                time = _args7.length > 0 && _args7[0] !== undefined ? _args7[0] : 1000;
                 this.removeTempElements();
 
                 _infoBoxes["default"].hideAll(time);
 
-                _context6.next = 5;
+                _context7.next = 5;
                 return new Promise(function (resolve) {
                   return setTimeout(resolve, time);
                 });
@@ -14277,10 +14435,10 @@ function () {
 
               case 6:
               case "end":
-                return _context6.stop();
+                return _context7.stop();
             }
           }
-        }, _callee6, this);
+        }, _callee7, this);
       }));
 
       function hideElementsInfo() {
@@ -14335,23 +14493,23 @@ function () {
     value: function () {
       var _run2 = _asyncToGenerator(
       /*#__PURE__*/
-      regeneratorRuntime.mark(function _callee7(situation) {
-        return regeneratorRuntime.wrap(function _callee7$(_context7) {
+      regeneratorRuntime.mark(function _callee8(situation) {
+        return regeneratorRuntime.wrap(function _callee8$(_context8) {
           while (1) {
-            switch (_context7.prev = _context7.next) {
+            switch (_context8.prev = _context8.next) {
               case 0:
-                _context7.next = 2;
+                _context8.next = 2;
                 return new SituationRunnerInternal(this.view, this.report, situation).run();
 
               case 2:
               case "end":
-                return _context7.stop();
+                return _context8.stop();
             }
           }
-        }, _callee7, this);
+        }, _callee8, this);
       }));
 
-      function run(_x) {
+      function run(_x2) {
         return _run2.apply(this, arguments);
       }
 
