@@ -54,7 +54,7 @@ p.report_paragraph:not(:last-child) {
   right: 0;
   opacity: 0;
   font-size: 22px;
-  padding: 0 10px;
+  padding: 10px 20px;
   text-align: justify; }
 
 .report_down {
@@ -99,7 +99,7 @@ p.report_paragraph:not(:last-child) {
     .menu_container_outer #menu .menu_container_inner {
       display: inline-block; }
       .menu_container_outer #menu .menu_container_inner #menu_options_area {
-        padding: calc( 30px - 1em);
+        padding-top: calc( 30px - 1em - 1ex);
         display: table;
         line-height: 15px;
         border-spacing: 1em; }
