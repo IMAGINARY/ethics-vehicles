@@ -10,7 +10,7 @@ By default, `./config.json` is used. A different config file can be specified vi
 Possible config options include:
 - `defaultLanguage` (string, default: `"en"`): Default language to use. Can be overridden by the
   `lang` query string.
-- `languages` (array of strings, default: ['de', 'en']): The languages loaded for i18n.
+- `languages` (array of strings, default: `['de', 'en']`): The languages loaded for i18n.
   Must match `.json` locale files in `./assets/locales`.
 - `showLanguageSwitcher` (boolean, default: `true`): Whether to show a button for switching
   languages. If the button is hidden, languages can still be switched using the <kbd>l</kbd> key.
