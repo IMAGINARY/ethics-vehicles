@@ -16,6 +16,7 @@ Possible config options include:
   languages. If the button is hidden, languages can still be switched using the <kbd>l</kbd> key.
 - `autoAdvance` (boolean, default: `true`): Whether the app should automatically advance whenever
   stepping forward is the only possible action.
+- `backgroundImage` (string, default `./assets/images/street.png`): Sets the path or URL to the background image.
 
 ## Compilation
 

@@ -12507,7 +12507,8 @@ var defaultConfig = {
   defaultLanguage: 'en',
   languages: ['de', 'en'],
   showLanguageSwitcher: true,
-  autoAdvance: true
+  autoAdvance: true,
+  backgroundImage: './assets/images/street.png'
 };
 exports["default"] = defaultConfig;
 
@@ -15453,7 +15454,7 @@ function () {
     this.app.stage.addChild(this.container);
     this.container.x = this.app.screen.width / 2;
     this.container.y = this.app.screen.height / 2;
-    this.background = new _sceneElement["default"](this, 'assets/images/street.png', _pixiHelp.POINT_ZERO, 1);
+    this.background = new _sceneElement["default"](this, this.config.backgroundImage, _pixiHelp.POINT_ZERO, 1);
     this.agentCar = new _car["default"](this, 'assets/images/car.png');
     this.background.show();
 

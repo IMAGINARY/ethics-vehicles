@@ -30,7 +30,7 @@ export default class View {
     this.container.x = this.app.screen.width / 2;
     this.container.y = this.app.screen.height / 2;
 
-    this.background = new SceneElement(this, 'assets/images/street.png', POINT_ZERO, 1);
+    this.background = new SceneElement(this, this.config.backgroundImage, POINT_ZERO, 1);
     this.agentCar = new Car(this, 'assets/images/car.png');
     this.background.show();
 
