@@ -1,10 +1,11 @@
 import { eventFilter, eventFilters, once } from './event-help';
 import Countdown from './countdown';
+import { tweenOpacity } from './style-help';
 
 class AdvanceButton {
   constructor(label, labelFormatter) {
-    this.htmlButton = $('#advanceButton');
-    this.htmlText = $('#advanceText');
+    this.htmlButton = document.querySelector('#advanceButton');
+    this.htmlText = document.querySelector('#advanceText');
     this.labelFormatter = labelFormatter ?? AdvanceButton.ID_LABEL_FORMATTER;
 
     this.triggerPromise = new Promise((resolve) => {
@@ -16,7 +17,8 @@ class AdvanceButton {
     once(this.htmlButton, 'click', () => this.trigger());
 
     this.setLabel(label);
-    this.htmlButton.show();
+    this.fadeShow()
+      .then();
   }
 
   setLabel(label) {
@@ -25,16 +27,24 @@ class AdvanceButton {
   }
 
   updateLabel() {
-    this.htmlText.text(this.labelFormatter(this.label));
+    this.htmlText.innerText = this.labelFormatter(this.label);
   }
 
   trigger() {
-    this.htmlButton.hide();
-    this.resolve();
+    this.fadeHide()
+      .then(() => this.resolve());
   }
 
   async wait() {
     await this.triggerPromise;
+  }
+
+  async fadeShow() {
+    return tweenOpacity(this.htmlButton, 1, 500);
+  }
+
+  async fadeHide() {
+    return tweenOpacity(this.htmlButton, 0, 500);
   }
 
   static ID_LABEL_FORMATTER(label) {

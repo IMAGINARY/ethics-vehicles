@@ -12376,6 +12376,8 @@ var _eventHelp = require("./event-help");
 
 var _countdown = _interopRequireDefault(require("./countdown"));
 
+var _styleHelp = require("./style-help");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -12396,8 +12398,8 @@ function () {
 
     _classCallCheck(this, AdvanceButton);
 
-    this.htmlButton = $('#advanceButton');
-    this.htmlText = $('#advanceText');
+    this.htmlButton = document.querySelector('#advanceButton');
+    this.htmlText = document.querySelector('#advanceText');
     this.labelFormatter = labelFormatter !== null && labelFormatter !== void 0 ? labelFormatter : AdvanceButton.ID_LABEL_FORMATTER;
     this.triggerPromise = new Promise(function (resolve) {
       _this.resolve = resolve;
@@ -12410,7 +12412,7 @@ function () {
       return _this.trigger();
     });
     this.setLabel(label);
-    this.htmlButton.show();
+    this.fadeShow().then();
   }
 
   _createClass(AdvanceButton, [{
@@ -12422,13 +12424,16 @@ function () {
   }, {
     key: "updateLabel",
     value: function updateLabel() {
-      this.htmlText.text(this.labelFormatter(this.label));
+      this.htmlText.innerText = this.labelFormatter(this.label);
     }
   }, {
     key: "trigger",
     value: function trigger() {
-      this.htmlButton.hide();
-      this.resolve();
+      var _this2 = this;
+
+      this.fadeHide().then(function () {
+        return _this2.resolve();
+      });
     }
   }, {
     key: "wait",
@@ -12456,6 +12461,58 @@ function () {
       }
 
       return wait;
+    }()
+  }, {
+    key: "fadeShow",
+    value: function () {
+      var _fadeShow = _asyncToGenerator(
+      /*#__PURE__*/
+      regeneratorRuntime.mark(function _callee2() {
+        return regeneratorRuntime.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                return _context2.abrupt("return", (0, _styleHelp.tweenOpacity)(this.htmlButton, 1, 500));
+
+              case 1:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2, this);
+      }));
+
+      function fadeShow() {
+        return _fadeShow.apply(this, arguments);
+      }
+
+      return fadeShow;
+    }()
+  }, {
+    key: "fadeHide",
+    value: function () {
+      var _fadeHide = _asyncToGenerator(
+      /*#__PURE__*/
+      regeneratorRuntime.mark(function _callee3() {
+        return regeneratorRuntime.wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                return _context3.abrupt("return", (0, _styleHelp.tweenOpacity)(this.htmlButton, 0, 500));
+
+              case 1:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3, this);
+      }));
+
+      function fadeHide() {
+        return _fadeHide.apply(this, arguments);
+      }
+
+      return fadeHide;
     }()
   }], [{
     key: "ID_LABEL_FORMATTER",
@@ -12496,7 +12553,7 @@ function createAdvanceButton(label, timeout) {
   return typeof timeout === 'undefined' ? new AdvanceButton(label) : createAdvanceButtonWithCountdown(label, timeout);
 }
 
-},{"./countdown":228,"./event-help":232,"core-js/modules/es.array.concat":125,"core-js/modules/es.object.define-property":141,"core-js/modules/es.object.to-string":147,"core-js/modules/es.promise":148,"regenerator-runtime/runtime":225}],230:[function(require,module,exports){
+},{"./countdown":228,"./event-help":232,"./style-help":249,"core-js/modules/es.array.concat":125,"core-js/modules/es.object.define-property":141,"core-js/modules/es.object.to-string":147,"core-js/modules/es.promise":148,"regenerator-runtime/runtime":225}],230:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
