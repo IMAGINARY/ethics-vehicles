@@ -5,6 +5,6 @@
     "en"
   ],
   "showLanguageSwitcher": true,
-  "autoAdvance": true,
+  "autoAdvance": false,
   "backgroundImage": "./assets/images/street.png"
 }

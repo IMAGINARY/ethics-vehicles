@@ -12564,7 +12564,7 @@ var defaultConfig = {
   defaultLanguage: 'en',
   languages: ['de', 'en'],
   showLanguageSwitcher: true,
-  autoAdvance: true,
+  autoAdvance: false,
   backgroundImage: './assets/images/street.png'
 };
 exports["default"] = defaultConfig;
