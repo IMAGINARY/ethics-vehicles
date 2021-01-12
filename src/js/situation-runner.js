@@ -46,6 +46,7 @@ class SituationRunnerInternal {
     };
     setReportPolicy();
     this.view.i18next.on('languageChanged', setReportPolicy);
+    await this.report.revealPolicy();
 
     await this.situation.wait(1000);
     await this.hideElementsInfo();
@@ -57,6 +58,7 @@ class SituationRunnerInternal {
     const setReportDecision = () => this.report.setDecision(this.t(this.currentDecision.textKey));
     setReportDecision();
     this.view.i18next.on('languageChanged', setReportDecision);
+    await this.report.revealDecision();
 
     await this.waitForAdvanceButton('Restart', 15000);
 

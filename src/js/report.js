@@ -12,12 +12,13 @@ export default class Report {
 
     this.decisionBlock = this.htmlElement.querySelector('#decision');
     this.decisionElement = this.htmlElement.querySelector('#decision_text');
+
+    this.hide(0)
+      .then();
   }
 
-  show() {
-    this.decisionBlock.style.display = 'none';
-    this.policyBlock.style.display = 'none';
-    return tweenOpacity(this.htmlElement, 1, 500);
+  show(timeMs = 500) {
+    return tweenOpacity(this.htmlElement, 1, timeMs);
   }
 
   setDescription(description) {
@@ -25,17 +26,37 @@ export default class Report {
   }
 
   setPolicy(name, objective) {
-    this.policyBlock.style.display = 'block';
     this.policyNameElement.innerHTML = name;
     this.policyObjectiveElement.innerHTML = objective;
   }
 
   setDecision(decision) {
-    this.decisionBlock.style.display = 'block';
     this.decisionElement.innerHTML = decision;
   }
 
-  hide() {
-    return tweenOpacity(this.htmlElement, 0, 250);
+  revealPolicy() {
+    return tweenOpacity(this.policyBlock, 1, 500);
+  }
+
+  revealDecision() {
+    return tweenOpacity(this.decisionBlock, 1, 500);
+  }
+
+  hidePolicyAndDecision(timeMs = 250) {
+    const hidePolicyPromise = tweenOpacity(this.policyBlock, 0, timeMs);
+    const hideDecisionPromise = tweenOpacity(this.decisionBlock, 0, timeMs);
+    return Promise.all([
+      hidePolicyPromise,
+      hideDecisionPromise,
+    ]);
+  }
+
+  hide(timeMs = 250) {
+    const hidePolicyAndDecision = this.hidePolicyAndDecision(timeMs);
+    const hideElementPromise = tweenOpacity(this.htmlElement, 0, timeMs);
+    return Promise.all([
+      hidePolicyAndDecision,
+      hideElementPromise,
+    ]);
   }
 }

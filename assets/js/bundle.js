@@ -13795,7 +13795,17 @@ exports.Policies = Policies;
 },{}],242:[function(require,module,exports){
 "use strict";
 
+require("core-js/modules/es.array.iterator");
+
 require("core-js/modules/es.object.define-property");
+
+require("core-js/modules/es.object.to-string");
+
+require("core-js/modules/es.promise");
+
+require("core-js/modules/es.string.iterator");
+
+require("core-js/modules/web.dom-collections.iterator");
 
 Object.defineProperty(exports, "__esModule", {
   value: true
@@ -13823,14 +13833,14 @@ function () {
     this.policyObjectiveElement = this.htmlElement.querySelector('#policy_objective');
     this.decisionBlock = this.htmlElement.querySelector('#decision');
     this.decisionElement = this.htmlElement.querySelector('#decision_text');
+    this.hide(0).then();
   }
 
   _createClass(Report, [{
     key: "show",
     value: function show() {
-      this.decisionBlock.style.display = 'none';
-      this.policyBlock.style.display = 'none';
-      return (0, _styleHelp.tweenOpacity)(this.htmlElement, 1, 500);
+      var timeMs = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 500;
+      return (0, _styleHelp.tweenOpacity)(this.htmlElement, 1, timeMs);
     }
   }, {
     key: "setDescription",
@@ -13840,20 +13850,39 @@ function () {
   }, {
     key: "setPolicy",
     value: function setPolicy(name, objective) {
-      this.policyBlock.style.display = 'block';
       this.policyNameElement.innerHTML = name;
       this.policyObjectiveElement.innerHTML = objective;
     }
   }, {
     key: "setDecision",
     value: function setDecision(decision) {
-      this.decisionBlock.style.display = 'block';
       this.decisionElement.innerHTML = decision;
+    }
+  }, {
+    key: "revealPolicy",
+    value: function revealPolicy() {
+      return (0, _styleHelp.tweenOpacity)(this.policyBlock, 1, 500);
+    }
+  }, {
+    key: "revealDecision",
+    value: function revealDecision() {
+      return (0, _styleHelp.tweenOpacity)(this.decisionBlock, 1, 500);
+    }
+  }, {
+    key: "hidePolicyAndDecision",
+    value: function hidePolicyAndDecision() {
+      var timeMs = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 250;
+      var hidePolicyPromise = (0, _styleHelp.tweenOpacity)(this.policyBlock, 0, timeMs);
+      var hideDecisionPromise = (0, _styleHelp.tweenOpacity)(this.decisionBlock, 0, timeMs);
+      return Promise.all([hidePolicyPromise, hideDecisionPromise]);
     }
   }, {
     key: "hide",
     value: function hide() {
-      return (0, _styleHelp.tweenOpacity)(this.htmlElement, 0, 250);
+      var timeMs = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 250;
+      var hidePolicyAndDecision = this.hidePolicyAndDecision(timeMs);
+      var hideElementPromise = (0, _styleHelp.tweenOpacity)(this.htmlElement, 0, timeMs);
+      return Promise.all([hidePolicyAndDecision, hideElementPromise]);
     }
   }]);
 
@@ -13862,7 +13891,7 @@ function () {
 
 exports["default"] = Report;
 
-},{"./style-help":249,"core-js/modules/es.object.define-property":141}],243:[function(require,module,exports){
+},{"./style-help":249,"core-js/modules/es.array.iterator":133,"core-js/modules/es.object.define-property":141,"core-js/modules/es.object.to-string":147,"core-js/modules/es.promise":148,"core-js/modules/es.string.iterator":152,"core-js/modules/web.dom-collections.iterator":158}],243:[function(require,module,exports){
 "use strict";
 
 require("core-js/modules/es.object.define-property");
@@ -14092,56 +14121,64 @@ function () {
                 setReportPolicy();
                 this.view.i18next.on('languageChanged', setReportPolicy);
                 _context.next = 26;
-                return this.situation.wait(1000);
+                return this.report.revealPolicy();
 
               case 26:
                 _context.next = 28;
-                return this.hideElementsInfo();
+                return this.situation.wait(1000);
 
               case 28:
                 _context.next = 30;
-                return this.situation.wait(1000);
+                return this.hideElementsInfo();
 
               case 30:
                 _context.next = 32;
-                return this.playOutDecision();
+                return this.situation.wait(1000);
 
               case 32:
                 _context.next = 34;
-                return this.situation.wait(1000);
+                return this.playOutDecision();
 
               case 34:
+                _context.next = 36;
+                return this.situation.wait(1000);
+
+              case 36:
                 setReportDecision = function setReportDecision() {
                   return _this2.report.setDecision(_this2.t(_this2.currentDecision.textKey));
                 };
 
                 setReportDecision();
                 this.view.i18next.on('languageChanged', setReportDecision);
-                _context.next = 39;
-                return this.waitForAdvanceButton('Restart', 15000);
-
-              case 39:
                 _context.next = 41;
-                return this.report.hide();
+                return this.report.revealDecision();
 
               case 41:
                 _context.next = 43;
-                return this.situation.clearSprites();
+                return this.waitForAdvanceButton('Restart', 15000);
 
               case 43:
                 _context.next = 45;
-                return this.situation.teardown();
+                return this.report.hide();
 
               case 45:
                 _context.next = 47;
-                return this.view.start();
+                return this.situation.clearSprites();
 
               case 47:
+                _context.next = 49;
+                return this.situation.teardown();
+
+              case 49:
+                _context.next = 51;
+                return this.view.start();
+
+              case 51:
                 this.view.i18next.off('languageChanged', setReportDescription);
                 this.view.i18next.off('languageChanged', setReportPolicy);
                 this.view.i18next.off('languageChanged', setReportDecision);
 
-              case 50:
+              case 54:
               case "end":
                 return _context.stop();
             }
