@@ -128,6 +128,7 @@ class SituationRunnerInternal {
       infoBox.setSize(width, height);
       infoBox.setPlacement(placement);
       infoBox.setAlignment(alignment);
+      this.highlight(element.sprite);
       await infoBox.fadeShow(1000); // eslint-disable-line no-await-in-loop
     }
   }

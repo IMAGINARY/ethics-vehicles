@@ -14375,7 +14375,7 @@ function () {
 
               case 3:
                 if (!(i < this.elements.length)) {
-                  _context6.next = 16;
+                  _context6.next = 17;
                   break;
                 }
 
@@ -14386,15 +14386,16 @@ function () {
                 infoBox.setSize(width, height);
                 infoBox.setPlacement(placement);
                 infoBox.setAlignment(alignment);
-                _context6.next = 13;
+                this.highlight(element.sprite);
+                _context6.next = 14;
                 return infoBox.fadeShow(1000);
 
-              case 13:
+              case 14:
                 i += 1;
                 _context6.next = 3;
                 break;
 
-              case 16:
+              case 17:
               case "end":
                 return _context6.stop();
             }
