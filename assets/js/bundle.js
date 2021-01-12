@@ -13797,12 +13797,6 @@ exports.Policies = Policies;
 
 require("core-js/modules/es.object.define-property");
 
-require("core-js/modules/es.object.to-string");
-
-require("core-js/modules/es.promise");
-
-require("core-js/modules/web.timers");
-
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
@@ -13839,28 +13833,6 @@ function () {
       return (0, _styleHelp.tweenOpacity)(this.htmlElement, 1, 500);
     }
   }, {
-    key: "pullUp",
-    value: function pullUp() {
-      var time = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1000;
-      this.htmlElement.classList.remove('report_down');
-      this.htmlElement.classList.remove('report_up');
-      this.htmlElement.classList.add('report_up');
-      return new Promise(function (r) {
-        return setTimeout(r, time);
-      });
-    }
-  }, {
-    key: "pullDown",
-    value: function pullDown() {
-      var time = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1000;
-      this.htmlElement.classList.remove('report_down');
-      this.htmlElement.classList.remove('report_up');
-      this.htmlElement.classList.add('report_down');
-      return new Promise(function (r) {
-        return setTimeout(r, time);
-      });
-    }
-  }, {
     key: "setDescription",
     value: function setDescription(description) {
       this.situationDescriptionElement.innerHTML = description;
@@ -13890,7 +13862,7 @@ function () {
 
 exports["default"] = Report;
 
-},{"./style-help":249,"core-js/modules/es.object.define-property":141,"core-js/modules/es.object.to-string":147,"core-js/modules/es.promise":148,"core-js/modules/web.timers":159}],243:[function(require,module,exports){
+},{"./style-help":249,"core-js/modules/es.object.define-property":141}],243:[function(require,module,exports){
 "use strict";
 
 require("core-js/modules/es.object.define-property");

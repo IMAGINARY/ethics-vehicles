@@ -20,22 +20,6 @@ export default class Report {
     return tweenOpacity(this.htmlElement, 1, 500);
   }
 
-  pullUp(time = 1000) {
-    this.htmlElement.classList.remove('report_down');
-    this.htmlElement.classList.remove('report_up');
-
-    this.htmlElement.classList.add('report_up');
-    return new Promise((r) => setTimeout(r, time));
-  }
-
-  pullDown(time = 1000) {
-    this.htmlElement.classList.remove('report_down');
-    this.htmlElement.classList.remove('report_up');
-
-    this.htmlElement.classList.add('report_down');
-    return new Promise((r) => setTimeout(r, time));
-  }
-
   setDescription(description) {
     this.situationDescriptionElement.innerHTML = description;
   }
