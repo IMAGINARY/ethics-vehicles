@@ -51,7 +51,7 @@ export default class Menu {
 
   createHTMLOptions() {
     const selectAndEnter = (index) => {
-      this.select(index);
+      this.setCurrentOption(index);
       this.enterOption();
     };
     this.rows = this.options.map(
@@ -87,16 +87,18 @@ export default class Menu {
     this.rows[index].removeClass('selected');
   }
 
-  down() {
+  setCurrentOption(index) {
     this.deselect(this.currentOption);
-    this.currentOption = Math.min(this.currentOption + 1, this.options.length - 1);
+    this.currentOption = Math.max(0, Math.min(index, this.options.length - 1));
     this.select(this.currentOption);
   }
 
+  down() {
+    this.setCurrentOption(this.currentOption + 1);
+  }
+
   up() {
-    this.deselect(this.currentOption);
-    this.currentOption = Math.max(0, this.currentOption - 1);
-    this.select(this.currentOption);
+    this.setCurrentOption(this.currentOption - 1);
   }
 
   refreshTexts() {

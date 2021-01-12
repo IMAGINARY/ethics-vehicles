@@ -13567,7 +13567,7 @@ function () {
           _$;
 
       var selectAndEnter = function selectAndEnter(index) {
-        _this4.select(index);
+        _this4.setCurrentOption(index);
 
         _this4.enterOption();
       };
@@ -13632,18 +13632,21 @@ function () {
       this.rows[index].removeClass('selected');
     }
   }, {
+    key: "setCurrentOption",
+    value: function setCurrentOption(index) {
+      this.deselect(this.currentOption);
+      this.currentOption = Math.max(0, Math.min(index, this.options.length - 1));
+      this.select(this.currentOption);
+    }
+  }, {
     key: "down",
     value: function down() {
-      this.deselect(this.currentOption);
-      this.currentOption = Math.min(this.currentOption + 1, this.options.length - 1);
-      this.select(this.currentOption);
+      this.setCurrentOption(this.currentOption + 1);
     }
   }, {
     key: "up",
     value: function up() {
-      this.deselect(this.currentOption);
-      this.currentOption = Math.max(0, this.currentOption - 1);
-      this.select(this.currentOption);
+      this.setCurrentOption(this.currentOption - 1);
     }
   }, {
     key: "refreshTexts",
