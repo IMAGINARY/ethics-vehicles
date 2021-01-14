@@ -4,6 +4,8 @@ export default class Report {
   constructor(htmlElement) {
     this.htmlElement = htmlElement;
 
+    this.titleElement = this.htmlElement.querySelector('#report_title');
+
     this.situationDescriptionElement = this.htmlElement.querySelector('#situation_description');
 
     this.policyBlock = this.htmlElement.querySelector('#policy');
@@ -19,6 +21,10 @@ export default class Report {
 
   show(timeMs = 500) {
     return tweenOpacity(this.htmlElement, 1, timeMs);
+  }
+
+  setTitle(title) {
+    this.titleElement.innerHTML = title;
   }
 
   setDescription(description) {

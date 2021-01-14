@@ -13884,6 +13884,7 @@ function () {
     _classCallCheck(this, Report);
 
     this.htmlElement = htmlElement;
+    this.titleElement = this.htmlElement.querySelector('#report_title');
     this.situationDescriptionElement = this.htmlElement.querySelector('#situation_description');
     this.policyBlock = this.htmlElement.querySelector('#policy');
     this.policyNameElement = this.htmlElement.querySelector('#policy_name');
@@ -13898,6 +13899,11 @@ function () {
     value: function show() {
       var timeMs = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 500;
       return (0, _styleHelp.tweenOpacity)(this.htmlElement, 1, timeMs);
+    }
+  }, {
+    key: "setTitle",
+    value: function setTitle(title) {
+      this.titleElement.innerHTML = title;
     }
   }, {
     key: "setDescription",
@@ -14126,7 +14132,7 @@ function () {
       regeneratorRuntime.mark(function _callee() {
         var _this2 = this;
 
-        var situationDescriptionKey, setReportDescription, policyNameKey, policyObjectiveKey, setReportPolicy, setReportDecision;
+        var setReportTitle, situationDescriptionKey, setReportDescription, policyNameKey, policyObjectiveKey, setReportPolicy, setReportDecision;
         return regeneratorRuntime.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
@@ -14148,6 +14154,11 @@ function () {
                 return this.showElementsInfo();
 
               case 9:
+                setReportTitle = function setReportTitle() {
+                  return _this2.report.setTitle(_this2.t('Report'));
+                };
+
+                this.view.i18next.on('languageChanged', setReportTitle);
                 situationDescriptionKey = this.situation.getDescriptionKey();
 
                 setReportDescription = function setReportDescription() {
@@ -14156,18 +14167,18 @@ function () {
 
                 setReportDescription();
                 this.view.i18next.on('languageChanged', setReportDescription);
-                _context.next = 15;
-                return this.report.show();
-
-              case 15:
                 _context.next = 17;
-                return this.waitForAdvanceButton('Next', 3000);
+                return this.report.show();
 
               case 17:
                 _context.next = 19;
-                return this.waitForPolicy();
+                return this.waitForAdvanceButton('Next', 3000);
 
               case 19:
+                _context.next = 21;
+                return this.waitForPolicy();
+
+              case 21:
                 policyNameKey = this.currentPolicy.nameKey;
                 policyObjectiveKey = this.currentPolicy.objectiveKey;
 
@@ -14177,65 +14188,65 @@ function () {
 
                 setReportPolicy();
                 this.view.i18next.on('languageChanged', setReportPolicy);
-                _context.next = 26;
-                return this.report.revealPolicy();
-
-              case 26:
                 _context.next = 28;
-                return this.situation.wait(1000);
+                return this.report.revealPolicy();
 
               case 28:
                 _context.next = 30;
-                return this.hideElementsInfo();
+                return this.situation.wait(1000);
 
               case 30:
                 _context.next = 32;
-                return this.situation.wait(1000);
+                return this.hideElementsInfo();
 
               case 32:
                 _context.next = 34;
-                return this.playOutDecision();
+                return this.situation.wait(1000);
 
               case 34:
                 _context.next = 36;
-                return this.situation.wait(1000);
+                return this.playOutDecision();
 
               case 36:
+                _context.next = 38;
+                return this.situation.wait(1000);
+
+              case 38:
                 setReportDecision = function setReportDecision() {
                   return _this2.report.setDecision(_this2.t(_this2.currentDecision.textKey));
                 };
 
                 setReportDecision();
                 this.view.i18next.on('languageChanged', setReportDecision);
-                _context.next = 41;
-                return this.report.revealDecision();
-
-              case 41:
                 _context.next = 43;
-                return this.waitForAdvanceButton('Restart', 15000);
+                return this.report.revealDecision();
 
               case 43:
                 _context.next = 45;
-                return this.report.hide();
+                return this.waitForAdvanceButton('Restart', 15000);
 
               case 45:
                 _context.next = 47;
-                return this.situation.clearSprites();
+                return this.report.hide();
 
               case 47:
                 _context.next = 49;
-                return this.situation.teardown();
+                return this.situation.clearSprites();
 
               case 49:
                 _context.next = 51;
-                return this.view.start();
+                return this.situation.teardown();
 
               case 51:
+                _context.next = 53;
+                return this.view.start();
+
+              case 53:
                 this.view.i18next.off('languageChanged', setReportDescription);
                 this.view.i18next.off('languageChanged', setReportPolicy);
                 this.view.i18next.off('languageChanged', setReportDecision);
 
-              case 54:
+              case 56:
               case "end":
                 return _context.stop();
             }

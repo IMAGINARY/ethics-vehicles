@@ -29,6 +29,9 @@ class SituationRunnerInternal {
     await this.situation.wait(1000);
     await this.showElementsInfo();
 
+    const setReportTitle = () => this.report.setTitle(this.t('Report'));
+    this.view.i18next.on('languageChanged', setReportTitle);
+
     const situationDescriptionKey = this.situation.getDescriptionKey();
     const setReportDescription = () => this.report.setDescription(this.t(situationDescriptionKey));
     setReportDescription();
