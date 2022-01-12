@@ -20,6 +20,7 @@
 Bounce buttonUP    = Bounce(0, 100);
 Bounce buttonDOWN  = Bounce(1, 100);
 Bounce buttonENTER = Bounce(2, 100);
+Bounce buttonL     = Bounce(3, 100);
 
 
 void setup()
@@ -83,6 +84,10 @@ void loop()
   {
     Keyboard.press(KEY_ENTER);
   }
+  if (buttonL.fallingEdge())
+  {
+    Keyboard.press(KEY_L);
+  }
 
   // ----------------------------------------------------
 
@@ -103,6 +108,9 @@ void loop()
   }
   if (buttonENTER.risingEdge()) {
     Keyboard.release(KEY_ENTER);
+  }
+  if (buttonL.risingEdge()) {
+    Keyboard.release(KEY_L);
   }
   
   // ----------------------------------------------------
