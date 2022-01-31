@@ -1,4 +1,4 @@
-import { eventFilter, eventFilters, once } from './event-help';
+import { eventFilter, eventFilters } from './event-help';
 import Countdown from './countdown';
 import { tweenOpacity } from './style-help';
 
@@ -12,9 +12,11 @@ class AdvanceButton {
       this.resolve = resolve;
     });
 
-    const triggerOnEnter = eventFilter(eventFilters.KEY_ENTER, () => this.trigger());
-    once(window, 'keydown', triggerOnEnter);
-    once(this.htmlButton, 'click', () => this.trigger());
+    this.triggerCb = () => this.trigger();
+    this.triggerOnEnter = eventFilter(eventFilters.KEY_ENTER, this.triggerCb);
+
+    window.addEventListener( 'keydown', this.triggerOnEnter);
+    this.htmlButton.addEventListener('click', this.triggerCb);
 
     this.setLabel(label);
     this.fadeShow()
@@ -31,6 +33,8 @@ class AdvanceButton {
   }
 
   trigger() {
+    window.removeEventListener( 'keydown', this.triggerOnEnter);
+    this.htmlButton.removeEventListener('click', this.triggerCb);
     this.fadeHide()
       .then(() => this.resolve());
   }

@@ -14421,13 +14421,14 @@ var AdvanceButton = /*#__PURE__*/function () {
     this.triggerPromise = new Promise(function (resolve) {
       _this.resolve = resolve;
     });
-    var triggerOnEnter = (0, _eventHelp.eventFilter)(_eventHelp.eventFilters.KEY_ENTER, function () {
+
+    this.triggerCb = function () {
       return _this.trigger();
-    });
-    (0, _eventHelp.once)(window, 'keydown', triggerOnEnter);
-    (0, _eventHelp.once)(this.htmlButton, 'click', function () {
-      return _this.trigger();
-    });
+    };
+
+    this.triggerOnEnter = (0, _eventHelp.eventFilter)(_eventHelp.eventFilters.KEY_ENTER, this.triggerCb);
+    window.addEventListener('keydown', this.triggerOnEnter);
+    this.htmlButton.addEventListener('click', this.triggerCb);
     this.setLabel(label);
     this.fadeShow().then();
   }
@@ -14448,6 +14449,8 @@ var AdvanceButton = /*#__PURE__*/function () {
     value: function trigger() {
       var _this2 = this;
 
+      window.removeEventListener('keydown', this.triggerOnEnter);
+      this.htmlButton.removeEventListener('click', this.triggerCb);
       this.fadeHide().then(function () {
         return _this2.resolve();
       });
